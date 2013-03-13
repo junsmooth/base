@@ -1,23 +1,12 @@
 package org.bgrimm.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
-@Entity(name="T_MENU")
 public class Menu {
-	@Id
-	@GeneratedValue
+
 	private int id;
 	private String text;
 	private String iconCls;
 	private boolean leaf = false;
 	private String controller;
-	@ManyToOne
-	@JoinColumn(name="parent")
-	private Menu parent;
 	public String getController() {
 		return controller;
 	}
@@ -26,7 +15,7 @@ public class Menu {
 		this.controller = controller;
 	}
 
-
+	private Menu parent;
 
 	public int getId() {
 		return id;

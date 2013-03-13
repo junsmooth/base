@@ -9,7 +9,7 @@
 	
 	<mvc:view-controller path="/login" view-name="home" />
 	
-	<context:component-scan base-package="org.bgrimm.controller">
+	<context:component-scan base-package="org.bgrimm">
 	<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
 	<mvc:annotation-driven />

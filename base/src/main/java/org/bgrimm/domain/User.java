@@ -1,18 +1,6 @@
 package org.bgrimm.domain;
 
-import java.util.List;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-
-@Entity
 public class User {
-	@Id
-	@GeneratedValue
 	private int id;
 	private String name;
 	private String password;
@@ -20,18 +8,7 @@ public class User {
 	private String telephone;
 	private String address;
 	private String cardno;
-	// private Role role;
-	@ManyToMany
-	@JoinTable(name = "userrole", joinColumns = @JoinColumn(name = "uid"), inverseJoinColumns = @JoinColumn(name = "rid"))
-	private List<Role> roles;
-
-	public List<Role> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
-	}
+	private Role role;
 
 	public int getId() {
 		return id;
@@ -89,11 +66,11 @@ public class User {
 		this.cardno = cardno;
 	}
 
-	// public Role getRole() {
-	// return role;
-	// }
-	//
-	// public void setRole(Role role) {
-	// this.role = role;
-	// }
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
 }
