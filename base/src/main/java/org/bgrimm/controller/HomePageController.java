@@ -13,7 +13,8 @@ import org.xml.sax.SAXException;
 @Controller
 @RequestMapping("homepage")
 public class HomePageController {
-
+	
+	
 	@RequestMapping("data")
 	public @ResponseBody
 	Object mainMenu() throws Exception, SAXException, IOException {
