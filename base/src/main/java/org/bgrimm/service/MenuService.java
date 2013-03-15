@@ -1,18 +1,11 @@
 package org.bgrimm.service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
-import javax.sql.DataSource;
-
-import org.bgrimm.common.datasource.DataSourceConst;
-import org.bgrimm.common.datasource.DataSourceHandle;
 import org.bgrimm.domain.Menu;
-import org.bgrimm.persistence.MenuMapper;
+import org.bgrimm.persistence.MenuDao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -21,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class MenuService {
 
 	@Autowired
-	private MenuMapper mapper;
+	private MenuDao menuDao;
 
 	private List<String> getCurrentAuthorities() {
 		UserDetails userDetails = (UserDetails) SecurityContextHolder
@@ -35,12 +28,12 @@ public class MenuService {
 	}
 
 	public List<Menu> getMainMenus() {
-		List<Menu> allMainMenus = mapper.getMenusByParentId(0);
+		List<Menu> allMainMenus = menuDao.getMenusByParentId(0);
 		return allMainMenus;
 	}
 
 	public List<Menu> getSubMenus(int id) {
-		List<Menu> subMenus = mapper.getMenusByParentId(id);
+		List<Menu> subMenus = menuDao.getMenusByParentId(id);
 		return subMenus;
 	}
 

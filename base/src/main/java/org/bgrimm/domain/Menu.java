@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-@Entity(name="T_MENU")
+@Entity(name="MENU")
 public class Menu {
 	@Id
 	@GeneratedValue
