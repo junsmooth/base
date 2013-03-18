@@ -6,7 +6,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-@Entity(name="MENU")
+
+@Entity(name = "MENU")
 public class Menu {
 	@Id
 	@GeneratedValue
@@ -16,8 +17,9 @@ public class Menu {
 	private boolean leaf = false;
 	private String controller;
 	@ManyToOne
-	@JoinColumn(name="parent")
+	@JoinColumn(name = "parent")
 	private Menu parent;
+
 	public String getController() {
 		return controller;
 	}
@@ -25,8 +27,6 @@ public class Menu {
 	public void setController(String controller) {
 		this.controller = controller;
 	}
-
-
 
 	public int getId() {
 		return id;
