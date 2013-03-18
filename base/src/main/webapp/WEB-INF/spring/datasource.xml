@@ -7,38 +7,34 @@
 	<!-- enable transaction demarcation with annotations -->
 	<tx:annotation-driven />
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
-		p:driverClass="com.mysql.jdbc.Driver"
-		p:jdbcUrl="jdbc:mysql://localhost:3306/jpa"
-		p:user="root" p:password="root" p:checkoutTimeout="5000"/>
-	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-		<property name="dataSource" ref="dataSource"/>
+		p:driverClass="com.mysql.jdbc.Driver" p:jdbcUrl="jdbc:mysql://localhost:3306/jpa"
+		p:user="root" p:password="root" p:checkoutTimeout="5000" />
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
 		<property name="packagesToScan">
 			<list>
-				<value>
-				 	org.bgrimm.domain	
-				</value>
+				<value>org.bgrimm.domain</value>
 			</list>
-  
+
 		</property>
+		<!-- <property name="annotatedClasses"> <value>org.bgrimm.domain.Menu</value> 
+			</property> -->
 		<property name="hibernateProperties">
-			<props>
-				<prop key="hibernate.dialect">
-   org.hibernate.dialect.MySQL5Dialect
-				</prop>
-				<prop key="hibernate.show_sql">true</prop>
-				<prop key="format_sql">true</prop>
-				<prop key="hbm2ddl.auto">create</prop>
-   
-			</props>
+			<value>
+				hibernate.dialect=org.hibernate.dialect.MySQL5Dialect
+				hibernate.show_sql=true
+				format_sql=true
+				hibernate.hbm2ddl.auto=create
+			</value>
 		</property>
 	</bean>
-	
-	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
-	
-	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-		<property name="sessionFactory" ref="sessionFactory"/>
+
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-	<context:component-scan base-package="org.bgrimm.domain"/>
-	<context:component-scan base-package="org.bgrimm.service"/>
-	<context:component-scan base-package="org.bgrimm.persistence"/>
+	<context:component-scan base-package="org.bgrimm.service" />
+	<context:component-scan base-package="org.bgrimm.persistence" />
 </beans>
