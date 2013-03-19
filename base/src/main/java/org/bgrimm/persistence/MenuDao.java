@@ -25,7 +25,6 @@ public class MenuDao {
 	public List<Menu> getMenusByParentId(int pid) {
 		Session session = sessionFactory.getCurrentSession();
 		Criteria c = session.createCriteria(Menu.class);
-		Menu m = new Menu();
 		Criterion cron=null;
 		if(pid==0){
 			cron = Restrictions.isNull("parent");
@@ -33,8 +32,7 @@ public class MenuDao {
 			cron=Restrictions.eq("parent.id", pid);
 		}
 		c.add(cron);
-		List list = c.list();
-		System.out.println(list);
+		List<Menu> list = c.list();
 		return list;
 
 	}
