@@ -7,9 +7,9 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,19 +20,24 @@ public class MenuDao {
 
 	@Autowired
 	private SessionFactory sessionFactory;
+	@Autowired
+	private MessageSource message;
 
 	@Transactional
 	public List<Menu> getMenusByParentId(int pid) {
 		Session session = sessionFactory.getCurrentSession();
 		Criteria c = session.createCriteria(Menu.class);
-		Criterion cron=null;
-		if(pid==0){
+		Criterion cron = null;
+		if (pid == 0) {
 			cron = Restrictions.isNull("parent");
-		}else{
-			cron=Restrictions.eq("parent.id", pid);
+		} else {
+			cron = Restrictions.eq("parent.id", pid);
 		}
 		c.add(cron);
 		List<Menu> list = c.list();
+		for (Menu m : list) {
+			m.setText(message.getMessage("menu."+m.getText(), null, m.getText(), null));
+		}
 		return list;
 
 	}
