@@ -13,23 +13,17 @@
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"/>
 		<property name="packagesToScan">
-			<list>
-				<value>
+			<value>
 				 	org.bgrimm.domain	
-				</value>
-			</list>
-  
+			</value>
 		</property>
 		<property name="hibernateProperties">
-			<props>
-				<prop key="hibernate.dialect">
-   org.hibernate.dialect.MySQL5Dialect
-				</prop>
-				<prop key="hibernate.show_sql">true</prop>
-				<prop key="format_sql">true</prop>
-				<prop key="hbm2ddl.auto">create</prop>
-   
-			</props>
+			<value>
+				hibernate.dialect= org.hibernate.dialect.MySQL5Dialect
+				hibernate.show_sql=true
+				format_sql=true
+				hbm2ddl.auto=true
+			</value>
 		</property>
 	</bean>
 	
