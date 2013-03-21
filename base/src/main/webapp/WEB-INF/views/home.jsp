@@ -2,14 +2,24 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>Blasting Management System</title>
-<link rel="stylesheet" type="text/css"
-	href="resources/extjs4/resources/css/ext-all.css" />
-<link rel="stylesheet" type="text/css" href="resources/css/style.css" />
-<script type="text/javascript" src="resources/extjs4/ext-all-debug.js"></script>
-<script type="text/javascript" src="resources/extjs4/ext-lang-zh_CN.js"></script>
-<script type="text/javascript" src="resources/app.js"></script>
 </head>
 <body>
-
+	<h1 id="greeting">Hello</h1>
+	<script type="text/javascript" src="resources/dojo/dojo.js"
+		data-dojo-config="async:true" />
+	<script>
+ require(["dojo/dom", "dojo/domReady!"], function(dom){
+	    var greeting = dom.byId("greeting");
+	    greeting.innerHTML += " from Dojo!";
+	});
+	require(["demo/myModule"], function(myModule){
+	    // Use our module to change the text in the greeting
+	    myModule.setText("greeting", "Hello Dojo!");
+	    // After a few seconds, restore the text to its original state
+	    setTimeout(function(){
+	        myModule.restoreText("greeting");
+	    }, 3000);
+	});
+ </script>
 </body>
 </html>
