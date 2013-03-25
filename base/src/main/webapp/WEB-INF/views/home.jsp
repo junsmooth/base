@@ -13,20 +13,24 @@ html,body {
 	overflow: hidden;
 }
 
-#borderContainerTwo {
+#boderContainer {
 	width: 100%;
 	height: 100%;
 }
 </style>
 	<script>dojoConfig = {parseOnLoad: true}</script>
+	<script type="text/javascript" src="resources/dojo/dojo.js"
+		data-dojo-config="async:true"></script>
+	<script type="text/javascript" src="resources/app.js"></script>
+	<script type="text/javascript" src="resources/app/head/head.js"></script>
 </head>
 <body class="claro">
 	<div data-dojo-type="dijit/layout/BorderContainer"
 		data-dojo-props="gutters:true, liveSplitters:false"
-		id="borderContainerTwo">
+		id="boderContainer">
 		<div data-dojo-type="dijit/layout/ContentPane"
 			data-dojo-props="region:'top', splitter:false" style="height: 50px;" align="">
-			BGRIMM Blasting System</div>
+		<span data-dojo-type="FancyCounter">press me</span></div>
 		<div data-dojo-type="dijit/layout/AccordionContainer"
 			data-dojo-props="minSize:20, region:'leading', splitter:true"
 			style="width: 300px;" id="leftAccordion">
@@ -55,10 +59,8 @@ html,body {
 	<!-- end BorderContainer -->
 
 
-	<script type="text/javascript" src="resources/dojo/dojo.js"
-		data-dojo-config="async:true"></script>
-	<script>
-	require(["dojo/parser", "dijit/layout/ContentPane", "dijit/layout/BorderContainer", "dijit/layout/TabContainer", "dijit/layout/AccordionContainer", "dijit/layout/AccordionPane"]);
- </script>
+	
+	
+	
 </body>
 </html>
