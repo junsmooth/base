@@ -30,7 +30,7 @@ html,body {
 		id="boderContainer">
 		<div data-dojo-type="dijit/layout/ContentPane"
 			data-dojo-props="region:'top', splitter:false" style="height: 50px;" align="">
-		<span data-dojo-type="FancyCounter">press me</span></div>
+		<span data-dojo-type="FancyCounter">Place Holder</span></div>
 		<div data-dojo-type="dijit/layout/AccordionContainer"
 			data-dojo-props="minSize:20, region:'leading', splitter:true"
 			style="width: 300px;" id="leftAccordion">
