@@ -6,6 +6,9 @@ require([ "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_TemplatedMixin",
 		templateString : template,
 		increment : function() {
 			this.counter.innerHTML = ++this._i;
+		},
+		constructor:function(args){console.log("head constructed!");
+		console.log(this.templateString);
 		}
 	});
 

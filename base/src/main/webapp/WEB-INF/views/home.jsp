@@ -23,25 +23,20 @@ html,body {
 		data-dojo-config="async:true"></script>
 	<script type="text/javascript" src="resources/app.js"></script>
 	<script type="text/javascript" src="resources/app/head/head.js"></script>
+	<script type="text/javascript" src="resources/app/left/left.js"></script>
 </head>
 <body class="claro">
 	<div data-dojo-type="dijit/layout/BorderContainer"
 		data-dojo-props="gutters:true, liveSplitters:false"
 		id="boderContainer">
 		<div data-dojo-type="dijit/layout/ContentPane"
-			data-dojo-props="region:'top', splitter:false" style="height: 50px;" align="">
-		<span data-dojo-type="FancyCounter">Place Holder</span></div>
-		<div data-dojo-type="dijit/layout/AccordionContainer"
-			data-dojo-props="minSize:20, region:'leading', splitter:true"
-			style="width: 300px;" id="leftAccordion">
-			<div data-dojo-type="dijit/layout/AccordionPane"
-				title="One fancy Pane"></div>
-			<div data-dojo-type="dijit/layout/AccordionPane" title="Another one">
-			</div>
-			<div data-dojo-type="dijit/layout/AccordionPane"
-				title="Even more fancy" selected="true"></div>
-			<div data-dojo-type="dijit/layout/AccordionPane"
-				title="Last, but not least"></div>
+			data-dojo-props="region:'top', splitter:false" style="height: 50px;"
+			align="">
+			<span data-dojo-type="FancyCounter">Place Holder</span>
+		</div>
+		<div data-dojo-type="dijit/layout/ContentPane"
+			data-dojo-props="region:'leading', splitter:true"
+			style="width: 300px;" id="leftTree">
 		</div>
 		<!-- end AccordionContainer -->
 		<div data-dojo-type="dijit/layout/TabContainer"
@@ -59,8 +54,8 @@ html,body {
 	<!-- end BorderContainer -->
 
 
-	
-	
-	
+
+
+
 </body>
 </html>
