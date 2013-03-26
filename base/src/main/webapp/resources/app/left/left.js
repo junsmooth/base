@@ -11,9 +11,10 @@ require([ "dojo/ready", "dojo/_base/window", "dojo/store/Memory",
 			"parent" : "treeRoot"
 		}, {
 			"id" : "1.1",
-			"label" : "1.1",
+			"label" : "test",
 			"parent" : "1",
-			"leaf" : "true"
+			"leaf" : "true",
+			"url":"app/center/test/test.html"
 		}, {
 			"id" : "1.2",
 			"label" : "1.2",
