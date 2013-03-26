@@ -36,7 +36,7 @@ html,body {
 		</div>
 		<div data-dojo-type="dijit/layout/ContentPane"
 			data-dojo-props="region:'leading', splitter:true"
-			style="width: 300px;" id="leftTree">
+			style="width: 200px;" id="leftTree">
 		</div>
 		<!-- end AccordionContainer -->
 		<div data-dojo-type="dijit/layout/TabContainer"
