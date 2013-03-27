@@ -1,6 +1,6 @@
-require([ "dojo/ready", "dojo/_base/window", "dojo/store/Memory",
-		"dijit/tree/ObjectStoreModel", "dijit/Tree", "dojo/query" ], function(
-		ready, win, Memory, ObjectStoreModel, Tree, query) {
+require(["dojo/store/Memory",
+		"dijit/tree/ObjectStoreModel", "dijit/Tree", "dojo/query"], function(
+		  Memory, ObjectStoreModel, Tree, query) {
 	var myStore = new Memory({
 		data : [ {
 			"id" : "treeRoot",
@@ -58,7 +58,7 @@ require([ "dojo/ready", "dojo/_base/window", "dojo/store/Memory",
 			return !item.leaf;
 		}
 	});
-	ready(function() {
+	dojo.ready(function() {
 		var tree = new Tree({
 			model : myModel,
 			showRoot : false,
@@ -76,8 +76,18 @@ require([ "dojo/ready", "dojo/_base/window", "dojo/store/Memory",
 					console.log('item clicked'+item);
 					var eventStr = item.label;
 					console.log(eventStr);
+					this.addTab('test');
 				}
 				
+			},
+			addTab:function(name) {
+			    var pane = new dijit.layout.ContentPane({
+			        title: name,
+			        closable:true,
+			        content: "<h4>" + name + "</h4>"
+			    });
+			    // add the new pane to our contentTabs widget
+			    dijit.registry.byId("contentTabs").addChild(pane);
 			},
 			onDblClick : function(item, node, evt) {
 				var eventStr = item['onDblClick'];

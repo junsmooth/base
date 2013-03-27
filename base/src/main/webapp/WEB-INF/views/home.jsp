@@ -39,15 +39,11 @@ html,body {
 			style="width: 200px;" id="leftTree">
 		</div>
 		<!-- end AccordionContainer -->
-		<div data-dojo-type="dijit/layout/TabContainer"
+		<div id="contentTabs" data-dojo-type="dijit/layout/TabContainer"
 			data-dojo-props="region:'center', tabStrip:true">
 			<div data-dojo-type="dijit/layout/ContentPane" title="My first tab"
 				selected="true">Lorem ipsum and all around...</div>
-			<div data-dojo-type="dijit/layout/ContentPane" title="My second tab">
-				Lorem ipsum and all around - second...</div>
-			<div data-dojo-type="dijit/layout/ContentPane"
-				data-dojo-props="closable:true" title="My last tab">Lorem
-				ipsum and all around - last...</div>
+			
 		</div>
 		<!-- end TabContainer -->
 	</div>
