@@ -13,12 +13,13 @@ require([ "dojo/store/Memory", "dijit/tree/ObjectStoreModel", "dijit/Tree",
 			"label" : "test",
 			"parent" : "1",
 			"leaf" : "true",
-			"url" : "app/center/test/test.html"
+			"url" : "test/info"
 		}, {
 			"id" : "1.2",
 			"label" : "1.2",
 			"parent" : "1",
-			"leaf" : "true"
+			"leaf" : "true",
+			"url":"test/info"
 		}, {
 			"id" : "2",
 			"label" : "权限管理",
@@ -76,11 +77,13 @@ require([ "dojo/store/Memory", "dijit/tree/ObjectStoreModel", "dijit/Tree",
 					console.log('item clicked' + item);
 					var eventStr = item.label;
 					console.log(eventStr);
-					this.addTab('test');
+					this.addTab(item);
 				}
 
 			},
-			addTab : function(name) {
+			addTab : function(item) {
+				var name=item.label;
+				var url=item.url;
 				var tabs = dijit.registry.byId("contentTabs");
 				var p=dijit.registry.byId(name);
 				if(p){
@@ -91,7 +94,7 @@ require([ "dojo/store/Memory", "dijit/tree/ObjectStoreModel", "dijit/Tree",
 					id : name,
 					title : name,
 					closable : true,
-					href : "test/info"
+					href : url
 				});
 				// add the new pane to our contentTabs widget
 				tabs.addChild(pane);
