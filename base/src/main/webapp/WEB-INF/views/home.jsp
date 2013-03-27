@@ -3,8 +3,10 @@
 <head>
 <title>Blasting Management System</title>
 
-<link rel="stylesheet" href="resources/dijit/themes/claro/claro.css"
-	media="screen">
+<link rel="stylesheet" href="resources/dijit/themes/claro/claro.css">
+<link rel="stylesheet" href="resources/dijit/themes/tundra/tundra.css">
+<link rel="stylesheet" href="resources/dijit/themes/soria/soria.css">
+<link rel="stylesheet" href="resources/dijit/themes/nihilo/nihilo.css">
 	<style type="text/css">
 html,body {
 	width: 100%;
@@ -22,17 +24,19 @@ html,body {
 	<script type="text/javascript" src="resources/dojo/dojo.js"
 		data-dojo-config="async:true"></script>
 	<script type="text/javascript" src="resources/app.js"></script>
-	<script type="text/javascript" src="resources/app/head/head.js"></script>
+
 	<script type="text/javascript" src="resources/app/left/left.js"></script>
 </head>
-<body class="claro">
+<body class="soria">
 	<div data-dojo-type="dijit/layout/BorderContainer"
 		data-dojo-props="gutters:true, liveSplitters:false"
 		id="boderContainer">
 		<div data-dojo-type="dijit/layout/ContentPane"
 			data-dojo-props="region:'top', splitter:false" style="height: 50px;"
 			align="">
-			<span data-dojo-type="FancyCounter">Place Holder</span>
+			<span data-dojo-type="FancyCounter">
+			<script>require(["app/head/head.js"]);</script>
+			</span>
 		</div>
 		<div data-dojo-type="dijit/layout/ContentPane"
 			data-dojo-props="region:'leading', splitter:true"

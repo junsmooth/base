@@ -84,10 +84,12 @@ require(["dojo/store/Memory",
 			    var pane = new dijit.layout.ContentPane({
 			        title: name,
 			        closable:true,
-			        content: "<h4>" + name + "</h4>"
+			        href:"test/info"
 			    });
 			    // add the new pane to our contentTabs widget
-			    dijit.registry.byId("contentTabs").addChild(pane);
+			    var tabs=dijit.registry.byId("contentTabs");
+			    tabs.addChild(pane);
+			    tabs.selectChild(pane);
 			},
 			onDblClick : function(item, node, evt) {
 				var eventStr = item['onDblClick'];
