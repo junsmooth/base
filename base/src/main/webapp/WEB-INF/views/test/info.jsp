@@ -9,12 +9,12 @@
 <body>
 	<span data-dojo-type="dijit.Toolbar"> <input type="button"
 		data-dojo-type="dijit.form.Button" tabIndex="-1"
-		intermediateChanges="false" label="Button 1" iconClass="dijitNoIcon"></input>
+		intermediateChanges="false" label="Button 1" iconClass="dijitEditorIconCut"></input>
 		<input type="button" data-dojo-type="dijit.form.Button" tabIndex="-1"
-		intermediateChanges="false" label="Button 2" iconClass="dijitNoIcon"
+		intermediateChanges="false" label="Button 2" iconClass="dijitEditorIcon"
 		onclick="test();"></input> <input type="button"
 		data-dojo-type="dijit.form.Button" tabIndex="-1"
-		intermediateChanges="false" label="Button 3" iconClass="dijitNoIcon"></input>
+		intermediateChanges="false" label="Button 3" iconClass="dijitEditorIcon"></input>
 	</span>
 	<button data-dojo-type="dijit/form/Button" type="button">
 		Click me too!

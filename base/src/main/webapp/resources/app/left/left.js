@@ -1,6 +1,5 @@
-require(["dojo/store/Memory",
-		"dijit/tree/ObjectStoreModel", "dijit/Tree", "dojo/query"], function(
-		  Memory, ObjectStoreModel, Tree, query) {
+require([ "dojo/store/Memory", "dijit/tree/ObjectStoreModel", "dijit/Tree",
+		"dojo/query" ], function(Memory, ObjectStoreModel, Tree, query) {
 	var myStore = new Memory({
 		data : [ {
 			"id" : "treeRoot",
@@ -14,7 +13,7 @@ require(["dojo/store/Memory",
 			"label" : "test",
 			"parent" : "1",
 			"leaf" : "true",
-			"url":"app/center/test/test.html"
+			"url" : "app/center/test/test.html"
 		}, {
 			"id" : "1.2",
 			"label" : "1.2",
@@ -59,6 +58,7 @@ require(["dojo/store/Memory",
 		}
 	});
 	dojo.ready(function() {
+		var openViewCache={};
 		var tree = new Tree({
 			model : myModel,
 			showRoot : false,
@@ -72,24 +72,31 @@ require(["dojo/store/Memory",
 				return iconStyle;
 			},
 			onClick : function(item, node, evt) {
-				if(item.leaf){
-					console.log('item clicked'+item);
+				if (item.leaf) {
+					console.log('item clicked' + item);
 					var eventStr = item.label;
 					console.log(eventStr);
 					this.addTab('test');
 				}
-				
+
 			},
-			addTab:function(name) {
-			    var pane = new dijit.layout.ContentPane({
-			        title: name,
-			        closable:true,
-			        href:"test/info"
-			    });
-			    // add the new pane to our contentTabs widget
-			    var tabs=dijit.registry.byId("contentTabs");
-			    tabs.addChild(pane);
-			    tabs.selectChild(pane);
+			addTab : function(name) {
+				var tabs = dijit.registry.byId("contentTabs");
+				var p=dijit.registry.byId(name);
+				if(p){
+					tabs.selectChild(p);
+					return;
+				}
+				var pane = new dijit.layout.ContentPane({
+					id : name,
+					title : name,
+					closable : true,
+					href : "test/info"
+				});
+				// add the new pane to our contentTabs widget
+				tabs.addChild(pane);
+				tabs.selectChild(pane);
+				
 			},
 			onDblClick : function(item, node, evt) {
 				var eventStr = item['onDblClick'];

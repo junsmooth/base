@@ -3,10 +3,11 @@
 <head>
 <title>Blasting Management System</title>
 
-<link rel="stylesheet" href="resources/dijit/themes/claro/claro.css">
+<!-- <link rel="stylesheet" href="resources/dijit/themes/claro/claro.css">
 <link rel="stylesheet" href="resources/dijit/themes/tundra/tundra.css">
+<link rel="stylesheet" href="resources/dijit/themes/nihilo/nihilo.css"> -->
 <link rel="stylesheet" href="resources/dijit/themes/soria/soria.css">
-<link rel="stylesheet" href="resources/dijit/themes/nihilo/nihilo.css">
+
 	<style type="text/css">
 html,body {
 	width: 100%;
