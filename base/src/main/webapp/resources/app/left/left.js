@@ -1,45 +1,8 @@
 require([ "dojo/store/Memory", "dijit/tree/ObjectStoreModel", "dijit/Tree",
-		"dojo/query" ], function(Memory, ObjectStoreModel, Tree, query) {
-	var myStore = new Memory({
-		data : [ {
-			"id" : "treeRoot",
-			"label" : "Root"
-		}, {
-			"id" : "1",
-			"label" : "系统管理",
-			"parent" : "treeRoot"
-		}, {
-			"id" : "1.1",
-			"label" : "test",
-			"parent" : "1",
-			"leaf" : "true",
-			"url" : "test/info"
-		}, {
-			"id" : "1.2",
-			"label" : "1.2",
-			"parent" : "1",
-			"leaf" : "true",
-			"url":"test/info"
-		}, {
-			"id" : "2",
-			"label" : "权限管理",
-			"parent" : "treeRoot"
-		}, {
-			"id" : "2.1",
-			"label" : "2.1",
-			"parent" : "2",
-			"leaf" : "true"
-		}, {
-			"id" : "2.2",
-			"label" : "2.2",
-			"parent" : "2",
-			"leaf" : "true"
-		}, {
-			"id" : "2.3",
-			"label" : "2.3",
-			"parent" : "2",
-			"leaf" : "true"
-		} ],
+		"dojo/query", "dojo/store/JsonRest" ], function(Memory,
+		ObjectStoreModel, Tree, query, JsonRest) {
+	var myStore = new JsonRest({
+		target : "menu",
 		getChildren : function(item) {
 			return this.query({
 				parent : this.getIdentity(item)
@@ -50,27 +13,26 @@ require([ "dojo/store/Memory", "dijit/tree/ObjectStoreModel", "dijit/Tree",
 	// Create the model
 	var myModel = new ObjectStoreModel({
 		store : myStore,
-		labelAttr : "label",
+		labelAttr : "text",
 		query : {
-			id : 'treeRoot'
+			id : 'root'
 		},
 		mayHaveChildren : function(item) {
 			return !item.leaf;
 		}
 	});
 	dojo.ready(function() {
-		var openViewCache={};
+		var openViewCache = {};
 		var tree = new Tree({
 			model : myModel,
 			showRoot : false,
-			openOnClick: true,
+			openOnClick : true,
 			// childrenAttr:"children",
 			getIconStyle : function(item, opened) {
 				var iconStyle = item.iconStyle;
 				if (opened && item.iconStyleOpen) {
 					iconStyle = item.iconStyleOpen;
 				}
-				;
 				return iconStyle;
 			},
 			onClick : function(item, node, evt) {
@@ -83,11 +45,11 @@ require([ "dojo/store/Memory", "dijit/tree/ObjectStoreModel", "dijit/Tree",
 
 			},
 			addTab : function(item) {
-				var name=item.label;
-				var url=item.url;
+				var name = item.text;
+				var url = item.url;
 				var tabs = dijit.registry.byId("contentTabs");
-				var p=dijit.registry.byId(name);
-				if(p){
+				var p = dijit.registry.byId(name);
+				if (p) {
 					tabs.selectChild(p);
 					return;
 				}
@@ -100,7 +62,7 @@ require([ "dojo/store/Memory", "dijit/tree/ObjectStoreModel", "dijit/Tree",
 				// add the new pane to our contentTabs widget
 				tabs.addChild(pane);
 				tabs.selectChild(pane);
-				
+
 			},
 			onDblClick : function(item, node, evt) {
 				var eventStr = item['onDblClick'];

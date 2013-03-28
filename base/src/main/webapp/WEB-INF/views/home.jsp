@@ -1,62 +1,19 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-<title>Blasting Management System</title>
-
-<!-- <link rel="stylesheet" href="resources/dijit/themes/claro/claro.css">
-<link rel="stylesheet" href="resources/dijit/themes/tundra/tundra.css">
-<link rel="stylesheet" href="resources/dijit/themes/nihilo/nihilo.css"> -->
-<link rel="stylesheet" href="resources/dijit/themes/soria/soria.css">
-
-	<style type="text/css">
-html,body {
-	width: 100%;
-	height: 100%;
-	margin: 0;
-	overflow: hidden;
-}
-
-#boderContainer {
-	width: 100%;
-	height: 100%;
-}
-</style>
-	<script>dojoConfig = {parseOnLoad: true}</script>
-	<script type="text/javascript" src="resources/dojo/dojo.js"
-		data-dojo-config="async:true"></script>
-	<script type="text/javascript" src="resources/app.js"></script>
-
-	<script type="text/javascript" src="resources/app/left/left.js"></script>
+	<meta charset="UTF-8">
+	<title>Full Layout - jQuery EasyUI Demo</title>
+	<link rel="stylesheet" type="text/css" href="resources/themes/metro-red/easyui.css">
+	<link rel="stylesheet" type="text/css" href="resources/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="resources/demo.css">
+	<script type="text/javascript" src="resources/jquery-1.8.0.min.js"></script>
+	<script type="text/javascript" src="resources/jquery.easyui.min.js"></script>
 </head>
-<body class="soria">
-	<div data-dojo-type="dijit/layout/BorderContainer"
-		data-dojo-props="gutters:true, liveSplitters:false"
-		id="boderContainer">
-		<div data-dojo-type="dijit/layout/ContentPane"
-			data-dojo-props="region:'top', splitter:false" style="height: 50px;"
-			align="">
-			<span data-dojo-type="FancyCounter">
-			<script>require(["app/head/head.js"]);</script>
-			</span>
-		</div>
-		<div data-dojo-type="dijit/layout/ContentPane"
-			data-dojo-props="region:'leading', splitter:true"
-			style="width: 200px;" id="leftTree">
-		</div>
-		<!-- end AccordionContainer -->
-		<div id="contentTabs" data-dojo-type="dijit/layout/TabContainer"
-			data-dojo-props="region:'center', tabStrip:true">
-			<div data-dojo-type="dijit/layout/ContentPane" title="My first tab"
-				selected="true">Lorem ipsum and all around...</div>
-			
-		</div>
-		<!-- end TabContainer -->
-	</div>
-	<!-- end BorderContainer -->
-
-
-
-
-
+<body class="easyui-layout">
+	<div data-options="region:'north',border:false" style="height:60px;padding:10px">north region</div>
+	<div data-options="region:'west',split:true,title:'West'" style="width:150px;padding:10px;">west content</div>
+	<div data-options="region:'east',split:true,collapsed:true,title:'East'" style="width:100px;padding:10px;">east region</div>
+	<div data-options="region:'south',border:false" style="height:50px;padding:10px;">south region</div>
+	<div data-options="region:'center',title:'Center'"></div>
 </body>
 </html>
