@@ -63,6 +63,7 @@ require([ "dojo/store/Memory", "dijit/tree/ObjectStoreModel", "dijit/Tree",
 		var tree = new Tree({
 			model : myModel,
 			showRoot : false,
+			openOnClick: true,
 			// childrenAttr:"children",
 			getIconStyle : function(item, opened) {
 				var iconStyle = item.iconStyle;
