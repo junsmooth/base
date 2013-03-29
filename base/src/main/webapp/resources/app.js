@@ -23,20 +23,24 @@ function InitLeftMenu() {
 	// $(".easyui-accordion").empty();
 	var menulist = "";
 	
-	$.getJSON("menu",
-					{parent : 0},function(data, textStatus) {
-						for ( var i = 0; i < data.length; i++) {
-							menulist += '<div title="' + data[i].text
-									+ '"</div>';
-							$("#accordion-menus").accordion('add',{
-												title : data[i].text,
-												iconCls : "icon-save",
-												content : '<ul><li>AAAAAAA</li></ul>',
-												selected : false
-											});
-						}
-					})
-				
+//	$.getJSON("menu",
+//					{parent : 0},function(data, textStatus) {
+//						for ( var i = 0; i < data.length; i++) {
+//							menulist += '<div title="' + data[i].text
+//									+ '"</div>';
+//							$("#accordion-menus").accordion('add',{
+//												title : data[i].text,
+//												iconCls : "icon-save",
+//												content : '<ul><li>AAAAAAA</li></ul>',
+//												selected : false
+//											});
+//						}
+//					})
+	
+	$('#treemenu').tree({
+		url:"menu"
+		
+	});
 	
 }
 

@@ -38,9 +38,7 @@
       </span>
     </div>
     <div data-options="region:'west',split:true,title:'导航菜单'" style="width: 150px; padding: 10px;">
-      <div id="accordion-menus" class="easyui-accordion" fit="true" border="false">
-        <!--  导航内容 -->
-      </div>
+      <ul id="treemenu"></ul>
     </div>
     <!--
       <div data-options="region:'east',split:true,collapsed:true,title:'East'" style="width: 100px; padding: 10px;">east
