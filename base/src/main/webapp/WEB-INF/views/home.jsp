@@ -6,11 +6,13 @@
     <title>
       Full Layout - jQuery EasyUI Demo
     </title>
-    <link rel="stylesheet" type="text/css" href="resources/themes/metro-red/easyui.css">
+    <link rel="stylesheet" type="text/css" href="resources/themes/metro-blue/easyui.css">
     <link rel="stylesheet" type="text/css" href="resources/themes/icon.css">
     <script type="text/javascript" src="resources/jquery-1.8.0.min.js">
     </script>
     <script type="text/javascript" src="resources/jquery.easyui.min.js">
+    </script>
+     <script type="text/javascript" src="resources/locale/easyui-lang-zh_CN.js">
     </script>
     <script type="text/javascript" src="resources/app.js">
     </script>
@@ -36,7 +38,7 @@
       </span>
     </div>
     <div data-options="region:'west',split:true,title:'导航菜单'" style="width: 150px; padding: 10px;">
-      <div class="easyui-accordion" fit="true" border="false">
+      <div id="accordion-menus" class="easyui-accordion" fit="true" border="false">
         <!--  导航内容 -->
       </div>
     </div>

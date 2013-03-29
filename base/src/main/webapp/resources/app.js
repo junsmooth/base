@@ -1,42 +1,43 @@
 $(function() {
-	// InitLeftMenu();
+	InitLeftMenu();
 	tabClose();
 	tabCloseEven();
+	registryLogout();
+
 })
+function registryLogout() {
+	$('#loginOut').click(function() {
+		$.messager.confirm('系统提示', '您确定要退出本次登录吗?', function(r) {
+
+			if (r) {
+				location.href = '/ajax/loginout.ashx';
+			}
+		});
+
+	})
+}
 // Download by http://www.codefans.net
 // 初始化左侧
 function InitLeftMenu() {
 
-	$(".easyui-accordion").empty();
+	// $(".easyui-accordion").empty();
 	var menulist = "";
-
-	$.each(_menus.menus, function(i, n) {
-		menulist += '<div title="' + n.menuname + '"  icon="' + n.icon
-				+ '" style="overflow:auto;">';
-		menulist += '<ul>';
-		$.each(n.menus, function(j, o) {
-			menulist += '<li><div><a target="mainFrame" href="' + o.url
-					+ '" ><span class="icon ' + o.icon + '" ></span>'
-					+ o.menuname + '</a></div></li> ';
-		})
-		menulist += '</ul></div>';
-	})
-
-	$(".easyui-accordion").append(menulist);
-
-	$('.easyui-accordion li a').click(function() {
-		var tabTitle = $(this).text();
-		var url = $(this).attr("href");
-		addTab(tabTitle, url);
-		$('.easyui-accordion li div').removeClass("selected");
-		$(this).parent().addClass("selected");
-	}).hover(function() {
-		$(this).parent().addClass("hover");
-	}, function() {
-		$(this).parent().removeClass("hover");
-	});
-
-	$(".easyui-accordion").accordion();
+	
+	$.getJSON("menu",
+					{parent : 0},function(data, textStatus) {
+						for ( var i = 0; i < data.length; i++) {
+							menulist += '<div title="' + data[i].text
+									+ '"</div>';
+							$("#accordion-menus").accordion('add',{
+												title : data[i].text,
+												iconCls : "icon-save",
+												content : '<ul><li>AAAAAAA</li></ul>',
+												selected : false
+											});
+						}
+					})
+				
+	
 }
 
 function addTab(subtitle, url) {
