@@ -47,6 +47,7 @@ public class MenuController {
 				map.put("id",m.getId());
 				map.put("text", m.getText());
 				map.put("state","closed");
+				map.put("attributes",m);
 				result.add(map);
 			}
 			System.out.println(id);

@@ -38,7 +38,11 @@ function InitLeftMenu() {
 //					})
 	
 	$('#treemenu').tree({
-		url:"menu"
+		url:"menu",
+		onClick:function(node){
+			console.log(node);
+			addTab(node.text,"http://www.baidu.com");
+		}
 		
 	});
 	
