@@ -14,7 +14,7 @@ public interface ICommonDao {
 	public <T> T get(Class<T> entityName, Serializable id);
 	public <T> T findUniqueByProperty(Class<T> entityClass, String propertyName, Object value);
 	public <T> T findUniqueBy(Class<T> entityClass, String propertyName, Object value);
-	public <T> T findByCriterions(Class<T> entityClass,Criterion... criterions);
+	public <T> List<T> findByCriterions(Class<T> entityClass,Criterion... criterions);
 	
 	public <T> List<T> findByProperty(Class<T> entityClass, String propertyName, Object value);
 	public <T> List<T> loadAll(final Class<T> entityClass);

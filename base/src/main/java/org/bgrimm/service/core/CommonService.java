@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
+import org.hibernate.criterion.Criterion;
+
 
 
 public interface CommonService {
@@ -40,6 +42,7 @@ public interface CommonService {
 	 * @param value
 	 * @return
 	 */
+	public <T> List<T> findByCriterion(Class<T> entityCls,Criterion... criterions);
 	public <T> T findUniqueByProperty(Class<T> entityClass, String propertyName, Object value);
 	public <T> List<T> findByProperty(Class<T> entityClass,String propertyName, Object value);
 	public <T> List<T> loadAll(final Class<T> entityClass);

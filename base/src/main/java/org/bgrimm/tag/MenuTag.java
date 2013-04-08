@@ -12,7 +12,6 @@ import org.bgrimm.domain.core.TMenu;
 public class MenuTag extends TagSupport {
 	private static final long serialVersionUID = 5235848893919233497L;
 	private List<TMenu> parentMenus;
-	private List<TMenu> childMenus;
 
 	public List<TMenu> getParentMenus() {
 		return parentMenus;
@@ -20,14 +19,6 @@ public class MenuTag extends TagSupport {
 
 	public void setParentMenus(List<TMenu> parentMenus) {
 		this.parentMenus = parentMenus;
-	}
-
-	public List<TMenu> getChildMenus() {
-		return childMenus;
-	}
-
-	public void setChildMenus(List<TMenu> childMenus) {
-		this.childMenus = childMenus;
 	}
 
 	@Override
@@ -58,8 +49,12 @@ sb.append(createMenus());
 	public String createMenus() {
 		StringBuffer menuString = new StringBuffer();
 		for (TMenu pMenu : parentMenus) {
-			menuString.append("<div  title=\"" + pMenu.getMenuName()
-					+ "\" iconCls=\"" + pMenu.getIcon().getIconCls() + "\">");
+			String title=pMenu.getMenuName();
+			String iconCls=pMenu.getIcon()==null?"":pMenu.getIcon().getIconCls();
+			
+			
+			menuString.append("<div  title=\"" +title
+					+ "\" iconCls=\"" + iconCls + "\">");
 			int submenusize = pMenu.getSubMenus().size();
 			if (submenusize == 0) {
 				menuString.append("</div>");
@@ -67,7 +62,7 @@ sb.append(createMenus());
 			if (submenusize > 0) {
 				menuString.append("<ul>");
 			}
-			for (TMenu sMenu : childMenus) {
+			for (TMenu sMenu : pMenu.getSubMenus()) {
 
 				if (sMenu.getParentMenu().getId() == pMenu.getId()) {
 					String icon = "folder";

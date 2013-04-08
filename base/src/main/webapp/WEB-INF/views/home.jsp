@@ -6,7 +6,7 @@
     <title>
       jQuery EasyUI Demo
     </title>
-    <link rel="stylesheet" type="text/css" href="resources/themes/metro-red/easyui.css">
+    <link rel="stylesheet" type="text/css" href="resources/themes/metro/easyui.css">
     <link rel="stylesheet" type="text/css" href="resources/themes/icon.css">
     <script type="text/javascript" src="resources/jquery-1.8.0.min.js">
     </script>

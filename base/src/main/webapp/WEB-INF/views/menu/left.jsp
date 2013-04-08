@@ -3,5 +3,5 @@
 <%@ taglib prefix="t" uri="/easyui-tags"%>
 <script type="text/javascript" src="resources/app.js">
 </script>
- <t:menu parentMenus="${parentMenus}" childMenus="${childMenus}"></t:menu>
+ <t:menu parentMenus="${parentMenus}"></t:menu>
 

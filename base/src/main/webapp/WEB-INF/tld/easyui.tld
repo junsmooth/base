@@ -25,11 +25,5 @@
 			<rtexprvalue>true</rtexprvalue>
 			<description>一级菜单</description>
 		</attribute>
-		<attribute>
-			<name>childMenus</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-			<description>二级菜单</description>
-		</attribute>
 	</tag>
 </taglib>

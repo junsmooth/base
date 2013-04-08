@@ -166,8 +166,8 @@ public class CommonDao implements ICommonDao {
 				Restrictions.eq(propertyName, value)).uniqueResult();
 	}
 
-	public <T> T findByCriterions(Class<T> entityClass, Criterion... criterions) {
-		return (T) createCriteria(entityClass, criterions).list();
+	public <T> List<T> findByCriterions(Class<T> entityClass, Criterion... criterions) {
+		return (List<T>) createCriteria(entityClass, criterions).list();
 	}
 
 	public <T> void saveOrUpdate(T entity) {

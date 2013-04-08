@@ -3,13 +3,10 @@ package org.bgrimm.service.core.impl;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
 
 import org.bgrimm.dao.core.ICommonDao;
 import org.bgrimm.service.core.CommonService;
+import org.hibernate.criterion.Criterion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -95,6 +92,10 @@ public class CommonServiceImpl implements CommonService {
 		return commonDao.findByProperty(entityClass, propertyName, value);
 	}
 
+	public <T> List<T> findByCriterion(Class<T> entityCls,Criterion... criterions){
+		return commonDao.findByCriterions(entityCls, criterions);
+	}
+	
 	/**
 	 * 加载全部实体
 	 * 
