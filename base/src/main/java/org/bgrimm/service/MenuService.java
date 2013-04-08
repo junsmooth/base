@@ -3,7 +3,7 @@ package org.bgrimm.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bgrimm.domain.Menu;
+import org.bgrimm.domain.core.TMenu;
 import org.bgrimm.persistence.MenuDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,13 +27,13 @@ public class MenuService {
 		return list;
 	}
 
-	public List<Menu> getMainMenus() {
-		List<Menu> allMainMenus = menuDao.getMenusByParentId(0);
+	public List<TMenu> getMainMenus() {
+		List<TMenu> allMainMenus = menuDao.getMenusByParentId(0);
 		return allMainMenus;
 	}
 
-	public List<Menu> getSubMenus(int id) {
-		List<Menu> subMenus = menuDao.getMenusByParentId(id);
+	public List<TMenu> getSubMenus(int id) {
+		List<TMenu> subMenus = menuDao.getMenusByParentId(id);
 		return subMenus;
 	}
 

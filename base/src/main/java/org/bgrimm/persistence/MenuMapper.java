@@ -2,9 +2,9 @@ package org.bgrimm.persistence;
 
 import java.util.List;
 
-import org.bgrimm.domain.Menu;
+import org.bgrimm.domain.core.TMenu;
 
 public interface MenuMapper {
 
-	List<Menu> getMenusByParentId(int parent);
+	List<TMenu> getMenusByParentId(int parent);
 }

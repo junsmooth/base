@@ -2,7 +2,7 @@ package org.bgrimm.persistence;
 
 import java.util.List;
 
-import org.bgrimm.domain.Menu;
+import org.bgrimm.domain.core.TMenu;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -24,9 +24,9 @@ public class MenuDao {
 	private MessageSource message;
 
 	@Transactional
-	public List<Menu> getMenusByParentId(int pid) {
+	public List<TMenu> getMenusByParentId(int pid) {
 		Session session = sessionFactory.getCurrentSession();
-		Criteria c = session.createCriteria(Menu.class);
+		Criteria c = session.createCriteria(TMenu.class);
 		Criterion cron = null;
 		if (pid == 0) {
 			cron = Restrictions.isNull("parent");
@@ -34,9 +34,9 @@ public class MenuDao {
 			cron = Restrictions.eq("parent.id", pid);
 		}
 		c.add(cron);
-		List<Menu> list = c.list();
-		for (Menu m : list) {
-			m.setText(message.getMessage("menu."+m.getText(), null, m.getText(), null));
+		List<TMenu> list = c.list();
+		for (TMenu m : list) {
+			//m.setText(message.getMessage("menu."+m.getText(), null, m.getText(), null));
 		}
 		return list;
 

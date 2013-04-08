@@ -2,11 +2,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <title>
-      Full Layout - jQuery EasyUI Demo
+      jQuery EasyUI Demo
     </title>
-    <link rel="stylesheet" type="text/css" href="resources/themes/metro-blue/easyui.css">
+    <link rel="stylesheet" type="text/css" href="resources/themes/metro-red/easyui.css">
     <link rel="stylesheet" type="text/css" href="resources/themes/icon.css">
     <script type="text/javascript" src="resources/jquery-1.8.0.min.js">
     </script>
@@ -14,8 +14,7 @@
     </script>
      <script type="text/javascript" src="resources/locale/easyui-lang-zh_CN.js">
     </script>
-    <script type="text/javascript" src="resources/app.js">
-    </script>
+    
   </head>
   <body class="easyui-layout">
     <div 
@@ -37,22 +36,25 @@
         管理信息系统
       </span>
     </div>
-    <div data-options="region:'west',split:true,title:'导航菜单'" style="width: 150px; padding: 10px;">
-      <ul id="treemenu"></ul>
+    <div href="menu/left" data-options="region:'west',split:true,title:'导航菜单'" style="width: 150px; padding: 1px;">
+      
     </div>
     <!--
       <div data-options="region:'east',split:true,collapsed:true,title:'East'" style="width: 100px; padding: 10px;">east
       region</div>
     -->
     <div data-options="region:'south',border:false" style="height: 30px; padding: 10px;">
-      south region
+      <div align="center" style="color: #CC99FF; padding-top: 2px">
+    &copy; 版权所有
+     <span class="tip"><a href="http://www.bgrimm.com" title="BGRIMM SYSTEM">北京矿冶研究总院</a> (推荐谷歌浏览器，获得更快响应速度)  </span>
+   </div>
     </div>
     <div data-options="region:'center'">
       <div id="tabs" class="easyui-tabs" fit="true" border="false">
         <div title="欢迎使用" style="padding: 20px; overflow: hidden;" id="home">
 
           <h1>
-            Welcome to jQuery UI!
+            Welcome to EasyUI!
           </h1>
 
         </div>
