@@ -41,7 +41,7 @@ public class MenuTag extends TagSupport {
 	public StringBuffer end() {
 		StringBuffer sb = new StringBuffer();
 		sb.append("<div id=\"nav\" class=\"easyui-accordion\" fit=\"true\" border=\"false\">");
-sb.append(createMenus());
+		sb.append(createMenus());
 		sb.append("</div>");
 		return sb;
 	}
@@ -49,12 +49,12 @@ sb.append(createMenus());
 	public String createMenus() {
 		StringBuffer menuString = new StringBuffer();
 		for (TMenu pMenu : parentMenus) {
-			String title=pMenu.getMenuName();
-			String iconCls=pMenu.getIcon()==null?"":pMenu.getIcon().getIconCls();
-			
-			
-			menuString.append("<div  title=\"" +title
-					+ "\" iconCls=\"" + iconCls + "\">");
+			String title = pMenu.getMenuName();
+			String iconCls = pMenu.getIcon() == null ? "folder" : pMenu
+					.getIcon().getIconCls();
+
+			menuString.append("<div  title=\"" + title + "\" iconCls=\""
+					+ iconCls + "\">");
 			int submenusize = pMenu.getSubMenus().size();
 			if (submenusize == 0) {
 				menuString.append("</div>");
@@ -65,18 +65,14 @@ sb.append(createMenus());
 			for (TMenu sMenu : pMenu.getSubMenus()) {
 
 				if (sMenu.getParentMenu().getId() == pMenu.getId()) {
-					String icon = "folder";
+					String icon = "pictures";
 					if (sMenu.getIcon() != null) {
 						icon = sMenu.getIcon().getIconCls();
 					}
 					// menuString.append("<li><div> <a class=\""+function.getFunctionName()+"\" iconCls=\""+icon+"\" target=\"tabiframe\"  href=\""+function.getFunctionUrl()+"\"> <span class=\"icon "+icon+"\" >&nbsp;</span> <span class=\"nav\">"+function.getFunctionName()+"</span></a></div></li>");
-					menuString.append("<li><div onclick=\"addTab(\'"
-							+ sMenu.getMenuName() + "\',\'" + sMenu.getUrl()
-							+ "\',\'" + icon + "\')\"  title=\""
+					menuString.append("<li><div  title=\""
 							+ sMenu.getMenuName() + "\" url=\""
-							+ sMenu.getUrl() + "\" iconCls=\"" + icon
-							+ "\"> <a class=\"" + sMenu.getMenuName()
-							+ "\" href=\"#\" > <span class=\"icon " + icon
+							+ sMenu.getUrl() + "\" iconCls=\""+icon+"\"> <a  href=\"#\" > <span class=\"icon " + icon
 							+ "\" >&nbsp;</span> <span class=\"nav\" >"
 							+ sMenu.getMenuName() + "</span></a></div></li>");
 				}

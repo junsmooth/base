@@ -19,22 +19,34 @@ function registryLogout() {
 // Download by http://www.codefans.net
 // 初始化左侧
 function InitLeftMenu() {
-
-	// $(".easyui-accordion").empty();
-	var menulist = "";
+	$('.easyui-accordion li div').click(function() {
+		var tabTitle = $(this).attr("title");
+		var url = $(this).attr("url");
+		var icon = $(this).attr("iconCls");
+		addTab(tabTitle, url, icon);
+		$('.easyui-accordion li div').removeClass("selected");
+		$(this).parent().addClass("selected");
+	}).hover(function() {
+		$(this).parent().addClass("hover");
+	}, function() {
+		$(this).parent().removeClass("hover");
+	});
+	
+	
 	
 	
 	
 }
 
-function addTab(subtitle, url) {
+function addTab(subtitle, url,icon) {
 	if (!$('#tabs').tabs('exists', subtitle)) {
 		$('#tabs').tabs('add', {
 			title : subtitle,
-			content : createFrame(url),
-			closable : true,
-			width : $('#mainPanle').width() - 10,
-			height : $('#mainPanle').height() - 26
+			//content : createFrame(url),
+			href:url,
+			icon:"icon " +icon,
+			closable : true
+
 		});
 	} else {
 		$('#tabs').tabs('select', subtitle);
