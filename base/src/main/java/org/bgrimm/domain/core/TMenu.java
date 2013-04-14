@@ -16,9 +16,9 @@ public class TMenu extends IdEntity implements java.io.Serializable {
 	@Column(name="menuname",nullable = false, length = 50)
 	private String menuName;
 	private String url;
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "parentMenu")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "parentMenu")
 	private List<TMenu> subMenus;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "iconid")
 	private TIcon icon;
 	@ManyToOne
@@ -74,5 +74,16 @@ public class TMenu extends IdEntity implements java.io.Serializable {
 	public void setParentMenu(TMenu parentMenu) {
 		this.parentMenu = parentMenu;
 	}
+
+	@Override
+	public String toString() {
+		return super.toString()+"TMenu [menuName=" + menuName + ", url=" + url + ", subMenus="
+				+ subMenus + ", icon=" + icon + ", parentMenu=" + (parentMenu!=null?parentMenu.getId():"")
+				+ ", menuOrder=" + menuOrder + "]";
+	}
+
+
+
+	
 
 }

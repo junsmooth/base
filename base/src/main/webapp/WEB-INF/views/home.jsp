@@ -6,10 +6,12 @@
     <title>
       jQuery EasyUI Demo
     </title>
-    <link rel="stylesheet" type="text/css" href="resources/themes/metro/easyui.css">
+    <link rel="stylesheet" type="text/css" href="resources/themes/metro-blue/easyui.css">
     <link rel="stylesheet" type="text/css" href="resources/themes/icon.css">
      <link rel="stylesheet" type="text/css" href="resources/custom/css/icon.css">
     <script type="text/javascript" src="resources/jquery-1.8.0.min.js">
+    </script>
+       <script type="text/javascript" src="resources/lhgdialog.min.js">
     </script>
     <script type="text/javascript" src="resources/jquery.easyui.min.js">
     </script>
@@ -37,7 +39,7 @@
         管理信息系统
       </span>
     </div>
-    <div href="menu/left" data-options="region:'west',split:true,title:'导航菜单'" style="width: 150px; padding: 1px;">
+    <div id="leftDiv" href="menu/left" data-options="region:'west',split:true,title:'导航菜单'" style="width: 150px; padding: 1px;">
       
     </div>
     <!--
@@ -88,4 +90,9 @@
       </div>
     </div>
   </body>
+  <script>
+  function freshLeftMenu(){
+  	$('#leftDiv').panel('refresh');
+  }
+  </script>
 </html>

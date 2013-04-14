@@ -42,9 +42,8 @@ public class CommonDao implements ICommonDao {
 
 	}
 
-	public <T> T get(Class<T> entityName, Serializable id) {
-		// TODO Auto-generated method stub
-		return null;
+	public <T> T get(Class<T> entityClass, Serializable id) {
+		return (T) getSession().get(entityClass, id);
 	}
 
 	public <T> T findUniqueByProperty(Class<T> entityClass,
@@ -71,7 +70,10 @@ public class CommonDao implements ICommonDao {
 	}
 
 	public <T> void deleteEntityById(Class entityClass, Serializable id) {
-
+		Object obj=get(entityClass, id);
+		System.out.println("ooo"+obj);
+		delete(get(entityClass, id));
+		getSession().flush();
 	}
 
 	public <T> void deleteAllEntitie(Collection<T> entities) {

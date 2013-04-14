@@ -17,4 +17,9 @@ public class IdEntity {
 		this.id = id;
 	}
 
+	@Override
+	public String toString() {
+		return "IdEntity [id=" + id + "]";
+	}
+
 }
