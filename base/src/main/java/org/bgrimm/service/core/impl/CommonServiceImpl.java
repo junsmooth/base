@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.List;
 
 import org.bgrimm.dao.core.ICommonDao;
+import org.bgrimm.domain.core.PageList;
+import org.bgrimm.domain.core.PagedQuery;
 import org.bgrimm.service.core.CommonService;
 import org.hibernate.criterion.Criterion;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -186,14 +188,10 @@ public class CommonServiceImpl implements CommonService {
 		
 	}
 
-	/**
-	 * 
-	 * cq方式分页
-	 * 
-	 * @param cq
-	 * @param isOffset
-	 * @return
-	 */
+	public PageList getPagedList(PagedQuery pq) {
+		return commonDao.getPageList(pq);
+	}
+
 
 
 

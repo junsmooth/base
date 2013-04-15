@@ -3,8 +3,8 @@ package org.bgrimm.controller.core;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.criteria.CriteriaBuilder;
-
+import org.bgrimm.domain.core.PageList;
+import org.bgrimm.domain.core.PagedQuery;
 import org.bgrimm.domain.core.TUser;
 import org.bgrimm.service.RoleService;
 import org.bgrimm.service.core.CommonService;
@@ -18,15 +18,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("user")
 public class UserController {
-	
+
 	@Autowired
 	private CommonService commonService;
-	
+
 	public void setCommonService(CommonService commonService) {
 		this.commonService = commonService;
 	}
+
 	@Autowired
 	private RoleService roleService;
+
 	@RequestMapping("roles")
 	public @ResponseBody
 	Map getRoles() {
@@ -39,12 +41,15 @@ public class UserController {
 	public String list() {
 		return "user/list";
 	}
+
 	@RequestMapping("list/data")
-	public @ResponseBody List userList(@RequestParam int page,@RequestParam int rows){
-		
-		
-		List<TUser> userList=commonService.loadAll(TUser.class);
-		return userList;
+	public @ResponseBody
+	Object userList(@RequestParam int page, @RequestParam int rows) {
+		PagedQuery pq = new PagedQuery(TUser.class, page, rows);
+		PageList pl = commonService.getPagedList(pq);
+		System.out.println(pl.getRows());
+		System.out.println(pl.getTotal());
+		return pl;
 	}
-	
+
 }

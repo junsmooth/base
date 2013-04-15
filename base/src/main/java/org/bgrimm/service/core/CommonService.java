@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
+import org.bgrimm.domain.core.PageList;
+import org.bgrimm.domain.core.PagedQuery;
 import org.hibernate.criterion.Criterion;
 
 
@@ -66,4 +68,5 @@ public interface CommonService {
 	public List findByExample(final String entityName, final Object exampleEntity);
 	public void parserXml(String fileName);
 	
+	public PageList getPagedList(PagedQuery pq);
 }

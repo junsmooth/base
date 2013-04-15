@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import org.bgrimm.domain.core.PageList;
+import org.bgrimm.domain.core.PagedQuery;
 import org.hibernate.criterion.Criterion;
 
 public interface ICommonDao {
@@ -30,6 +32,7 @@ public interface ICommonDao {
 	public <T> List<T> findListbySql(String query);
 	public <T> List<T> findByPropertyisOrder(Class<T> entityClass, String propertyName, Object value, boolean isAsc);
 	public Map<Object,Object> getHashMapbyQuery(String query);
+	public PageList getPageList(PagedQuery pq);
 	
 	
 	

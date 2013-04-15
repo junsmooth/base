@@ -89,11 +89,5 @@
     	 });
     	};
   }
-  },'-',{
-    text:'Refresh',
-    iconCls:'icon-reload',
-  handler:function(){
-  	reload();
-  }
   }];
 </script>

@@ -7,16 +7,24 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.bgrimm.dao.core.ICommonDao;
+import org.bgrimm.domain.core.PageList;
+import org.bgrimm.domain.core.PagedQuery;
+import org.bgrimm.uitls.PagerUtil;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.internal.CriteriaImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
+
 @Repository
 public class CommonDao implements ICommonDao {
 	@Autowired
@@ -70,8 +78,8 @@ public class CommonDao implements ICommonDao {
 	}
 
 	public <T> void deleteEntityById(Class entityClass, Serializable id) {
-		Object obj=get(entityClass, id);
-		System.out.println("ooo"+obj);
+		Object obj = get(entityClass, id);
+		System.out.println("ooo" + obj);
 		delete(get(entityClass, id));
 		getSession().flush();
 	}
@@ -168,7 +176,8 @@ public class CommonDao implements ICommonDao {
 				Restrictions.eq(propertyName, value)).uniqueResult();
 	}
 
-	public <T> List<T> findByCriterions(Class<T> entityClass, Criterion... criterions) {
+	public <T> List<T> findByCriterions(Class<T> entityClass,
+			Criterion... criterions) {
 		return (List<T>) createCriteria(entityClass, criterions).list();
 	}
 
@@ -185,5 +194,25 @@ public class CommonDao implements ICommonDao {
 			throw e;
 		}
 
+	}
+
+	public PageList getPageList(PagedQuery pq) {
+
+		Criteria criteria = pq.getDetachedCriteria().getExecutableCriteria(
+				getSession());
+		CriteriaImpl impl = (CriteriaImpl) criteria;
+		Projection projection = impl.getProjection();
+		final int allCounts = ((Long) criteria.setProjection(
+				Projections.rowCount()).uniqueResult()).intValue();
+		criteria.setProjection(projection);
+		if (projection == null) {
+			criteria.setResultTransformer(CriteriaSpecification.ROOT_ENTITY);
+		}
+		int offset = PagerUtil.getOffset(allCounts, pq.getCurrentPage(),
+				pq.getPageSize());
+		criteria.setFirstResult(offset);
+		criteria.setMaxResults(pq.getPageSize());
+		
+		return new PageList(criteria.list(),allCounts);
 	}
 }
