@@ -1,4 +1,4 @@
-package org.bgrimm.controller;
+package org.bgrimm.controller.core;
 
 import java.util.ArrayList;
 import java.util.HashMap;

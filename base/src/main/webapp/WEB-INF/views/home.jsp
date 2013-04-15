@@ -46,7 +46,7 @@
       <div data-options="region:'east',split:true,collapsed:true,title:'East'" style="width: 100px; padding: 10px;">east
       region</div>
     -->
-    <div data-options="region:'south',border:false" style="height: 30px; padding: 10px;">
+    <div data-options="region:'south',border:false" style="height: 25px;overflow: hidden;">
       <div align="center" style="color: #CC99FF; padding-top: 2px">
     &copy; 版权所有
      <span class="tip"><a href="http://www.bgrimm.com" title="BGRIMM SYSTEM">北京矿冶研究总院</a> (推荐谷歌浏览器，获得更快响应速度)  </span>
