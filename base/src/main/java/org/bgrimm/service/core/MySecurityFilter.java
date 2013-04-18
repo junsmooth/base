@@ -1,5 +1,7 @@
 package org.bgrimm.service.core;
 
+import org.apache.log4j.Logger;
+
 import java.io.IOException;
 
 import javax.servlet.Filter;
@@ -23,6 +25,10 @@ import org.springframework.stereotype.Service;
 @Service("myFilter")
 public class MySecurityFilter extends AbstractSecurityInterceptor implements
 		Filter {
+	/**
+	 * Logger for this class
+	 */
+	private static final Logger logger = Logger.getLogger(MySecurityFilter.class);
 
 	@Autowired
 	@Qualifier("mySecurityMetadataSource")
@@ -39,9 +45,16 @@ public class MySecurityFilter extends AbstractSecurityInterceptor implements
 
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
+		if (logger.isDebugEnabled()) {
+			logger.debug("doFilter(ServletRequest, ServletResponse, FilterChain) - start"); //$NON-NLS-1$
+		}
+
 		FilterInvocation fi = new FilterInvocation(request, response, chain);
 		invoke(fi);
 
+		if (logger.isDebugEnabled()) {
+			logger.debug("doFilter(ServletRequest, ServletResponse, FilterChain) - end"); //$NON-NLS-1$
+		}
 	}
 
 	private void invoke(FilterInvocation fi) throws IOException,
