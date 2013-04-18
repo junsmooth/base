@@ -10,23 +10,25 @@
 	<http pattern="/app/**" security="none"></http>
 	<http pattern="/**/*.jpg" security="none"></http>
 	<!-- exclude login page -->
-	<http pattern="/login" security="none" />
-	<http auto-config='true' />
-	<!-- <http auto-config='true' use-expressions="true">
-		<form-login login-page="/login" login-processing-url="/j_spring_security_check"
-			default-target-url="/" authentication-failure-url="/login?login_error" />
+	<!-- <http pattern="/login" security="none" /> -->
+	<!-- <http auto-config='true' /> -->
+	<http auto-config='true' use-expressions="true">
+		<form-login />
+		<logout />
+		<remember-me />
+		<custom-filter ref="myFilter" before="FILTER_SECURITY_INTERCEPTOR" />
 		<intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
-	</http> -->
+	</http>
 
 
-	<user-service id="userService">
+	<!-- <user-service id="userService">
 		<user name="admin" password="admin" authorities="ROLE_USER,ROLE_ADMIN" />
 		<user name="twoqubed" password="longhorns" authorities="ROLE_USER" />
-		
-	</user-service>
-	<authentication-manager>
-		<authentication-provider user-service-ref="userService"></authentication-provider>
-		<!-- <authentication-provider user-service-ref='myUserDetailsService'> 
+
+	</user-service> -->
+	<authentication-manager alias="myAuthenticationManager">
+	<authentication-provider user-service-ref="myUserDetailServiceImpl" />
+	<!-- <authentication-provider user-service-ref="userService"></authentication-provider> -->		<!-- <authentication-provider user-service-ref='myUserDetailsService'> 
 			<password-encoder hash="md5"> <salt-source system-wide="bgrimm" /> </password-encoder> 
 			</authentication-provider> -->
 	</authentication-manager>

@@ -10,10 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.bgrimm.domain.core.TIcon;
 import org.bgrimm.domain.core.TMenu;
-import org.bgrimm.service.core.CommonService;
+import org.bgrimm.service.core.MenuService;
 import org.bgrimm.uitls.JsonMsg;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,15 +25,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("menu")
 public class MenuController {
 	@Autowired
-	private CommonService commonService;
+	private MenuService menuService;
 
 	@RequestMapping("left")
 	public String left(Model model) {
-		List<TMenu> pMenus = commonService.findByCriterion(TMenu.class,
-				Restrictions.eq("parentMenu.id",1L));
+		List<TMenu> pMenus = menuService.getParentMenus();
 		// Add Security check
 		model.addAttribute("parentMenus", pMenus);
 		return "menu/left";
+	}
+
+	public MenuService getMenuService() {
+		return menuService;
+	}
+
+	public void setMenuService(MenuService menuService) {
+		this.menuService = menuService;
 	}
 
 	@RequestMapping("list")
@@ -41,17 +49,15 @@ public class MenuController {
 	}
 	@RequestMapping("remove")
 	public @ResponseBody JsonMsg remove(@RequestParam long id){
-		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"+id);
-		commonService.deleteEntityById(TMenu.class, id);
+		menuService.removeEntity(id);
 		return JsonMsg.simpleSuccessJson();
 	}
 	
 	
 	@RequestMapping("addOrUpdate")
 	public String addOrUpdate(HttpServletRequest req,Model model) {
-		List<TIcon> iconlist = commonService.loadAll(TIcon.class);
-		List<TMenu> pMenus = commonService.findByCriterion(TMenu.class,
-				Restrictions.eq("parentMenu.id",1L));
+		List<TIcon> iconlist = menuService.getAllIcon();
+		List<TMenu> pMenus = menuService.getParentMenus();
 		model.addAttribute("iconlist", iconlist);
 		List menuList=new ArrayList();
 		for (TMenu menu : pMenus) {
@@ -69,7 +75,7 @@ public class MenuController {
 		String id=req.getParameter("id");
 		if(StringUtils.isNumeric(id)){
 			long pid=Long.parseLong(id);
-			TMenu menu=commonService.findUniqueByProperty(TMenu.class, "id", pid);
+			TMenu menu=menuService.getUniqueById(pid);
 			Map m=new HashMap();
 			m.put("id", menu.getId());
 			m.put("name", menu.getMenuName());
@@ -92,7 +98,7 @@ public class MenuController {
 	
 	@RequestMapping("save")
 	public @ResponseBody JsonMsg saveMenu(TMenu menu){
-		commonService.saveOrUpdate(menu);
+		menuService.saveOrUpdate(menu);
 		return JsonMsg.simpleSuccessJson();
 		
 	}
@@ -100,8 +106,7 @@ public class MenuController {
 	@RequestMapping("list/data")
 	public @ResponseBody
 	List<Map> menuList() {
-		List<TMenu> pMenus = commonService.findByCriterion(TMenu.class,
-				Restrictions.eq("parentMenu.id", 1L));
+		List<TMenu> pMenus = menuService.getParentMenus();
 		List<Map> result = new ArrayList();
 		for (TMenu menu : pMenus) {
 			Map m = new HashMap();

@@ -1,21 +1,18 @@
 package org.bgrimm.domain.core;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 
-@Entity
-public class TUser {
-	@Id
-	@GeneratedValue
-	private int id;
+@Entity(name="t_user")
+public class TUser extends IdEntity implements java.io.Serializable{
+	private static final long serialVersionUID = 2048463947914157677L;
 	private String username;
 	private String realname;
 	private String password;
@@ -25,25 +22,16 @@ public class TUser {
 	private String cardno;
 	// private Role role;
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "userrole", joinColumns = @JoinColumn(name = "uid"), inverseJoinColumns = @JoinColumn(name = "rid"))
-	private List<TRole> roles;
+	@JoinTable(name = "t_user_role", joinColumns = @JoinColumn(name = "uid"), inverseJoinColumns = @JoinColumn(name = "rid"))
+	private Set<TRole> roles;
 
-	public List<TRole> getRoles() {
+	public Set<TRole> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(List<TRole> roles) {
+	public void setRoles(Set<TRole> roles) {
 		this.roles = roles;
 	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
 
 	public String getUsername() {
 		return username;

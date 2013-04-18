@@ -15,6 +15,17 @@ public class TMenu extends IdEntity implements java.io.Serializable {
 	private static final long serialVersionUID = 7745791364255292541L;
 	@Column(name="menuname",nullable = false, length = 50)
 	private String menuName;
+	
+	@Column(name="modulename",nullable=false,length=50)
+	private String moduleName;
+	public String getModuleName() {
+		return moduleName;
+	}
+
+	public void setModuleName(String moduleName) {
+		this.moduleName = moduleName;
+	}
+
 	private String url;
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "parentMenu")
 	private List<TMenu> subMenus;
