@@ -1,11 +1,12 @@
 package org.bgrimm.service.core;
 
-import org.apache.log4j.Logger;
-
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.apache.log4j.Logger;
 import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.access.SecurityConfig;
+import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.stereotype.Service;
 
@@ -21,12 +22,18 @@ public class MySecurityMetadataSource implements FilterInvocationSecurityMetadat
 		if (logger.isDebugEnabled()) {
 			logger.debug("getAttributes(Object) - start"); //$NON-NLS-1$
 		}
-
-
+		   String requestUrl = ((FilterInvocation) object).getRequestUrl();
+		if (logger.isInfoEnabled()) {
+			logger.info("getAttributes(Object) - String requestUrl=" + requestUrl); //$NON-NLS-1$
+		}
+		 Collection<ConfigAttribute> configAttributes = new ArrayList<ConfigAttribute>();  
+		 
+		 ConfigAttribute configAttribute = new SecurityConfig("ROLE_MENU_QUERY");  
+         configAttributes.add(configAttribute);  
 		if (logger.isDebugEnabled()) {
 			logger.debug("getAttributes(Object) - end"); //$NON-NLS-1$
 		}
-		return null;
+		return configAttributes;
 	}
 
 	public Collection<ConfigAttribute> getAllConfigAttributes() {

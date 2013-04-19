@@ -1,3 +1,13 @@
+
+
+
+
+
+
+
+
+
+
 package org.bgrimm.service.core;
 
 import org.apache.log4j.Logger;
@@ -86,6 +96,9 @@ public class MySecurityFilter extends AbstractSecurityInterceptor implements
 	@Qualifier("myAuthenticationManager")
 	public void setAuthenticationManager(
 			AuthenticationManager authenticationManager) {
+		if (logger.isInfoEnabled()) {
+			logger.info("setAuthenticationManager(AuthenticationManager)"); //$NON-NLS-1$
+		}
 		super.setAuthenticationManager(authenticationManager);
 	}
 

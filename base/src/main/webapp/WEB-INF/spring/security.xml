@@ -17,7 +17,7 @@
 		<logout />
 		<remember-me />
 		<custom-filter ref="myFilter" before="FILTER_SECURITY_INTERCEPTOR" />
-		<intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
+		<!-- <intercept-url pattern="/**" access="hasRole('ROLE_USER')" /> -->
 	</http>
 
 
