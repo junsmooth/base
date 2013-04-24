@@ -1,4 +1,4 @@
-package org.bgrimm.controller.core;
+package org.bgrimm.controller.system;
 
 import java.util.List;
 import java.util.Map;

@@ -13,6 +13,11 @@
 						name="menuName" value="${menu.name}" data-options="required:true"> </input></td>
 				</tr>
 				<tr>
+					<td>模块名称:</td>
+					<td><input class="easyui-validatebox" type="text"
+						name="moduleName" value="${menu.module}" data-options="required:true"> </input></td>
+				</tr>
+				<tr>
 					<td>父菜单:</td>
 					<td><select name="parentMenu.id">
 							<option value="1"></option>

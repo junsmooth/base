@@ -2,6 +2,7 @@ INSERT INTO `t_menu` (`id`,`menuname`,`modulename`,`menuorder`,`url`,`iconid`,`p
 INSERT INTO `t_menu` (`id`,`menuname`,`modulename`,`menuorder`,`url`,`iconid`,`parentid`) VALUES (2,'系统管理','SYSTEM','a','system',NULL,1);
 INSERT INTO `t_menu` (`id`,`menuname`,`modulename`,`menuorder`,`url`,`iconid`,`parentid`) VALUES (3,'用户管理','USER','bb','user/list',NULL,2);
 INSERT INTO `t_menu` (`id`,`menuname`,`modulename`,`menuorder`,`url`,`iconid`,`parentid`) VALUES (4,'菜单管理','MENU','cc','menu/list',NULL,2);
+INSERT INTO `t_menu` (`id`,`menuname`,`modulename`,`menuorder`,`url`,`iconid`,`parentid`) VALUES (5,'角色管理','ROLE','cc','role/list',NULL,2);
 
 
 

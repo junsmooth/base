@@ -1,4 +1,4 @@
-package org.bgrimm.service.core;
+package org.bgrimm.service.core.security;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,6 +10,7 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.bgrimm.domain.core.TMenu;
+import org.bgrimm.service.core.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;

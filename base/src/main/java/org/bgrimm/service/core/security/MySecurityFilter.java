@@ -8,7 +8,7 @@
 
 
 
-package org.bgrimm.service.core;
+package org.bgrimm.service.core.security;
 
 import org.apache.log4j.Logger;
 

@@ -1,4 +1,4 @@
-package org.bgrimm.controller.core;
+package org.bgrimm.controller.system;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,7 +64,7 @@ public class MenuController {
 			Map m = new HashMap();
 			m.put("id", menu.getId());
 			m.put("name", menu.getMenuName());
-			
+			m.put("module", menu.getModuleName());
 			//remove self ,if exits. can't as child of self
 			if(!(menu.getId()+"").equals(req.getParameter("id"))){
 				menuList.add(m);
@@ -79,6 +79,7 @@ public class MenuController {
 			Map m=new HashMap();
 			m.put("id", menu.getId());
 			m.put("name", menu.getMenuName());
+			m.put("module", menu.getModuleName());
 			m.put("url", menu.getUrl());
 			m.put("icon", menu.getIcon());
 			m.put("parentid", menu.getParentMenu()!=null?menu.getParentMenu().getId():1);
@@ -112,6 +113,7 @@ public class MenuController {
 			Map m = new HashMap();
 			m.put("id", menu.getId());
 			m.put("name", menu.getMenuName());
+			m.put("module", menu.getModuleName());
 			m.put("url", menu.getUrl());
 			m.put("icon", menu.getIcon());
 			if (menu.getSubMenus() != null) {
@@ -120,6 +122,7 @@ public class MenuController {
 					Map m1 = new HashMap();
 					m1.put("id", subMenu.getId());
 					m1.put("name", subMenu.getMenuName());
+					m1.put("module", subMenu.getModuleName());
 					m1.put("url", subMenu.getUrl());
 					m1.put("icon", subMenu.getIcon());
 					children.add(m1);

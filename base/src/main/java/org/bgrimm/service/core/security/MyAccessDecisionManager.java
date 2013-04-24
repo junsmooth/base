@@ -8,7 +8,7 @@
 
 
 
-package org.bgrimm.service.core;
+package org.bgrimm.service.core.security;
 
 import java.util.Collection;
 import java.util.Iterator;

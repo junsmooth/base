@@ -1,4 +1,4 @@
-package org.bgrimm.controller.core;
+package org.bgrimm.controller.system;
 
 import javax.servlet.http.HttpServletRequest;
 
