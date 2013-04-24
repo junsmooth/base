@@ -3,11 +3,8 @@ package org.bgrimm.service.core;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.print.attribute.standard.Compression;
-
 import org.bgrimm.domain.core.TIcon;
 import org.bgrimm.domain.core.TMenu;
-import org.bgrimm.service.core.impl.CommonServiceImpl;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -42,6 +39,10 @@ private CommonService commonService;
 				Restrictions.eq("parentMenu.id", 1L));
 	}
 
+	public List<TMenu> getAllMenus(){
+		return commonService.loadAll(TMenu.class);
+	}
+	
 	public List<TIcon> getAllIcon() {
 		return commonService.loadAll(TIcon.class);
 	}

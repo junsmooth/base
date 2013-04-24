@@ -1,3 +1,13 @@
+
+
+
+
+
+
+
+
+
+
 package org.bgrimm.service.core;
 
 import java.util.Collection;
@@ -13,11 +23,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
 @Service("myAccessDecisionManager")
-public class MyAccessDecisionManager implements AccessDecisionManager{
+public class MyAccessDecisionManager implements AccessDecisionManager {
 	/**
 	 * Logger for this class
 	 */
-	private static final Logger logger = Logger.getLogger(MyAccessDecisionManager.class);
+	private static final Logger logger = Logger
+			.getLogger(MyAccessDecisionManager.class);
 
 	public void decide(Authentication authentication, Object object,
 			Collection<ConfigAttribute> configAttributes)
@@ -25,40 +36,46 @@ public class MyAccessDecisionManager implements AccessDecisionManager{
 		if (logger.isDebugEnabled()) {
 			logger.debug("decide(Authentication, Object, Collection<ConfigAttribute>) - start"); //$NON-NLS-1$
 		}
-		   if(configAttributes == null) {  
-	            return;  
-	        }  
-	        //所请求的资源拥有的权限(一个资源对多个权限)  
-	        Iterator<ConfigAttribute> iterator = configAttributes.iterator();  
-	        while(iterator.hasNext()) {  
-	            ConfigAttribute configAttribute = iterator.next();  
-	            //访问所请求资源所需要的权限  
-	            String needPermission = configAttribute.getAttribute();  
+		if (configAttributes == null) {
+			return;
+		}
+		// 所请求的资源拥有的权限(一个资源对多个权限)
+
+		Iterator<ConfigAttribute> iterator = configAttributes.iterator();
+		while (iterator.hasNext()) {
+			ConfigAttribute configAttribute = iterator.next();
+			// 访问所请求资源所需要的权限
+			String needPermission = configAttribute.getAttribute();
 
 			if (logger.isInfoEnabled()) {
 				logger.info("decide(Authentication, Object, Collection<ConfigAttribute>) - String needPermission=" + needPermission); //$NON-NLS-1$
 			}
 
-	            //用户所拥有的权限authentication  
-	            for(GrantedAuthority ga : authentication.getAuthorities()) {  
-	            String ownedauthority=	ga.getAuthority();
+			// 用户所拥有的权限authentication
+			for (GrantedAuthority ga : authentication.getAuthorities()) {
+				String ownedauthority = ga.getAuthority();
 
 				if (logger.isInfoEnabled()) {
 					logger.info("decide(Authentication, Object, Collection<ConfigAttribute>) - String ownedauthority=" + ownedauthority); //$NON-NLS-1$
 				}
-
-	                if(needPermission.equals(ga.getAuthority())) {  
-	                    return;  
-	                }  
-	            }  
-	        }  
-	        if (logger.isDebugEnabled()) {
-				logger.debug("decide(Authentication, Object, Collection<ConfigAttribute>) - end"); //$NON-NLS-1$
+				String authority = ga.getAuthority();
+				if ("ROLE_SYSTEM".equals(authority)) {
+					if (logger.isInfoEnabled()) {
+						logger.info("decide(Authentication, Object, Collection<ConfigAttribute>) - USER HAS ROLE_SYSTEM AUTHORITY."); //$NON-NLS-1$
+					}
+					return;
+				}
+				if (needPermission.equals(ga.getAuthority())) {
+					return;
+				}
 			}
-	        //没有权限  
-	        throw new AccessDeniedException(" 没有权限访问！ ");  
-		
-		
+		}
+		if (logger.isDebugEnabled()) {
+			logger.debug("decide(Authentication, Object, Collection<ConfigAttribute>) - end"); //$NON-NLS-1$
+		}
+		// 没有权限
+		throw new AccessDeniedException("Acces Denied.");
+
 	}
 
 	public boolean supports(ConfigAttribute attribute) {

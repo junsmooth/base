@@ -9,6 +9,7 @@
 	<http pattern="/resources/**" security="none" />
 	<http pattern="/app/**" security="none"></http>
 	<http pattern="/**/*.jpg" security="none"></http>
+	<http pattern="/**/*.ico" security="none"></http>
 	<!-- exclude login page -->
 	<!-- <http pattern="/login" security="none" /> -->
 	<!-- <http auto-config='true' /> -->
@@ -17,7 +18,6 @@
 		<logout />
 		<remember-me />
 		<custom-filter ref="myFilter" before="FILTER_SECURITY_INTERCEPTOR" />
-		<!-- <intercept-url pattern="/**" access="hasRole('ROLE_USER')" /> -->
 	</http>
 
 
