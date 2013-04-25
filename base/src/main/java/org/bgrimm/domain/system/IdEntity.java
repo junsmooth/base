@@ -1,4 +1,4 @@
-package org.bgrimm.domain.core;
+package org.bgrimm.domain.system;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;

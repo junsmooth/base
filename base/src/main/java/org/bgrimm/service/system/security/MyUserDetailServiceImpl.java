@@ -1,13 +1,13 @@
-package org.bgrimm.service.core.security;
+package org.bgrimm.service.system.security;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
-import org.bgrimm.domain.core.TAuthority;
-import org.bgrimm.domain.core.TRole;
-import org.bgrimm.domain.core.TUser;
-import org.bgrimm.service.core.CommonService;
+import org.bgrimm.domain.system.TAuthority;
+import org.bgrimm.domain.system.TRole;
+import org.bgrimm.domain.system.TUser;
+import org.bgrimm.service.system.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.acls.domain.GrantedAuthoritySid;

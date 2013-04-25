@@ -1,13 +1,12 @@
-package org.bgrimm.service.core.impl;
+package org.bgrimm.service.system;
 
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
 import org.bgrimm.dao.core.ICommonDao;
-import org.bgrimm.domain.core.PageList;
-import org.bgrimm.domain.core.PagedQuery;
-import org.bgrimm.service.core.CommonService;
+import org.bgrimm.domain.system.PageList;
+import org.bgrimm.domain.system.PagedQuery;
 import org.hibernate.criterion.Criterion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

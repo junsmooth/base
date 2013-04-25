@@ -2,7 +2,7 @@ package org.bgrimm.persistence;
 
 import java.util.List;
 
-import org.bgrimm.domain.core.TMenu;
+import org.bgrimm.domain.system.TMenu;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

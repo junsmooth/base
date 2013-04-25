@@ -1,4 +1,4 @@
-package org.bgrimm.domain.core;
+package org.bgrimm.domain.system;
 
 import java.util.List;
 

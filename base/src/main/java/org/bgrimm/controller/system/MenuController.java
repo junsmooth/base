@@ -8,9 +8,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
-import org.bgrimm.domain.core.TIcon;
-import org.bgrimm.domain.core.TMenu;
-import org.bgrimm.service.core.MenuService;
+import org.bgrimm.domain.system.TIcon;
+import org.bgrimm.domain.system.TMenu;
+import org.bgrimm.service.system.MenuService;
 import org.bgrimm.uitls.JsonMsg;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;

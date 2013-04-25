@@ -1,10 +1,10 @@
-package org.bgrimm.service.core;
+package org.bgrimm.service.system;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bgrimm.domain.core.TIcon;
-import org.bgrimm.domain.core.TMenu;
+import org.bgrimm.domain.system.TIcon;
+import org.bgrimm.domain.system.TMenu;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -38,7 +38,9 @@ private CommonService commonService;
 		return commonService.findByCriterion(TMenu.class,
 				Restrictions.eq("parentMenu.id", 1L));
 	}
-
+	public TMenu getRootMenu() {
+		return commonService.findUniqueByProperty(TMenu.class, "id", 1L);
+	}
 	public List<TMenu> getAllMenus(){
 		return commonService.loadAll(TMenu.class);
 	}

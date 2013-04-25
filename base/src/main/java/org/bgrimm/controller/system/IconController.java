@@ -2,7 +2,7 @@ package org.bgrimm.controller.system;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.bgrimm.service.core.CommonService;
+import org.bgrimm.service.system.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,11 +1,11 @@
-package org.bgrimm.service.core;
+package org.bgrimm.service.system;
 
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
-import org.bgrimm.domain.core.PageList;
-import org.bgrimm.domain.core.PagedQuery;
+import org.bgrimm.domain.system.PageList;
+import org.bgrimm.domain.system.PagedQuery;
 import org.hibernate.criterion.Criterion;
 
 

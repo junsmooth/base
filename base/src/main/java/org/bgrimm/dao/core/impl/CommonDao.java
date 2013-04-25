@@ -7,8 +7,8 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.bgrimm.dao.core.ICommonDao;
-import org.bgrimm.domain.core.PageList;
-import org.bgrimm.domain.core.PagedQuery;
+import org.bgrimm.domain.system.PageList;
+import org.bgrimm.domain.system.PagedQuery;
 import org.bgrimm.uitls.PagerUtil;
 import org.hibernate.Criteria;
 import org.hibernate.Session;

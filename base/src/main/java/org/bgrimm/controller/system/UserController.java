@@ -3,11 +3,11 @@ package org.bgrimm.controller.system;
 import java.util.List;
 import java.util.Map;
 
-import org.bgrimm.domain.core.PageList;
-import org.bgrimm.domain.core.PagedQuery;
-import org.bgrimm.domain.core.TUser;
-import org.bgrimm.service.RoleService;
-import org.bgrimm.service.core.CommonService;
+import org.bgrimm.domain.system.PageList;
+import org.bgrimm.domain.system.PagedQuery;
+import org.bgrimm.domain.system.TUser;
+import org.bgrimm.service.system.CommonService;
+import org.bgrimm.service.system.RoleService;
 import org.bgrimm.uitls.JSONUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,18 +25,6 @@ public class UserController {
 	public void setCommonService(CommonService commonService) {
 		this.commonService = commonService;
 	}
-
-	@Autowired
-	private RoleService roleService;
-
-	@RequestMapping("roles")
-	public @ResponseBody
-	Map getRoles() {
-		List result = roleService.getRoles();
-		Map m = JSONUtils.resultJsonMap(result, true);
-		return m;
-	}
-
 	@RequestMapping("list")
 	public String list() {
 		return "user/list";

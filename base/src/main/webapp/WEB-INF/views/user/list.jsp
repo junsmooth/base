@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div class="easyui-layout" fit="true">
  <div region="center" style="padding:1px;border:1px;">
-<table id="tt2"
+<table id="usergrid"
     class="easyui-datagrid" 
     data-options="rownumbers:true,singleSelect:true, idField: 'id',url:'user/list/data',toolbar:toolbar,pagination:'true',fitColumns:'true',fit:'true'">
   <thead>
@@ -21,6 +21,7 @@
   </thead>
 </table>
 </div>
+<div id="userdialog">
 </div>
 <script>
   function formatIcon(value){
@@ -30,14 +31,13 @@
 </script>
 <script type="text/javascript">
  function reload(){
- 	$('#tt').treegrid('reload');
+ 	$('#usergrid').treegrid('reload');
  }
-
   var toolbar = [{
     text:'Add',
     iconCls:'icon-add',
     handler:function(){
-      $('#dd').dialog({
+      $('#userdialog').dialog({
         title: '增加菜单',
         width: 600,
         height: 300,
@@ -53,11 +53,11 @@
       text:'Edit',
       iconCls:'icon-edit',
     handler:function(){
-    	var node=$('#tt').treegrid('getSelected');
+    	var node=$('#userdialog').treegrid('getSelected');
     	if(!node){
     	 $.dialog.tips('请选择条目');
     	}else{
-    	 $('#dd').dialog({
+    	 $('#userdialog').dialog({
         title: '增加菜单',
         width: 600,
         height: 300,
@@ -74,7 +74,7 @@
     text:'Delete',
     iconCls:'icon-remove',
   handler:function(){
-  	var node=$('#tt').treegrid('getSelected');
+  	var node=$('#userdialog').treegrid('getSelected');
     	if(!node){
     	 $.dialog.tips('请选择条目');
     	}else{

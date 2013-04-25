@@ -5,8 +5,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import org.bgrimm.domain.core.PageList;
-import org.bgrimm.domain.core.PagedQuery;
+import org.bgrimm.domain.system.PageList;
+import org.bgrimm.domain.system.PagedQuery;
 import org.hibernate.criterion.Criterion;
 
 public interface ICommonDao {

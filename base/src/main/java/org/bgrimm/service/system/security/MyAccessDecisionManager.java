@@ -8,12 +8,13 @@
 
 
 
-package org.bgrimm.service.core.security;
+package org.bgrimm.service.system.security;
 
 import java.util.Collection;
 import java.util.Iterator;
 
 import org.apache.log4j.Logger;
+import org.bgrimm.uitls.Constants;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
@@ -59,7 +60,7 @@ public class MyAccessDecisionManager implements AccessDecisionManager {
 					logger.info("decide(Authentication, Object, Collection<ConfigAttribute>) - String ownedauthority=" + ownedauthority); //$NON-NLS-1$
 				}
 				String authority = ga.getAuthority();
-				if ("ROLE_SYSTEM".equals(authority)) {
+				if (Constants.AUTH_SYSTEM.equals(authority)) {
 					if (logger.isInfoEnabled()) {
 						logger.info("decide(Authentication, Object, Collection<ConfigAttribute>) - USER HAS ROLE_SYSTEM AUTHORITY."); //$NON-NLS-1$
 					}
