@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <script>
 var editingId;
+var roleid='${roleid}';
 var editAuthToolBar=
  [{
 		    text:'Save',
@@ -11,19 +12,44 @@ var editAuthToolBar=
 		    	//1.get all rows of treegrid
 		    	//2.iterate rows, and for every rowid, get OP_{rowid} checked Authids
 		    	//3.save to server with rowid,roleid,checkedauthids,altogether
+		    	var row=$("#editAuthTable").treegrid('getRoot');
+		    	result=[];
+		    	parseParameters(row,result);
 		    	
-		    	var chk_value =[];    
-		    	  $('input[name="OP_1"]:checked').each(function(){    
-		    	   chk_value.push($(this).val());    
-		    	  });    
-		    	console.log(chk_value);
-				save();
-				var rows=$("#editAuthTable").treegrid('getRoot');
-				console.log(rows);
-				//save auth to server
-				//roleid,menuid,op{id1 id2...}
+		    	console.log(result);
+		    	$.ajax({
+		    		  type: 'POST',
+		    		  url: "role/auth/saveAuth",
+		    		  data: {roleid:roleid,
+		    			data:result
+		    		  },
+		    		  success: function(){
+		    			  console.log("success.");
+		    		  },
+		    		  dataType: "json"
+		    		});
 		      }
 		    }]
+		    
+function parseParameters(row,result){
+	var p={};
+	p.menuid=row.id;
+	var chk_value =''; 
+	var name="EDITAUTH_"+row.id;
+	$('input[name="'+name+'"]:checked').each(function(){    
+ 	   chk_value+=$(this).val()+",";
+ 	  });  
+	p.auths=chk_value;
+	result.push(p);
+	var children=row.children;
+	if(children.length>0){
+		for(var i=0;i<children.length;i++){
+			var child=children[i];
+			parseParameters(child,result);
+		}
+	}
+	return result;
+}
 function save(){
 	
 	if (editingId != undefined){
@@ -33,19 +59,12 @@ function save(){
 	}
 }		    
 function formatAction(value,row,index){
-	//if(value){
-	//	return "Y";
-	//}
-	if(value)
-	return "<div><input type='checkbox' name='OP_"+row.id+"' value='"+value.id+"' checked></div>";
 	if(value){
-		if(value=='Y'){
-			return "<div><input type='checkbox' onclick='checkboxclicked()' name='auth' value='"+value+"' checked></div>"
+		if(value.checked){
+			return "<div><input type='checkbox' name='EDITAUTH_"+row.id+"' value='"+value.id+"' checked></div>";
 		}else{
-			return "<input type='checkbox' onclick='checkboxclicked()' name='auth' value='"+value+"'>"
+			return "<div><input type='checkbox' name='EDITAUTH_"+row.id+"' value='"+value.id+"'></div>";
 		}
-		
-		
 	}
 	
 }
@@ -80,7 +99,7 @@ function onClickRow(index){
 		<tr>
 			<c:forEach var="op" items="${ops}">
 				<th
-					data-options="field:'${op.name}',width:200,align:'left',formatter:formatAction,editor:{type:'checkbox',options:{on:'Y',off:''}}">${op.name}</th>
+					data-options="field:'${op.name}',width:200,align:'left',formatter:formatAction">${op.name}</th>
 			</c:forEach>
 		</tr>
 	</thead>

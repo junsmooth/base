@@ -15,15 +15,10 @@ public class TRole extends IdEntity implements java.io.Serializable {
 	private String name;
 	//role code
 	private String roledesc;
-	// @ManyToMany(mappedBy = "roles")
-	// private List<TUser> users;
-
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "t_role_authority", joinColumns = @JoinColumn(name = "roleid"), inverseJoinColumns = @JoinColumn(name = "authid"))
 	private Set<TAuthority> auths;
 
-	//
-	//
 	public Set<TAuthority> getAuths() {
 		return auths;
 	}
@@ -54,13 +49,4 @@ public class TRole extends IdEntity implements java.io.Serializable {
 				+ auths + "]";
 	}
 
-
-
-	// public List<TUser> getUsers() {
-	// return users;
-	// }
-	//
-	// public void setUsers(List<TUser> users) {
-	// this.users = users;
-	// }
 }

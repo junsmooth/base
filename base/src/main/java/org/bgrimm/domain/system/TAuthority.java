@@ -15,10 +15,10 @@ public class TAuthority extends IdEntity implements java.io.Serializable {
 	private String name;
 	@Column(name="description")
 	private String description;
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "menuid")
 	private TMenu menu;
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "operationid")
 	private TOperation op;
 	public TMenu getMenu() {
