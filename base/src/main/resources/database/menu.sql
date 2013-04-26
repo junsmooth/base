@@ -26,9 +26,9 @@ INSERT INTO `t_operation` VALUES (1,'View','VIEW');
 INSERT INTO `t_operation` VALUES (2,'Query','QUERY');
 INSERT INTO `t_operation` VALUES (3,'Edit','EDIT');
 
-INSERT INTO `t_authority` VALUES (1,NULL,'ROLE_SYSTEM',null,null);
-INSERT INTO `t_authority` VALUES (2,NULL,'ROLE_USER_QUERY',3,1);
-INSERT INTO `t_authority` VALUES (3,NULL,'ROLE_USER_EDIT',3,2);
+INSERT INTO `t_authority` VALUES (1,NULL,'ROLE_SYSTEM');
+INSERT INTO `t_authority` VALUES (2,NULL,'ROLE_USER_QUERY');
+INSERT INTO `t_authority` VALUES (3,NULL,'ROLE_USER_EDIT');
 
 INSERT INTO `t_role` VALUES (1,'系统管理员','SYSMANAGE');
 INSERT INTO `t_role_authority` VALUES (1,1);

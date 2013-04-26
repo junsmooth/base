@@ -15,27 +15,27 @@ public class TAuthority extends IdEntity implements java.io.Serializable {
 	private String name;
 	@Column(name="description")
 	private String description;
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "menuid")
-	private TMenu menu;
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "operationid")
-	private TOperation op;
-	public TMenu getMenu() {
-		return menu;
-	}
-
-	public void setMenu(TMenu menu) {
-		this.menu = menu;
-	}
-
-	public TOperation getOp() {
-		return op;
-	}
-
-	public void setOp(TOperation op) {
-		this.op = op;
-	}
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "menuid")
+//	private TMenu menu;
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "operationid")
+//	private TOperation op;
+//	public TMenu getMenu() {
+//		return menu;
+//	}
+//
+//	public void setMenu(TMenu menu) {
+//		this.menu = menu;
+//	}
+//
+//	public TOperation getOp() {
+//		return op;
+//	}
+//
+//	public void setOp(TOperation op) {
+//		this.op = op;
+//	}
 
 	public String getName() {
 		return name;

@@ -70,6 +70,7 @@ public class CommonDao implements ICommonDao {
 
 	public <T> List<T> loadAll(Class<T> entityClass) {
 		Criteria criteria = createCriteria(entityClass);
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		return criteria.list();
 	}
 
@@ -205,9 +206,10 @@ public class CommonDao implements ICommonDao {
 		final int allCounts = ((Long) criteria.setProjection(
 				Projections.rowCount()).uniqueResult()).intValue();
 		criteria.setProjection(projection);
-		if (projection == null) {
-			criteria.setResultTransformer(CriteriaSpecification.ROOT_ENTITY);
-		}
+//		if (projection == null) {
+//			criteria.setResultTransformer(CriteriaSpecification.ROOT_ENTITY);
+//		}
+		criteria.setResultTransformer(CriteriaSpecification.ROOT_ENTITY);
 		int offset = PagerUtil.getOffset(allCounts, pq.getCurrentPage(),
 				pq.getPageSize());
 		criteria.setFirstResult(offset);

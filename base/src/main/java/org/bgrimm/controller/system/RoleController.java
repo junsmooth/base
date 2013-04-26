@@ -75,11 +75,14 @@ public class RoleController {
 			for(String opid:ids){
 				long oid=Long.parseLong(opid);
 				TOperation operation=roleService.getCommonService().findUniqueByProperty(TOperation.class, "id", oid);
-				TAuthority auth = new TAuthority();
-				auth.setMenu(menu);
-				auth.setOp(operation);
-				auth.setName("");
-				roleService.getCommonService().saveOrUpdate(auth);
+				String AUTHORITY="ROLE_"+menu.getModuleName()+"_"+operation.getOpcode();
+				TAuthority auth=roleService.getCommonService().findUniqueByProperty(TAuthority.class, "name", AUTHORITY);
+				if(auth==null){
+					auth=new TAuthority();
+					auth.setName(AUTHORITY);
+					roleService.getCommonService().saveOrUpdate(auth);
+				}
+				
 				authSets.add(auth);
 			}
 		}

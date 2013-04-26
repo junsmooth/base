@@ -2,5 +2,4 @@ eclipse.preferences.version=1
 encoding//src/main/java/org/bgrimm/filter/KaptchaFilter.java=UTF-8
 encoding//src/main/resources/database/menu.sql=UTF-8
 encoding//src/main/webapp/WEB-INF/views/home.jsp=UTF-8
-encoding//src/main/webapp/WEB-INF/views/test/info.jsp=UTF-8
 encoding/<project>=UTF-8
