@@ -6,10 +6,22 @@
 		 if(value){
 		        var edit='['+'<a href="#" onclick="user.list.edit('+value+')">编辑</a>' +']';
 		        var del='['+ '<a href="#" onclick="user.list.remove('+value+' )">删除</a>'+']';
-		        return edit+del;
+		        var setRole='['+ '<a href="#" onclick="user.list.setRole('+value+' )">分配角色</a>'+']';
+		        return edit+setRole+del;
 		        }
 	},
-	
+	setRole:function(value){
+	$('#userdialog').dialog({
+		        title: '分配角色',
+		        width: 600,
+		        height: 300,
+		        closed: false,
+		        resizable:true,
+		        cache: false,
+		        href: 'menu/addOrUpdate?id='+value,
+		        modal: true
+		        });
+	},
 	remove:function(value){
 		 $.messager.confirm('提示', '确定要删除吗?', function(r){  
              if (r){  
@@ -25,7 +37,7 @@
          });  
 	},
 	edit:function(value){
-		   $('#menudialog').dialog({
+		   $('#userdialog').dialog({
 		        title: '修改菜单',
 		        width: 600,
 		        height: 300,
@@ -56,13 +68,16 @@ user.list.toolbar = [{
         modal: true
         });
       }
-    },'-',{
-    text:'刷新',
-    iconCls:'icon-reload',
- 	handler:function(){
-	  user.list.reload();
-  }
-  }];
+    }
+  //  ,'-',{
+   // text:'刷新',
+   // iconCls:'icon-reload',
+ 	//handler:function(){
+	//  user.list.reload();
+ // }
+ // }
+  
+  ];
  
 </script>
 <div class="easyui-layout" fit="true">

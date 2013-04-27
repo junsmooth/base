@@ -1,7 +1,8 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
-<table id="tt"
+<div class="easyui-layout" fit="true">
+<div region="center" style="padding:1px;border:1px;">
+<table id="role_tablegrid"
     class="easyui-datagrid"
     data-options="rownumbers:true,singleSelect:true, idField: 'id', url:'role/list/data',toolbar:role.list.toolbar">
   <thead>
@@ -18,22 +19,25 @@
     </tr>
   </thead>
 </table>
-<div id="roleDialog">
+<div id="roleDialog"/>
 </div>
+</div>
+
 <script type="text/javascript">
 Namespace.register("role.list",{
 	formatOperation:function(value){
 		 if(value){
-		        var setAuth='['+'<a href="#" onclick="setAuth('+value+')">设置权限</a>' +']';
-    			var del='['+ '<a href="#" onclick="remove('+value+' )">删除</a>'+']';
-   				return setAuth+del;
+		        var setAuth='['+'<a href="#" onclick="role.list.setAuth('+value+')">设置权限</a>' +']';
+    			var del='['+ '<a href="#" onclick="role.list.remove('+value+' )">删除</a>'+']';
+   				 var edit='['+'<a href="#" onclick="role.list.edit('+value+')">编辑</a>' +']';
+   				return edit+setAuth+del;
 		        }
 	},
 	setAuth:function(id){
    		$('#roleDialog').dialog({
         title: '设置权限',
         width: 800,
-        height: 200,
+        height: 400,
         closed: false,
         resizable:true,
         cache: false,
@@ -46,7 +50,7 @@ Namespace.register("role.list",{
              if (r){  
               $.post('menu/remove',{id:value},function(data){
 	    			if(data.success){
-	    				user.list.reload();
+	    				role.list.reload();
 	    				$.dialog.tips(data.msg);
 	    	}
  	 });
@@ -56,8 +60,8 @@ Namespace.register("role.list",{
          });  
 	},
 	edit:function(value){
-		   $('#menudialog').dialog({
-		        title: '修改菜单',
+		   $('#roleDialog').dialog({
+		        title: '修改角色',
 		        width: 600,
 		        height: 300,
 		        closed: false,
@@ -68,8 +72,11 @@ Namespace.register("role.list",{
 		        });
 		  },
 	reload:function(){
-		  	$('#usergrid').datagrid('reload');
-		  }
+		  	$("#role_tablegrid").datagrid('reload');
+		  },
+	closeDialog:function(){
+		$('#roleDialog').dialog('close');
+	}
 	
 });
 role.list.toolbar = [{

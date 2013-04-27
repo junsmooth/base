@@ -27,7 +27,7 @@
 		<a class="easyui-linkbutton" data-options="iconCls:'icon-ok'"
 			href="javascript:void(0)" onclick="save()"> 保存 </a> <a
 			class="easyui-linkbutton" data-options="iconCls:'icon-cancel'"
-			href="javascript:void(0)" onclick="javascript:$('#dd').dialog('close')">
+			href="javascript:void(0)" onclick="role.list.closeDialog();">
 
 			取消 </a>
 	</div>
@@ -35,26 +35,32 @@
 
 </div>
 <script>
-function save(){
-	$('#roleform').form('submit', {  
-	    url:"role/save", 
-	    dataType : 'json',  
-	    onSubmit: function(params){  
-	    	var isValid = $(this).form('validate');
-			if (!isValid){
-				$.messager.progress('close');	// hide progress bar while the form is invalid
-			}
-			return isValid;	// return false will stop the form submission
-	    },  
-	    success:function(data){ 
-	    	data = $.parseJSON(data);  
-	    	if(data.success){
-	    		$('#dd').dialog('close');
-	    		 $.dialog.tips(data.msg);
-	    	}
-	    }  
-	});  
-}
+Namespace.register('role.add',{
+	save:function(){
+		$('#roleform').form('submit', {  
+		    url:"role/save", 
+		    dataType : 'json',  
+		    onSubmit: function(params){  
+		    	var isValid = $(this).form('validate');
+				if (!isValid){
+					$.messager.progress('close');	// hide progress bar while the form is invalid
+				}
+				return isValid;	// return false will stop the form submission
+		    },  
+		    success:function(data){ 
+		    	data = $.parseJSON(data);  
+		    	if(data.success){
+		    		role.list.closeDialog();
+		    		role.list.reload();
+		    		 $.dialog.tips(data.msg);
+		    	}
+		    }  
+		}); 
+	}
+	
+	
+});
+
 
 
 </script>
