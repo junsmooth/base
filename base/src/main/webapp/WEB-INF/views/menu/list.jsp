@@ -1,39 +1,81 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
-<table id="menutable"
-    class="easyui-treegrid"
-    data-options="rownumbers:true,singleSelect:true, idField: 'id', treeField: 'name',url:'menu/list/data',toolbar:toolbar">
-  <thead>
-    <tr>
-      <th data-options="field:'name',width:200,align:'left'">
-        菜单名称
-      </th>
-      <th data-options="field:'icon',width:80,align:'left',formatter:formatIcon">
-        图标
-      </th>
-      <th data-options="field:'url',width:280,align:'left'">
-        菜单地址
-      </th>
-
-    </tr>
-  </thead>
-</table>
-<div id="menudialog">
-</div>
 <script>
-  function formatIcon(value){
-    if(value)
-    return '<image border="0" src='+value.iconPath+'/'+value.iconName+value.iconExtension+'/>'
-  }
+
+Namespace.register("menunamespace",{
+	formationOperation:function(value){
+		 if(value){
+		        var edit='['+'<a href="#" onclick="menunamespace.editMenu('+value+')">编辑</a>' +']';
+		        var del='['+ '<a href="#" onclick="menunamespace.removeMenu('+value+' )">删除</a>'+']';
+		        return edit+del;
+		        }
+	},
+	formatIcon:function(value){
+		 if(value)
+			    return '<image border="0" src='+value.iconPath+'/'+value.iconName+value.iconExtension+'/>'
+	},
+	
+	removeMenu:function(value){
+		 $.messager.confirm('提示', '确定要删除吗?', function(r){  
+             if (r){  
+              $.post('menu/remove',{id:value},function(data){
+	    			if(data.success){
+	    				console.log(menunamespace);
+	    				return;
+	    				menunamespace.reload();
+	    				freshLeftMenu();
+	    				$.dialog.tips(data.msg);
+	    	}
+ 	 });
+             }  else{
+             return;
+             }
+         });  
+	},
+	editMenu:function(value){
+		   $('#menudialog').dialog({
+		        title: '修改菜单',
+		        width: 600,
+		        height: 300,
+		        closed: false,
+		        resizable:true,
+		        cache: false,
+		        href: 'menu/addOrUpdate?id='+value,
+		        modal: true
+		        });
+		  },
+	reload:function(){
+		$('#menutable').treegrid('reload');
+	}
+	
+});
+
+
+
+</script>
+<table id="menutable" class="easyui-treegrid"
+	data-options="rownumbers:true,singleSelect:true, idField: 'id', treeField: 'name',url:'menu/list/data',toolbar:toolbar">
+	<thead>
+		<tr>
+			<th data-options="field:'name',width:200,align:'left'">菜单名称</th>
+			<th
+				data-options="field:'icon',width:80,align:'left',formatter:menunamespace.formatIcon">
+				图标</th>
+			<th data-options="field:'url',width:280,align:'left'">菜单地址</th>
+			<th
+				data-options="field:'id',width:200,align:'left',formatter:menunamespace.formationOperation">
+				操作</th>
+		</tr>
+	</thead>
+</table>
+<div id="menudialog"></div>
+<script>
+  
 </script>
 <script type="text/javascript">
- function reload(){
- 	$('#menutable').treegrid('reload');
- }
 
   var toolbar = [{
-    text:'Add',
+    text:'增加',
     iconCls:'icon-add',
     handler:function(){
       $('#menudialog').dialog({
@@ -46,50 +88,9 @@
         href: 'menu/addOrUpdate',
         modal: true
         });
-
       }
     },'-',{
-      text:'Edit',
-      iconCls:'icon-edit',
-    handler:function(){
-    	var node=$('#menudialog').treegrid('getSelected');
-    	if(!node){
-    	 $.dialog.tips('请选择条目');
-    	}else{
-    	 $('#menudialog').dialog({
-        title: '增加菜单',
-        width: 600,
-        height: 300,
-        closed: false,
-        resizable:true,
-        cache: false,
-        href: 'menu/addOrUpdate?id='+node.id,
-        modal: true
-        });
-    	};
-    
-    }
-  },'-',{
-    text:'Delete',
-    iconCls:'icon-remove',
-  handler:function(){
-  	var node=$('#menutable').treegrid('getSelected');
-    	if(!node){
-    	 $.dialog.tips('请选择条目');
-    	}else{
-    	 $.post('menu/remove',{id:node.id},function(data){
-    	 	//data = $.parseJSON(data);  
-	    	if(data.success){
-	    		//$('#dd').dialog('close');
-	    		reload();
-	    		freshLeftMenu();
-	    		 $.dialog.tips(data.msg);
-	    	}
-    	 });
-    	};
-  }
-  },'-',{
-    text:'Refresh',
+    text:'刷新',
     iconCls:'icon-reload',
   handler:function(){
   	reload();

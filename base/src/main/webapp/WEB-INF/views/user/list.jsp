@@ -16,7 +16,8 @@
       <th data-options="field:'telephone',width:280,align:'left'">
         联系电话
       </th>
-
+	  <th	data-options="field:'id',width:200,align:'left',formatter:formatOperation">
+				操作</th>
     </tr>
   </thead>
 </table>
@@ -34,7 +35,7 @@
  	$('#usergrid').treegrid('reload');
  }
   var toolbar = [{
-    text:'Add',
+    text:'增加',
     iconCls:'icon-add',
     handler:function(){
       $('#userdialog').dialog({
@@ -49,45 +50,5 @@
         });
 
       }
-    },'-',{
-      text:'Edit',
-      iconCls:'icon-edit',
-    handler:function(){
-    	var node=$('#userdialog').treegrid('getSelected');
-    	if(!node){
-    	 $.dialog.tips('请选择条目');
-    	}else{
-    	 $('#userdialog').dialog({
-        title: '增加菜单',
-        width: 600,
-        height: 300,
-        closed: false,
-        resizable:true,
-        cache: false,
-        href: 'menu/addOrUpdate?id='+node.id,
-        modal: true
-        });
-    	};
-    
-    }
-  },'-',{
-    text:'Delete',
-    iconCls:'icon-remove',
-  handler:function(){
-  	var node=$('#userdialog').treegrid('getSelected');
-    	if(!node){
-    	 $.dialog.tips('请选择条目');
-    	}else{
-    	 $.post('menu/remove',{id:node.id},function(data){
-    	 	//data = $.parseJSON(data);  
-	    	if(data.success){
-	    		//$('#dd').dialog('close');
-	    		reload();
-	    		freshLeftMenu();
-	    		 $.dialog.tips(data.msg);
-	    	}
-    	 });
-    	};
-  }
-  }];
+    }];
 </script>

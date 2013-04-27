@@ -6,7 +6,7 @@
     <title>
       jQuery EasyUI Demo
     </title>
-    <link rel="stylesheet" type="text/css" href="resources/themes/metro-blue/easyui.css">
+    <link rel="stylesheet" type="text/css" href="resources/themes/bootstrap/easyui.css">
     <link rel="stylesheet" type="text/css" href="resources/themes/icon.css">
      <link rel="stylesheet" type="text/css" href="resources/custom/css/icon.css">
     <script type="text/javascript" src="resources/jquery-1.8.0.min.js">
@@ -17,7 +17,8 @@
     </script>
      <script type="text/javascript" src="resources/locale/easyui-lang-zh_CN.js">
     </script>
-    
+     <script type="text/javascript" src="resources/namespace.js">
+    </script>
   </head>
   <body class="easyui-layout">
     <div 
@@ -94,5 +95,7 @@
   function freshLeftMenu(){
   	$('#leftDiv').panel('refresh');
   }
+//create Namespace object
+
   </script>
 </html>
