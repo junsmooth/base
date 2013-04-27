@@ -55,15 +55,16 @@
 	<div data-options="region:'south',border:false"
 		style="text-align: right; padding: 5px 0 0;">
 		<a class="easyui-linkbutton" data-options="iconCls:'icon-ok'"
-			href="javascript:void(0)" onclick="saveMenu()"> 保存 </a> <a
+			href="javascript:void(0)" onclick="menu.add.saveMenu()"> 保存 </a> <a
 			class="easyui-linkbutton" data-options="iconCls:'icon-cancel'"
 			href="javascript:void(0)"
-			onclick="javascript:$('#menudialog').dialog('close')"> 取消 </a>
+			onclick="menu.list.closeDialog();"> 取消 </a>
 	</div>
 
 
 </div>
 <script>
+
 $("#menumodulename").keypress(function(event) {
 	var key = event.which;
 	if (key >= 97 && key <= 122) {
@@ -72,45 +73,32 @@ $("#menumodulename").keypress(function(event) {
 	}
 });
 
-
-function toUpperCase(id_name) {
-	  var nKeyCode = window.event.keyCode ;
-	  if(nKeyCode!=37 && nKeyCode!=39 && nKeyCode!=8)
-	  {
-	   var obj = document.getElementById(id_name)
-	   var pos = getPos(obj);  
-	   upperCase(obj);  
-	   setPos(obj,pos);
-	  }
+Namespace.register("menu.add",{
+	saveMenu:function(){
+		$('#menuForm').form('submit', {  
+		    url:"menu/save", 
+		    dataType : 'json',  
+		    onSubmit: function(params){  
+		    	var isValid = $(this).form('validate');
+				return isValid;	// return false will stop the form submission
+		    },  
+		    success:function(data){ 
+		    	data = $.parseJSON(data);  
+		    	if(data.success){
+		    		menu.list.closeDialog();
+		    		menu.list.reload();
+		    		freshLeftMenu();
+		    		 $.dialog.tips(data.msg);
+		    	}else{
+		    		
+		    	}
+		    }  
+		});  
+		
+		
 	}
-function keyPress(event){
-	 var keyCode= event.keyCode;  
-     var realkey = String.fromCharCode(keyCode).toUpperCase();  
-     $(this).val($(this).val()+realkey);  
-     event.returnValue =false;  
 	
-}
-function saveMenu(){
-	$('#menuForm').form('submit', {  
-	    url:"menu/save", 
-	    dataType : 'json',  
-	    onSubmit: function(params){  
-	    	var isValid = $(this).form('validate');
-			return isValid;	// return false will stop the form submission
-	    },  
-	    success:function(data){ 
-	    	data = $.parseJSON(data);  
-	    	if(data.success){
-	    		$('#menudialog').dialog('close');
-	    		menunamespace.reload();
-	    		freshLeftMenu();
-	    		 $.dialog.tips(data.msg);
-	    	}else{
-	    		
-	    	}
-	    }  
-	});  
-}
-
+	
+});
 
 </script>

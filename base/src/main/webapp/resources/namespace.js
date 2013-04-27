@@ -10,8 +10,8 @@ Namespace.register = function(fullNS,params)
      sNS += nsArray[i];
      sEval += "if (typeof(" + sNS + ") == 'undefined') " + sNS + " = new Object();"
  }
- if (sEval != "") var nm=eval(sEval);
- 
+ if (sEval != "") eval(sEval);
+ var nm=eval(sNS);
  for(var key in params){
  	nm[key]=params[key];
  }
