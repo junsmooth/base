@@ -2,10 +2,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <script>
 Namespace.register("menu.list",{
-	formationOperation:function(value){
+	formatOperation:function(value){
 		 if(value){
-		        var edit='['+'<a href="#" onclick="menu.list.editMenu('+value+')">编辑</a>' +']';
-		        var del='['+ '<a href="#" onclick="menu.list.removeMenu('+value+' )">删除</a>'+']';
+		        var edit='['+'<a href="#" onclick="menu.list.edit('+value+')">编辑</a>' +']';
+		        var del='['+ '<a href="#" onclick="menu.list.remove('+value+' )">删除</a>'+']';
 		        return edit+del;
 		        }
 	},
@@ -14,7 +14,7 @@ Namespace.register("menu.list",{
 			    return '<image border="0" src='+value.iconPath+'/'+value.iconName+value.iconExtension+'/>'
 	},
 	
-	removeMenu:function(value){
+	remove:function(value){
 		 $.messager.confirm('提示', '确定要删除吗?', function(r){  
              if (r){  
               $.post('menu/remove',{id:value},function(data){
@@ -31,7 +31,7 @@ Namespace.register("menu.list",{
              }
          });  
 	},
-	editMenu:function(value){
+	edit:function(value){
 		   $('#menudialog').dialog({
 		        title: '修改菜单',
 		        width: 600,
@@ -86,7 +86,7 @@ menu.list.toolbar = [{
 				图标</th>
 			<th data-options="field:'url',width:280,align:'left'">菜单地址</th>
 			<th
-				data-options="field:'id',width:200,align:'left',formatter:menu.list.formationOperation">
+				data-options="field:'id',width:200,align:'left',formatter:menu.list.formatOperation">
 				操作</th>
 		</tr>
 	</thead>

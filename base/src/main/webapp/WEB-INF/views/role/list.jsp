@@ -3,7 +3,7 @@
 
 <table id="tt"
     class="easyui-datagrid"
-    data-options="rownumbers:true,singleSelect:true, idField: 'id', url:'role/list/data',toolbar:roleListToolBar">
+    data-options="rownumbers:true,singleSelect:true, idField: 'id', url:'role/list/data',toolbar:role.list.toolbar">
   <thead>
     <tr>
       <th data-options="field:'name',width:200,align:'left'">
@@ -12,7 +12,7 @@
  <th data-options="field:'roledesc',width:200,align:'left'">
         角色描述
       </th>
-       <th data-options="field:'id',width:200,align:'left',formatter:formatOperation">
+       <th data-options="field:'id',width:200,align:'left',formatter:role.list.formatOperation">
         操作
       </th>
     </tr>
@@ -20,19 +20,17 @@
 </table>
 <div id="roleDialog">
 </div>
-<script>
-  function formatOperation(value){
-    if(value){
-    var setAuth='['+'<a href="#" onclick="setAuth('+value+')">设置权限</a>' +']';
-    var del='['+ '<a href="#" onclick="remove('+value+' )">删除</a>'+']';
-    return setAuth+del;
-    }
-  }
-  function remove(id){
-  
-  }
-  function setAuth(id){
-   $('#roleDialog').dialog({
+<script type="text/javascript">
+Namespace.register("role.list",{
+	formatOperation:function(value){
+		 if(value){
+		        var setAuth='['+'<a href="#" onclick="setAuth('+value+')">设置权限</a>' +']';
+    			var del='['+ '<a href="#" onclick="remove('+value+' )">删除</a>'+']';
+   				return setAuth+del;
+		        }
+	},
+	setAuth:function(id){
+   		$('#roleDialog').dialog({
         title: '设置权限',
         width: 800,
         height: 200,
@@ -42,15 +40,43 @@
         href: 'role/editAuth?id='+id,
         modal: true
         });
-  }
-</script>
-<script type="text/javascript">
-
-  var roleListToolBar = [{
-    text:'Add',
+	},
+	remove:function(value){
+		 $.messager.confirm('提示', '确定要删除吗?', function(r){  
+             if (r){  
+              $.post('menu/remove',{id:value},function(data){
+	    			if(data.success){
+	    				user.list.reload();
+	    				$.dialog.tips(data.msg);
+	    	}
+ 	 });
+             }  else{
+             return;
+             }
+         });  
+	},
+	edit:function(value){
+		   $('#menudialog').dialog({
+		        title: '修改菜单',
+		        width: 600,
+		        height: 300,
+		        closed: false,
+		        resizable:true,
+		        cache: false,
+		        href: 'menu/addOrUpdate?id='+value,
+		        modal: true
+		        });
+		  },
+	reload:function(){
+		  	$('#usergrid').datagrid('reload');
+		  }
+	
+});
+role.list.toolbar = [{
+    text:'增加',
     iconCls:'icon-add',
     handler:function(){
-      $('#roleDialog').dialog({
+           $('#roleDialog').dialog({
         title: '增加角色',
         width: 600,
         height: 300,
@@ -60,53 +86,13 @@
         href: 'role/addOrUpdate',
         modal: true
         });
-
       }
     },'-',{
-      text:'Edit',
-      iconCls:'icon-edit',
-    handler:function(){
-    	var node=$('#tt').treegrid('getSelected');
-    	if(!node){
-    	 $.dialog.tips('请选择条目');
-    	}else{
-    	 $('#dd').dialog({
-        title: '增加菜单',
-        width: 600,
-        height: 300,
-        closed: false,
-        resizable:true,
-        cache: false,
-        href: 'menu/addOrUpdate?id='+node.id,
-        modal: true
-        });
-    	};
-    
-    }
-  },'-',{
-    text:'Delete',
-    iconCls:'icon-remove',
-  handler:function(){
-  	var node=$('#tt').treegrid('getSelected');
-    	if(!node){
-    	 $.dialog.tips('请选择条目');
-    	}else{
-    	 $.post('menu/remove',{id:node.id},function(data){
-    	 	//data = $.parseJSON(data);  
-	    	if(data.success){
-	    		//$('#dd').dialog('close');
-	    		reload();
-	    		freshLeftMenu();
-	    		 $.dialog.tips(data.msg);
-	    	}
-    	 });
-    	};
-  }
-  },'-',{
-    text:'Refresh',
+    text:'刷新',
     iconCls:'icon-reload',
-  handler:function(){
-  	reload();
+ 	handler:function(){
+	  role.list.reload();
   }
   }];
+ 
 </script>
