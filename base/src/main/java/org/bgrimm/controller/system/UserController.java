@@ -53,9 +53,8 @@ public class UserController {
 	}
 
 	@RequestMapping("addOrUpdate")
-	public String addOrUpdate(HttpServletRequest req, Model model,
-			@RequestParam long id) {
-		System.out.println(id);
+	public String addOrUpdate(HttpServletRequest req, Model model
+			) {
 		return "user/add";
 
 	}
