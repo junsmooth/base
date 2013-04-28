@@ -68,7 +68,7 @@ public class MenuController {
 			if(!(menu.getId()+"").equals(req.getParameter("id"))){
 				menuList.add(m);
 			}else{
-				//if have child,can't change parent path
+				//if (menu to edit) have child,can't change parent path
 				if(menu.getSubMenus()!=null&&menu.getSubMenus().size()>0){
 					menuList.clear();
 					break;
@@ -83,6 +83,7 @@ public class MenuController {
 			TMenu menu=menuService.getUniqueById(pid);
 			Map m=new HashMap();
 			TMenu tempParent=menu.getParentMenu();
+			//set subMenu&ParentMenu to null, in case of recursive parsing
 			menu.setParentMenu(null);
 			menu.setSubMenus(null);
 			m=BeanUtils.pojo2Map(menu);
