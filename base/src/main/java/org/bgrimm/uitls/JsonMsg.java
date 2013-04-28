@@ -11,7 +11,13 @@ public class JsonMsg {
 	public static JsonMsg simpleSuccessJson(){
 		return SUCCESS;
 	}
-	
+	public static JsonMsg createJsonMsg(boolean success,String msg,Object obj){
+		JsonMsg jm=new JsonMsg();
+		jm.setSuccess(success);
+		jm.setMsg(msg);
+		jm.setObj(obj);
+		return jm;
+	}
 	
 	public JsonMsg() {
 		

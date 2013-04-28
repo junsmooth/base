@@ -25,10 +25,12 @@
 	remove:function(value){
 		 $.messager.confirm('提示', '确定要删除吗?', function(r){  
              if (r){  
-              $.post('menu/remove',{id:value},function(data){
+              $.post('user/remove',{id:value},function(data){
 	    			if(data.success){
 	    				user.list.reload();
 	    				$.dialog.tips(data.msg);
+	    	}else{
+	    	$.dialog.tips(data.msg+":"+data.obj,600,'error.gif');
 	    	}
  	 });
              }  else{
@@ -57,14 +59,14 @@ user.list.toolbar = [{
     text:'增加',
     iconCls:'icon-add',
     handler:function(){
-      $('#menudialog').dialog({
-        title: '增加菜单',
+      $('#userdialog').dialog({
+        title: '添加用户',
         width: 600,
         height: 300,
         closed: false,
         resizable:true,
         cache: false,
-        href: 'menu/addOrUpdate',
+        href: 'user/addOrUpdate?id=',
         modal: true
         });
       }
@@ -80,20 +82,20 @@ user.list.toolbar = [{
   ];
  
 </script>
-<div class="easyui-layout" fit="true">
- <div region="center" style="padding:1px;border:1px;">
-<table id="usergrid"
+<div  class="easyui-layout" fit="true">
+<div  data-options="region:'center'" style="padding: 10px 0 10px 10px">
+<table id="usergrid" 
     class="easyui-datagrid" 
-    data-options="rownumbers:true,singleSelect:true, idField: 'id',url:'user/list/data',toolbar:user.list.toolbar,pagination:'true',fitColumns:'true',fit:'true'">
+    data-options="rownumbers:true,singleSelect:true, idField: 'id',url:'user/list/data',toolbar:user.list.toolbar,pagination:'true',fitColumns:true,fit:true">
   <thead>
     <tr>
-      <th data-options="field:'username',width:200,align:'left'">
+      <th data-options="field:'username',width:80,align:'left'">
         用户名
       </th>
       <th data-options="field:'realname',width:80,align:'left'">
         真实姓名
       </th>
-      <th data-options="field:'telephone',width:280,align:'left'">
+      <th data-options="field:'telephone',width:120,align:'left'">
         联系电话
       </th>
 	 <th
@@ -103,6 +105,5 @@ user.list.toolbar = [{
   </thead>
 </table>
 </div>
-<div id="userdialog">
 </div>
-
+<div id="userdialog">

@@ -55,9 +55,9 @@ Namespace.register('role.editAuth',{
   
 </script>
 <div class="easyui-layout" data-options="fit:true">
-<div data-options="region:'center'" style="padding: 10px 0 10px 10px">
+<div  data-options="region:'center'" style="padding: 10px 0 10px 10px">
 <table id="editAuthTable" class="easyui-treegrid"
-	data-options="rownumbers:true,singleSelect:true, idField: 'id', treeField: 'name',url:'role/auth/edit?id=${roleid}'">
+	data-options="fit:true,pagination:'true',rownumbers:true,singleSelect:true, idField: 'id', treeField: 'name',url:'role/auth/edit?id=${roleid}'">
 	<thead>
 
 		<tr>
@@ -74,7 +74,7 @@ Namespace.register('role.editAuth',{
 		</tr>
 	</thead>
 </table>
-
+</div>
 <div data-options="region:'south',border:false"
 		style="text-align: right; padding: 5px 0 0;">
 		<a class="easyui-linkbutton" data-options="iconCls:'icon-ok'"
