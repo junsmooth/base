@@ -11,10 +11,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.bgrimm.domain.system.TIcon;
 import org.bgrimm.domain.system.TMenu;
 import org.bgrimm.service.system.MenuService;
+import org.bgrimm.uitls.BeanUtils;
 import org.bgrimm.uitls.JsonMsg;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,16 +54,15 @@ public class MenuController {
 	
 	
 	@RequestMapping("addOrUpdate")
-	public String addOrUpdate(HttpServletRequest req,Model model) {
+	public String addOrUpdate(HttpServletRequest req,Model model) throws Exception {
 		List<TIcon> iconlist = menuService.getAllIcon();
 		List<TMenu> pMenus = menuService.getParentMenus();
 		model.addAttribute("iconlist", iconlist);
 		List menuList=new ArrayList();
 		for (TMenu menu : pMenus) {
 			Map m = new HashMap();
-			m.put("id", menu.getId());
-			m.put("name", menu.getMenuName());
-			m.put("module", menu.getModuleName());
+			menu.setParentMenu(null);
+			m=BeanUtils.pojo2Map(menu);
 			//remove self ,if exits. can't as child of self
 			if(!(menu.getId()+"").equals(req.getParameter("id"))){
 				menuList.add(m);
@@ -77,11 +75,8 @@ public class MenuController {
 			long pid=Long.parseLong(id);
 			TMenu menu=menuService.getUniqueById(pid);
 			Map m=new HashMap();
-			m.put("id", menu.getId());
-			m.put("name", menu.getMenuName());
-			m.put("module", menu.getModuleName());
-			m.put("url", menu.getUrl());
-			m.put("icon", menu.getIcon());
+			menu.setParentMenu(null);
+			m=BeanUtils.pojo2Map(menu);
 			m.put("parentid", menu.getParentMenu()!=null?menu.getParentMenu().getId():1);
 			model.addAttribute("menu",m);
 		}
@@ -106,30 +101,29 @@ public class MenuController {
 
 	@RequestMapping("list/data")
 	public @ResponseBody
-	List<Map> menuList() {
+	List<Map> menuList() throws Exception {
 		List<TMenu> pMenus = menuService.getParentMenus();
 		List<Map> result = new ArrayList();
 		for (TMenu menu : pMenus) {
 			Map m = new HashMap();
-			m.put("id", menu.getId());
-			m.put("name", menu.getMenuName());
-			m.put("module", menu.getModuleName());
-			m.put("url", menu.getUrl());
-			m.put("icon", menu.getIcon());
-			if (menu.getSubMenus() != null) {
+			m=BeanUtils.pojo2Map(menu);
+			List<TMenu> tempMenus=menu.getSubMenus();
+			menu.setSubMenus(null);
+			menu.setParentMenu(null);
+			if (tempMenus != null) {
 				List<Map> children = new ArrayList();
-				for (TMenu subMenu : menu.getSubMenus()) {
+				for (TMenu subMenu : tempMenus) {
 					Map m1 = new HashMap();
-					m1.put("id", subMenu.getId());
-					m1.put("name", subMenu.getMenuName());
-					m1.put("module", subMenu.getModuleName());
-					m1.put("url", subMenu.getUrl());
-					m1.put("icon", subMenu.getIcon());
+					subMenu.setParentMenu(null);
+					subMenu.setSubMenus(null);
+					m1=BeanUtils.pojo2Map(subMenu);
+					
 					children.add(m1);
 				}
 				m.put("children", children);
 			}
-
+//			m.put("parentMenu", null);
+//			m.put("subMenus", null);
 			result.add(m);
 		}
 		return result;

@@ -62,7 +62,7 @@ user.list.toolbar = [{
       $('#userdialog').dialog({
         title: '添加用户',
         width: 600,
-        height: 300,
+        height: 400,
         closed: false,
         resizable:true,
         cache: false,

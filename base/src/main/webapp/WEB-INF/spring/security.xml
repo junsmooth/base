@@ -16,7 +16,9 @@
 	<http auto-config='true' use-expressions="true">
 		<form-login />
 		<logout />
+		<session-management ></session-management>
 		<remember-me />
+		<form-login always-use-default-target="true" default-target-url="/" ></form-login>
 		<custom-filter ref="myFilter" before="FILTER_SECURITY_INTERCEPTOR" />
 	</http>
 

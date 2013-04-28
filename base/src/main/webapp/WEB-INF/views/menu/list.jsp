@@ -10,6 +10,7 @@ Namespace.register("menu.list",{
 		        }
 	},
 	formatIcon:function(value){
+		console.log(value);
 		 if(value)
 			    return '<image border="0" src='+value.iconPath+'/'+value.iconName+value.iconExtension+'/>'
 	},
@@ -77,10 +78,10 @@ menu.list.toolbar = [{
 
 </script>
 <table id="menutable" class="easyui-treegrid"
-	data-options="rownumbers:true,singleSelect:true, idField: 'id', treeField: 'name',url:'menu/list/data',toolbar:menu.list.toolbar">
+	data-options="rownumbers:true,singleSelect:true, idField: 'id', treeField: 'menuName',url:'menu/list/data',toolbar:menu.list.toolbar">
 	<thead>
 		<tr>
-			<th data-options="field:'name',width:200,align:'left'">菜单名称</th>
+			<th data-options="field:'menuName',width:200,align:'left'">菜单名称</th>
 			<th
 				data-options="field:'icon',width:80,align:'left',formatter:menu.list.formatIcon">
 				图标</th>

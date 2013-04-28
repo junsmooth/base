@@ -12,13 +12,13 @@
 				<tr>
 					<td>菜单名称:</td>
 					<td><input class="easyui-validatebox" type="text"
-						name="menuName" value="${menu.name}" data-options="required:true">
+						name="menuName" value="${menu.menuName}" data-options="required:true">
 						</input></td>
 				</tr>
 				<tr>
 					<td>模块名称:</td>
 					<td><input id="menumodulename" class="easyui-validatebox"
-						type="text" name="moduleName" value="${menu.module}"
+						type="text" name="moduleName" value="${menu.moduleName}"
 						data-options="required:true"> </input></td>
 				</tr>
 				<tr>
@@ -28,7 +28,7 @@
 							<c:forEach items="${menulist}" var="pMenu">
 								<option value="${pMenu.id}"
 									<c:if test="${menu.parentid==pMenu.id }">selected="selected"</c:if>>
-									${pMenu.name}</option>
+									${pMenu.menuName}</option>
 							</c:forEach>
 					</select></td>
 				</tr>
