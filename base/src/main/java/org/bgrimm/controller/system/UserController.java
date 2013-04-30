@@ -29,14 +29,15 @@ public class UserController {
 	public String list() {
 		return "user/list";
 	}
-
+	@RequestMapping("rolelist")
+	public String rolelist() {
+		return "user/roleList";
+	}
 	@RequestMapping("list/data")
 	public @ResponseBody
 	Object userList(@RequestParam int page, @RequestParam int rows) {
 		PagedQuery pq = new PagedQuery(TUser.class, page, rows);
 		PageList pl = commonService.getPagedList(pq);
-		System.out.println(pl.getRows());
-		System.out.println(pl.getTotal());
 		return pl;
 	}
 
@@ -53,8 +54,8 @@ public class UserController {
 	}
 
 	@RequestMapping("addOrUpdate")
-	public String addOrUpdate(HttpServletRequest req, Model model
-			) {
+	public String addOrUpdate(HttpServletRequest req, Model model,
+			@RequestParam long id) {
 		return "user/add";
 
 	}

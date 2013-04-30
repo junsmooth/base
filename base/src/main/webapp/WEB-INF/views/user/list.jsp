@@ -7,21 +7,10 @@
 		        var edit='['+'<a href="#" onclick="user.list.edit('+value+')">编辑</a>' +']';
 		        var del='['+ '<a href="#" onclick="user.list.remove('+value+' )">删除</a>'+']';
 		        var setRole='['+ '<a href="#" onclick="user.list.setRole('+value+' )">分配角色</a>'+']';
-		        return edit+setRole+del;
+		        return edit+del;
 		        }
 	},
-	setRole:function(value){
-	$('#userdialog').dialog({
-		        title: '分配角色',
-		        width: 600,
-		        height: 300,
-		        closed: false,
-		        resizable:true,
-		        cache: false,
-		        href: 'menu/addOrUpdate?id='+value,
-		        modal: true
-		        });
-	},
+
 	remove:function(value){
 		 $.messager.confirm('提示', '确定要删除吗?', function(r){  
              if (r){  
@@ -40,15 +29,18 @@
 	},
 	edit:function(value){
 		   $('#userdialog').dialog({
-		        title: '修改菜单',
+		        title: '用户编辑',
 		        width: 600,
-		        height: 300,
+		        height: 336,
 		        closed: false,
 		        resizable:true,
 		        cache: false,
-		        href: 'menu/addOrUpdate?id='+value,
+		        href: 'user/addOrUpdate?id='+value,
 		        modal: true
 		        });
+		  },
+		  closeDialog:function(){
+		  $('#userdialog').dialog('close');
 		  },
 	reload:function(){
 		  	$('#usergrid').datagrid('reload');
@@ -62,11 +54,11 @@ user.list.toolbar = [{
       $('#userdialog').dialog({
         title: '添加用户',
         width: 600,
-        height: 400,
+        height: 360,
         closed: false,
-        resizable:true,
+        //resizable:true,
         cache: false,
-        href: 'user/addOrUpdate?id=',
+        href: 'user/addOrUpdate?id=-1',
         modal: true
         });
       }

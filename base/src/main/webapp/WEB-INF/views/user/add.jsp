@@ -3,14 +3,11 @@
 <script>
 Namespace.register('user.add',{
 	save:function(){
-		$('#roleform').form('submit', {  
-		    url:"role/save", 
+		$('#user_addorupdate_form').form('submit', {  
+		    url:"user/save", 
 		    dataType : 'json',  
 		    onSubmit: function(params){  
 		    	var isValid = $(this).form('validate');
-				if (!isValid){
-					$.messager.progress('close');	// hide progress bar while the form is invalid
-				}
 				return isValid;	// return false will stop the form submission
 		    },  
 		    success:function(data){ 
@@ -22,61 +19,87 @@ Namespace.register('user.add',{
 		    	}
 		    }  
 		}); 
+	},
+	chooseRoles:function(){
+		
+		 $('#chooseroledialog').dialog({
+		        title: '角色列表',
+		        width: 300,
+		        height: 336,
+		        closed: false,
+		        resizable:true,
+		        cache: false,
+		        href: 'user/rolelist',
+		        modal: true
+		        });
+	},
+	closeDialog:function(){
+		 $('#chooseroledialog').dialog('close');
+	},
+	setRoles:function(value,ids){
+		$("#user_add_roles").attr("value",value);
+		$("#user_add_roleids").attr("value",ids);
+	},
+	clearRoles:function(){
+		$("#user_add_roles").attr("value","");
+		$("#user_add_roleids").attr("value","");
 	}
 });
 
 </script>
 <div class="easyui-layout" data-options="fit:true">
 	<div data-options="region:'center'" style="padding: 10px 0 10px 10px">
-		<form id="userform" method="post">
+		<form id="user_addorupdate_form" method="post">
 		<c:if test="${!empty user.id}"><input type="hidden" name="id" value="${user.id}"></input></c:if>
 		
 			<table>
 				<tr>
 					<td>用户名:</td>
 					<td><input class="easyui-validatebox" type="text"
-						name="name" value="${user.name}" data-options="required:true"> </input></td>
+						name="username" value="${user.username}" data-options="required:true"> </input></td>
 				</tr>
 				<tr>
 					<td>真实姓名:</td>
 					<td><input class="easyui-validatebox" type="text"
-						name="roledesc" value="${user.realname}" data-options="required:true"> </input></td>
+						name="realname" value="${user.realname}" data-options="required:true"> </input></td>
 				</tr>
 				<tr>
 					<td>密码:</td>
-					<td><input class="easyui-validatebox" type="text"
+					<td><input class="easyui-validatebox" type="password"
 						name="roledesc" value="${user.password}" data-options="required:true"> </input></td>
 				</tr>
 				<tr>
 					<td>重复密码:</td>
-					<td><input class="easyui-validatebox" type="text"
+					<td><input class="easyui-validatebox" type="password"
 						name="roledesc" value="${user.realname}" data-options="required:true"> </input></td>
 				</tr>
 					<tr>
 					<td>地址:</td>
 					<td><input class="easyui-validatebox" type="text"
-						name="roledesc" value="${user.realname}" > </input></td>
+						name="address" value="${user.address}" > </input></td>
 				</tr>
 					<tr>
 					<td>电话:</td>
 					<td><input class="easyui-validatebox" type="text"
-						name="roledesc" value="${user.realname}" > </input></td>
+						name="telephone" value="${user.telephone}" > </input></td>
 				</tr>
 					<tr>
 					<td>电子邮件:</td>
 					<td><input class="easyui-validatebox" type="text"
-						name="roledesc" value="${user.realname}" > </input></td>
+						name="email" value="${user.email}" > </input></td>
 				</tr>
 					<tr>
 					<td>角色:</td>
-					<td>  <input class="easyui-validatebox" type="text" readonly="readonly"
-						name="roledesc" value="${user.realname}" data-options="required:true"> </input>
+					<td>  
+					<input name="roleid"  name="roleid" type="hidden" value="${user.roleids}"  id="user_add_roleids">
+					<input id="user_add_roles" class="easyui-validatebox" type="text" readonly="readonly"
+						name="roles" value="${user.roles}" data-options="required:true"> </input>
      				 </td>
-     				 <td><a href="#" class="easyui-linkbutton l-btn l-btn-plain" plain="true"  onclick="choose()" id="">
+     				 <td><a href="#" class="easyui-linkbutton l-btn l-btn-plain" plain="true"  onclick="user.add.chooseRoles()" id="">
      				 <span class="l-btn-text icon-choose l-btn-icon-left">选择</span></a></td>
 					
 					
-					<td><a href="#" class="easyui-linkbutton l-btn l-btn-plain" plain="true"  onclick="clearAll();" id="">
+					<td><a href="#" class="easyui-linkbutton l-btn l-btn-plain" plain="true"  onclick="user.add.clearRoles();" id="">
 					<span class="l-btn-text icon-redo l-btn-icon-left">清空</span></a></td>
 				</tr>
 			</table>
@@ -86,13 +109,13 @@ Namespace.register('user.add',{
 	<div data-options="region:'south',border:false"
 		style="text-align: right; padding: 5px 0 0;">
 		<a class="easyui-linkbutton" data-options="iconCls:'icon-ok'"
-			href="javascript:void(0)" onclick="save()"> 保存 </a> <a
+			href="javascript:void(0)" onclick="user.add.save()"> 保存 </a> <a
 			class="easyui-linkbutton" data-options="iconCls:'icon-cancel'"
-			href="javascript:void(0)" onclick="role.list.closeDialog();">
+			href="javascript:void(0)" onclick="user.list.closeDialog();">
 
 			取消 </a>
 	</div>
 
 
 </div>
-
+<div id="chooseroledialog"></div>

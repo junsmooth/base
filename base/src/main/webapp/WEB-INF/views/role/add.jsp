@@ -25,7 +25,7 @@
 	<div data-options="region:'south',border:false"
 		style="text-align: right; padding: 5px 0 0;">
 		<a class="easyui-linkbutton" data-options="iconCls:'icon-ok'"
-			href="javascript:void(0)" onclick="save()"> 保存 </a> <a
+			href="javascript:void(0)" onclick="role.add.save()"> 保存 </a> <a
 			class="easyui-linkbutton" data-options="iconCls:'icon-cancel'"
 			href="javascript:void(0)" onclick="role.list.closeDialog();">
 
