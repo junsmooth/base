@@ -19,6 +19,8 @@
     </script>
      <script type="text/javascript" src="resources/namespace.js">
     </script>
+    <script type="text/javascript" src="resources/jquery.easyui.validate.js">
+    </script>
   </head>
   <body class="easyui-layout">
     <div 

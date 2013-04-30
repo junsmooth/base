@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.apache.commons.lang3.StringUtils;
 import org.bgrimm.domain.system.TIcon;
@@ -16,6 +17,7 @@ import org.bgrimm.uitls.JsonMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -97,7 +99,10 @@ public class MenuController {
 	}
 	
 	@RequestMapping("save")
-	public @ResponseBody JsonMsg saveMenu(TMenu menu){
+	public @ResponseBody JsonMsg saveMenu(@Valid TMenu menu,BindingResult result){
+		if (result.hasErrors()) {
+			return null;
+		}
 		menuService.saveOrUpdate(menu);
 		return JsonMsg.simpleSuccessJson();
 		

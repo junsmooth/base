@@ -10,10 +10,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 @Entity(name = "t_menu")
 public class TMenu extends IdEntity implements java.io.Serializable {
 	private static final long serialVersionUID = 7745791364255292541L;
 	@Column(name="menuname",nullable = false, length = 50)
+	@NotEmpty
 	private String menuName;
 	
 	@Column(name="modulename",nullable=false,length=50)

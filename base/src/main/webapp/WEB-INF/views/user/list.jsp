@@ -39,7 +39,7 @@
 		        modal: true
 		        });
 		  },
-		  closeDialog:function(){
+	closeDialog:function(){
 		  $('#userdialog').dialog('close');
 		  },
 	reload:function(){
@@ -74,7 +74,7 @@ user.list.toolbar = [{
   ];
  
 </script>
-<div  class="easyui-layout" fit="true">
+<div  class="easyui-layout" data-options="fit:true">
 <div  data-options="region:'center'" style="padding: 10px 0 10px 10px">
 <table id="usergrid" 
     class="easyui-datagrid" 
@@ -98,4 +98,4 @@ user.list.toolbar = [{
 </table>
 </div>
 </div>
-<div id="userdialog">
+<div id="userdialog"></div>

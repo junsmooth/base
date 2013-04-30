@@ -1,7 +1,11 @@
 package org.bgrimm.controller.system;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.bgrimm.domain.system.PageList;
 import org.bgrimm.domain.system.PagedQuery;
 import org.bgrimm.domain.system.TUser;
@@ -10,6 +14,8 @@ import org.bgrimm.uitls.JsonMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,14 +31,28 @@ public class UserController {
 		this.commonService = commonService;
 	}
 
+	@RequestMapping("save")
+	public @ResponseBody
+	JsonMsg save(@RequestBody MultiValueMap<String, String> user)
+			throws IllegalAccessException, InvocationTargetException {
+		Map m = user.toSingleValueMap();
+		TUser u = new TUser();
+		BeanUtils.populate(u, m);
+		
+		return JsonMsg.simpleSuccessJson();
+
+	}
+
 	@RequestMapping("list")
 	public String list() {
 		return "user/list";
 	}
+
 	@RequestMapping("rolelist")
 	public String rolelist() {
 		return "user/roleList";
 	}
+
 	@RequestMapping("list/data")
 	public @ResponseBody
 	Object userList(@RequestParam int page, @RequestParam int rows) {
