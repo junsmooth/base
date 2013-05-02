@@ -10,7 +10,7 @@ function registryLogout() {
 		$.messager.confirm('系统提示', '您确定要退出本次登录吗?', function(r) {
 
 			if (r) {
-				location.href = '/j_security_logout';
+				location.href = 'j_spring_security_logout';
 			}
 		});
 
