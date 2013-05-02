@@ -10,16 +10,8 @@ INSERT INTO `t_icon` VALUES (1,'pictures','.png','pictures','resources/custom/im
 
 
 INSERT INTO `t_user` (`id`,`address`,`cardno`,`email`,`password`,`realname`,`telephone`,`username`,`enabled`) VALUES (1,'ww','ww','ww','ww','ww','ww','ww',1);
-INSERT INTO `t_user` (`id`,`address`,`cardno`,`email`,`password`,`realname`,`telephone`,`username`,`enabled`) VALUES (2,NULL,NULL,NULL,NULL,'33',NULL,'22',1);
-INSERT INTO `t_user` (`id`,`address`,`cardno`,`email`,`password`,`realname`,`telephone`,`username`,`enabled`) VALUES (3,'123',NULL,NULL,NULL,NULL,'qe','qe',1);
-INSERT INTO `t_user` (`id`,`address`,`cardno`,`email`,`password`,`realname`,`telephone`,`username`,`enabled`) VALUES (4,'qe','e','qwe','qwe','qwe','qe','qe',1);
-INSERT INTO `t_user` (`id`,`address`,`cardno`,`email`,`password`,`realname`,`telephone`,`username`,`enabled`) VALUES (5,NULL,'e','qwe','qe','qweq','eq','e',1);
-INSERT INTO `t_user` (`id`,`address`,`cardno`,`email`,`password`,`realname`,`telephone`,`username`,`enabled`) VALUES (6,NULL,'qe','qe','qe','qwe','qew','e',1);
-INSERT INTO `t_user` (`id`,`address`,`cardno`,`email`,`password`,`realname`,`telephone`,`username`,`enabled`) VALUES (7,NULL,'qew','qe','qew','qwe','qwe','qew',1);
-INSERT INTO `t_user` (`id`,`address`,`cardno`,`email`,`password`,`realname`,`telephone`,`username`,`enabled`) VALUES (8,NULL,'qwe','qe','qwe','qwe','qew','qwe',1);
-INSERT INTO `t_user` (`id`,`address`,`cardno`,`email`,`password`,`realname`,`telephone`,`username`,`enabled`) VALUES (9,NULL,'qe','qe','qe','qe','qeq','e',1);
-INSERT INTO `t_user` (`id`,`address`,`cardno`,`email`,`password`,`realname`,`telephone`,`username`,`enabled`) VALUES (10,'q','eq','e','qe','qe','qe','qe',1);
-INSERT INTO `t_user` (`id`,`address`,`cardno`,`email`,`password`,`realname`,`telephone`,`username`,`enabled`) VALUES (11,NULL,'qe','qe','qe','qe','qe','qe',1);
+INSERT INTO `t_user` (`id`,`address`,`cardno`,`email`,`password`,`realname`,`telephone`,`username`,`enabled`) VALUES (2,NULL,NULL,NULL,'ww','33',NULL,'22',1);
+
 INSERT INTO `t_user` (`id`,`address`,`cardno`,`email`,`password`,`realname`,`telephone`,`username`,`enabled`) VALUES (12,NULL,'admin','admin','admin','admin','admin','admin',1);
 
 INSERT INTO `t_operation` VALUES (1,'View','VIEW');

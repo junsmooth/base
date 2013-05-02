@@ -3,6 +3,7 @@ package org.bgrimm.domain.system;
 import java.util.Collection;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -10,6 +11,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Transient;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -18,6 +20,7 @@ public class TUser extends IdEntity implements UserDetails,
 		java.io.Serializable {
 	private static final long serialVersionUID = 2048463947914157677L;
 	private String username;
+	@NotEmpty
 	private String realname;
 	private String password;
 	private String email;

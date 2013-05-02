@@ -16,13 +16,16 @@ Namespace.register('user.add',{
 		    		user.list.closeDialog();
 		    		user.list.reload();
 		    		 $.dialog.tips(data.msg);
+		    	}else{
+		    		//$.dialog.tips(data.msg);
+		    		alert(data.msg+":"+data.obj);
 		    	}
 		    }  
 		}); 
 	},
 	chooseRoles:function(){
 		
-		 $('#chooseroledialog').dialog({
+		 $('#choose_role_dialog').dialog({
 		        title: '角色列表',
 		        width: 300,
 		        height: 336,
@@ -34,7 +37,7 @@ Namespace.register('user.add',{
 		        });
 	},
 	closeDialog:function(){
-		 $('#chooseroledialog').dialog('close');
+		 $('#choose_role_dialog').dialog('close');
 	},
 	setRoles:function(value,ids){
 		$("#user_add_roles").attr("value",value);
@@ -55,24 +58,36 @@ Namespace.register('user.add',{
 			<table>
 				<tr>
 					<td>用户名:</td>
-					<td><input class="easyui-validatebox" type="text"
-						name="username" value="${user.username}" data-options="required:true"> </td>
+					<td>
+					
+					<c:choose>
+						<c:when test="${empty user.id}">
+						<input class="easyui-validatebox" type="text" 
+						name="username" value="${user.username}" data-options="required:true"> 
+						</c:when>
+						<c:otherwise>
+							${user.username }
+						</c:otherwise>
+					</c:choose>
+					</td>
 				</tr>
 				<tr>
 					<td>真实姓名:</td>
 					<td><input class="easyui-validatebox" type="text"
 						name="realname" value="${user.realname}" data-options="required:true"> </td>
 				</tr>
+				<c:if test="${empty user.id}">
 				<tr>
 					<td>密码:</td>
 					<td><input id="txtpasswd" class="easyui-validatebox" type="password"
-						name="password" value="${user.password}" data-options="required:true"> </td>
+						name="password"  data-options="required:true"> </td>
 				</tr>
 				<tr>
 					<td>重复密码:</td>
 					<td><input class="easyui-validatebox" type="password"
-						name="repassword" value="${user.realname}" data-options="required:true,validType:'equalTo[txtpasswd]'"></td>
+						name="repassword"  data-options="required:true,validType:'equalTo[txtpasswd]'"></td>
 				</tr>
+				</c:if>
 					<tr>
 					<td>地址:</td>
 					<td><input class="easyui-validatebox" type="text"
@@ -93,7 +108,7 @@ Namespace.register('user.add',{
 					<td>  
 					<input  name="roleids" type="hidden" value="${user.roleids}"  id="user_add_roleids">
 					<input id="user_add_roles" class="easyui-validatebox" type="text" readonly="readonly"
-						name="rolenames" value="${user.roles}" data-options="required:true"> 
+						name="rolenames" value="${user.rolenames}" data-options="required:true"> 
      				 </td>
      				 <td><a href="#" class="easyui-linkbutton l-btn l-btn-plain" data-options="plain:true"  onclick="user.add.chooseRoles()" id="">
      				 <span class="l-btn-text icon-choose l-btn-icon-left">选择</span></a></td>
@@ -118,4 +133,4 @@ Namespace.register('user.add',{
 
 
 </div>
-<div id="chooseroledialog"></div>
+<div id="choose_role_dialog"></div>

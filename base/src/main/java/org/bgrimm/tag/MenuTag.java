@@ -8,6 +8,9 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import org.bgrimm.domain.system.TMenu;
+import org.bgrimm.uitls.JSONUtils;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 public class MenuTag extends TagSupport {
 	private static final long serialVersionUID = 5235848893919233497L;
@@ -48,6 +51,14 @@ public class MenuTag extends TagSupport {
 
 	public String createMenus() {
 		StringBuffer menuString = new StringBuffer();
+		Object principal = SecurityContextHolder.getContext()
+				.getAuthentication();
+		if (principal != null
+				&& principal instanceof UsernamePasswordAuthenticationToken) {
+			UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) principal;
+			String user=token.getName();
+			
+		}
 		for (TMenu pMenu : parentMenus) {
 			String title = pMenu.getMenuName();
 			String iconCls = pMenu.getIcon() == null ? "folder" : pMenu

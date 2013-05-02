@@ -45,10 +45,6 @@
     <div id="leftDiv" href="menu/left" data-options="region:'west',split:true,title:'导航菜单'" style="width: 150px; padding: 1px;">
       
     </div>
-    <!--
-      <div data-options="region:'east',split:true,collapsed:true,title:'East'" style="width: 100px; padding: 10px;">east
-      region</div>
-    -->
     <div data-options="region:'south',border:false" style="height: 25px;overflow: hidden;">
       <div align="center" style="color: #CC99FF; padding-top: 2px">
     &copy; 版权所有
@@ -56,7 +52,7 @@
    </div>
     </div>
     <div data-options="region:'center'">
-      <div id="tabs" class="easyui-tabs" fit="true" border="false">
+      <div id="tabs" class="easyui-tabs"  data-options="fit:true,border:false">
         <div title="欢迎使用" style="padding: 20px; overflow: hidden;" id="home">
 
           <h1>

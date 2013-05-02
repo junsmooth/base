@@ -1,7 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<div class="easyui-layout" fit="true">
-<div region="center" style="padding:1px;border:1px;">
+<div class="easyui-layout" data-options="fit:true">
+<div  style="padding:1px;border:1px;" data-options="region:'center'">
 <table id="rolisttable"
     class="easyui-datagrid"
     data-options="rownumbers:true, idField: 'id', url:'role/list/data'">
