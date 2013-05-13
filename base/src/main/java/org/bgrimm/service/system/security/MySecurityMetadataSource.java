@@ -63,6 +63,15 @@ public class MySecurityMetadataSource implements
 		}
 		
 		String requestUrl = ((FilterInvocation) object).getRequestUrl();
+		//if requestUrl contains menu/left
+		//return ROLE_ROOT_VIEW
+		//
+		if(requestUrl.contains("menu/left")){
+			Collection<ConfigAttribute> configAttributes = new HashSet<ConfigAttribute>();
+			ConfigAttribute cofig = new SecurityConfig("ROLE_ROOT_VIEW");
+			configAttributes.add(cofig);
+			return configAttributes;
+		}
 		if (logger.isInfoEnabled()) {
 			logger.info("getAttributes(Object) - String requestUrl=" + requestUrl); //$NON-NLS-1$
 		}

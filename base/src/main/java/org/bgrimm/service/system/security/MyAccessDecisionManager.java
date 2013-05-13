@@ -1,13 +1,3 @@
-
-
-
-
-
-
-
-
-
-
 package org.bgrimm.service.system.security;
 
 import java.util.Collection;
@@ -34,9 +24,10 @@ public class MyAccessDecisionManager implements AccessDecisionManager {
 	public void decide(Authentication authentication, Object object,
 			Collection<ConfigAttribute> configAttributes)
 			throws AccessDeniedException, InsufficientAuthenticationException {
-		if (logger.isDebugEnabled()) {
-			logger.debug("decide(Authentication, Object, Collection<ConfigAttribute>) - start"); //$NON-NLS-1$
+		if (logger.isInfoEnabled()) {
+			logger.info("decide(Authentication, Object, Collection<ConfigAttribute>) - decide: - object=" + object); //$NON-NLS-1$
 		}
+
 		if (configAttributes == null) {
 			return;
 		}

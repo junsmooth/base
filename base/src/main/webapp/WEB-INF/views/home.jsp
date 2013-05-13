@@ -56,7 +56,7 @@
         <div title="欢迎使用" style="padding: 20px; overflow: hidden;" id="home">
 
           <h1>
-            Welcome to EasyUI!
+            Welcome!
           </h1>
 
         </div>
