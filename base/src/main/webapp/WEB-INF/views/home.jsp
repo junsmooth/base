@@ -1,10 +1,11 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="security"uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
     <title>
-      jQuery EasyUI Demo
+      Management System
     </title>
     <link rel="stylesheet" type="text/css" href="resources/themes/bootstrap/easyui.css">
     <link rel="stylesheet" type="text/css" href="resources/themes/icon.css">
@@ -21,6 +22,8 @@
     </script>
     <script type="text/javascript" src="resources/jquery.easyui.validate.js">
     </script>
+     <script type="text/javascript" src="resources/authority.js">
+    </script>
   </head>
   <body class="easyui-layout">
     <div 
@@ -29,7 +32,7 @@
 
 
       <span style="float: right; padding-right: 20px;" class="head">
-        欢迎
+        欢迎:<security:authentication property="principal.username" />
         <a href="#" id="editpass">
           修改密码
         </a>

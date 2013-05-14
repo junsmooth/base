@@ -1,13 +1,3 @@
-
-
-
-
-
-
-
-
-
-
 package org.bgrimm.tag;
 
 import org.apache.log4j.Logger;

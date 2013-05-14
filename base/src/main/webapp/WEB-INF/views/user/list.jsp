@@ -1,13 +1,18 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="security"uri="http://www.springframework.org/security/tags" %>
 <script type="text/javascript">
+
+
  Namespace.register("user.list",{
 	formatOperation:function(value){
 		 if(value){
 		        var edit='['+'<a href="#" onclick="user.list.edit('+value+')">编辑</a>' +']';
 		        var del='['+ '<a href="#" onclick="user.list.remove('+value+' )">删除</a>'+']';
-		        var setRole='['+ '<a href="#" onclick="user.list.setRole('+value+' )">分配角色</a>'+']';
-		        return edit+del;
+		      	if(hasRole('ROLE_USER_EDIT')){
+		      		 return edit+del;
+		      	}
+		       	
 		        }
 	},
 
@@ -50,6 +55,7 @@
 user.list.toolbar = [{
     text:'增加',
     iconCls:'icon-add',
+    disabled:hasRole('ROLE_USER_EDIT'),
     handler:function(){
       $('#userdialog').dialog({
         title: '添加用户',

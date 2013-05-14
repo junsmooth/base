@@ -209,7 +209,8 @@ public class CommonDao implements ICommonDao {
 //		if (projection == null) {
 //			criteria.setResultTransformer(CriteriaSpecification.ROOT_ENTITY);
 //		}
-		criteria.setResultTransformer(CriteriaSpecification.ROOT_ENTITY);
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		//criteria.setResultTransformer(CriteriaSpecification.ROOT_ENTITY);
 		int offset = PagerUtil.getOffset(allCounts, pq.getCurrentPage(),
 				pq.getPageSize());
 		criteria.setFirstResult(offset);
