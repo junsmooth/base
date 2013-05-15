@@ -3,6 +3,7 @@ package org.bgrimm.service.system;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bgrimm.dao.core.impl.CommonDao;
 import org.bgrimm.domain.system.TIcon;
 import org.bgrimm.domain.system.TMenu;
 import org.hibernate.criterion.Restrictions;
@@ -19,7 +20,7 @@ public class MenuService {
 //	@Autowired
 //	private MenuDao menuDao;
 	@Autowired
-private CommonService commonService;
+	private CommonDao commonDao;
 	private List<String> getCurrentAuthorities() {
 		UserDetails userDetails = (UserDetails) SecurityContextHolder
 				.getContext().getAuthentication().getPrincipal();
@@ -32,29 +33,29 @@ private CommonService commonService;
 	}
 
 	public void removeEntity(long id	){
-		commonService.deleteEntityById(TMenu.class, id);
+		commonDao.deleteEntityById(TMenu.class, id);
 	}
 	public List<TMenu> getParentMenus() {
-		return commonService.findByCriterion(TMenu.class,
+		return commonDao.findByCriterions(TMenu.class,
 				Restrictions.eq("parentMenu.id", 1L));
 	}
 	public TMenu getRootMenu() {
-		return commonService.findUniqueByProperty(TMenu.class, "id", 1L);
+		return commonDao.findUniqueByProperty(TMenu.class, "id", 1L);
 	}
 	public List<TMenu> getAllMenus(){
-		return commonService.loadAll(TMenu.class);
+		return commonDao.loadAll(TMenu.class);
 	}
 	
 	public List<TIcon> getAllIcon() {
-		return commonService.loadAll(TIcon.class);
+		return commonDao.loadAll(TIcon.class);
 	}
 
 	public TMenu getUniqueById(long pid) {
-		return commonService.findUniqueByProperty(TMenu.class, "id", pid);
+		return commonDao.findUniqueByProperty(TMenu.class, "id", pid);
 	}
 
 	public void saveOrUpdate(TMenu menu) {
-		commonService.saveOrUpdate(menu);
+		commonDao.saveOrUpdate(menu);
 	}
 
 //	public List<TMenu> getSubMenus(int id) {

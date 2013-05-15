@@ -188,7 +188,7 @@ public class CommonServiceImpl implements CommonService {
 	}
 
 	public PageList getPagedList(PagedQuery pq) {
-		return commonDao.getPageList(pq);
+		return commonDao.getPagedList(pq);
 	}
 
 

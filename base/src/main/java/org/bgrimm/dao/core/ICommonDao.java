@@ -32,7 +32,7 @@ public interface ICommonDao {
 	public <T> List<T> findListbySql(String query);
 	public <T> List<T> findByPropertyisOrder(Class<T> entityClass, String propertyName, Object value, boolean isAsc);
 	public Map<Object,Object> getHashMapbyQuery(String query);
-	public PageList getPageList(PagedQuery pq);
+	public PageList getPagedList(PagedQuery pq);
 	
 	
 	

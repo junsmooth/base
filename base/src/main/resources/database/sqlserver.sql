@@ -20,6 +20,9 @@ INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url],[iconid
 INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url],[iconid],[parentid] ) VALUES ( 3 , '用户管理' , 'USER' , 'USER' , 'user/list',NULL,2)
 INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url],[iconid],[parentid] ) VALUES ( 4 , '菜单管理' , 'MENU' , 'MENU' , 'menu/list',NULL,2)
 INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url],[iconid],[parentid] ) VALUES ( 5 , '角色管理' , 'ROLE' , 'ROLE' , 'role/list',NULL,2)
+INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url],[iconid],[parentid] ) VALUES ( 6 , '参数配置' , 'CONFIG' , 'CONFIG' , 'config',NULL,1)
+INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url],[iconid],[parentid] ) VALUES ( 7 , '监测类型' , 'MONTYPE' , 'MONTYPE' , 'config/montype',NULL,6)
+INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url],[iconid],[parentid] ) VALUES ( 8 , '监测点' , 'MONPOINT' , 'MONPOINT' , 'config/monpoint',NULL,6)
 SET IDENTITY_INSERT [t_menu] OFF
 
 SET IDENTITY_INSERT [t_operation] ON

@@ -69,25 +69,25 @@ public class RoleController {
 			String opids = pair.get("auths");
 			String[] ids = StringUtils.split(opids, ",");
 			
-			TMenu menu = roleService.getCommonService().findUniqueByProperty(
+			TMenu menu = roleService.getCommonDao().findUniqueByProperty(
 					TMenu.class, "id", menuid);
 			
 			for(String opid:ids){
 				long oid=Long.parseLong(opid);
-				TOperation operation=roleService.getCommonService().findUniqueByProperty(TOperation.class, "id", oid);
+				TOperation operation=roleService.getCommonDao().findUniqueByProperty(TOperation.class, "id", oid);
 				String AUTHORITY="ROLE_"+menu.getModuleName()+"_"+operation.getOpcode();
-				TAuthority auth=roleService.getCommonService().findUniqueByProperty(TAuthority.class, "name", AUTHORITY);
+				TAuthority auth=roleService.getCommonDao().findUniqueByProperty(TAuthority.class, "name", AUTHORITY);
 				if(auth==null){
 					auth=new TAuthority();
 					auth.setName(AUTHORITY);
-					roleService.getCommonService().saveOrUpdate(auth);
+					roleService.getCommonDao().saveOrUpdate(auth);
 				}
 				
 				authSets.add(auth);
 			}
 		}
 		role.setAuths(authSets);
-		roleService.getCommonService().saveOrUpdate(role);
+		roleService.getCommonDao().saveOrUpdate(role);
 		return "";
 	}
 
@@ -107,7 +107,7 @@ public class RoleController {
 		String id = req.getParameter("id");
 
 		if (StringUtils.isNumeric(id)) {
-			List<TOperation> operations = roleService.getCommonService()
+			List<TOperation> operations = roleService.getCommonDao()
 					.loadAll(TOperation.class);
 			model.addAttribute("roleid", id);
 			List<Map> ops = new ArrayList();
@@ -127,7 +127,7 @@ public class RoleController {
 	Object getAuth(HttpServletRequest req, Model model, @RequestParam String id) {
 		// String id = req.getParameter("id");
 		List<Map> result = new ArrayList();
-		List<TOperation> operations = roleService.getCommonService().loadAll(
+		List<TOperation> operations = roleService.getCommonDao().loadAll(
 				TOperation.class);
 		if (StringUtils.isNumeric(id)) {
 			TMenu menu = menuService.getRootMenu();

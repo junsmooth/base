@@ -197,7 +197,7 @@ public class CommonDao implements ICommonDao {
 
 	}
 
-	public PageList getPageList(PagedQuery pq) {
+	public PageList getPagedList(PagedQuery pq) {
 
 		Criteria criteria = pq.getDetachedCriteria().getExecutableCriteria(
 				getSession());
