@@ -32,7 +32,7 @@
 
 
       <span style="float: right; padding-right: 20px;" class="head">
-        欢迎:<security:authentication property="principal.username" />
+        欢迎:
         <a href="#" id="editpass">
           修改密码
         </a>

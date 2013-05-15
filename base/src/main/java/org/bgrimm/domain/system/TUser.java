@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -27,6 +28,8 @@ public class TUser extends IdEntity implements UserDetails,
 	private String telephone;
 	private String address;
 	private String cardno;
+	@Column
+	@org.hibernate.annotations.Type(type="yes_no")
 	private boolean enabled=true;
 	public Collection<? extends GrantedAuthority> getAuthoritis() {
 		return authoritis;

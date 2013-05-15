@@ -55,7 +55,7 @@ Namespace.register("menu.list",{
 menu.list.toolbar = [{
     text:'增加',
     iconCls:'icon-add',
-    disabled:hasRole('ROLE_MENU_EDIT'),
+    disabled:!hasRole('ROLE_MENU_EDIT'),
     handler:function(){
       $('#menudialog').dialog({
         title: '增加菜单',

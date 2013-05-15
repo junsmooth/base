@@ -82,7 +82,7 @@ Namespace.register("role.list",{
 role.list.toolbar = [{
     text:'增加',
     iconCls:'icon-add',
-    disabled:hasRole('ROLE_ROLE_EDIT'),
+    disabled:!hasRole('ROLE_ROLE_EDIT'),
     handler:function(){
            $('#roleDialog').dialog({
         title: '增加角色',

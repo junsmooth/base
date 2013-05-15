@@ -55,7 +55,7 @@
 user.list.toolbar = [{
     text:'增加',
     iconCls:'icon-add',
-    disabled:hasRole('ROLE_USER_EDIT'),
+    disabled:!hasRole('ROLE_USER_EDIT'),
     handler:function(){
       $('#userdialog').dialog({
         title: '添加用户',

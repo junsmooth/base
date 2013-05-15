@@ -3,8 +3,9 @@ INSERT INTO `t_menu` (`id`,`menuname`,`modulename`,`menuorder`,`url`,`iconid`,`p
 INSERT INTO `t_menu` (`id`,`menuname`,`modulename`,`menuorder`,`url`,`iconid`,`parentid`) VALUES (3,'用户管理','USER','bb','user/list',NULL,2);
 INSERT INTO `t_menu` (`id`,`menuname`,`modulename`,`menuorder`,`url`,`iconid`,`parentid`) VALUES (4,'菜单管理','MENU','cc','menu/list',NULL,2);
 INSERT INTO `t_menu` (`id`,`menuname`,`modulename`,`menuorder`,`url`,`iconid`,`parentid`) VALUES (5,'角色管理','ROLE','cc','role/list',NULL,2);
-
-
+INSERT INTO `t_menu` (`id`,`menuname`,`modulename`,`menuorder`,`url`,`iconid`,`parentid`) VALUES (6, '参数配置', 'CONFIG', 'CONFIG', 'config', NULL, 1);
+INSERT INTO `t_menu` (`id`,`menuname`,`modulename`,`menuorder`,`url`,`iconid`,`parentid`) VALUES (7, '监测类型', 'MONTYPE', 'MONTYPE', 'config/montype', NULL, 6);
+INSERT INTO `t_menu` (`id`,`menuname`,`modulename`,`menuorder`,`url`,`iconid`,`parentid`) VALUES (8, '监测点', 'MONPOINT', 'MONPOINT', 'config/monpoint', NULL, 6);
 
 INSERT INTO `t_icon` VALUES (1,'pictures','.png','pictures','resources/custom/images');
 
