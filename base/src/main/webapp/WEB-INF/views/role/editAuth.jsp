@@ -57,7 +57,7 @@ Namespace.register('role.editAuth',{
 <div class="easyui-layout" data-options="fit:true">
 <div  data-options="region:'center'" style="padding: 10px 0 10px 10px">
 <table id="editAuthTable" class="easyui-treegrid"
-	data-options="fit:true,pagination:'true',rownumbers:true,singleSelect:true, idField: 'id', treeField: 'name',url:'role/auth/edit?id=${roleid}'">
+	data-options="fit:true,rownumbers:true,singleSelect:true, idField: 'id', treeField: 'name',url:'role/auth/edit?id=${roleid}'">
 	<thead>
 
 		<tr>

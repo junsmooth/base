@@ -16,10 +16,10 @@
 
 SET IDENTITY_INSERT [t_menu] ON
 INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url],[iconid],[parentid] ) VALUES ( 1 , 'ROOT' , 'ROOT' , 'ROOT' , '/',NULL,NULL )
-INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url],[iconid],[parentid] ) VALUES ( 2 , 'Á≥ªÁªüÁÆ°ÁêÜ' , 'SYSTEM' , 'SYSTEM' , 'system',NULL,1 )
-INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url],[iconid],[parentid] ) VALUES ( 3 , 'Áî®Êà∑ÁÆ°ÁêÜ' , 'USER' , 'USER' , 'user/list',NULL,2)
-INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url],[iconid],[parentid] ) VALUES ( 4 , 'ËèúÂçïÁÆ°ÁêÜ' , 'MENU' , 'MENU' , 'menu/list',NULL,2)
-INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url],[iconid],[parentid] ) VALUES ( 5 , 'ËßíËâ≤ÁÆ°ÁêÜ' , 'ROLE' , 'ROLE' , 'role/list',NULL,2)
+INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url],[iconid],[parentid] ) VALUES ( 2 , 'œµÕ≥π‹¿Ì' , 'SYSTEM' , 'SYSTEM' , 'system',NULL,1 )
+INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url],[iconid],[parentid] ) VALUES ( 3 , '”√ªßπ‹¿Ì' , 'USER' , 'USER' , 'user/list',NULL,2)
+INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url],[iconid],[parentid] ) VALUES ( 4 , '≤Àµ•π‹¿Ì' , 'MENU' , 'MENU' , 'menu/list',NULL,2)
+INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url],[iconid],[parentid] ) VALUES ( 5 , 'Ω«…´π‹¿Ì' , 'ROLE' , 'ROLE' , 'role/list',NULL,2)
 SET IDENTITY_INSERT [t_menu] OFF
 
 SET IDENTITY_INSERT [t_operation] ON
@@ -32,15 +32,15 @@ SET IDENTITY_INSERT [t_operation] OFF
 
 SET IDENTITY_INSERT [t_authority] ON
 INSERT [t_authority] ( [id] , [description] , [name] ) VALUES ( 1 , NULL,'ROLE_SYSTEM');
-INSERT [t_authority] ( [id] , [description] , [name] ) VALUES ( 1 , NULL,'ROLE_USER_QUERY');
-INSERT [t_authority] ( [id] , [description] , [name] ) VALUES ( 1 , NULL,'ROLE_USER_EDIT');
+INSERT [t_authority] ( [id] , [description] , [name] ) VALUES ( 2 , NULL,'ROLE_USER_QUERY');
+INSERT [t_authority] ( [id] , [description] , [name] ) VALUES ( 3 , NULL,'ROLE_USER_EDIT');
 
 
  SET IDENTITY_INSERT [t_authority] OFF
 
  SET IDENTITY_INSERT [t_role] ON
 
- INSERT [t_role] ( [id] , [name] , [roledesc] ) VALUES ( 1 , 'Á≥ªÁªüÁÆ°ÁêÜÂëò' , 'SYSMANAGE' )
+ INSERT [t_role] ( [id] , [name] , [roledesc] ) VALUES ( 1 , 'œµÕ≥π‹¿Ì‘±' , 'SYSMANAGE' )
 
  SET IDENTITY_INSERT [t_role] OFF
 
