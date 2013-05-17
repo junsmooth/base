@@ -67,7 +67,7 @@ Namespace.register("role.list",{
 		        closed: false,
 		        resizable:true,
 		        cache: false,
-		        href: 'menu/addOrUpdate?id='+value,
+		        href: 'role/addOrUpdate?id='+value,
 		        modal: true
 		        });
 		  },

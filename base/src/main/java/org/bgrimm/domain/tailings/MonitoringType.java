@@ -12,7 +12,7 @@ public class MonitoringType extends IdEntity {
 	// RAIN DRYBEACH ...
 	private String name;
 	private String code;
-	private String table;
+	private String tableName;
 	public String getName() {
 		return name;
 	}
@@ -25,16 +25,11 @@ public class MonitoringType extends IdEntity {
 	public void setCode(String code) {
 		this.code = code;
 	}
-	public String getTable() {
-		return table;
+	public String getTableName() {
+		return tableName;
 	}
-	public void setTable(String table) {
-		this.table = table;
-	}
-	@Override
-	public String toString() {
-		return "MonitoringType [name=" + name + ", code=" + code + ", table="
-				+ table + "]";
+	public void setTableName(String tableName) {
+		this.tableName = tableName;
 	}
 
 }

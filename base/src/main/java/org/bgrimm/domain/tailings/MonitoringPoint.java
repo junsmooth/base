@@ -13,6 +13,7 @@ import org.bgrimm.domain.system.IdEntity;
 @Entity
 @Table(name = "t_monpoint")
 public class MonitoringPoint extends IdEntity{
+	private String monitoringName;
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "montypeid")
 	private MonitoringType type;
@@ -35,5 +36,5 @@ public class MonitoringPoint extends IdEntity{
 	public void setMonitoringName(String monitoringName) {
 		this.monitoringName = monitoringName;
 	}
-	private String monitoringName;
+	
 }

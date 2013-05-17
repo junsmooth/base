@@ -1,4 +1,4 @@
-package org.bgrimm.service;
+package org.bgrimm.service.system;
 
 import java.util.HashSet;
 import java.util.Set;

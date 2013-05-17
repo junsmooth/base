@@ -97,7 +97,7 @@ public class RoleController {
 		if (StringUtils.isNumeric(id)) {
 			long pid = Long.parseLong(id);
 			TRole role = roleService.getUniqueById(pid);
-			model.addAttribute("menu", role);
+			model.addAttribute("role", role);
 		}
 		return "role/add";
 	}
