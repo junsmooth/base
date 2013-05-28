@@ -1,7 +1,8 @@
 package org.bgrimm.service;
 
+import java.util.List;
+
 import org.bgrimm.dao.core.impl.CommonDao;
-import org.bgrimm.domain.system.TRole;
 import org.bgrimm.domain.tailings.MonitoringPoint;
 import org.bgrimm.domain.tailings.MonitoringType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ public class ConfigService {
 	@Autowired
 	public CommonDao commonDao;
 
-	public Object getAllMonType() {
+	public List<MonitoringType> getAllMonType() {
 		return commonDao.loadAll(MonitoringType.class);
 	}
 
@@ -30,8 +31,24 @@ public class ConfigService {
 		commonDao.deleteEntityById(MonitoringType.class, id);
 	}
 
-	public Object getAllMonPoint() {
+	public List<MonitoringPoint> getAllMonPoint() {
 		return commonDao.loadAll(MonitoringPoint.class);
+	}
+
+	public MonitoringPoint getUniqueMonPointById(long pid) {
+		return commonDao.findUniqueByProperty(MonitoringPoint.class, "id", pid);
+	}
+
+	public Object isValidMonPointName(String monName) {
+		MonitoringPoint mp=commonDao.findUniqueByProperty(MonitoringPoint.class, "monitoringName", monName);
+		if(mp==null){
+			return true;
+		}
+		return false;
+	}
+
+	public void saveOrUpdateMonPoint(MonitoringPoint mon) {
+		commonDao.saveOrUpdate(mon);
 	}
 
 }

@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="security"uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <script type="text/javascript">
 
 
@@ -24,7 +24,7 @@
 	    				config.monType.reload();
 	    				$.dialog.tips(data.msg);
 	    	}else{
-	    	$.dialog.tips(data.msg+":"+data.obj,600,'error.gif');
+	    	$.dialog.tips(data.msg+":"+data.obj,5,'error.gif');
 	    	}
  	 });
              }  else{

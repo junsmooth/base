@@ -15,8 +15,9 @@ Namespace.register('role.editAuth',{
     		  data: {roleid:roleid,
     			data:result
     		  },
-    		  success: function(){
-    			  console.log("success.");
+    		  success: function(data){
+    			  role.list.closeDialog();
+    			  $.dialog.tips(data.msg);
     		  },
     		  dataType: "json"
     		});

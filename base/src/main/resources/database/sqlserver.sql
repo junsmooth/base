@@ -23,6 +23,13 @@ INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url],[iconid
 INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url],[iconid],[parentid] ) VALUES ( 6 , '参数配置' , 'CONFIG' , 'CONFIG' , 'config',NULL,1)
 INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url],[iconid],[parentid] ) VALUES ( 7 , '监测类型' , 'MONTYPE' , 'MONTYPE' , 'config/montype',NULL,6)
 INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url],[iconid],[parentid] ) VALUES ( 8 , '监测点' , 'MONPOINT' , 'MONPOINT' , 'config/monpoint',NULL,6)
+INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 9 , '实时分析' , 'CHART' , 'chart' , 1 , 1 )
+INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 10 , '表面位移过程线' , 'BMWYCHART' , 'chart/bmwy' , 1 , 9 )
+INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 11 , '历史数据' , 'DATA' , 'data' , 1 , 1 )
+ INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 12 , '表面位移数据' , 'BMWYDATA' , 'data/bmwy' , 1 , 11 )
+ INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 13 , '系统日志' , 'LOG' , 'log' , 1 , 1 )
+ INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 14 , '报警日志' , 'ALARMLOG' , 'log/alarm' , 1 , 13 )
+
 SET IDENTITY_INSERT [t_menu] OFF
 
 SET IDENTITY_INSERT [t_operation] ON
@@ -53,6 +60,15 @@ INSERT [t_authority] ( [id] , [description] , [name] ) VALUES ( 3 , NULL,'ROLE_U
  
  INSERT [t_user_role] ( [uid] , [rid] ) VALUES ( 1 , 1 )
  
- 
+ SET IDENTITY_INSERT [t_montype] ON
+
+ INSERT [t_montype] ( [id] , [code] , [name] , [tableName] ) VALUES ( 1 , 'BMWY' , '表面位移' , 'MeanPos_DeformationMonitor_Default' )
+
+ SET IDENTITY_INSERT [t_montype] OFF
+ SET IDENTITY_INSERT [t_monpoint] ON
+
+ INSERT [t_monpoint] ( [id] , [monitoringName] , [position] , [montypeid] ) VALUES ( 1 , '表面位移1#' , 1 , 1 )
+
+ SET IDENTITY_INSERT [t_monpoint] OFF
  
  

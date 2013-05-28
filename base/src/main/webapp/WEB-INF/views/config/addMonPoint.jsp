@@ -3,24 +3,31 @@
 
 <div class="easyui-layout" data-options="fit:true">
 	<div data-options="region:'center'" style="padding: 10px 0 10px 10px">
-		<form id="addMonTypeForm" method="post">
-		<c:if test="${!empty montype.id}"><input type="hidden" name="id" value="${montype.id}"></c:if>
+		<form id="addMonPointForm" method="post">
+		<c:if test="${!empty monpoint.id}"><input type="hidden" name="id" value="${monpoint.id}"></c:if>
 		
 			<table>
 				<tr>
 					<td>名称:</td>
-					<td><input class="easyui-validatebox" type="text"
-						name="name" value="${montype.name}" data-options="required:true"> </td>
+					<td><input id="monName" class="easyui-validatebox" type="text"
+						name="monitoringName" value="${monpoint.monitoringName}" data-options="required:true,validType:'remote[\'config/monpoint/validateMonPointName\',\'monName\']'"> </td>
 				</tr>
 				<tr>
-					<td>编码:</td>
-					<td><input class="easyui-validatebox" type="text"
-						name="code" value="${montype.code}" data-options="required:true"> </td>
+					<td>监测类型:</td>
+					<td><select name="type.id">
+							
+							<c:forEach items="${montypelist}" var="monType">
+								<option value="${monType.id}"
+									<c:if test="${monpoint.type==monType.id }">selected="selected"</c:if>>
+									${monType.name}</option>
+							</c:forEach>
+					</select></td>
+					
 				</tr>
 				<tr>
-					<td>数据库表:</td>
+					<td>通道号:</td>
 					<td><input class="easyui-validatebox" type="text"
-						name="tableName" value="${montype.tableName}" data-options="required:true"> </td>
+						name="position" value="${monpoint.position}" data-options="required:true,validType:'number'" > </td>
 				</tr>
 			</table>
 
@@ -29,9 +36,9 @@
 	<div data-options="region:'south',border:false"
 		style="text-align: right; padding: 5px 0 0;">
 		<a class="easyui-linkbutton" data-options="iconCls:'icon-ok'"
-			href="javascript:void(0)" onclick="config.montype.add.save()"> 保存 </a> <a
+			href="javascript:void(0)" onclick="config.monpoint.add.save()"> 保存 </a> <a
 			class="easyui-linkbutton" data-options="iconCls:'icon-cancel'"
-			href="javascript:void(0)" onclick="config.monType.closeDialog();">
+			href="javascript:void(0)" onclick="config.monpoint.closeDialog();">
 
 			取消 </a>
 	</div>
@@ -39,10 +46,10 @@
 
 </div>
 <script>
-Namespace.register('config.montype.add',{
+Namespace.register('config.monpoint.add',{
 	save:function(){
-		$('#addMonTypeForm').form('submit', {  
-		    url:"config/montype/save", 
+		$('#addMonPointForm').form('submit', {  
+		    url:"config/monpoint/save", 
 		    dataType : 'json',  
 		    onSubmit: function(params){  
 		    	var isValid = $(this).form('validate');
@@ -54,8 +61,8 @@ Namespace.register('config.montype.add',{
 		    success:function(data){ 
 		    	data = $.parseJSON(data);  
 		    	if(data.success){
-		    		config.monType.closeDialog();
-		    		config.monType.reload();
+		    		config.monpoint.closeDialog();
+		    		config.monpoint.reload();
 		    		 $.dialog.tips(data.msg);
 		    	}
 		    }  

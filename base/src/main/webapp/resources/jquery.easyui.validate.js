@@ -52,6 +52,21 @@ $.extend($.fn.validatebox.defaults.rules, {
             return idCard(value);
         },
         message:'请输入正确的身份证号码'
+    },
+    rmtValid:{
+    	 validator: function(value, url){
+             $.post(url+"",{name:value},function(data){
+                if(data=="unexist"){
+                   flag = true;
+                   $.data(document.body,"flag",flag);
+                }else if(data=="exist"){
+                   flag = false;
+                   $.data(document.body,"flag",flag);
+                }
+             });
+             return  $.data(document.body,"flag");
+         },
+         message: '此名称已被占使用'
     }
 });
 

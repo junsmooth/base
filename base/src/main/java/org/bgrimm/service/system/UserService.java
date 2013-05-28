@@ -59,4 +59,13 @@ public class UserService {
 	public TUser findUserById(long id) {
 		return commonDao.findUniqueByProperty(TUser.class, "id", id);
 	}
+
+	public boolean isValidUserName(String username) {
+		
+		TUser user=commonDao.findUniqueByProperty(TUser.class, "username", username);
+		if(user==null){
+			return true;
+		}
+		return false;
+	}
 }

@@ -70,6 +70,11 @@ public class UserController {
 		return userService.getUserPageList(page, rows);
 	}
 
+	
+	@RequestMapping("validateUserName")
+	public @ResponseBody Object validateUserName(@RequestParam String username){
+		return userService.isValidUserName(username);
+	}
 	@RequestMapping("remove")
 	public @ResponseBody
 	JsonMsg remove(@RequestParam long id) {

@@ -1,5 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@ taglib prefix="security"uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -32,7 +32,7 @@
 
 
       <span style="float: right; padding-right: 20px;" class="head">
-        欢迎:
+        欢迎:<security:authentication property="principal.username" />
         <a href="#" id="editpass">
           修改密码
         </a>

@@ -63,7 +63,7 @@ Namespace.register('user.add',{
 					<c:choose>
 						<c:when test="${empty user.id}">
 						<input class="easyui-validatebox" type="text" 
-						name="username" value="${user.username}" data-options="required:true"> 
+						name="username" value="${user.username}" data-options="required:true,validType:'remote[\'user/validateUserName\',\'username\']'"> 
 						</c:when>
 						<c:otherwise>
 							${user.username }

@@ -1,8 +1,12 @@
 package org.bgrimm.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
+import org.bgrimm.domain.tailings.MonitoringPoint;
 import org.bgrimm.domain.tailings.MonitoringType;
 import org.bgrimm.service.ConfigService;
 import org.bgrimm.uitls.JsonMsg;
@@ -34,7 +38,12 @@ public class ConfigController {
 	Object monPointList() {
 		return configService.getAllMonPoint();
 	}
-
+	@RequestMapping("monpoint/validateMonPointName")
+	public @ResponseBody Object validateMonPointName(@RequestParam String monName){
+		return configService.isValidMonPointName(monName);
+		
+	}
+	
 	@RequestMapping("montype/data")
 	public @ResponseBody
 	Object monTypeList() {
@@ -42,7 +51,7 @@ public class ConfigController {
 	}
 	
 	@RequestMapping("montype/addOrUpdate")
-	public String addOrUpdate(HttpServletRequest req, Model model) {
+	public String addOrUpdateMonType(HttpServletRequest req, Model model) {
 		String id = req.getParameter("id");
 		if (StringUtils.isNumeric(id)) {
 			long pid = Long.parseLong(id);
@@ -52,15 +61,33 @@ public class ConfigController {
 		}
 		return "config/addMonType";
 	}
-	
+	@RequestMapping("monpoint/addOrUpdate")
+	public String addOrUpdateMonPoint(HttpServletRequest req, Model model) {
+		String id = req.getParameter("id");
+		if (StringUtils.isNumeric(id)) {
+			long pid = Long.parseLong(id);
+			MonitoringPoint mp=configService.getUniqueMonPointById(pid);
+			model.addAttribute("monpoint", mp);
+		}
+		List monTyps=configService.getAllMonType();
+		model.addAttribute("montypelist",monTyps);
+		return "config/addMonPoint";
+	}
 	@RequestMapping("montype/save")
 	public @ResponseBody
-	JsonMsg saveMenu(MonitoringType mon) {
+	JsonMsg saveMonType(MonitoringType mon) {
 		configService.saveOrUpdateMonType(mon);
 		return JsonMsg.simpleSuccessJson();
 
 	}
-	@RequestMapping("monType/remove")
+	@RequestMapping("monpoint/save")
+	public @ResponseBody
+	JsonMsg saveMonPoint(MonitoringPoint mon) {
+		configService.saveOrUpdateMonPoint(mon);
+		return JsonMsg.simpleSuccessJson();
+
+	}
+	@RequestMapping("montype/remove")
 	public @ResponseBody
 	JsonMsg removeMonType(@RequestParam long id) {
 		try {
