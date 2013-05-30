@@ -1,5 +1,6 @@
 package org.bgrimm.domain.tailings;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -13,6 +14,15 @@ public class MonitoringType extends IdEntity {
 	private String name;
 	private String code;
 	private String tableName;
+	@Column
+	@org.hibernate.annotations.Type(type="yes_no")
+	private boolean enabled;
+	public boolean isEnabled() {
+		return enabled;
+	}
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
 	public String getName() {
 		return name;
 	}

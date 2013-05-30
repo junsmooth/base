@@ -22,6 +22,11 @@
 					<td><input class="easyui-validatebox" type="text"
 						name="tableName" value="${montype.tableName}" data-options="required:true"> </td>
 				</tr>
+				<tr>
+					<td>启用:</td>
+					<td><input class="easyui-validatebox" type="checkbox"
+						name="enabled" value="${montype.enabled}" data-options="required:true"> </td>
+				</tr>
 			</table>
 
 		</form>
