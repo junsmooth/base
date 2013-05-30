@@ -62,7 +62,18 @@ INSERT [t_authority] ( [id] , [description] , [name] ) VALUES ( 3 , NULL,'ROLE_U
  
  SET IDENTITY_INSERT [t_montype] ON
 
- INSERT [t_montype] ( [id] , [code] , [name] , [tableName] ) VALUES ( 1 , 'BMWY' , '表面位移' , 'MeanPos_DeformationMonitor_Default' )
+  INSERT [t_montype] ( [id] , [code] , [enabled] , [name] , [tableName] ) VALUES ( 1 , 'BMWY' , 'Y' , '表面位移' , 'MeanPos_DeformationMonitor_Default' )
+ INSERT [t_montype] ( [id] , [code] , [enabled] , [name] , [tableName] ) VALUES ( 2 , 'JYL' , 'Y' , '降雨量' , 'rainmointoring' )
+ INSERT [t_montype] ( [id] , [code] , [enabled] , [name] , [tableName] ) VALUES ( 3 , 'JRX' , 'Y' , '浸润线' , 'jrx' )
+ INSERT [t_montype] ( [id] , [code] , [enabled] , [name] , [tableName] ) VALUES ( 4 , 'GTGC' , 'Y' , '干滩高程' , 'gtgc' )
+ INSERT [t_montype] ( [id] , [code] , [enabled] , [name] , [tableName] ) VALUES ( 5 , 'GTCD' , 'Y' , '干滩长度' , 'gtcd' )
+ INSERT [t_montype] ( [id] , [code] , [enabled] , [name] , [tableName] ) VALUES ( 6 , 'NBWY' , 'Y' , '内部位移' , 'nbwy' )
+ INSERT [t_montype] ( [id] , [code] , [enabled] , [name] , [tableName] ) VALUES ( 7 , 'SLL' , 'Y' , '渗流量' , 'sll' )
+ INSERT [t_montype] ( [id] , [code] , [enabled] , [name] , [tableName] ) VALUES ( 8 , 'SP' , 'Y' , '视频' , 'sp' )
+ INSERT [t_montype] ( [id] , [code] , [enabled] , [name] , [tableName] ) VALUES ( 9 , 'AQCG' , 'Y' , '安全超高' , 'aqcg' )
+ INSERT [t_montype] ( [id] , [code] , [enabled] , [name] , [tableName] ) VALUES ( 10 , 'BDGC' , 'Y' , '坝顶高程' , 'bdgc' )
+ INSERT [t_montype] ( [id] , [code] , [enabled] , [name] , [tableName] ) VALUES ( 11 , 'KSW' , 'Y' , '库水位' , 'ksw' )
+
 
  SET IDENTITY_INSERT [t_montype] OFF
  SET IDENTITY_INSERT [t_monpoint] ON

@@ -96,6 +96,9 @@ config.monType.toolbar = [{
       <th data-options="field:'tableName',width:120,align:'left'">
        数据库表
       </th>
+      <th data-options="field:'enabled',width:120,align:'left'">
+       启用
+      </th>
 	 <th
 				data-options="field:'id',width:200,align:'left',formatter:config.monType.formatOperation">
 				操作</th>
