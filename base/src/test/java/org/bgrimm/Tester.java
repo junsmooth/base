@@ -11,6 +11,7 @@ public class Tester {
 		String str="/";
 		String[] urlsplits=StringUtils.split(str,"/");
 		System.out.println(urlsplits.length);
+		
 	}
 
 }
