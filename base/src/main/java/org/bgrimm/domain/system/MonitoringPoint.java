@@ -1,4 +1,4 @@
-package org.bgrimm.domain.tailings;
+package org.bgrimm.domain.system;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -6,7 +6,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.bgrimm.domain.system.IdEntity;
 
 
 //all monitoring points of the system 

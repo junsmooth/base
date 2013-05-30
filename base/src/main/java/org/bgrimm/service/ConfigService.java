@@ -3,8 +3,8 @@ package org.bgrimm.service;
 import java.util.List;
 
 import org.bgrimm.dao.core.impl.CommonDao;
-import org.bgrimm.domain.tailings.MonitoringPoint;
-import org.bgrimm.domain.tailings.MonitoringType;
+import org.bgrimm.domain.system.MonitoringPoint;
+import org.bgrimm.domain.system.MonitoringType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
