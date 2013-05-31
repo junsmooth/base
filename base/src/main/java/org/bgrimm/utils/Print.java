@@ -1,4 +1,4 @@
-package org.bgrimm.uitls;
+package org.bgrimm.utils;
 
 import java.io.File;
 import java.io.FileOutputStream;

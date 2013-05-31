@@ -1,4 +1,4 @@
-package org.bgrimm.uitls;
+package org.bgrimm.utils;
 
 import java.io.IOException;
 import java.util.HashMap;

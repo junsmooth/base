@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
 import org.bgrimm.dao.core.ICommonDao;
 import org.bgrimm.domain.system.PageList;
 import org.bgrimm.domain.system.PagedQuery;
-import org.bgrimm.uitls.PagerUtil;
+import org.bgrimm.utils.PagerUtil;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

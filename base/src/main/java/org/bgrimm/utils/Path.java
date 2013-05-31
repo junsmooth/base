@@ -1,4 +1,4 @@
-package org.bgrimm.uitls;
+package org.bgrimm.utils;
 public class Path {
 	private String d;
 	private String fillrule;

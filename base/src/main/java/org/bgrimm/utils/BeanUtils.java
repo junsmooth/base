@@ -1,4 +1,4 @@
-package org.bgrimm.uitls;
+package org.bgrimm.utils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

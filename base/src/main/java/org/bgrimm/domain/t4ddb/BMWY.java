@@ -18,8 +18,11 @@ public class BMWY{
 	@Id
 	@Column(name = "StationId")
 	private int stationId;
+	@Column(precision=24,scale=0)
 	private float dN;
+	@Column(precision=24,scale=0)
 	private float dE;
+	@Column(precision=24,scale=0)
 	private float dH;
 	public Date getLogtime() {
 		return logtime;
@@ -51,4 +54,10 @@ public class BMWY{
 	public void setdH(float dH) {
 		this.dH = dH;
 	}
+	@Override
+	public String toString() {
+		return "BMWY [logtime=" + logtime + ", stationId=" + stationId
+				+ ", dN=" + dN + ", dE=" + dE + ", dH=" + dH + "]";
+	}
+	
 }

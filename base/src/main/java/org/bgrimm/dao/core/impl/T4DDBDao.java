@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
 import org.bgrimm.dao.core.ICommonDao;
 import org.bgrimm.domain.system.PageList;
 import org.bgrimm.domain.system.PagedQuery;
-import org.bgrimm.uitls.PagerUtil;
+import org.bgrimm.utils.PagerUtil;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -21,15 +21,17 @@ import org.hibernate.criterion.Restrictions;
 import org.hibernate.internal.CriteriaImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
-
+@Repository
 public class T4DDBDao implements ICommonDao{
 	@Autowired
 	@Qualifier("sessionFactory2")
-	private SessionFactory sessionFactory;
+	private SessionFactory sessionFactory2;
 	private static final Logger logger = Logger.getLogger(T4DDBDao.class);
 	public Session getSession() {
-		return sessionFactory.getCurrentSession();
+		Session s=sessionFactory2.getCurrentSession();
+		return s;
 	}
 
 	public <T> void delete(T entity) {

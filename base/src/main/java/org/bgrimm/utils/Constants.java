@@ -1,4 +1,4 @@
-package org.bgrimm.uitls;
+package org.bgrimm.utils;
 
 public class Constants {
 	public static final String AUTH_SYSTEM = "ROLE_SYSTEM";
