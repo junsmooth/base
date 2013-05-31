@@ -9,6 +9,6 @@ public class MySQLServerDialect extends SQLServerDialect {
 	public MySQLServerDialect() {
 		super();
 		//registerHibernateType(Types.REAL, "float");
-		registerColumnType(Types.FLOAT, "real");
+		registerColumnType(Types.DOUBLE, "real");
 	}
 }

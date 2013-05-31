@@ -19,11 +19,11 @@ public class BMWY{
 	@Column(name = "StationId")
 	private int stationId;
 	@Column(precision=24,scale=0)
-	private float dN;
+	private double dN;
 	@Column(precision=24,scale=0)
-	private float dE;
+	private double dE;
 	@Column(precision=24,scale=0)
-	private float dH;
+	private double dH;
 	public Date getLogtime() {
 		return logtime;
 	}
@@ -36,22 +36,22 @@ public class BMWY{
 	public void setStationId(int stationId) {
 		this.stationId = stationId;
 	}
-	public float getdN() {
+	public double getdN() {
 		return dN;
 	}
-	public void setdN(float dN) {
+	public void setdN(double dN) {
 		this.dN = dN;
 	}
-	public float getdE() {
+	public double getdE() {
 		return dE;
 	}
-	public void setdE(float dE) {
+	public void setdE(double dE) {
 		this.dE = dE;
 	}
-	public float getdH() {
+	public double getdH() {
 		return dH;
 	}
-	public void setdH(float dH) {
+	public void setdH(double dH) {
 		this.dH = dH;
 	}
 	@Override
