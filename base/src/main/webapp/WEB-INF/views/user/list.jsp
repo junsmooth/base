@@ -52,32 +52,7 @@
 		  }
 	
 });
-user.list.toolbar = [{
-    text:'增加',
-    iconCls:'icon-add',
-    disabled:!hasRole('ROLE_USER_EDIT'),
-    handler:function(){
-      $('#userdialog').dialog({
-        title: '添加用户',
-        width: 600,
-        height: 360,
-        closed: false,
-        //resizable:true,
-        cache: false,
-        href: 'user/addOrUpdate?id=-1',
-        modal: true
-        });
-      }
-    }
-  //  ,'-',{
-   // text:'刷新',
-   // iconCls:'icon-reload',
- 	//handler:function(){
-	//  user.list.reload();
- // }
- // }
-  
-  ];
+
  
 </script>
 <div  class="easyui-layout" data-options="fit:true">

@@ -24,6 +24,10 @@
     </script>
      <script type="text/javascript" src="resources/authority.js">
     </script>
+     <script type="text/javascript" src="resources/dateformat.js">
+    </script>
+     <script type="text/javascript" src="resources/validation.js">
+    </script>
   </head>
   <body class="easyui-layout">
     <div 

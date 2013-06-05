@@ -29,7 +29,7 @@ INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parenti
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 12 , '表面位移数据' , 'BMWYDATA' , 'data/bmwy' , 1 , 11 )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 13 , '系统日志' , 'LOG' , 'log' , 1 , 1 )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 14 , '报警日志' , 'ALARMLOG' , 'log/alarm' , 1 , 13 )
-
+ INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 15 , '浸润线数据' , 'JRXDATA' , 'jrx/data/jrxPage' , 1 , 11 )
 SET IDENTITY_INSERT [t_menu] OFF
 
 SET IDENTITY_INSERT [t_operation] ON

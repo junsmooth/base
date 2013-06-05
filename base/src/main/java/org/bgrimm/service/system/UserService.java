@@ -2,7 +2,6 @@ package org.bgrimm.service.system;
 
 import java.util.HashSet;
 import java.util.Set;
-
 import org.bgrimm.dao.core.impl.CommonDao;
 import org.bgrimm.domain.system.PageList;
 import org.bgrimm.domain.system.PagedQuery;
