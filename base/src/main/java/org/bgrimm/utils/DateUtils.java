@@ -9,7 +9,7 @@ public class DateUtils {
 	//将页面获取时间字符串转为Date类型
 		public static Date strToDate(String time) {
 
-			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			 try {
 				return sdf.parse(time);
 			} catch (ParseException e) {
