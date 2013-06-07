@@ -67,7 +67,22 @@ $.extend($.fn.validatebox.defaults.rules, {
              return  $.data(document.body,"flag");
          },
          message: '此名称已被占使用'
+    },
+    checkDate:{
+    	validator: function(value, format){
+    		/*try{
+    			str2datetime(value);
+    			return true;
+    		}catch(e){
+    			return false;
+    		}*/
+    		
+    		return CheckDateTime(value);
+    	},
+    	message:'输入日期格式不正确！'
+    	
     }
+    
 });
 
 /* 密码由字母和数字组成，至少6位 */
@@ -75,6 +90,20 @@ var safePassword = function (value) {
     return !(/^(([A-Z]*|[a-z]*|\d*|[-_\~!@#\$%\^&\*\.\(\)\[\]\{\}<>\?\\\/\'\"]*)|.{0,5})$|\s/.test(value));
 }
 
+function CheckDateTime(str){  
+    var reg = /^(\d+)-(\d{1,2})-(\d{1,2}) (\d{1,2}):(\d{1,2}):(\d{1,2})$/; 
+    var r = str.match(reg); 
+    if(r==null)return false; 
+    r[2]=r[2]-1; 
+    var d= new Date(r[1], r[2],r[3], r[4],r[5], r[6]); 
+    if(d.getFullYear()!=r[1])return false; 
+    if(d.getMonth()!=r[2])return false; 
+    if(d.getDate()!=r[3])return false; 
+    if(d.getHours()!=r[4])return false; 
+    if(d.getMinutes()!=r[5])return false; 
+    if(d.getSeconds()!=r[6])return false; 
+    return true;
+} 
 var idCard = function (value) {
     if (value.length == 18 && 18 != value.length) return false;
     var number = value.toLowerCase();

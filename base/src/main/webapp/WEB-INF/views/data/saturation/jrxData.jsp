@@ -37,21 +37,20 @@
              }
          });  
 	},
-	myDate:function myformatter(value){  
+	myDate:function (value){  
+		var d=formatDateTime(value);
 		return 	formatDateTime(value);
     },  
-   myParserDate:function myparser(value){  
-        if (!value) return new Date();  
-        var ss = (value.split('-'));  
-        var y = parseInt(ss[0],10);  
-        var m = parseInt(ss[1],10);  
-        var d = parseInt(ss[2],10);  
-        if (!isNaN(y) && !isNaN(m) && !isNaN(d)){  
-            return new Date(y,m-1,d);  
-        } else {  
-            return new Date();  
-        }  
-    },
+    /*
+   myParserDate:function (value){  
+        
+	  if(!value){
+		  return new Date();
+	  }else{
+		  
+		    return new Date();
+	  }     
+    },*/
 	edit:function(value){
 		   $('#userdialog').dialog({
 		        title: '用户编辑',
@@ -75,14 +74,27 @@
 
  
  function submit(){
-	var mp=$('#monitorPosition').combobox('getValues');
-	var min1=$('#min').combobox('getText');
-	var max1=$('#max').combobox('getText');
-	var str1='';
-	for(var i=0;i<mp.length;i++){
-		str1+=mp[i]+',';
-	}
-	str1=str1.substring(0,str1.length-1);
+	 //CheckDateTime();
+	 
+	 var validFormDate=$("#tb").form('validate');
+	 if(!validFormDate){
+		 return ;
+	 }
+	 	var str1='',mp,min1,max1;
+
+		 mp=$('#monitorPosition').combobox('getValues');
+
+		
+		 for(var i=0;i<mp.length;i++){
+				str1+=mp[i]+',';
+		 }
+		 str1=str1.substring(0,str1.length-1);
+			//return ;
+	
+		 min1=$('#min').combobox('getText');
+	
+		 max1=$('#max').combobox('getText');
+	
 
 	$('#jrxgrid').datagrid('load',{
 			min:min1,
@@ -92,9 +104,13 @@
 	);
   
  }
- function showData(result){
-	 
- }
+ function Mystr2time (str) {
+	 var reg = /^(\d+)-(\d{1,2})-(\d{1,2}) (\d{1,2}):(\d{1,2}):(\d{1,2})$/; 
+	    var r = str.match(reg); 
+	    if(r==null)return false; 
+	    r[2]=r[2]-1; 
+	   return new Date(r[1], r[2],r[3], r[4],r[5], r[6]); 
+	}
  
 </script>
 <div  class="easyui-layout" data-options="fit:true">
@@ -112,7 +128,7 @@
   时间
       </th>
       <th data-options="field:'monitorName',width:80,align:'left'">
-        测点
+        测点;
       </th>
       <th data-options="field:'water_depth',width:120,align:'left'">
     深度
@@ -123,11 +139,10 @@
 </table>
 </div>
 </div>
- <div id="tb" style="padding:5px;height:auto">  
-        
+ <div id="tb" style="padding:5px;height:auto" >  
         <div>  
-            	时间  从: <input id='min' class="easyui-datebox" data-options="formatter:saturation.list.myDate,parser:saturation.list.myParserDate"></input>    
-            	到: <input id='max' class="easyui-datebox" data-options="formatter:saturation.list.myDate,parser:saturation.list.myParserDate"></input>  
+            	时间  从: <input id='min' class="easyui-datetimebox" data-options="formatter:saturation.list.myDate,validType:'checkDate[\'yyyy-MM-dd HH:mm:ss\']'"></input>    
+            	到: <input id='max' class="easyui-datetimebox" data-options="formatter:saturation.list.myDate,validType:'checkDate[\'yyyy-MM-dd HH:mm:ss\']'"></input>
          		 测点:   
            <input id="monitorPosition" class="easyui-combobox"   
             name="monitorPosition"  
@@ -136,8 +151,9 @@
                     valueField:'position',  
                     textField:'monitoringName',  
                     multiple:true,  
-                    panelHeight:'auto'  
-            "> 
+                    panelHeight:'auto',
+                    editable:false  
+            " readonly="readonly"> 
             <a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="submit()">查询</a>  
         </div>  
     </div>  
