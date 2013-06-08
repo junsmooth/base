@@ -1,8 +1,10 @@
-package org.bgrimm.domain.system;
+package org.bgrimm.domain.bgrimm;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
+import org.bgrimm.domain.system.IdEntity;
 
 
 @Entity

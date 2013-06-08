@@ -128,7 +128,7 @@
   时间
       </th>
       <th data-options="field:'monitorName',width:80,align:'left'">
-        测点;
+        测点
       </th>
       <th data-options="field:'water_depth',width:120,align:'left'">
     深度

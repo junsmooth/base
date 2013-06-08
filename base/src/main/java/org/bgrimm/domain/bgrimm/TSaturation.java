@@ -10,7 +10,6 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import org.bgrimm.domain.system.IdEntity;
-import org.bgrimm.domain.system.MonitoringPoint;
 import org.hibernate.validator.constraints.NotEmpty;
 
 //@Table

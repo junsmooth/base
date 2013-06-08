@@ -45,7 +45,7 @@
 				hibernate.dialect=org.hibernate.dialect.SQLServerDialect
 				hibernate.show_sql=true
 				format_sql=true
-				hibernate.hbm2ddl.auto=update
+				hibernate.hbm2ddl.auto=validate
 			</value>
 		</property>
 	</bean>

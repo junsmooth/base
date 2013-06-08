@@ -1,10 +1,12 @@
-package org.bgrimm.domain.system;
+package org.bgrimm.domain.bgrimm;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.bgrimm.domain.system.IdEntity;
 
 
 
