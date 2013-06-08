@@ -49,8 +49,10 @@ public class JRXServiceImpl {
 	 * @return
 	 */
 	public Object getJRXPageList(TableParam param) {
+
 		MonitoringType t=commonDao.findUniqueBy(MonitoringType.class, "code", Constants.JCD_JRX);
 		List<MonitoringPoint> jrxPointList=commonDao.findByCriterions(MonitoringPoint.class, Restrictions.eq("type.id", t.getId()));
+
 		PagedQuery pq = new PagedQuery(TSaturation.class, param.getPage(), param.getRows());
 		PageList pl =getPagedList(pq,jrxPointList,param);
 		return pl;
@@ -131,10 +133,7 @@ public class JRXServiceImpl {
 
 	//获取浸润线类型
 	private long getMontypeid(String jcdJrx) {
-//		Session se=getSessionMethod();
-//		List<TMonType> tmt=se.createCriteria(TMonType.class)
-//							.add(Restrictions.like("code", Constants.JCD_JRX))
-//							.list();
+
 		List<MonitoringType> tmt=commonDao.findByCriterions(MonitoringType.class, Restrictions.like("code", Constants.JCD_JRX));
 		long bd=-1;
 		if(tmt.size()>0){
