@@ -10,6 +10,7 @@ import org.bgrimm.domain.system.PagedQuery;
 import org.hibernate.criterion.Criterion;
 
 public interface ICommonDao {
+	public <T> List<T> queryByExample(Class<T> entityClass,Object example);
 	public <T> void save(T entity);
 	public <T> void saveOrUpdate(T entity);
 	public <T> void delete(T entitie);

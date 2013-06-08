@@ -15,6 +15,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
@@ -217,5 +218,9 @@ public class CommonDao implements ICommonDao {
 		criteria.setMaxResults(pq.getPageSize());
 		
 		return new PageList(criteria.list(),allCounts);
+	}
+
+	public <T> List<T> queryByExample(Class<T> entityClass, Object example) {
+		return createCriteria(entityClass).add(Example.create(example)).list();
 	}
 }

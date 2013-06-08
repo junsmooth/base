@@ -216,4 +216,9 @@ public class T4DDBDao implements ICommonDao{
 		
 		return new PageList(criteria.list(),allCounts);
 	}
+
+	public <T> List<T> queryByExample(Class<T> entityClass, Object example) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
