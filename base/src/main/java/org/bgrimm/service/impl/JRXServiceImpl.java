@@ -147,13 +147,8 @@ public class JRXServiceImpl {
 	private Session getSessionMethod() {
 		return sessionFactory.getCurrentSession();
 	}
-
-
-
-
 	//将字符串转换为Integer类型的数组
 	private Integer[] strToArray(String str) {
-
 		if(StringUtils.isNotEmpty(str)){
 			String [] s=str.split(",");
 			Integer [] arr=new Integer [s.length];
