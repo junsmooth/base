@@ -50,39 +50,20 @@ public class JRXServiceImpl {
 	 */
 	public Object getJRXPageList(TableParam param) {
 
-		Session se=getSessionMethod();
+		MonitoringType t=commonDao.findUniqueBy(MonitoringType.class, "code", Constants.JCD_JRX);
+		List<MonitoringPoint> jrxPointList=commonDao.findByCriterions(MonitoringPoint.class, Restrictions.eq("type.id", t.getId()));
 
-		List<MonitoringType> tm=commonDao.findByCriterions(MonitoringType.class,Restrictions.like("code", Constants.JCD_JRX));
-		long jrxId=((MonitoringType)tm.get(0)).getId();
-
-		List<MonitoringPoint> tmPoint=commonDao.findByCriterions(MonitoringPoint.class, Restrictions.eq("type.id", jrxId));
-
-		Object [] jrxPosition=new Object[tmPoint.size()];
-		Object [] jrxName=new Object[tmPoint.size()];
-		int i=0;
-		int j=0;
-		for(MonitoringPoint t: tmPoint){
-			
-			jrxPosition[i++]=t.getPosition();
-			jrxName[j++]=t.getMonitoringName();
-		}
-		
 		PagedQuery pq = new PagedQuery(TSaturation.class, param.getPage(), param.getRows());
-		PageList pl =getPagedList(pq,jrxPosition,jrxName,param);
-	
-		
+		PageList pl =getPagedList(pq,jrxPointList,param);
 		return pl;
 	}
 	
-
-	
-	private PageList getPagedList(PagedQuery pq,Object [] obj,Object [] name,TableParam param) {
+	private PageList getPagedList(PagedQuery pq,List<MonitoringPoint> jrxPointList,TableParam param) {
 
 		Criteria criteria = pq.getDetachedCriteria().getExecutableCriteria(
 				getSession());
 		CriteriaImpl impl = (CriteriaImpl) criteria;
 		Projection projection = impl.getProjection();
-		
 		
 		//
 		Integer [] arr=strToArray(param.getStr());
@@ -98,11 +79,16 @@ public class JRXServiceImpl {
 		if(StringUtils.isNotEmpty(param.getStr())){
 			criteria.add(Restrictions.in("monitoring_position", arr));
 		}else{
-			criteria.add(Restrictions.in("monitoring_position", obj));
+			//use all ids
+			List<Integer> idList=new ArrayList();
+			for(MonitoringPoint p:jrxPointList){
+				idList.add(p.getPosition());
+			}
+			criteria.add(Restrictions.in("monitoring_position", idList.toArray()));
 		}
-		
-		final int allCounts = ((Long) criteria.setProjection(
-				Projections.rowCount()).uniqueResult()).intValue();
+		Object obj=criteria.setProjection(
+				Projections.rowCount()).uniqueResult();
+		final int allCounts=Integer.parseInt(obj.toString());
 		criteria.setProjection(projection);
 		
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
@@ -111,15 +97,17 @@ public class JRXServiceImpl {
 		criteria.setFirstResult(offset);
 		criteria.setMaxResults(pq.getPageSize());
 		criteria.addOrder(Order.asc("date_Time"));
-		List<TSaturation> l=criteria.list();
-		for(TSaturation ts:l){
-			for(int i=0;i<obj.length;i++){
-				if(ts.getMonitoring_position().equals(obj[i])){
-					ts.setMonitorName((String)name[i]);
+		List<TSaturation> saturationList=criteria.list();
+		for(TSaturation ts:saturationList){
+			for(MonitoringPoint point:jrxPointList){
+				int position=point.getPosition();
+				if(ts.getMonitoring_position()==position){
+					ts.setMonitorName(point.getMonitoringName());
 				}
+				
 			}
 		}
-		return new PageList(l,allCounts);
+		return new PageList(saturationList,allCounts);
 	}
 
 	/**
