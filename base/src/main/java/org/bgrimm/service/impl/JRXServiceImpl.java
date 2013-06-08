@@ -1,6 +1,5 @@
 package org.bgrimm.service.impl;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -52,16 +51,10 @@ public class JRXServiceImpl {
 	public Object getJRXPageList(TableParam param) {
 
 		Session se=getSessionMethod();
-//		List<TMonType> tm=se.createCriteria(TMonType.class)
-//				.add(Restrictions.like("code", Constants.JCD_JRX))
-//				.list();
+
 		List<MonitoringType> tm=commonDao.findByCriterions(MonitoringType.class,Restrictions.like("code", Constants.JCD_JRX));
 		long jrxId=((MonitoringType)tm.get(0)).getId();
-//		long bd=jrxId;
-		
-//		List<TMonPoint> tmPoint=se.createCriteria(TMonPoint.class)
-//				.add(Restrictions.eq("montypeid", bd))
-//				.list();
+
 		List<MonitoringPoint> tmPoint=commonDao.findByCriterions(MonitoringPoint.class, Restrictions.eq("type.id", jrxId));
 
 		Object [] jrxPosition=new Object[tmPoint.size()];
@@ -152,10 +145,7 @@ public class JRXServiceImpl {
 
 	//获取浸润线类型
 	private long getMontypeid(String jcdJrx) {
-//		Session se=getSessionMethod();
-//		List<TMonType> tmt=se.createCriteria(TMonType.class)
-//							.add(Restrictions.like("code", Constants.JCD_JRX))
-//							.list();
+
 		List<MonitoringType> tmt=commonDao.findByCriterions(MonitoringType.class, Restrictions.like("code", Constants.JCD_JRX));
 		long bd=-1;
 		if(tmt.size()>0){
