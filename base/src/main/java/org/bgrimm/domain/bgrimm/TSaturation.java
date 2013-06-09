@@ -23,19 +23,19 @@ public class TSaturation extends IdEntity implements java.io.Serializable {
 	private BigDecimal water_depth;
 
 	@Transient
-	private MonitoringPoint mp;
+	private MonitoringPoint point;
 	
-	@Transient
-	private String monitorName;
-	
-	
-	public String getMonitorName() {
-		return monitorName;
-	}
+//	@Transient
+//	private String monitorName;
+//	
+//	
+//	public String getMonitorName() {
+//		return monitorName;
+//	}
 
-	public void setMonitorName(String monitorName) {
-		this.monitorName = monitorName;
-	}
+//	public void setMonitorName(String monitorName) {
+//		this.monitorName = monitorName;
+//	}
 
 	public Date getDate_Time() {
 		return date_Time;
@@ -56,11 +56,13 @@ public class TSaturation extends IdEntity implements java.io.Serializable {
 	public void setWater_depth(BigDecimal water_depth) {
 		this.water_depth = water_depth;
 	}
-	public MonitoringPoint getMp() {
-		return mp;
+
+	public MonitoringPoint getPoint() {
+		return point;
 	}
-	public void setMp(MonitoringPoint mp) {
-		this.mp = mp;
+
+	public void setPoint(MonitoringPoint point) {
+		this.point = point;
 	}
 
 

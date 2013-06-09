@@ -19,7 +19,10 @@
 		        }
 	},
 	formatJRXTime:function(value){
-	return 	formatDateTime(value);
+		return 	formatDateTime(value);
+	},
+	formatJRXPoint:function(value){
+		return value.monitoringName;
 	},
 	remove:function(value){
 		 $.messager.confirm('提示', '确定要删除吗?', function(r){  
@@ -127,7 +130,7 @@
       
   时间
       </th>
-      <th data-options="field:'monitorName',width:80,align:'left'">
+      <th data-options="field:'point',width:80,align:'left',formatter:saturation.list.formatJRXPoint">
         测点
       </th>
       <th data-options="field:'water_depth',width:120,align:'left'">
@@ -147,7 +150,7 @@
            <input id="monitorPosition" class="easyui-combobox"   
             name="monitorPosition"  
             data-options="  
-                    url:'jrx/position/jrxMonitorPostion',  
+                    url:'jrx/data/jrxMonitorPostion',  
                     valueField:'position',  
                     textField:'monitoringName',  
                     multiple:true,  

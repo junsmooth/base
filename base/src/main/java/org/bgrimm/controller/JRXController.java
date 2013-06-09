@@ -13,7 +13,7 @@ public class JRXController {
 	@Autowired
 	private JRXServiceImpl JRXServiceImpl;
 	
-	@RequestMapping("data/jrxPage")
+	@RequestMapping("data")
 	public String toJrxPage() {
 		
 		return "data/saturation/jrxData";
@@ -27,7 +27,7 @@ public class JRXController {
 		return JRXServiceImpl.getJRXPageList(param);
 	}
 	
-	@RequestMapping("position/jrxMonitorPostion")
+	@RequestMapping("data/jrxMonitorPostion")
 	@ResponseBody
 	public Object JRXMonitorPosition(){
 		

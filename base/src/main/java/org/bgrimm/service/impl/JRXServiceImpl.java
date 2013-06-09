@@ -102,7 +102,8 @@ public class JRXServiceImpl {
 			for(MonitoringPoint point:jrxPointList){
 				int position=point.getPosition();
 				if(ts.getMonitoring_position()==position){
-					ts.setMonitorName(point.getMonitoringName());
+//					ts.setMonitorName(point.getMonitoringName());
+					ts.setPoint(point);
 				}
 				
 			}
