@@ -43,11 +43,11 @@ public class MySecurityMetadataSource implements
 					+ menu.getModuleName() + "_VIEW");
 			configAttributes.add(cofig);
 			String menuUrl = menu.getUrl();
-			String[] urlsplits = StringUtils.split(menuUrl, "/");
-			// split url, get the base path: /=/,/MENU=MENU,/SYSTEM=SYSTEM,...
-			if (urlsplits.length > 0) {
-				menuUrl = urlsplits[0];
-			}
+//			String[] urlsplits = StringUtils.split(menuUrl, "/");
+//			// split url, get the base path: /=/,/MENU=MENU,/SYSTEM=SYSTEM,...
+//			if (urlsplits.length > 0) {
+//				menuUrl = urlsplits[0];
+//			}
 			resourceMap.put(menuUrl, configAttributes);
 		}
 		

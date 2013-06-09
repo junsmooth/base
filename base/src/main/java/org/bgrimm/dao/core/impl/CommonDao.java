@@ -197,7 +197,9 @@ public class CommonDao implements ICommonDao {
 		}
 
 	}
-
+/**
+ * This Implementation is only support Object that do not have child Objects
+ */
 	public PageList getPagedList(PagedQuery pq) {
 
 		Criteria criteria = pq.getDetachedCriteria().getExecutableCriteria(
@@ -207,16 +209,15 @@ public class CommonDao implements ICommonDao {
 		final int allCounts = ((Long) criteria.setProjection(
 				Projections.rowCount()).uniqueResult()).intValue();
 		criteria.setProjection(projection);
-//		if (projection == null) {
-//			criteria.setResultTransformer(CriteriaSpecification.ROOT_ENTITY);
-//		}
-		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-		//criteria.setResultTransformer(CriteriaSpecification.ROOT_ENTITY);
+		if (projection == null) {
+			criteria.setResultTransformer(CriteriaSpecification.ROOT_ENTITY);
+		}
+//		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+//		criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
 		int offset = PagerUtil.getOffset(allCounts, pq.getCurrentPage(),
 				pq.getPageSize());
 		criteria.setFirstResult(offset);
 		criteria.setMaxResults(pq.getPageSize());
-		
 		return new PageList(criteria.list(),allCounts);
 	}
 
