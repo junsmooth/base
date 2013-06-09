@@ -42,7 +42,7 @@ public class RoleController {
 	@Autowired
 	private MenuService menuService;
 
-	@RequestMapping("list")
+	@RequestMapping(method=RequestMethod.GET)
 	public String list() {
 		return "role/list";
 	}

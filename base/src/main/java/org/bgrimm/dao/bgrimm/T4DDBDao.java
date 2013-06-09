@@ -1,4 +1,4 @@
-package org.bgrimm.dao.core.impl;
+package org.bgrimm.dao.bgrimm;
 
 import java.io.Serializable;
 import java.util.Collection;

@@ -2,7 +2,8 @@ package org.bgrimm.utils;
 
 public class Constants {
 	public static final String AUTH_SYSTEM = "ROLE_SYSTEM";
-	public static final String AUTH_ROOT_VIEW="ROLE_ROOT_VIEW";
+	public static final String AUTH_DEFAULT_VIEW="ROLE_ROOT_VIEW";
+	public static final String AUTH_DENIED_VIEW="_DENIED_VIEW_";
 	public static final String ROOT_VIEW_URL="menu/left";
 	
 	

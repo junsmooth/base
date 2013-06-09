@@ -35,7 +35,7 @@
 				<tr>
 					<td>URL地址:</td>
 					<td><input id="menulink" name="url" class="easyui-validatebox"
-						type="text" value="${menu.url}" data-options="required:true"></td>
+						type="text" value="${menu.url}" data-options=""></td>
 
 				</tr>
 				<tr>

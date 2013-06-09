@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("test")
@@ -16,9 +17,7 @@ public class TestController {
 	private T4DDBTestService service;
 	
 	@RequestMapping("info")
-	public String infoView(Model model) {
-	List list=	service.getT4ddb();
-	System.out.println(list.size()+"--------------------------------");
+	public @ResponseBody String infoView(Model model) {
 		return "test/info";
 	}
 

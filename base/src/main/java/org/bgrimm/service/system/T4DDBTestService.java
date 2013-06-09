@@ -2,7 +2,7 @@ package org.bgrimm.service.system;
 
 import java.util.List;
 
-import org.bgrimm.dao.core.impl.T4DDBDao;
+import org.bgrimm.dao.bgrimm.T4DDBDao;
 import org.bgrimm.domain.t4ddb.BMWY;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
