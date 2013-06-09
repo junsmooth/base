@@ -1,10 +1,24 @@
 package org.bgrimm.utils;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class PagerUtil {
 	public PagerUtil() {
 
 	}
 
+	// 将字符串转换为Integer类型的数组
+	public static Integer[] strToArray(String str) {
+		if (StringUtils.isNotEmpty(str)) {
+			String[] s = str.split(",");
+			Integer[] arr = new Integer[s.length];
+			for (int i = 0; i < s.length; i++) {
+				arr[i] = Integer.parseInt(s[i]);
+			}
+			return arr;
+		}
+		return null;
+	}
 
 	public static int getOffset(int rowCounts, int curPageNO, int pageSize) {
 		int offset = 0;

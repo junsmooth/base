@@ -26,7 +26,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
-@Repository
+@Repository(value="commonDao")
 public class CommonDao implements ICommonDao {
 	@Autowired
 	@Qualifier("sessionFactory")

@@ -66,7 +66,7 @@ public class JRXServiceImpl {
 		Projection projection = impl.getProjection();
 		
 		//
-		Integer [] arr=strToArray(param.getStr());
+		Integer [] arr=PagerUtil.strToArray(param.getStr());
 		
 		if(StringUtils.isNotEmpty(param.getMin())){
 			Date startDate=DateUtils.strToDate(param.getMin());
@@ -148,17 +148,6 @@ public class JRXServiceImpl {
 	private Session getSessionMethod() {
 		return sessionFactory.getCurrentSession();
 	}
-	//将字符串转换为Integer类型的数组
-	private Integer[] strToArray(String str) {
-		if(StringUtils.isNotEmpty(str)){
-			String [] s=str.split(",");
-			Integer [] arr=new Integer [s.length];
-			for(int i=0;i<s.length;i++){
-				arr[i]=Integer.parseInt(s[i]);
-			}
-			return arr;
-		}
-		return null;
-	}
+	
 
 }

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.bgrimm.dao.core.ICommonDao;
+import org.bgrimm.dao.core.impl.CommonDao;
 import org.bgrimm.domain.system.PageList;
 import org.bgrimm.domain.system.PagedQuery;
 import org.bgrimm.utils.PagerUtil;
@@ -24,13 +24,14 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 @Repository
-public class T4DDBDao implements ICommonDao{
+public class T4DDBDao extends CommonDao{
 	@Autowired
 	@Qualifier("sessionFactory2")
-	private SessionFactory sessionFactory2;
+	private SessionFactory sessionFactory;
 	private static final Logger logger = Logger.getLogger(T4DDBDao.class);
 	public Session getSession() {
-		Session s=sessionFactory2.getCurrentSession();
+		Session s=sessionFactory.getCurrentSession();
+		s.getTransaction();
 		return s;
 	}
 

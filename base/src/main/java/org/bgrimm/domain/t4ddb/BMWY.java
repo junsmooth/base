@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.bgrimm.domain.bgrimm.MonitoringPoint;
 
 @Entity
 @IdClass(BMWYPK.class)
@@ -26,6 +29,15 @@ public class BMWY{
 	private double dH;
 	public Date getLogtime() {
 		return logtime;
+	}
+	
+	@Transient
+	private MonitoringPoint point;
+	public MonitoringPoint getPoint() {
+		return point;
+	}
+	public void setPoint(MonitoringPoint point) {
+		this.point = point;
 	}
 	public void setLogtime(Date logtime) {
 		this.logtime = logtime;
