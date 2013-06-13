@@ -60,7 +60,15 @@ public class MenuController {
 		menuService.removeEntity(id);
 		return JsonMsg.simpleSuccessJson();
 	}
-
+	@RequestMapping("validateModuleName")
+	public @ResponseBody Object validateModuleName(@RequestParam("menu_modulename") String menumodulename){
+		return menuService.isValidModuleName(menumodulename);
+	}
+	
+	@RequestMapping("validateMenuName")
+	public @ResponseBody Object validateMenuName(@RequestParam("menu_menuName") String menuName){
+		return menuService.isValidMenuName(menuName);
+	}
 	@RequestMapping("addOrUpdate")
 	public String addOrUpdate(HttpServletRequest req, Model model)
 			throws Exception {

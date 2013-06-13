@@ -11,15 +11,15 @@
 			<table>
 				<tr>
 					<td>菜单名称:</td>
-					<td><input class="easyui-validatebox" type="text"
-						name="menuName" value="${menu.menuName}" data-options="required:true">
+					<td><input id="menu_menuName" class="easyui-validatebox" type="text"
+						name="menuName" value="${menu.menuName}" data-options="required:true,validType:'remote[\'menu/validateMenuName\',\'menu_menuName\']'">
 						</td>
 				</tr>
 				<tr>
 					<td>模块名称:</td>
-					<td><input id="menumodulename" class="easyui-validatebox"
+					<td><input id="menu_modulename" class="easyui-validatebox"
 						type="text" name="moduleName" value="${menu.moduleName}"
-						data-options="required:true"> </td>
+						data-options="required:true,validType:'remote[\'menu/validateModuleName\',\'menu_modulename\']'"> </td>
 				</tr>
 				<tr>
 					<td>父菜单:</td>

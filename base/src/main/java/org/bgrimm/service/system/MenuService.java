@@ -6,6 +6,7 @@ import java.util.List;
 import org.bgrimm.dao.core.impl.CommonDao;
 import org.bgrimm.domain.system.TIcon;
 import org.bgrimm.domain.system.TMenu;
+import org.bgrimm.domain.system.TUser;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -58,9 +59,19 @@ public class MenuService {
 		commonDao.saveOrUpdate(menu);
 	}
 
-//	public List<TMenu> getSubMenus(int id) {
-//		List<TMenu> subMenus = menuDao.getMenusByParentId(id);
-//		return subMenus;
-//	}
+	public Object isValidModuleName(String menumodulename) {
+		TMenu menu=commonDao.findUniqueByProperty(TMenu.class, "moduleName", menumodulename);
+		if(menu==null){
+			return true;
+		}
+		return false;
+	}
 
+	public Object isValidMenuName(String menuName) {
+		TMenu menu=commonDao.findUniqueByProperty(TMenu.class, "menuName", menuName);
+		if(menu==null){
+			return true;
+		}
+		return false;
+	}
 }
