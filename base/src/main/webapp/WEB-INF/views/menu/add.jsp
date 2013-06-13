@@ -12,14 +12,14 @@
 				<tr>
 					<td>菜单名称:</td>
 					<td><input id="menu_menuName" class="easyui-validatebox" type="text"
-						name="menuName" value="${menu.menuName}" data-options="required:true,validType:'remote[\'menu/validateMenuName\',\'menu_menuName\']'">
+						name="menuName" value="${menu.menuName}" data-options="required:true,validType:'rmtValid[\'menu/validateMenuName\',\'menu_menuName\',\'${menu.id}\']'">
 						</td>
 				</tr>
 				<tr>
 					<td>模块名称:</td>
 					<td><input id="menu_modulename" class="easyui-validatebox"
 						type="text" name="moduleName" value="${menu.moduleName}"
-						data-options="required:true,validType:'remote[\'menu/validateModuleName\',\'menu_modulename\']'"> </td>
+						data-options="required:true,validType:'rmtValid[\'menu/validateModuleName\',\'menu_modulename\',\'${menu.id}\']'"> </td>
 				</tr>
 				<tr>
 					<td>父菜单:</td>

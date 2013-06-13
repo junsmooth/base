@@ -3,6 +3,7 @@ package org.bgrimm.service.system;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.bgrimm.dao.core.impl.CommonDao;
 import org.bgrimm.domain.system.TIcon;
 import org.bgrimm.domain.system.TMenu;
@@ -59,7 +60,14 @@ public class MenuService {
 		commonDao.saveOrUpdate(menu);
 	}
 
-	public Object isValidModuleName(String menumodulename) {
+	public Object isValidModuleName(String menumodulename,String id) {
+		
+		if(StringUtils.isNumeric(id)){
+			TMenu m1=commonDao.findUniqueByProperty(TMenu.class, "id", Long.parseLong(id));
+			if(m1.getModuleName().equals(menumodulename)){
+				return true;
+			}
+		}
 		TMenu menu=commonDao.findUniqueByProperty(TMenu.class, "moduleName", menumodulename);
 		if(menu==null){
 			return true;
@@ -67,7 +75,13 @@ public class MenuService {
 		return false;
 	}
 
-	public Object isValidMenuName(String menuName) {
+	public Object isValidMenuName(String menuName, String id) {
+		if(StringUtils.isNumeric(id)){
+			TMenu m1=commonDao.findUniqueByProperty(TMenu.class, "id", Long.parseLong(id));
+			if(m1.getMenuName().equals(menuName)){
+				return true;
+			}
+		}
 		TMenu menu=commonDao.findUniqueByProperty(TMenu.class, "menuName", menuName);
 		if(menu==null){
 			return true;
