@@ -206,6 +206,17 @@ public class CommonDao implements ICommonDao {
 				getSession());
 		CriteriaImpl impl = (CriteriaImpl) criteria;
 		Projection projection = impl.getProjection();
+		
+//		Object obj=criteria.setProjection(
+//				Projections.rowCount()).uniqueResult();
+//		final int allCounts=Integer.parseInt(obj.toString());
+		
+		Projection pro=Projections.rowCount();
+		Criteria  cri=criteria.setProjection(pro);
+		Object obj=cri.uniqueResult();
+		Long l=(Long)obj;
+		l.intValue();
+		
 		final int allCounts = ((Long) criteria.setProjection(
 				Projections.rowCount()).uniqueResult()).intValue();
 		criteria.setProjection(projection);

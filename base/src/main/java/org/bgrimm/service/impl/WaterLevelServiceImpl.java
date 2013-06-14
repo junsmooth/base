@@ -3,15 +3,17 @@ package org.bgrimm.service.impl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.bgrimm.dao.core.impl.CommonDao;
 import org.bgrimm.domain.bgrimm.DryBeachLength;
 import org.bgrimm.domain.bgrimm.MonitoringPoint;
 import org.bgrimm.domain.bgrimm.MonitoringType;
 import org.bgrimm.domain.bgrimm.TableParam;
+import org.bgrimm.domain.bgrimm.WaterLevel;
 import org.bgrimm.domain.system.PageList;
 import org.bgrimm.domain.system.PagedQuery;
-import org.bgrimm.service.IDryBeachLengthService;
+import org.bgrimm.service.IWaterLevelService;
 import org.bgrimm.utils.Constants;
 import org.bgrimm.utils.DateUtils;
 import org.bgrimm.utils.PagerUtil;
@@ -22,68 +24,64 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionTemplate;
-
-@Service(value="dryBeachLengthServiceImpl")
+@Service(value="waterLevelServiceImpl")
 @Transactional
-public class DryBeachLengthServiceImpl implements IDryBeachLengthService {
+public class WaterLevelServiceImpl implements IWaterLevelService {
 
-	@Autowired
-	private TransactionTemplate template;
 	@Autowired
 	@Qualifier("commonDao")
 	private CommonDao commonDao;
-	
 	/**
 	 * 获取所有测点
 	 */
 	public Object getAllPoints() {
 		
 		MonitoringType t = commonDao.findUniqueBy(MonitoringType.class, "code",
-				Constants.JCD_DRYBEACHLENGTH);
-		final List<MonitoringPoint> dryBeachPoint = commonDao.findByCriterions(
+				Constants.JCD_WATERLEVEL);
+		final List<MonitoringPoint> waterPoint = commonDao.findByCriterions(
 				MonitoringPoint.class, Restrictions.eq("type.id", t.getId()));
-		return dryBeachPoint;
+		return waterPoint;
 
 	}
-
+	
 	/**
 	 * 获取测点数据
 	 */
-	public Object getDryBeachPageList(TableParam param) {
+	public Object getWaterLevelPageList(TableParam param) {
 
 		List<Order> list=new ArrayList();
-		MonitoringType t=commonDao.findUniqueBy(MonitoringType.class, "code", Constants.JCD_DRYBEACHLENGTH);
-		List<MonitoringPoint> dryBeachLPointList=commonDao.findByCriterions(MonitoringPoint.class, Restrictions.eq("type.id", t.getId()));
-		PagedQuery pq = new PagedQuery(DryBeachLength.class, param.getPage(), param.getRows());
+		MonitoringType t=commonDao.findUniqueBy(MonitoringType.class, "code", Constants.JCD_WATERLEVEL);
+		List<MonitoringPoint> waterLevelPointList=commonDao.findByCriterions(MonitoringPoint.class, Restrictions.eq("type.id", t.getId()));
+		PagedQuery pq = new PagedQuery(WaterLevel.class, param.getPage(), param.getRows());
 		DetachedCriteria criteria = pq.getDetachedCriteria();
 		Integer[] arr = PagerUtil.strToArray(param.getStr());
 		if (StringUtils.isNotEmpty(param.getMin())) {
 			Date startDate = DateUtils.strToDate(param.getMin());
-			criteria.add(Restrictions.ge("date_Time", startDate));
+			criteria.add(Restrictions.ge("dateTime", startDate));
 		}
 		if (StringUtils.isNotEmpty(param.getMax())) {
 			Date endDate = DateUtils.strToDate(param.getMax());
-			criteria.add(Restrictions.le("date_Time", endDate));
+			criteria.add(Restrictions.le("dateTime", endDate));
 		}
 		if (StringUtils.isNotEmpty(param.getStr())) {
-			criteria.add(Restrictions.in("monitoring_position", arr));
+			criteria.add(Restrictions.in("monitoringPosition", arr));
 		} else {
 			// 设置测点
 			List<Integer> positions = new ArrayList();
-			for (MonitoringPoint p : dryBeachLPointList) {
+			for (MonitoringPoint p : waterLevelPointList) {
 				positions.add(p.getPosition());
 			}
-			criteria.add(Restrictions.in("monitoring_position", positions.toArray()));
+			criteria.add(Restrictions.in("monitoringPosition", positions.toArray()));
+//			criteria.add(Restrictions.in("monitoring_position", new Object[]{1}));
 		}
-		Order or=Order.desc("date_Time");
+		Order or=Order.desc("dateTime");
 		list.add(or);
-		PageList<DryBeachLength> pl= commonDao.getPagedList(pq,list);
+		PageList<WaterLevel> pl= commonDao.getPagedList(pq,list);
 		//将DryBeachLength与MonitoringPoint关联起来，主要是为了在页面根据测点获取对应名称
-		for (DryBeachLength dbl : pl.getRows()) {
-			for (MonitoringPoint point : dryBeachLPointList) {
-				if (dbl.getMonitoring_position()== point.getPosition()) {
-					dbl.setPoint(point);
+		for (WaterLevel wl : pl.getRows()) {
+			for (MonitoringPoint point : waterLevelPointList) {
+				if (wl.getMonitoringPosition()== point.getPosition()) {
+					wl.setPoint(point);
 				}
 			}
 		}
@@ -91,6 +89,4 @@ public class DryBeachLengthServiceImpl implements IDryBeachLengthService {
 	}
 
 	
-	
-
 }

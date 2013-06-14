@@ -1,7 +1,7 @@
 package org.bgrimm.controller;
 
 import org.bgrimm.domain.bgrimm.TableParam;
-import org.bgrimm.service.IDryBeachLengthService;
+import org.bgrimm.service.IWaterLevelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -9,27 +9,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("dryBeachLength")
-public class DryBeachLengthController {
-
+@RequestMapping("waterLevel")
+public class WaterLevelController {
 	@Autowired
-	private IDryBeachLengthService dryBeachLengthService;
+	@Qualifier("waterLevelServiceImpl")
+	private IWaterLevelService waterLevelService;
+
 	@RequestMapping("data")
 	public String index(){
 		
-		return "data/dryBeachLength/dryBeachLengthData";
+		return "data/waterLevel/waterLevelData";
 	}
+	
 	@RequestMapping("data/points")
 	@ResponseBody
 	public Object points(){
 		
-		return dryBeachLengthService.getAllPoints();
+		return waterLevelService.getAllPoints();
 	}
 	
-	@RequestMapping("data/dryBeachLengthData")
+	
+	@RequestMapping("data/waterLevelData")
 	@ResponseBody
-	public Object DryBeachLenList(TableParam param) {
+	public Object WaterLevelList(TableParam param) {
 
-		return dryBeachLengthService.getDryBeachPageList(param);
+		return waterLevelService.getWaterLevelPageList(param);
 	}
 }
