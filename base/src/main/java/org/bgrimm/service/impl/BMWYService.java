@@ -93,9 +93,9 @@ public class BMWYService {
 					}
 					criteria.add(Restrictions.in("stationId", idList.toArray()));
 				}
-				List<Order> list=new ArrayList<Order>();
-				Order od=Order.desc("logtime");
-				list.add(od);
+
+				List<Order> list=new ArrayList();
+				Order or=Order.desc("logtime");
 				return dao.getPagedList(pq,list);
 			}
 		});

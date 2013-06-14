@@ -96,6 +96,6 @@
                     editable:false  
             "
 			readonly="readonly"> <a href="#" class="easyui-linkbutton"
-			iconCls="icon-search" onclick="formatter:waterLevel.list.mySubmit">查询</a>
+			iconCls="icon-search" onclick="formatter:waterLevel.list.mySubmit()">查询</a>
 	</div>
 </div>

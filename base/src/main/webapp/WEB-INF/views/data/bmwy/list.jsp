@@ -63,49 +63,45 @@
 		},
 		reload : function() {
 			$('#jrxgrid').datagrid('reload');
+		},
+		submit:function(){
+			var validFormDate = $("#bmwydata_tb").form('validate');
+			if (!validFormDate) {
+				return;
+			}
+			var str1 = '', mp, min1, max1;
+
+			mp = $('#bmwydata_monitorPosition').combobox('getValues');
+
+			for ( var i = 0; i < mp.length; i++) {
+				str1 += mp[i] + ',';
+			}
+			str1 = str1.substring(0, str1.length - 1);
+			//return ;
+
+			min1 = $('#bmwydata_min').combobox('getText');
+
+			max1 = $('#bmwydata_max').combobox('getText');
+
+			$('#bmwydata_grid').datagrid('load', {
+				min : min1,
+				max : max1,
+				str : str1
+			});
 		}
 
 	});
-
-	function submit() {
-		//CheckDateTime();
-
-		var validFormDate = $("#tb").form('validate');
-		if (!validFormDate) {
-			return;
-		}
-		var str1 = '', mp, min1, max1;
-
-		mp = $('#monitorPosition').combobox('getValues');
-
-		for ( var i = 0; i < mp.length; i++) {
-			str1 += mp[i] + ',';
-		}
-		str1 = str1.substring(0, str1.length - 1);
-		//return ;
-
-		min1 = $('#min').combobox('getText');
-
-		max1 = $('#max').combobox('getText');
-
-		$('#jrxgrid').datagrid('load', {
-			min : min1,
-			max : max1,
-			str : str1
-		});
-
-	}
 </script>
 <div class="easyui-layout" data-options="fit:true">
 	<div data-options="region:'center'" style="padding: 10px 0 10px 10px">
 
 
-		<table id="jrxgrid" class="easyui-datagrid"
-			data-options="rownumbers:true,singleSelect:true, idField: 'id',url:'bmwy/data/bmwyData',pagination:'true',fitColumns:true,fit:true,toolbar:'#tb'">
+		<table id="bmwydata_grid" class="easyui-datagrid"
+			data-options="rownumbers:true,singleSelect:true, idField: 'id',url:'bmwy/data/bmwyData',pagination:'true',fitColumns:true,fit:true,toolbar:'#bmwydata_tb'">
 			<thead>
 
 				<tr>
-					<th id="dt"
+					<th 
 						data-options="field:'logtime',formatter:bmwydata.list.formatDataPageTime,width:80,align:'left'">
 
 						时间</th>
@@ -120,13 +116,13 @@
 		</table>
 	</div>
 </div>
-<div id="tb" style="padding: 5px; height: auto">
+<div id="bmwydata_tb" style="padding: 5px; height: auto">
 	<div>
-		时间 从: <input id='min' class="easyui-datetimebox"
+		时间 从: <input id='bmwydata_min' class="easyui-datetimebox"
 			data-options="formatter:bmwydata.list.myDate,validType:'checkDate[\'yyyy-MM-dd HH:mm:ss\']'"></input>
-		到: <input id='max' class="easyui-datetimebox"
+		到: <input id='bmwydata_max' class="easyui-datetimebox"
 			data-options="formatter:bmwydata.list.myDate,validType:'checkDate[\'yyyy-MM-dd HH:mm:ss\']'"></input>
-		测点: <input id="monitorPosition" class="easyui-combobox"
+		测点: <input id="bmwydata_monitorPosition" class="easyui-combobox"
 			name="monitorPosition"
 			data-options="  
                     url:'bmwy/data/points',  
@@ -137,6 +133,6 @@
                     editable:false  
             "
 			readonly="readonly"> <a href="#" class="easyui-linkbutton"
-			iconCls="icon-search" onclick="submit()">查询</a>
+			iconCls="icon-search" onclick="bmwydata.list.submit()">查询</a>
 	</div>
 </div>

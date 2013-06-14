@@ -34,9 +34,9 @@ SET IDENTITY_INSERT [t_menu] OFF
 
 SET IDENTITY_INSERT [t_operation] ON
 
- INSERT [t_operation] ( [id] , [name] , [opcode] ) VALUES (1,'View','VIEW');
- INSERT [t_operation] ( [id] , [name] , [opcode] ) VALUES (2,'Query','QUERY');
- INSERT [t_operation] ( [id] , [name] , [opcode] ) VALUES (3,'Edit','EDIT');
+ INSERT [t_operation] ( [id] , [name] , [opcode] ) VALUES (1,'ä¯ÀÀ','VIEW');
+ INSERT [t_operation] ( [id] , [name] , [opcode] ) VALUES (2,'²éÑ¯','QUERY');
+ INSERT [t_operation] ( [id] , [name] , [opcode] ) VALUES (3,'ÐÞ¸Ä','EDIT');
 SET IDENTITY_INSERT [t_operation] OFF
 
 

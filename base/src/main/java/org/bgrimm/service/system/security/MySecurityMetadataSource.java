@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.bgrimm.domain.system.TMenu;
 import org.bgrimm.service.system.MenuService;
@@ -80,6 +81,7 @@ public class MySecurityMetadataSource implements
 		}
 
 		String requestUrl = ((FilterInvocation) object).getRequestUrl();
+		requestUrl=StringUtils.substringBefore(requestUrl, "?");
 		if(whitlist.contains(requestUrl)){
 			return defaultAttributes();
 		}
