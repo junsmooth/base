@@ -17,6 +17,7 @@ import org.bgrimm.utils.Constants;
 import org.bgrimm.utils.DateUtils;
 import org.bgrimm.utils.PagerUtil;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -92,7 +93,10 @@ public class BMWYService {
 					}
 					criteria.add(Restrictions.in("stationId", idList.toArray()));
 				}
-				return dao.getPagedList(pq);
+				Order o1=Order.desc("logtime");
+				List<Order> list=new ArrayList();
+				list.add(o1);
+				return dao.getPagedList(pq,list);
 			}
 		});
 		// Parse Result, Add Point Info to data
