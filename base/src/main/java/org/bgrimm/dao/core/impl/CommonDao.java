@@ -200,7 +200,7 @@ public class CommonDao implements ICommonDao {
 /**
  * This Implementation is only support Object that do not have child Objects
  */
-	public PageList getPagedList(PagedQuery pq) {
+	public PageList getPagedList(PagedQuery pq,List<Order> list) {
 
 		Criteria criteria = pq.getDetachedCriteria().getExecutableCriteria(
 				getSession());
@@ -218,6 +218,11 @@ public class CommonDao implements ICommonDao {
 				pq.getPageSize());
 		criteria.setFirstResult(offset);
 		criteria.setMaxResults(pq.getPageSize());
+		
+		for(Order order:list){
+			criteria.addOrder(order);
+		}
+		
 		return new PageList(criteria.list(),allCounts);
 	}
 

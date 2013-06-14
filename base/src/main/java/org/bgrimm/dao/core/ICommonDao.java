@@ -8,6 +8,7 @@ import java.util.Map;
 import org.bgrimm.domain.system.PageList;
 import org.bgrimm.domain.system.PagedQuery;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 
 public interface ICommonDao {
 	public <T> List<T> queryByExample(Class<T> entityClass,Object example);
@@ -38,7 +39,7 @@ public interface ICommonDao {
 	 * @param pq
 	 * @return
 	 */
-	public PageList getPagedList(PagedQuery pq);
+	public  PageList getPagedList(PagedQuery pq,List<Order> li);
 	
 	
 	

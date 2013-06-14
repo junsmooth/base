@@ -1,8 +1,10 @@
 package org.bgrimm;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -19,7 +21,7 @@ public class Tester {
 	}
 	
 	
-	public void test(){
+	public void tes1t(){
 		//Calendar的调用
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.sss");
 		Calendar cal=Calendar.getInstance();
@@ -33,6 +35,19 @@ public class Tester {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	public void test(){
+		List l=getList();
+		for(Object obj: l){
+			System.out.println("success!");
+		}
+	
+	}
+	
+	public List<Object> getList(){
+		List l=new ArrayList();
+		l.add("afds");
+		return l;
 	}
 
 }

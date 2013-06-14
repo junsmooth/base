@@ -1,6 +1,7 @@
 package org.bgrimm.service.system;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -188,7 +189,10 @@ public class CommonServiceImpl implements CommonService {
 	}
 
 	public PageList getPagedList(PagedQuery pq) {
-		return commonDao.getPagedList(pq);
+		
+		
+		
+		return commonDao.getPagedList(pq,new ArrayList());
 	}
 
 

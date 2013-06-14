@@ -9,4 +9,6 @@ public class Constants {
 	
 	public static final String JCD_JRX="JRX";
 	public static final String JCD_BMWY="BMWY";
+	public static final String JCD_DRYBEACHELEVATION="GTGC";
+	public static final String JCD_DRYBEACHLENGTH="GTCD";
 }
