@@ -4,7 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>
+    <title> 
       Management System
     </title>
     <link rel="stylesheet" type="text/css" href="resources/themes/metro/easyui.css">

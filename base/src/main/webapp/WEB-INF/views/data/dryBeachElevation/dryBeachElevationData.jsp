@@ -26,7 +26,7 @@
 		}
 		var str1 = '', mp, min1, max1;
 
-		mp = $('#monitorPosition').combobox('getValues');
+		mp = $('#dryBeachE_mp').combobox('getValues');
 
 		for ( var i = 0; i < mp.length; i++) {
 			str1 += mp[i] + ',';
@@ -34,11 +34,11 @@
 		str1 = str1.substring(0, str1.length - 1);
 		//return ;
 
-		min1 = $('#min').combobox('getText');
+		min1 = $('#dryBeachE_min').combobox('getText');
 
-		max1 = $('#max').combobox('getText');
+		max1 = $('#dryBeachE_max').combobox('getText');
 
-		$('#dryBeachId').datagrid('load', {
+		$('#dryBeachEId').datagrid('load', {
 			min : min1,
 			max : max1,
 			str : str1
@@ -58,7 +58,7 @@
 	<div data-options="region:'center'" style="padding: 10px 0 10px 10px">
 
 
-		<table id="dryBeachId" class="easyui-datagrid"
+		<table id="dryBeachEId" class="easyui-datagrid"
 			data-options="rownumbers:true,singleSelect:true, idField: 'id',url:'dryBeachElevation/data/dryBeachElevationData',pagination:'true',fitColumns:true,fit:true,toolbar:'#tb'">
 			<thead>
 
@@ -80,12 +80,12 @@
 </div>
 <div id="tb" style="padding: 5px; height: auto">
 	<div>
-		时间 从: <input id='min' class="easyui-datetimebox"
+		时间 从: <input id='dryBeachE_min' class="easyui-datetimebox"
 			data-options="formatter:dryBeach.list.myDate,validType:'checkDate[\'yyyy-MM-dd HH:mm:ss\']'"></input>
-		到: <input id='max' class="easyui-datetimebox"
+		到: <input id='dryBeachE_max' class="easyui-datetimebox"
 			data-options="formatter:dryBeach.list.myDate,validType:'checkDate[\'yyyy-MM-dd HH:mm:ss\']'"></input>
-		测点: <input id="monitorPosition" class="easyui-combobox"
-			name="monitorPosition"
+		测点: <input id="dryBeachE_mp" class="easyui-combobox"
+			name="dryBeachE_mp"
 			data-options="  
                     url:'dryBeachElevation/data/points',  
                     valueField:'position',  

@@ -12,5 +12,10 @@ public class Constants {
 	public static final String JCD_DRYBEACHELEVATION="GTGC";
 	public static final String JCD_DRYBEACHLENGTH="GTCD";
 	public static final String JCD_WATERLEVEL="KSW";
+	public static final String JCD_RAINFALL="JYL";
+	public static final String JCD_FREEBOARD="AQCG";
+	public static final String JCD_DAMCREST="BDGC";
+	public static final String JCD_SEEPAGE="SLL";
+	public static final String JCD_INNERDISP="NBWY";
 	
 }

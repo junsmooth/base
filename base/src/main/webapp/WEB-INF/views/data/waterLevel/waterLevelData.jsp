@@ -23,7 +23,7 @@
 			}
 			var str1 = '', mp, min1, max1;
 
-			mp = $('#monitorPosition').combobox('getValues');
+			mp = $('#monitorPosition_wl').combobox('getValues');
 
 			for ( var i = 0; i < mp.length; i++) {
 				str1 += mp[i] + ',';
@@ -85,8 +85,8 @@
 			data-options="formatter:waterLevel.list.myDate,validType:'checkDate[\'yyyy-MM-dd HH:mm:ss\']'"></input>
 		到: <input id='waterLevel_max' class="easyui-datetimebox"
 			data-options="formatter:waterLevel.list.myDate,validType:'checkDate[\'yyyy-MM-dd HH:mm:ss\']'"></input>
-		测点: <input id="monitorPosition" class="easyui-combobox"
-			name="monitorPosition"
+		测点: <input id="monitorPosition_wl" class="easyui-combobox"
+			name="monitorPosition_wl"
 			data-options="  
                     url:'waterLevel/data/points',  
                     valueField:'position',  

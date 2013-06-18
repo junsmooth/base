@@ -68,13 +68,13 @@
 	});
 
 	function submit() {
-		var validFormDate = $("#tb").form('validate');
+		var validFormDate = $("#jrx_tb").form('validate');
 		if (!validFormDate) {
 			return;
 		}
 		var str1 = '', mp, min1, max1;
 
-		mp = $('#monitorPosition').combobox('getValues');
+		mp = $('#jrx_monitorPosition').combobox('getValues');
 
 		for ( var i = 0; i < mp.length; i++) {
 			str1 += mp[i] + ',';
@@ -82,9 +82,9 @@
 		str1 = str1.substring(0, str1.length - 1);
 		//return ;
 
-		min1 = $('#min').combobox('getText');
+		min1 = $('#jrx_min').combobox('getText');
 
-		max1 = $('#max').combobox('getText');
+		max1 = $('#jrx_max').combobox('getText');
 
 		$('#jrxgrid').datagrid('load', {
 			min : min1,
@@ -107,7 +107,7 @@
 
 
 		<table id="jrxgrid" class="easyui-datagrid"
-			data-options="rownumbers:true,singleSelect:true, idField: 'id',url:'jrx/data/jrxData',pagination:'true',fitColumns:true,fit:true,toolbar:'#tb'">
+			data-options="rownumbers:true,singleSelect:true, idField: 'id',url:'jrx/data/jrxData',pagination:'true',fitColumns:true,fit:true,toolbar:'#jrx_tb'">
 			<thead>
 
 				<tr>
@@ -126,14 +126,14 @@
 		</table>
 	</div>
 </div>
-<div id="tb" style="padding: 5px; height: auto">
+<div id="jrx_tb" style="padding: 5px; height: auto">
 	<div>
-		时间 从: <input id='min' class="easyui-datetimebox"
+		时间 从: <input id='jrx_min' class="easyui-datetimebox"
 			data-options="formatter:saturation.list.myDate,validType:'checkDate[\'yyyy-MM-dd HH:mm:ss\']'"></input>
-		到: <input id='max' class="easyui-datetimebox"
+		到: <input id='jrx_max' class="easyui-datetimebox"
 			data-options="formatter:saturation.list.myDate,validType:'checkDate[\'yyyy-MM-dd HH:mm:ss\']'"></input>
-		测点: <input id="monitorPosition" class="easyui-combobox"
-			name="monitorPosition"
+		测点: <input id="jrx_monitorPosition" class="easyui-combobox"
+			name="jrx_monitorPosition"
 			data-options="  
                     url:'jrx/data/jrxMonitorPostion',  
                     valueField:'position',  
