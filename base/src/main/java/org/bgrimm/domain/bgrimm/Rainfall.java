@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.bgrimm.domain.bgrimm.extend.MonitoringPoint;
 import org.bgrimm.domain.system.IdEntity;
 
 @Entity

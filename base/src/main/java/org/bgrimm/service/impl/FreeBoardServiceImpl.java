@@ -6,11 +6,11 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.bgrimm.dao.core.impl.CommonDao;
-import org.bgrimm.domain.bgrimm.FreeBoard;
-import org.bgrimm.domain.bgrimm.MonitoringPoint;
-import org.bgrimm.domain.bgrimm.MonitoringType;
 import org.bgrimm.domain.bgrimm.Rainfall;
 import org.bgrimm.domain.bgrimm.TableParam;
+import org.bgrimm.domain.bgrimm.extend.FreeBoard;
+import org.bgrimm.domain.bgrimm.extend.MonitoringPoint;
+import org.bgrimm.domain.bgrimm.extend.MonitoringType;
 import org.bgrimm.domain.system.PageList;
 import org.bgrimm.domain.system.PagedQuery;
 import org.bgrimm.service.IFreeBoardService;

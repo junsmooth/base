@@ -1,4 +1,4 @@
-package org.bgrimm.domain.bgrimm;
+package org.bgrimm.domain.bgrimm.extend;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -11,14 +11,14 @@ import javax.persistence.Transient;
 import org.bgrimm.domain.system.IdEntity;
 
 @Entity
-@Table(name="dam_crest_elevation")
-public class DamCrest extends IdEntity {
+@Table(name="free_board")
+public class FreeBoard extends IdEntity {
 
 	@Column(name="date_Time")
 	private Date dateTime;
 
 	
-	@Column(name="elevation")
+	@Column(name="freeboard")
 	private BigDecimal value;
 	
 

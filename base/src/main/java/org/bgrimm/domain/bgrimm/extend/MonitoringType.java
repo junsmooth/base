@@ -1,4 +1,4 @@
-package org.bgrimm.domain.bgrimm;
+package org.bgrimm.domain.bgrimm.extend;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

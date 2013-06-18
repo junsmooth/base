@@ -8,6 +8,7 @@ import org.bgrimm.service.IFreeBoardService;
 import org.bgrimm.service.IInnerDisplacementService;
 import org.bgrimm.service.IRainfallService;
 import org.bgrimm.service.ISeepageService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("innerDisp")
 public class InnerDisplacementController {
 
-	@Resource(name="innerDisplacementServiceImpl")
+	@Autowired
 	private IInnerDisplacementService innerDisplacementServiceImpl;
 	
 	@RequestMapping("data")

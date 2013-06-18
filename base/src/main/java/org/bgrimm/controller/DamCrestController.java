@@ -6,6 +6,7 @@ import org.bgrimm.domain.bgrimm.TableParam;
 import org.bgrimm.service.IDamCrestService;
 import org.bgrimm.service.IFreeBoardService;
 import org.bgrimm.service.IRainfallService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("damCrest")
 public class DamCrestController {
 
-	@Resource(name="damCrestServiceImpl")
+	@Autowired
 	private IDamCrestService damCrestServiceImpl;
 	@RequestMapping("data")
 	public String index(){

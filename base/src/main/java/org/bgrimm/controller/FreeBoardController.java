@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import org.bgrimm.domain.bgrimm.TableParam;
 import org.bgrimm.service.IFreeBoardService;
 import org.bgrimm.service.IRainfallService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("freeBoard")
 public class FreeBoardController {
 
-	@Resource(name="freeBoardServiceImpl")
+	@Autowired
 	private IFreeBoardService freeBoardServiceImpl;
 	@RequestMapping("data")
 	public String index(){
