@@ -8,11 +8,11 @@
 	<tx:annotation-driven />
 	<bean id="bgrimmDS" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		p:driverClass="net.sourceforge.jtds.jdbc.Driver"
-		p:jdbcUrl="jdbc:jtds:sqlserver://172.16.3.12:1433;DatabaseName=BGRIMMDB"
+		p:jdbcUrl="jdbc:jtds:sqlserver://172.16.3.11:1433;DatabaseName=BGRIMMDB"
 		p:user="sa" p:password="trimble" />
 	<bean id="t4ddbDS" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		p:driverClass="net.sourceforge.jtds.jdbc.Driver"
-		p:jdbcUrl="jdbc:jtds:sqlserver://172.16.3.12:1433;DatabaseName=T4DDB"
+		p:jdbcUrl="jdbc:jtds:sqlserver://172.16.3.11:1433;DatabaseName=T4DDB"
 		p:user="sa" p:password="trimble" />
 	<!-- Proxy DataSource -->
 	<bean id="dataSource" class="org.bgrimm.common.datasource.DynamicDataSource">
@@ -34,7 +34,7 @@
 		<property name="packagesToScan">
 			<list>
 				<value>org.bgrimm.domain.system</value>
-				<value>org.bgrimm.domain.bgrimm</value>
+				<value>org.bgrimm.domain.bgrimm.extend</value>
 				
 			</list>
 		</property>
@@ -45,7 +45,7 @@
 				hibernate.dialect=org.hibernate.dialect.SQLServerDialect
 				hibernate.show_sql=true
 				format_sql=true
-				hibernate.hbm2ddl.auto=validate
+				hibernate.hbm2ddl.auto=create-drop
 			</value>
 		</property>
 	</bean>
@@ -90,9 +90,9 @@
 	<context:component-scan base-package="org.bgrimm.service" />
 	<context:component-scan base-package="org.bgrimm.persistence" />
 	
-<!--
+
 		<jdbc:initialize-database data-source="bgrimmDS">
 			<jdbc:script location="classpath:database/sqlserver.sql"/>
 		</jdbc:initialize-database>
--->
+
 </beans>
