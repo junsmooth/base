@@ -16,22 +16,35 @@ public class JRXController {
 	@RequestMapping("data")
 	public String toJrxPage() {
 		
-		return "data/saturation/jrxData";
+		return "data/jrx/jrxData";
 	}
 	
-	
-	@RequestMapping("data/jrxData")
-	@ResponseBody
-	public Object JRXList(TableParam param) {
+	@RequestMapping("chart")
+	public String chartIndex() {
+		
+		return "data/jrx/jrxChart";
+	}
 
-		return JRXServiceImpl.getJRXPageList(param);
-	}
 	
+	@RequestMapping("data/points")
+	@ResponseBody
+	public Object points(){
+		
+		return JRXServiceImpl.getAllPoints();
+	}
 	@RequestMapping("data/jrxMonitorPostion")
 	@ResponseBody
-	public Object JRXMonitorPosition(){
+	public Object JRXMonitorPosition(TableParam param){
 		
-		return JRXServiceImpl.getJRXMonitorPosition();
+		return JRXServiceImpl.getJRXMonitorPosition(param);
+	}
+	
+	
+	@RequestMapping("chart/jrxChart")
+	@ResponseBody
+	public Object JRXChart(TableParam param){
+		
+		return JRXServiceImpl.getJRXMonitorPosition(param);
 	}
 	
 }

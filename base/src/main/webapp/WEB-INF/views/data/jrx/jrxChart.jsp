@@ -3,6 +3,7 @@
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <script type="text/javascript">
 	Namespace.register("saturation.list", {
 		formatOperation : function(value) {
@@ -101,28 +102,82 @@
 		r[2] = r[2] - 1;
 		return new Date(r[1], r[2], r[3], r[4], r[5], r[6]);
 	}
+	
+	
+	function jrxHighCharts() {
+        $('#jrx_chart').highcharts({
+            chart: {
+                zoomType: 'x',
+                spacingRight: 20
+            },
+            title: {
+                text: '浸润线过程线'
+            },
+           /* subtitle: {
+                text: document.ontouchstart === undefined ?
+                    'Click and drag in the plot area to zoom in' :
+                    'Drag your finger over the plot to zoom in'
+            },*/
+            xAxis: {
+                type: 'datetime',
+                maxZoom: 14 * 24 * 3600000, // fourteen days
+                title: {
+                    text: null
+                }
+            },
+            yAxis: {
+                title: {
+                    text: '干滩高程监测值（m）'
+                }
+            },
+            tooltip: {
+                shared: true
+            },
+            legend: {
+                enabled: false
+            },
+            plotOptions: {
+                area: {
+                    fillColor: {
+                        linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1},
+                        stops: [
+                            [0, Highcharts.getOptions().colors[0]],
+                            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                        ]
+                    },
+                    lineWidth: 1,
+                    marker: {
+                        enabled: false
+                    },
+                    shadow: false,
+                    states: {
+                        hover: {
+                            lineWidth: 1
+                        }
+                    },
+                    threshold: null
+                }
+            },
+    
+            series: [{
+                type: 'area',
+                name: 'USD to EUR',
+                pointInterval: 24 * 3600 * 1000,
+                pointStart: Date.UTC(2006, 0, 01),
+              //  data: []//json数据
+            }]
+        });
+    }
+	
+	$(document).ready(jrxHighCharts());
 </script>
 <div class="easyui-layout" data-options="fit:true">
 	<div data-options="region:'center'" style="padding: 10px 0 10px 10px">
 
 
 		<table id="jrxgrid" class="easyui-datagrid"
-			data-options="rownumbers:true,singleSelect:true, idField: 'id',url:'jrx/data/jrxData',pagination:'true',fitColumns:true,fit:true,toolbar:'#jrx_tb'">
-			<thead>
-
-				<tr>
-					<th id="dt"
-						data-options="field:'date_Time',formatter:saturation.list.formatJRXTime,width:80,align:'left'">
-
-						时间</th>
-					<th
-						data-options="field:'point',width:80,align:'left',formatter:saturation.list.formatJRXPoint">
-						测点</th>
-					<th data-options="field:'water_depth',width:120,align:'left'">
-						深度</th>
-
-				</tr>
-			</thead>
+			data-options="url:'jrx/data/jrxMonitorPostion',fit:true,toolbar:'#jrx_tb'">
+			
 		</table>
 	</div>
 </div>
@@ -135,7 +190,7 @@
 		测点: <input id="jrx_monitorPosition" class="easyui-combobox"
 			name="jrx_monitorPosition"
 			data-options="  
-                    url:'jrx/data/jrxMonitorPostion',  
+                    url:'jrx/data/points',  
                     valueField:'position',  
                     textField:'monitoringName',  
                     multiple:true,  
@@ -145,4 +200,5 @@
 			readonly="readonly"> <a href="#" class="easyui-linkbutton"
 			iconCls="icon-search" onclick="submit()">查询</a>
 	</div>
+		<div id="jrx_chart"></div>
 </div>
