@@ -29,7 +29,8 @@
      <script type="text/javascript" src="resources/validation.js">
     </script>
     
-    <script src="resources/highcharts.js"></script>
+  <!--   <script src="resources/highcharts.js"></script> -->
+    <script src="resources/highstock.js"></script>
 	<script src="resources/modules/exporting.js"></script>
   </head>
   <body class="easyui-layout">

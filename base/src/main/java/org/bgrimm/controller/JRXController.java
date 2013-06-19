@@ -44,7 +44,7 @@ public class JRXController {
 	@ResponseBody
 	public Object JRXChart(TableParam param){
 		
-		return JRXServiceImpl.getJRXMonitorPosition(param);
+		return JRXServiceImpl.getJrxChartData(param);
 	}
 	
 }

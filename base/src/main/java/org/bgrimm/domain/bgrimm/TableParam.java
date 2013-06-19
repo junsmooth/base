@@ -8,6 +8,7 @@ public class TableParam {
 	private int page;
 	private int rows;
 	private String str;
+	private String flag;
 	public String getMax() {
 		return max;
 	}
@@ -38,7 +39,11 @@ public class TableParam {
 	public void setStr(String str) {
 		this.str = str;
 	}
-	
-	
+	public String getFlag() {
+		return flag;
+	}
+	public void setFlag(String flag) {
+		this.flag = flag;
+	}
 	
 }
