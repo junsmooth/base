@@ -39,7 +39,13 @@ INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parenti
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 22 , '渗流量数据' , 'SHELIULIANGSHUJU' , 'seepage/data' , 1 , 11 )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 23 , '内部位移数据' , 'NEIBUWEIYISHUJU' , 'innerDisp/data' , 1 , 11 )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 24 , '浸润线过程线' , 'JINRUNXIAN' , 'jrx/chart' , 1 , 9 )
-
+INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 25 , '监测属性' , 'MONATTR' , 'config/monattr' , 1 , 6 )
+ INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 26 , '报警阈值' , 'THRESHOLD' , 'alarm/threshold' , 1 , 6 )
+ 
+ INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 27 , '报警级别' , 'ALARMTYPE' , 'alarm/alarmtype' , 1 , 6 )
+ INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 28 , '报警颜色' , 'ALARMCOLOR' , 'alarm/alarmcolor' , 1 , 6 )
+ INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 29 , '浸润线过程线' , 'JINRUNXIAN' , 'jrx/chart' , 1 , 9 )
+ 
  
  SET IDENTITY_INSERT [t_menu] OFF
 
@@ -93,4 +99,40 @@ INSERT [t_authority] ( [id] , [description] , [name] ) VALUES ( 3 , NULL,'ROLE_U
 
  SET IDENTITY_INSERT [t_monpoint] OFF
  
+ SET IDENTITY_INSERT [dbo].[t_thresholdop] ON
+INSERT [t_thresholdop] ( [id] , [displayName] , [opName] ) VALUES ( 1 , '大于' , 'GT' )
+ INSERT [t_thresholdop] ( [id] , [displayName] , [opName] ) VALUES ( 2 , '大于等于' , 'GE' )
+ INSERT [t_thresholdop] ( [id] , [displayName] , [opName] ) VALUES ( 4 , '小于等于' , 'LE' )
+ INSERT [t_thresholdop] ( [id] , [displayName] , [opName] ) VALUES ( 3 , '小于' , 'GT' )
+
+ SET IDENTITY_INSERT [t_thresholdop] OFF
+
  
+ SET IDENTITY_INSERT [t_montypeattr] ON
+
+ INSERT [t_montypeattr] ( [id] , [attr] , [name] , [montypeid] ) VALUES ( 1 , 'dN' , '平行坝轴线变化' , 1 )
+ INSERT [t_montypeattr] ( [id] , [attr] , [name] , [montypeid] ) VALUES ( 2 , 'value' , '库水位' , 11 )
+ SET IDENTITY_INSERT [t_montypeattr] OFF
+ 
+ SET IDENTITY_INSERT [t_alarmcolor] ON
+
+ INSERT [t_alarmcolor] ( [id] , [code] , [name] ) VALUES ( 1 , '#FF0000' , '红色' )
+ INSERT [t_alarmcolor] ( [id] , [code] , [name] ) VALUES ( 2 , '#FFFF00' , '黄色' )
+
+ SET IDENTITY_INSERT [t_alarmcolor] OFF
+
+ 
+  SET IDENTITY_INSERT [t_alarmtype] ON
+
+ INSERT [t_alarmtype] ( [id] , [name] , [severity] , [color_id] ) VALUES ( 1 , '一级报警' , 1 , 2 )
+ INSERT [t_alarmtype] ( [id] , [name] , [severity] , [color_id] ) VALUES ( 3 , '二级警报' , 2 , 1 )
+
+ SET IDENTITY_INSERT [t_alarmtype] OFF
+
+ 
+  SET IDENTITY_INSERT [t_threshold] ON
+
+ INSERT [t_threshold] ( [id] , [value] , [alarmTypeid] , [montypeattrid] , [thresholdopid] , [monpointid] ) VALUES ( 1 , 10.0 , 1 , 1 , 1 , 1 )
+
+ SET IDENTITY_INSERT [t_threshold] OFF
+

@@ -5,6 +5,8 @@ import java.util.List;
 import org.bgrimm.dao.core.impl.CommonDao;
 import org.bgrimm.domain.bgrimm.extend.MonitoringPoint;
 import org.bgrimm.domain.bgrimm.extend.MonitoringType;
+import org.bgrimm.domain.bgrimm.extend.MonitoringTypeAttribute;
+import org.bgrimm.domain.bgrimm.extend.Threshold;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +18,7 @@ public class ConfigService {
 	public CommonDao commonDao;
 
 	public List<MonitoringType> getAllMonType() {
-		return commonDao.loadAll(MonitoringType.class);
+			return commonDao.loadAll(MonitoringType.class);
 	}
 
 	public void saveOrUpdateMonType(MonitoringType mon) {
@@ -50,5 +52,11 @@ public class ConfigService {
 	public void saveOrUpdateMonPoint(MonitoringPoint mon) {
 		commonDao.saveOrUpdate(mon);
 	}
+
+	public Object getAllMonAttr() {
+		return commonDao.loadAll(MonitoringTypeAttribute.class);
+	}
+
+	
 
 }

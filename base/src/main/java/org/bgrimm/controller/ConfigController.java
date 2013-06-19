@@ -1,6 +1,5 @@
 package org.bgrimm.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,12 +31,25 @@ public class ConfigController {
 	public String monPoint() {
 		return "config/monPoint";
 	}
-
+	@RequestMapping("monattr")
+	public String monAttr() {
+		return "config/monAttr";
+	}
+	
+	
+	
 	@RequestMapping("monpoint/data")
 	public @ResponseBody
 	Object monPointList() {
 		return configService.getAllMonPoint();
 	}
+	
+	@RequestMapping("monattr/data")
+	public @ResponseBody
+	Object monAttrList() {
+		return configService.getAllMonAttr();
+	}
+	
 	@RequestMapping("monpoint/validateMonPointName")
 	public @ResponseBody Object validateMonPointName(@RequestParam String monName){
 		return configService.isValidMonPointName(monName);
