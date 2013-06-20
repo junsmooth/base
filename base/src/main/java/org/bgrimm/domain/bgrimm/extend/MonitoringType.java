@@ -15,6 +15,13 @@ public class MonitoringType extends IdEntity {
 	private String name;
 	private String code;
 	private String tableName;
+	private String domainClsName;
+	public String getDomainClsName() {
+		return domainClsName;
+	}
+	public void setDomainClsName(String domainClsName) {
+		this.domainClsName = domainClsName;
+	}
 	@Column
 	@org.hibernate.annotations.Type(type="yes_no")
 	private boolean enabled;
