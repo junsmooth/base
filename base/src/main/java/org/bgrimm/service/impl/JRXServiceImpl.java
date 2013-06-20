@@ -124,9 +124,7 @@ public class JRXServiceImpl {
 			}
 			criteria.add(Restrictions.in("monitoringPosition", positions.toArray()));
 		}
-		if("1".equals(param.getFlag())){
-			criteria.add(Restrictions.between("dateTime",DateUtils.getTimeOfAWeek().get(0), DateUtils.getTimeOfAWeek().get(1)));
-		}
+
 		criteria.addOrder(Order.asc("dateTime"));
 		
 		return criteria.list();

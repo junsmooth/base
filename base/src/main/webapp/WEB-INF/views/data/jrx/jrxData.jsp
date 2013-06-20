@@ -5,66 +5,17 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script type="text/javascript">
 	Namespace.register("saturation.list", {
-		formatOperation : function(value) {
-			if (value) {
-				var edit = '[' + '<a href="#" onclick="user.list.edit(' + value
-						+ ')">编辑</a>' + ']';
-				var del = '[' + '<a href="#" onclick="user.list.remove('
-						+ value + ' )">删除</a>' + ']';
-				if (hasRole('ROLE_USER_EDIT')) {
-					return edit + del;
-				}
-
-			}
-		},
+		
 		formatJRXTime : function(value) {
 			return formatDateTime(value);
 		},
 		formatJRXPoint : function(value) {
 			return value.monitoringName;
 		},
-		remove : function(value) {
-			$.messager.confirm('提示', '确定要删除吗?', function(r) {
-				if (r) {
-					$.post('user/remove', {
-						id : value
-					}, function(data) {
-						if (data.success) {
-							user.list.reload();
-							$.dialog.tips(data.msg);
-						} else {
-							$.dialog.tips(data.msg + ":" + data.obj, 600,
-									'error.gif');
-						}
-					});
-				} else {
-					return;
-				}
-			});
-		},
 		myDate : function(value) {
 			//var d = formatDateTime(value);
 			return formatDateTime(value);
-		},
-		edit : function(value) {
-			$('#userdialog').dialog({
-				title : '用户编辑',
-				width : 600,
-				height : 336,
-				closed : false,
-				resizable : true,
-				cache : false,
-				href: 'user/addOrUpdate?id=' + value,
-				modal : true
-			});
-		},
-		closeDialog : function() {
-			$('#userdialog').dialog('close');
-		},
-		reload : function() {
-			$('#jrxgrid').datagrid('reload');
 		}
-
 	});
 
 	function submit() {
@@ -135,7 +86,7 @@
 		测点: <input id="jrx_monitorPosition" class="easyui-combobox"
 			name="jrx_monitorPosition"
 			data-options="  
-                    url:'jrx/data/jrxMonitorPostion',  
+                    url:'jrx/data/points',  
                     valueField:'position',  
                     textField:'monitoringName',  
                     multiple:true,  

@@ -16,6 +16,13 @@
 		myDate : function(value) {
 			//var d = formatDateTime(value);
 			return formatDateTime(value);
+		},
+		initToolBarValue:function(){
+			var date=new Date(); 
+			var oldDate=new Date(date.getTime()-7*24*60*60*1000);
+			$("#jrxChart_min").attr("value",formatDateTime(oldDate));
+			$("#jrxChart_max").attr("value",formatDateTime(date)); 
+			getChartData();
 		}
 	});
 	
@@ -59,27 +66,25 @@
 						}]
 					});
     }
-	function getChartData(jrxFlag){
+	function getChartData(){
 		var validFormDate = $("#jrxChart_tb").form('validate');
 		if (!validFormDate) {
 			return;
 		}
 				var str1 = '', mp, min1, max1;
-				//alert(st=="1");
-		if(!jrxFlag=="1"){
+		
 			
 				mp = $('#jrxChart_monitorPosition').combobox('getValues');
 		
-				for ( var i = 0; i < mp.length; i++) {
+				 for ( var i = 0; i < mp.length; i++) {
 					str1 += mp[i] + ',';
-				}
+				} 
 				str1 = str1.substring(0, str1.length - 1);
-				//return ;
-		
+	
 				min1 = $('#jrxChart_min').combobox('getText');
 		
 				max1 = $('#jrxChart_max').combobox('getText');
-		}
+		
 		$.ajax({
 			type : 'POST',
 			url : "jrx/chart/jrxChart",
@@ -91,20 +96,33 @@
 		});
 	}
 	
-	 
 	
-	$(document).ready(
-		function(){
-			
-			//1. set inital params startTime, endTime, Point
-			var date=new Date(); 
-			//new Date(date.getYear(),date.getDate()-7
-			$("#jrxChart_min").attr("value",formatDateTime(date));
-			//2. query();
-			
-		}		
-	
-	);
+
+		/* $(document).ready(
+			function(){
+				alert("success!");
+				var date=new Date(); 
+				var oldDate=new Date(date.getTime()-7*24*60*60*1000);
+				$("#jrxChart_min").attr("value",formatDateTime(oldDate));
+				$("#jrxChart_max").attr("value",formatDateTime(date));
+				
+				getChartData();
+				
+			}		
+		
+		); */
+	/* 
+	 	$("#jrxChart_monitorPosition").combobox({onLoadSuccess:function(){
+					//alert("success!");
+				var date=new Date(); 
+					var oldDate=new Date(date.getTime()-7*24*60*60*1000);
+					$("#jrxChart_min").attr("value",formatDateTime(oldDate));
+					$("#jrxChart_max").attr("value",formatDateTime(date)); 
+					//getChartData();
+					
+				}		
+	 	}
+		);  */
 </script>
 <div class="easyui-layout" data-options="fit:true">
 	<div data-options="region:'center'" style="padding: 10px 0 10px 10px">
@@ -130,7 +148,11 @@
                     textField:'monitoringName',  
                     multiple:true,  
                     panelHeight:'auto',
-                    editable:false  
+                    editable:false,
+                    value:1,
+                    onChange:function(){
+                    	jrxChart.list.initToolBarValue();
+                    }
             "
 			readonly="readonly"> <a href="#" class="easyui-linkbutton"
 			iconCls="icon-search" onclick="getChartData()">查询</a>
