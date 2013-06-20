@@ -80,7 +80,7 @@ public class DryBeachElevationServiceImpl implements IDryBeachElevationService {
 		for (DryBeachElevation dbe : result.getRows()) {
 			for (MonitoringPoint point : dryBeachPointList) {
 				int position = point.getPosition();
-				if (dbe.getMonitoring_position()== position) {
+				if (dbe.getMonitoringPosition()== position) {
 					dbe.setPoint(point);
 				}
 			}

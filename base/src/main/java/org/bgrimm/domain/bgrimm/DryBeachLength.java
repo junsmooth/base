@@ -3,6 +3,7 @@ package org.bgrimm.domain.bgrimm;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -14,22 +15,25 @@ import org.bgrimm.domain.system.IdEntity;
 @Table(name="drybeach_length_monitoring")
 public class DryBeachLength extends IdEntity{
 
-	private Date date_Time;
-	private int monitoring_position;
+	@Column( name="date_Time" )
+	private Date dateTime;
+	@Column(name="monitoring_position")
+	private Integer monitoringPosition; 
+	
 	private BigDecimal drybeach_length;
 	@Transient
 	private MonitoringPoint point;
-	public Date getDate_Time() {
-		return date_Time;
+	public Date getDateTime() {
+		return dateTime;
 	}
-	public void setDate_Time(Date date_Time) {
-		this.date_Time = date_Time;
+	public void setDateTime(Date dateTime) {
+		this.dateTime = dateTime;
 	}
-	public int getMonitoring_position() {
-		return monitoring_position;
+	public Integer getMonitoringPosition() {
+		return monitoringPosition;
 	}
-	public void setMonitoring_position(int monitoring_position) {
-		this.monitoring_position = monitoring_position;
+	public void setMonitoringPosition(Integer monitoringPosition) {
+		this.monitoringPosition = monitoringPosition;
 	}
 	public BigDecimal getDrybeach_length() {
 		return drybeach_length;
