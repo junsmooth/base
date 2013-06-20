@@ -82,7 +82,7 @@ public class DryBeachLengthServiceImpl implements IDryBeachLengthService {
 		//将DryBeachLength与MonitoringPoint关联起来，主要是为了在页面根据测点获取对应名称
 		for (DryBeachLength dbl : pl.getRows()) {
 			for (MonitoringPoint point : dryBeachLPointList) {
-				if (dbl.getMonitoring_position()== point.getPosition()) {
+				if (dbl.getMonitoringPosition()== point.getPosition()) {
 					dbl.setPoint(point);
 				}
 			}
