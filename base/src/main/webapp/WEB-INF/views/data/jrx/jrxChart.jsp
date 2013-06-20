@@ -75,7 +75,7 @@
 		
 			
 				mp = $('#jrxChart_monitorPosition').combobox('getValues');
-		
+				
 				 for ( var i = 0; i < mp.length; i++) {
 					str1 += mp[i] + ',';
 				} 
@@ -84,7 +84,7 @@
 				min1 = $('#jrxChart_min').combobox('getText');
 		
 				max1 = $('#jrxChart_max').combobox('getText');
-		
+				
 		$.ajax({
 			type : 'POST',
 			url : "jrx/chart/jrxChart",
@@ -150,7 +150,7 @@
                     panelHeight:'auto',
                     editable:false,
                     value:1,
-                    onChange:function(){
+                    onLoadSuccess:function(){
                     	jrxChart.list.initToolBarValue();
                     }
             "
