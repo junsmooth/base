@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.bgrimm.dao.core.ICommonDao;
+import org.bgrimm.domain.bgrimm.extend.AlarmRecord;
 import org.bgrimm.domain.system.PageList;
 import org.bgrimm.domain.system.PagedQuery;
 import org.bgrimm.utils.PagerUtil;
@@ -26,7 +27,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
-@Repository(value="commonDao")
+@Repository(value = "commonDao")
 public class CommonDao implements ICommonDao {
 	@Autowired
 	@Qualifier("sessionFactory")
@@ -158,6 +159,15 @@ public class CommonDao implements ICommonDao {
 		return criteria;
 	}
 
+	private <T> Criteria createCriteria(Class<T> entityClass,
+			List<Criterion> criterions) {
+		Criteria criteria = getSession().createCriteria(entityClass);
+		for (Criterion c : criterions) {
+			criteria.add(c);
+		}
+		return criteria;
+	}
+
 	public <T> void save(T entity) {
 		try {
 			getSession().save(entity);
@@ -176,6 +186,11 @@ public class CommonDao implements ICommonDao {
 		Assert.hasText(propertyName);
 		return (T) createCriteria(entityClass,
 				Restrictions.eq(propertyName, value)).uniqueResult();
+	}
+
+	public <T> T findUniqueByCriterions(Class<T> entityClass,
+			List<Criterion> criterions) {
+		return (T) createCriteria(entityClass, criterions).uniqueResult();
 	}
 
 	public <T> List<T> findByCriterions(Class<T> entityClass,
@@ -197,37 +212,43 @@ public class CommonDao implements ICommonDao {
 		}
 
 	}
-/**
- * This Implementation is only support Object that do not have child Objects
- */
-	public PageList getPagedList(PagedQuery pq,List<Order> list) {
+
+	/**
+	 * This Implementation is only support Object that do not have child Objects
+	 */
+	public PageList getPagedList(PagedQuery pq, List<Order> list) {
 
 		Criteria criteria = pq.getDetachedCriteria().getExecutableCriteria(
 				getSession());
 		CriteriaImpl impl = (CriteriaImpl) criteria;
 		Projection projection = impl.getProjection();
-		
+
 		final int allCounts = ((Long) criteria.setProjection(
 				Projections.rowCount()).uniqueResult()).intValue();
 		criteria.setProjection(projection);
 		if (projection == null) {
 			criteria.setResultTransformer(CriteriaSpecification.ROOT_ENTITY);
 		}
-//		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-//		criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+		// criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		// criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
 		int offset = PagerUtil.getOffset(allCounts, pq.getCurrentPage(),
 				pq.getPageSize());
 		criteria.setFirstResult(offset);
 		criteria.setMaxResults(pq.getPageSize());
-		
-		for(Order order:list){
+
+		for (Order order : list) {
 			criteria.addOrder(order);
 		}
-		
-		return new PageList(criteria.list(),allCounts);
+
+		return new PageList(criteria.list(), allCounts);
 	}
 
 	public <T> List<T> queryByExample(Class<T> entityClass, Object example) {
 		return createCriteria(entityClass).add(Example.create(example)).list();
+	}
+
+	public <T> List<T> findByCriterions(Class<T> entityClass,
+			List<Criterion> criterions) {
+		return createCriteria(entityClass, criterions).list();
 	}
 }
