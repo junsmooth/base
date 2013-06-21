@@ -1,5 +1,6 @@
 package org.bgrimm.domain.bgrimm.extend;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -24,10 +25,20 @@ public class Threshold extends IdEntity {
 	@JoinColumn(name = "thresholdopid")
 	private ThresholdOperation op;
 
+	@Column
+	@org.hibernate.annotations.Type(type="yes_no")
+	private boolean removed;
 	public AlarmType getAlarmType() {
 		return alarmType;
 	}
+	
+	public boolean isRemoved() {
+		return removed;
+	}
 
+	public void setRemoved(boolean removed) {
+		this.removed = removed;
+	}
 	public void setAlarmType(AlarmType alarmType) {
 		this.alarmType = alarmType;
 	}

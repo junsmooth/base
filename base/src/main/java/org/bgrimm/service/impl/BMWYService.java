@@ -103,7 +103,7 @@ public class BMWYService {
 		for (BMWY bmwy : result.getRows()) {
 			for (MonitoringPoint point : bmwyPointList) {
 				int position = point.getPosition();
-				if (bmwy.getStationId() == position) {
+				if (bmwy.getMonitoringPosition() == position) {
 					bmwy.setPoint(point);
 				}
 			}
