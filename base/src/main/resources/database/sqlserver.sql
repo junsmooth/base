@@ -28,7 +28,7 @@ INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parenti
 INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 11 , '历史数据' , 'DATA' , '' , 1 , 1 )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 12 , '表面位移数据' , 'BMWYDATA' , 'bmwy/data' , 1 , 11 )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 13 , '系统日志' , 'LOG' , '' , 1 , 1 )
- INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 14 , '报警记录' , 'ALARMLOG' , 'log/alarm' , 1 , 13 )
+ INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 14 , '报警记录' , 'ALARMLOG' , 'alarm/alarmrecord' , 1 , 13 )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 15 , '浸润线数据' , 'JRXDATA' , 'jrx/data' , 1 , 11 )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 16 , '干滩高程' , 'DRYBEACHELEVA' , 'dryBeachElevation/data' , 1 , 11 )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 17 , '干滩长度数据' , 'DRYBEACHLENGTH' , 'dryBeachLength/data' , 1 , 11 )

@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.bgrimm.dao.bgrimm.AlarmDao;
 import org.bgrimm.dao.bgrimm.T4DDBDao;
+import org.bgrimm.domain.bgrimm.TableParam;
 import org.bgrimm.domain.bgrimm.TimeValue;
 import org.bgrimm.domain.bgrimm.extend.AlarmColor;
 import org.bgrimm.domain.bgrimm.extend.AlarmRecord;
@@ -16,9 +17,11 @@ import org.bgrimm.domain.bgrimm.extend.AlarmType;
 import org.bgrimm.domain.bgrimm.extend.MonitoringPoint;
 import org.bgrimm.domain.bgrimm.extend.Threshold;
 import org.bgrimm.domain.bgrimm.extend.ThresholdOperation;
+import org.bgrimm.domain.system.PagedQuery;
 import org.bgrimm.utils.Constants;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
@@ -269,5 +272,12 @@ public class AlarmService {
 		}
 		return null;
 
+	}
+
+	public Object getPagedAlarmRecords(TableParam param) {
+		PagedQuery pq = new PagedQuery(AlarmRecord.class, param.getPage(), param.getRows());
+		List<Order> orders=new ArrayList<Order>();
+		orders.add(Order.desc("collectTime"));
+		return alarmDao.getPagedList(pq, orders);
 	}
 }

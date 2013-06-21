@@ -1,5 +1,6 @@
 package org.bgrimm.controller;
 
+import org.bgrimm.domain.bgrimm.TableParam;
 import org.bgrimm.service.AlarmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,13 +28,20 @@ public class AlarmController {
 	public String alarmtype() {
 		return "alarm/alarmtype";
 	}
-	
+	@RequestMapping("alarmrecord")
+	public String alarmRecord() {
+		return "alarm/alarmrecord";
+	}
 	@RequestMapping("threshold/data")
 	public @ResponseBody
 	Object thresholdList() {
 		return service.getAllThreshold();
 	}
-	
+	@RequestMapping("alarmrecord/data")
+	public @ResponseBody
+	Object alarmRecordList(TableParam param) {
+		return service.getPagedAlarmRecords( param);
+	}
 	@RequestMapping("alarmtype/data")
 	public @ResponseBody
 	Object alarmTypeList() {
