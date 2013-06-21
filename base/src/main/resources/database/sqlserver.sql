@@ -28,7 +28,7 @@ INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parenti
 INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 11 , '历史数据' , 'DATA' , '' , 1 , 1 )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 12 , '表面位移数据' , 'BMWYDATA' , 'bmwy/data' , 1 , 11 )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 13 , '系统日志' , 'LOG' , '' , 1 , 1 )
- INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 14 , '报警日志' , 'ALARMLOG' , 'log/alarm' , 1 , 13 )
+ INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 14 , '报警记录' , 'ALARMLOG' , 'log/alarm' , 1 , 13 )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 15 , '浸润线数据' , 'JRXDATA' , 'jrx/data' , 1 , 11 )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 16 , '干滩高程' , 'DRYBEACHELEVA' , 'dryBeachElevation/data' , 1 , 11 )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 17 , '干滩长度数据' , 'DRYBEACHLENGTH' , 'dryBeachLength/data' , 1 , 11 )
@@ -78,20 +78,19 @@ INSERT [t_authority] ( [id] , [description] , [name] ) VALUES ( 3 , NULL,'ROLE_U
  
  SET IDENTITY_INSERT [t_montype] ON
 
-  INSERT [t_montype] ( [id] , [code] , [enabled] , [name] , [tableName] ) VALUES ( 1 , 'BMWY' , 'Y' , '表面位移' , 'MeanPos_DeformationMonitor_Default' )
- INSERT [t_montype] ( [id] , [code] , [enabled] , [name] , [tableName] ) VALUES ( 2 , 'JYL' , 'Y' , '降雨量' , 'rainmointoring' )
- INSERT [t_montype] ( [id] , [code] , [enabled] , [name] , [tableName] ) VALUES ( 3 , 'JRX' , 'Y' , '浸润线' , 'jrx' )
- INSERT [t_montype] ( [id] , [code] , [enabled] , [name] , [tableName] ) VALUES ( 4 , 'GTGC' , 'Y' , '干滩高程' , 'gtgc' )
- INSERT [t_montype] ( [id] , [code] , [enabled] , [name] , [tableName] ) VALUES ( 5 , 'GTCD' , 'Y' , '干滩长度' , 'gtcd' )
- INSERT [t_montype] ( [id] , [code] , [enabled] , [name] , [tableName] ) VALUES ( 6 , 'NBWY' , 'Y' , '内部位移' , 'nbwy' )
- INSERT [t_montype] ( [id] , [code] , [enabled] , [name] , [tableName] ) VALUES ( 7 , 'SLL' , 'Y' , '渗流量' , 'sll' )
+ INSERT [t_montype] ( [id] , [code] , [domainClsName] , [enabled] , [name] , [tableName] ) VALUES ( 1 , 'BMWY' , 'org.bgrimm.domain.t4ddb.BMWY' , 'Y' , '表面位移' , 'MeanPos_DeformationMonitor_Default' )
+ INSERT [t_montype] ( [id] , [code] , [domainClsName] , [enabled] , [name] , [tableName] ) VALUES ( 2 , 'JYL' , 'Rainfall' , 'Y' , '降雨量' , 'rainmointoring' )
+ INSERT [t_montype] ( [id] , [code] , [domainClsName] , [enabled] , [name] , [tableName] ) VALUES ( 3 , 'JRX' , 'Saturation' , 'Y' , '浸润线' , 'jrx' )
+ INSERT [t_montype] ( [id] , [code] , [domainClsName] , [enabled] , [name] , [tableName] ) VALUES ( 4 , 'GTGC' , 'DryBeachElevation' , 'Y' , '干滩高程' , 'gtgc' )
+ INSERT [t_montype] ( [id] , [code] , [domainClsName] , [enabled] , [name] , [tableName] ) VALUES ( 5 , 'GTCD' , 'DryBeachLength' , 'Y' , '干滩长度' , 'gtcd' )
+ INSERT [t_montype] ( [id] , [code] , [domainClsName] , [enabled] , [name] , [tableName] ) VALUES ( 6 , 'NBWY' , 'InnerDisplacement' , 'Y' , '内部位移' , 'nbwy' )
+ INSERT [t_montype] ( [id] , [code] , [domainClsName] , [enabled] , [name] , [tableName] ) VALUES ( 7 , 'SLL' , 'Seepage' , 'Y' , '渗流量' , 'sll' )
  INSERT [t_montype] ( [id] , [code] , [enabled] , [name] , [tableName] ) VALUES ( 8 , 'SP' , 'Y' , '视频' , 'sp' )
- INSERT [t_montype] ( [id] , [code] , [enabled] , [name] , [tableName] ) VALUES ( 9 , 'AQCG' , 'Y' , '安全超高' , 'aqcg' )
- INSERT [t_montype] ( [id] , [code] , [enabled] , [name] , [tableName] ) VALUES ( 10 , 'BDGC' , 'Y' , '坝顶高程' , 'bdgc' )
- INSERT [t_montype] ( [id] , [code] , [enabled] , [name] , [tableName] ) VALUES ( 11 , 'KSW' , 'Y' , '库水位' , 'ksw' )
-
-
+ INSERT [t_montype] ( [id] , [code] , [domainClsName] , [enabled] , [name] , [tableName] ) VALUES ( 9 , 'AQCG' , 'FreeBoard' , 'Y' , '安全超高' , 'aqcg' )
+ INSERT [t_montype] ( [id] , [code] , [domainClsName] , [enabled] , [name] , [tableName] ) VALUES ( 10 , 'BDGC' , 'DamCrest' , 'Y' , '坝顶高程' , 'bdgc' )
+ INSERT [t_montype] ( [id] , [code] , [domainClsName] , [enabled] , [name] , [tableName] ) VALUES ( 11 , 'KSW' , 'WaterLevel' , 'Y' , '库水位' , 'ksw' )
  SET IDENTITY_INSERT [t_montype] OFF
+ 
  SET IDENTITY_INSERT [t_monpoint] ON
 
  INSERT [t_monpoint] ( [id] , [monitoringName] , [position] , [montypeid] ) VALUES ( 1 , '表面位移1#' , 1 , 1 )
@@ -102,7 +101,7 @@ INSERT [t_authority] ( [id] , [description] , [name] ) VALUES ( 3 , NULL,'ROLE_U
 INSERT [t_thresholdop] ( [id] , [displayName] , [opName] ) VALUES ( 1 , '大于' , 'GT' )
  INSERT [t_thresholdop] ( [id] , [displayName] , [opName] ) VALUES ( 2 , '大于等于' , 'GE' )
  INSERT [t_thresholdop] ( [id] , [displayName] , [opName] ) VALUES ( 4 , '小于等于' , 'LE' )
- INSERT [t_thresholdop] ( [id] , [displayName] , [opName] ) VALUES ( 3 , '小于' , 'GT' )
+ INSERT [t_thresholdop] ( [id] , [displayName] , [opName] ) VALUES ( 3 , '小于' , 'LT' )
 
  SET IDENTITY_INSERT [t_thresholdop] OFF
 
@@ -131,7 +130,7 @@ INSERT [t_thresholdop] ( [id] , [displayName] , [opName] ) VALUES ( 1 , '大于' ,
  
   SET IDENTITY_INSERT [t_threshold] ON
 
- INSERT [t_threshold] ( [id] , [value] , [alarmTypeid] , [montypeattrid] , [thresholdopid] , [monpointid] ) VALUES ( 1 , 10.0 , 1 , 1 , 1 , 1 )
+ INSERT [t_threshold] ( [id] , [removed] , [value] , [alarmTypeid] , [montypeattrid] , [thresholdopid] , [monpointid] ) VALUES ( 1 , 'N' , 10.0 , 1 , 1 , 3 , 1 )
 
  SET IDENTITY_INSERT [t_threshold] OFF
 

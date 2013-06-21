@@ -17,19 +17,16 @@ import org.bgrimm.domain.bgrimm.extend.MonitoringPoint;
 public class BMWY{
 	@Id
 	@Column(name = "LogTime")
-	private Date logtime;
+	private Date dateTime;
 	@Id
 	@Column(name = "StationId")
-	private int stationId;
+	private int monitoringPosition; 
 	@Column(precision=24,scale=0)
 	private double dN;
 	@Column(precision=24,scale=0)
 	private double dE;
 	@Column(precision=24,scale=0)
 	private double dH;
-	public Date getLogtime() {
-		return logtime;
-	}
 	
 	@Transient
 	private MonitoringPoint point;
@@ -38,15 +35,6 @@ public class BMWY{
 	}
 	public void setPoint(MonitoringPoint point) {
 		this.point = point;
-	}
-	public void setLogtime(Date logtime) {
-		this.logtime = logtime;
-	}
-	public int getStationId() {
-		return stationId;
-	}
-	public void setStationId(int stationId) {
-		this.stationId = stationId;
 	}
 	public double getdN() {
 		return dN;
@@ -66,9 +54,21 @@ public class BMWY{
 	public void setdH(double dH) {
 		this.dH = dH;
 	}
+	public Date getDateTime() {
+		return dateTime;
+	}
+	public void setDateTime(Date dateTime) {
+		this.dateTime = dateTime;
+	}
+	public int getMonitoringPosition() {
+		return monitoringPosition;
+	}
+	public void setMonitoringPosition(int monitoringPosition) {
+		this.monitoringPosition = monitoringPosition;
+	}
 	@Override
 	public String toString() {
-		return "BMWY [logtime=" + logtime + ", stationId=" + stationId
+		return "BMWY [logtime=" + dateTime + ", stationId=" + monitoringPosition
 				+ ", dN=" + dN + ", dE=" + dE + ", dH=" + dH + "]";
 	}
 	
