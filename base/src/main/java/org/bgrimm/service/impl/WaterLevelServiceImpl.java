@@ -9,7 +9,7 @@ import org.bgrimm.dao.core.impl.CommonDao;
 import org.bgrimm.domain.bgrimm.TableParam;
 import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.bgrimm.common.MonitoringType;
-import org.bgrimm.domain.bgrimm.monitor.provided.DryBeachLength;
+import org.bgrimm.domain.bgrimm.monitor.provided.GTCD;
 import org.bgrimm.domain.bgrimm.monitor.provided.WaterLevel;
 import org.bgrimm.domain.system.PageList;
 import org.bgrimm.domain.system.PagedQuery;
