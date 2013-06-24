@@ -11,21 +11,20 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
+import org.bgrimm.domain.system.IdEntity;
 
 
 
 @Entity
-@Table(name="inner_dam_deformation_monitoring")
-public class TInnerDisplacement {
+@Table(name="t_inner_dam_deformation_monitoring")
+public class TInnerDisplacement extends IdEntity {
 
-	@Id
 	@Column(name="date_Time")
 	private Date dateTime;
 
 	@Column(precision=24,scale=0, name="value")
 	private BigDecimal value;
 
-	@Id
 	@Column(name="monitoring_position")
 	private Integer monitoringPosition; 
 	

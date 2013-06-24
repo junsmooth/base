@@ -12,7 +12,7 @@ import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.system.IdEntity;
 
 @Entity
-@Table(name="seepage_flow_monitoring")
+@Table(name="t_seepage_flow_monitoring")
 public class TSeepage extends IdEntity {
 
 	@Column(name="date_Time")

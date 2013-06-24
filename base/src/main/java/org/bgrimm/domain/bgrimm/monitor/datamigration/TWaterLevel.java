@@ -12,7 +12,7 @@ import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.system.IdEntity;
 
 @Entity
-@Table(name="water_level_monitoring")
+@Table(name="t_water_level_monitoring")
 public class TWaterLevel extends IdEntity{
 
 	@Column( name="date_Time" )

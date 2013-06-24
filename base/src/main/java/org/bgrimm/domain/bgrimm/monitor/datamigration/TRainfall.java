@@ -12,7 +12,7 @@ import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.system.IdEntity;
 
 @Entity
-@Table(name="rainfall_monitoring")
+@Table(name="t_rainfall_monitoring")
 public class TRainfall extends IdEntity {
 
 	@Column(name="date_Time")

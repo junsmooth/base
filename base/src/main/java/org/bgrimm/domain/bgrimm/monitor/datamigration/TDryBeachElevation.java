@@ -12,7 +12,7 @@ import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.system.IdEntity;
 
 @Entity
-@Table(name="drybeach_elevation_monitoring")
+@Table(name="t_drybeach_elevation_monitoring")
 public class TDryBeachElevation extends IdEntity{
 
 	

@@ -16,7 +16,7 @@ import org.bgrimm.domain.bgrimm.common.AlarmRecord;
 import org.bgrimm.domain.bgrimm.common.AlarmType;
 import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.bgrimm.common.Threshold;
-import org.bgrimm.domain.bgrimm.monitor.datamigration.ThresholdOperation;
+import org.bgrimm.domain.bgrimm.common.ThresholdOperation;
 import org.bgrimm.domain.system.PagedQuery;
 import org.bgrimm.utils.Constants;
 import org.hibernate.Criteria;
