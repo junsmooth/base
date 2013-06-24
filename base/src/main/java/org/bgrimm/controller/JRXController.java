@@ -1,6 +1,6 @@
 package org.bgrimm.controller;
 import org.bgrimm.domain.bgrimm.TableParam;
-import org.bgrimm.service.impl.gtgcService;
+import org.bgrimm.service.impl.JRXService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +11,7 @@ public class JRXController {
 
 	//@Resource(name="JRXServiceImpl")
 	@Autowired
-	private gtgcService JRXServiceImpl;
+	private JRXService JRXServiceImpl;
 	
 	@RequestMapping("data")
 	public String toJrxPage() {
