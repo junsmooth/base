@@ -17,6 +17,7 @@ import org.bgrimm.domain.bgrimm.common.AlarmType;
 import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.bgrimm.common.Threshold;
 import org.bgrimm.domain.bgrimm.common.ThresholdOperation;
+import org.bgrimm.domain.bgrimm.monitor.provided.Saturation;
 import org.bgrimm.domain.system.PagedQuery;
 import org.bgrimm.utils.Constants;
 import org.hibernate.Criteria;
@@ -193,7 +194,7 @@ public class AlarmService {
 			MonitoringPoint mp, List<Threshold> thresholds) {
 		List<Threshold> ths = getThresholdsOfPoint(mp, thresholds);
 		Map<String, List<Threshold>> map = new HashMap<String, List<Threshold>>();
-		for (Threshold th : thresholds) {
+		for (Threshold th : ths) {
 			String attr = th.getAttr().getAttr();
 			List<Threshold> thslist = map.get(attr);
 			if (thslist == null) {
@@ -259,6 +260,8 @@ public class AlarmService {
 			ProjectionList pList = Projections.projectionList();
 
 			pList.add(Projections.max("dateTime"));
+			criteria.add(Restrictions.eq("monitoringPosition",
+					point.getPosition()));
 			criteria.setProjection(pList);
 			criteria.setFetchSize(1);
 			Object obj = criteria.uniqueResult();
