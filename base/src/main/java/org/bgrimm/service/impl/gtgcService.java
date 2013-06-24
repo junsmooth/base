@@ -31,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service("JRXServiceImpl")
 @Transactional
-public class JRXServiceImpl {
+public class gtgcService {
 
 	
 	@Autowired

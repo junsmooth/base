@@ -13,14 +13,16 @@ import org.bgrimm.domain.system.IdEntity;
 
 @Entity
 @Table(name="drybeach_length_monitoring")
-public class DryBeachLength extends IdEntity{
+public class GTCD extends IdEntity{
 
 	@Column( name="date_Time" )
 	private Date dateTime;
+	
 	@Column(name="monitoring_position")
 	private Integer monitoringPosition; 
 	
-	private BigDecimal drybeach_length;
+	@Column(name="drybeach_length")
+	private BigDecimal value;
 	@Transient
 	private MonitoringPoint point;
 	public Date getDateTime() {
@@ -35,11 +37,12 @@ public class DryBeachLength extends IdEntity{
 	public void setMonitoringPosition(Integer monitoringPosition) {
 		this.monitoringPosition = monitoringPosition;
 	}
-	public BigDecimal getDrybeach_length() {
-		return drybeach_length;
+	
+	public BigDecimal getValue() {
+		return value;
 	}
-	public void setDrybeach_length(BigDecimal drybeach_length) {
-		this.drybeach_length = drybeach_length;
+	public void setValue(BigDecimal value) {
+		this.value = value;
 	}
 	public MonitoringPoint getPoint() {
 		return point;
