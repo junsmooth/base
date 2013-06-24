@@ -231,6 +231,8 @@ public class AlarmService {
 					ProjectionList pList = Projections.projectionList();
 
 					pList.add(Projections.max("dateTime"));
+					criteria.add(Restrictions.eq("monitoringPosition",
+							point.getPosition()));
 					criteria.setProjection(pList);
 					criteria.setFetchSize(1);
 					Object obj = criteria.uniqueResult();

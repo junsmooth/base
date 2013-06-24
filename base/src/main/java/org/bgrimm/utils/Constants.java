@@ -17,5 +17,6 @@ public class Constants {
 	public static final String JCD_DAMCREST="BDGC";
 	public static final String JCD_SEEPAGE="SLL";
 	public static final String JCD_INNERDISP="NBWY";
+	public static final String JCD_SP = "SP";
 	
 }

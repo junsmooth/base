@@ -28,8 +28,8 @@ public class PackingDataServiceImpl {
 	@Autowired
 	private CommonDao commonDao;
 	
-	@Transactional(isolation=Isolation.DEFAULT,readOnly=false)
-	@Scheduled(fixedRate =60*60*1000)
+//	@Transactional(isolation=Isolation.DEFAULT,readOnly=false)
+//	@Scheduled(fixedRate =60*60*1000)
 	public void  packingDataOfHour(){
 		//1.   Get All MonitoringPoint 
 		//2. For  each MonitoringPoint
