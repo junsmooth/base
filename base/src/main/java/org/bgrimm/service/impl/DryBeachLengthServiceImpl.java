@@ -11,7 +11,6 @@ import org.bgrimm.domain.bgrimm.extend.MonitoringPoint;
 import org.bgrimm.domain.bgrimm.extend.MonitoringType;
 import org.bgrimm.domain.system.PageList;
 import org.bgrimm.domain.system.PagedQuery;
-import org.bgrimm.service.IDryBeachLengthService;
 import org.bgrimm.utils.Constants;
 import org.bgrimm.utils.DateUtils;
 import org.bgrimm.utils.PagerUtil;
@@ -26,7 +25,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 @Service(value="dryBeachLengthServiceImpl")
 @Transactional
-public class DryBeachLengthServiceImpl implements IDryBeachLengthService {
+public class DryBeachLengthServiceImpl {
 
 	@Autowired
 	private TransactionTemplate template;

@@ -1,10 +1,7 @@
 package org.bgrimm.controller;
 
-import javax.annotation.Resource;
-
 import org.bgrimm.domain.bgrimm.TableParam;
-import org.bgrimm.service.IFreeBoardService;
-import org.bgrimm.service.IRainfallService;
+import org.bgrimm.service.impl.FreeBoardServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class FreeBoardController {
 
 	@Autowired
-	private IFreeBoardService freeBoardServiceImpl;
+	private FreeBoardServiceImpl freeBoardServiceImpl;
 	@RequestMapping("data")
 	public String index(){
 		

@@ -1,9 +1,8 @@
 package org.bgrimm.controller;
 
 import org.bgrimm.domain.bgrimm.TableParam;
-import org.bgrimm.service.IDryBeachLengthService;
+import org.bgrimm.service.impl.DryBeachLengthServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class DryBeachLengthController {
 
 	@Autowired
-	private IDryBeachLengthService dryBeachLengthService;
+	private DryBeachLengthServiceImpl dryBeachLengthService;
 	@RequestMapping("data")
 	public String index(){
 		
