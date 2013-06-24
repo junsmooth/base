@@ -1,7 +1,7 @@
 package org.bgrimm.controller;
 
 import org.bgrimm.domain.bgrimm.TableParam;
-import org.bgrimm.service.IDryBeachElevationService;
+import org.bgrimm.service.impl.DryBeachElevationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class DryBeachElevationController {
 
 	@Autowired
-	private IDryBeachElevationService dryBeachElevationService;
+	private DryBeachElevationServiceImpl dryBeachElevationService;
 	@RequestMapping("data")
 	public String index(){
 		

@@ -34,4 +34,16 @@ public class DateUtils {
 		list.add(currentTime);
 		return list;
 	}
+	
+	
+	/**
+	 * 将事假转换为字符串
+	 * @param date
+	 * @return
+	 */
+	public static String date2String(Date date){
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
+		
+		return sdf.format(date);
+	}
 }

@@ -13,6 +13,7 @@ import org.bgrimm.domain.bgrimm.extend.MonitoringType;
 import org.bgrimm.domain.system.PageList;
 import org.bgrimm.domain.system.PagedQuery;
 import org.bgrimm.utils.Constants;
+import org.bgrimm.utils.DataUtils;
 import org.bgrimm.utils.DateUtils;
 import org.bgrimm.utils.PagerUtil;
 import org.hibernate.Criteria;
@@ -24,6 +25,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 
@@ -35,6 +37,11 @@ public class JRXServiceImpl {
 	@Autowired
 	@Qualifier("commonDao")
 	private CommonDao commonDao;
+	
+	
+	@Autowired
+	PackingDataServiceImpl packingDataServiceImpl;
+	
 	/**
 	 * 获取所有测点
 	 */
@@ -96,15 +103,16 @@ public class JRXServiceImpl {
 	 * @param param
 	 * @return
 	 */
+	@Transactional(isolation=Isolation.DEFAULT,readOnly=false)
 	public Object getJrxChartData(TableParam param) {
 		List<Order> list=new ArrayList();
 		MonitoringType t=commonDao.findUniqueBy(MonitoringType.class, "code", Constants.JCD_JRX);
 		List<MonitoringPoint> jrxPointList=commonDao.findByCriterions(MonitoringPoint.class, Restrictions.eq("type.id", t.getId()));
 		Criteria criteria=commonDao.getSession().createCriteria(Saturation.class);
 		ProjectionList pList=Projections.projectionList();
-		pList.add(Projections.property("dateTime"));
-		pList.add(Projections.property("value"));
-		criteria.setProjection(pList);
+//		pList.add(Projections.property("dateTime"));
+//		pList.add(Projections.property("value"));
+//		criteria.setProjection(pList);
 		Integer[] arr = PagerUtil.strToArray(param.getStr());
 		if (StringUtils.isNotEmpty(param.getMin())) {
 			Date startDate = DateUtils.strToDate(param.getMin());
@@ -126,8 +134,29 @@ public class JRXServiceImpl {
 		}
 
 		criteria.addOrder(Order.asc("dateTime"));
-		
-		return criteria.list();
+		List li= criteria.list();
+		if(li.size()>100000){
+			List nameList=new ArrayList();
+			nameList.add("value");
+			return DataUtils.packingData(nameList, li);
+		}else{
+			packingDataServiceImpl.packingDataOfHour();
+			return toPageJSonList(li);
+		}
+//		return li;
+	}
+
+	private List toPageJSonList(List li) {
+
+		List listData=new ArrayList();
+		for(Object obj:li){
+			Saturation sa=(Saturation)obj;
+			List list=new ArrayList();
+			list.add(sa.getDateTime());
+			list.add(sa.getValue());
+			listData.add(list);
+		}
+		return listData;
 	}
 
 

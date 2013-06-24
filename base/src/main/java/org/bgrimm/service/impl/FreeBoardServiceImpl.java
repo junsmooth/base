@@ -13,7 +13,6 @@ import org.bgrimm.domain.bgrimm.extend.MonitoringPoint;
 import org.bgrimm.domain.bgrimm.extend.MonitoringType;
 import org.bgrimm.domain.system.PageList;
 import org.bgrimm.domain.system.PagedQuery;
-import org.bgrimm.service.IFreeBoardService;
 import org.bgrimm.utils.Constants;
 import org.bgrimm.utils.DateUtils;
 import org.bgrimm.utils.PagerUtil;
@@ -26,7 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service("freeBoardServiceImpl")
 @Transactional
-public class FreeBoardServiceImpl implements IFreeBoardService {
+public class FreeBoardServiceImpl{
 
 	@Autowired
 	private CommonDao commonDao;

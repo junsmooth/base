@@ -1,7 +1,7 @@
 package org.bgrimm.controller;
 
 import org.bgrimm.domain.bgrimm.TableParam;
-import org.bgrimm.service.IWaterLevelService;
+import org.bgrimm.service.impl.WaterLevelServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class WaterLevelController {
 	@Autowired
 	@Qualifier("waterLevelServiceImpl")
-	private IWaterLevelService waterLevelService;
+	private WaterLevelServiceImpl waterLevelService;
 
 	@RequestMapping("data")
 	public String index(){

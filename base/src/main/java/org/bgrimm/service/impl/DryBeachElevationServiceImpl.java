@@ -11,7 +11,6 @@ import org.bgrimm.domain.bgrimm.extend.MonitoringPoint;
 import org.bgrimm.domain.bgrimm.extend.MonitoringType;
 import org.bgrimm.domain.system.PageList;
 import org.bgrimm.domain.system.PagedQuery;
-import org.bgrimm.service.IDryBeachElevationService;
 import org.bgrimm.utils.Constants;
 import org.bgrimm.utils.DateUtils;
 import org.bgrimm.utils.PagerUtil;
@@ -28,7 +27,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 @Service(value="dryBeachElevationServiceImpl")
 @Transactional
-public class DryBeachElevationServiceImpl implements IDryBeachElevationService {
+public class DryBeachElevationServiceImpl {
 
 	@Autowired
 	private TransactionTemplate template;

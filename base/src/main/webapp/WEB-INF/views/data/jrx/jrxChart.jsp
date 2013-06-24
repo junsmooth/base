@@ -14,15 +14,22 @@
 			return value.monitoringName;
 		},
 		myDate : function(value) {
-			//var d = formatDateTime(value);
 			return formatDateTime(value);
 		},
 		initToolBarValue:function(){
 			var date=new Date(); 
 			var oldDate=new Date(date.getTime()-7*24*60*60*1000);
+			$("#jrxChart_max").attr("value",formatDateTime(date));  
 			$("#jrxChart_min").attr("value",formatDateTime(oldDate));
-			$("#jrxChart_max").attr("value",formatDateTime(date)); 
 			getChartData();
+		},
+		change_min:function(){
+			var minv=$("#jrxChart_min").datetimebox('getValue');
+			$("#jrxChart_min").attr("value",minv);
+		},
+		change_max:function(){
+			var maxv=$("#jrxChart_max").datetimebox('getValue');
+			$("#jrxChart_max").attr("value",maxv);
 		}
 	});
 	
@@ -35,7 +42,13 @@
 		return new Date(r[1], r[2], r[3], r[4], r[5], r[6]);
 	}
 	
-	
+	function  checkTime(min1,max1){
+		var regEx = new RegExp("\\-","gi");
+	    min1=min1.replace(regEx,"/");
+		max1=max1.replace(regEx,"/");
+		var value =new Date(max1).getTime()-new Date(min1).getTime()-365*24*60*60*1000;
+		return value;
+	};
 	function jrxHighCharts(result) {
 		
 			if(result.length==0){
@@ -72,57 +85,31 @@
 			return;
 		}
 				var str1 = '', mp, min1, max1;
-		
 			
 				mp = $('#jrxChart_monitorPosition').combobox('getValues');
-				
 				 for ( var i = 0; i < mp.length; i++) {
 					str1 += mp[i] + ',';
 				} 
 				str1 = str1.substring(0, str1.length - 1);
-	
-				min1 = $('#jrxChart_min').combobox('getText');
-		
-				max1 = $('#jrxChart_max').combobox('getText');
+				min1=$('#jrxChart_min').val();	
+			    max1 = $('#jrxChart_max').val();
+			    var value= checkTime(min1,max1);
+			   if(value>0){
+					alert("【查询时间超过一年,请重新输入！】");
+					return;
+				} 
 				
-		$.ajax({
+	 	$.ajax({
 			type : 'POST',
 			url : "jrx/chart/jrxChart",
 			data:{min : min1,
 				max : max1,
-				str : str1,
-				flag : jrxFlag},
+				str : str1
+				},
 			success:jrxHighCharts
-		});
+		}); 
 	}
 	
-	
-
-		/* $(document).ready(
-			function(){
-				alert("success!");
-				var date=new Date(); 
-				var oldDate=new Date(date.getTime()-7*24*60*60*1000);
-				$("#jrxChart_min").attr("value",formatDateTime(oldDate));
-				$("#jrxChart_max").attr("value",formatDateTime(date));
-				
-				getChartData();
-				
-			}		
-		
-		); */
-	/* 
-	 	$("#jrxChart_monitorPosition").combobox({onLoadSuccess:function(){
-					//alert("success!");
-				var date=new Date(); 
-					var oldDate=new Date(date.getTime()-7*24*60*60*1000);
-					$("#jrxChart_min").attr("value",formatDateTime(oldDate));
-					$("#jrxChart_max").attr("value",formatDateTime(date)); 
-					//getChartData();
-					
-				}		
-	 	}
-		);  */
 </script>
 <div class="easyui-layout" data-options="fit:true">
 	<div data-options="region:'center'" style="padding: 10px 0 10px 10px">
@@ -137,9 +124,12 @@
 <div id="jrxChart_tb" style="padding: 5px; height: auto">
 	<div>
 		时间 从: <input id='jrxChart_min' class="easyui-datetimebox"
-			data-options="formatter:jrxChart.list.myDate,validType:'checkDate[\'yyyy-MM-dd HH:mm:ss\']'"></input>
+			data-options="onChange:jrxChart.list.change_min,formatter:jrxChart.list.myDate,validType:'checkDate[\'yyyy-MM-dd HH:mm:ss\']'"></input>
 		到: <input id='jrxChart_max' class="easyui-datetimebox"
-			data-options="formatter:jrxChart.list.myDate,validType:'checkDate[\'yyyy-MM-dd HH:mm:ss\']'"></input>
+			data-options="onChange:jrxChart.list.change_max,formatter:jrxChart.list.myDate,
+						  validType:'checkDate[\'yyyy-MM-dd HH:mm:ss\']'
+			
+			"></input>
 		测点: <input id="jrxChart_monitorPosition" class="easyui-combobox"
 			name="jrxChart_monitorPosition"
 			data-options="  
@@ -150,9 +140,7 @@
                     panelHeight:'auto',
                     editable:false,
                     value:1,
-                    onLoadSuccess:function(){
-                    	jrxChart.list.initToolBarValue();
-                    }
+                    onLoadSuccess:jrxChart.list.initToolBarValue
             "
 			readonly="readonly"> <a href="#" class="easyui-linkbutton"
 			iconCls="icon-search" onclick="getChartData()">查询</a>
