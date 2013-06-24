@@ -8,11 +8,11 @@
 	<tx:annotation-driven />
 	<bean id="bgrimmDS" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		p:driverClass="net.sourceforge.jtds.jdbc.Driver"
-		p:jdbcUrl="jdbc:jtds:sqlserver://172.16.3.12:1433;DatabaseName=BGRIMMDB"
+		p:jdbcUrl="jdbc:jtds:sqlserver://172.16.3.11:1433;DatabaseName=BGRIMMDB"
 		p:user="sa" p:password="trimble" />
 	<bean id="t4ddbDS" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		p:driverClass="net.sourceforge.jtds.jdbc.Driver"
-		p:jdbcUrl="jdbc:jtds:sqlserver://172.16.3.12:1433;DatabaseName=T4DDB"
+		p:jdbcUrl="jdbc:jtds:sqlserver://172.16.3.11:1433;DatabaseName=T4DDB"
 		p:user="sa" p:password="trimble" />
 	<!-- Proxy DataSource -->
 	<bean id="dataSource" class="org.bgrimm.common.datasource.DynamicDataSource">
@@ -34,8 +34,9 @@
 		<property name="packagesToScan">
 			<list>
 				<value>org.bgrimm.domain.system</value>
-				<value>org.bgrimm.domain.bgrimm.extend</value>
-				
+				<value>org.bgrimm.domain.bgrimm.common</value>
+				<value>org.bgrimm.domain.bgrimm.monitor.extended</value>
+				<value>org.bgrimm.domain.bgrimm.monitor.datamigration</value>
 			</list>
 		</property>
 		<!-- <property name="annotatedClasses"> <value>org.bgrimm.domain.Menu</value> 
