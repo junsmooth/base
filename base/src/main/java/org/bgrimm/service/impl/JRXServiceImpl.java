@@ -135,6 +135,8 @@ public class JRXServiceImpl {
 
 		criteria.addOrder(Order.asc("dateTime"));
 		List li= criteria.list();
+		
+		
 		if(li.size()>100000){
 			List nameList=new ArrayList();
 			nameList.add("value");
