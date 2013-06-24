@@ -3,7 +3,7 @@ package org.bgrimm.dao.bgrimm;
 import java.util.List;
 
 import org.bgrimm.dao.core.impl.CommonDao;
-import org.bgrimm.domain.bgrimm.extend.Threshold;
+import org.bgrimm.domain.bgrimm.common.Threshold;
 import org.springframework.stereotype.Repository;
 
 @Repository(value = "alarmDao")

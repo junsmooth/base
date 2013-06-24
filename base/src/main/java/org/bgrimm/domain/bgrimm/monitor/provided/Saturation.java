@@ -1,21 +1,24 @@
-package org.bgrimm.domain.bgrimm;
+package org.bgrimm.domain.bgrimm.monitor.provided;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-import org.bgrimm.domain.bgrimm.extend.MonitoringPoint;
+import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.system.IdEntity;
+import org.hibernate.validator.constraints.NotEmpty;
 
 
-@Entity()
-@Table(name="t_saturation_line_monitoring")
-public class TSaturation extends IdEntity implements java.io.Serializable {
+@Entity(name="saturation_line_monitoring")
+public class Saturation extends IdEntity implements java.io.Serializable {
 	private static final long serialVersionUID = 2048463947914157677L;
+	@NotEmpty
+	@Temporal(TemporalType.TIMESTAMP)
 	
 	@Column(name="date_Time")
 	private Date dateTime;
@@ -28,17 +31,6 @@ public class TSaturation extends IdEntity implements java.io.Serializable {
 
 	@Transient
 	private MonitoringPoint point;
-
-
-	public TSaturation() {
-	}
-	
-	public TSaturation(Date dateTime, BigDecimal value) {
-		super();
-		this.dateTime = dateTime;
-		this.value = value;
-	}
-
 
 	public Date getDateTime() {
 		return dateTime;

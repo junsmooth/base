@@ -9,7 +9,7 @@ import javax.persistence.IdClass;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.bgrimm.domain.bgrimm.extend.MonitoringPoint;
+import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 
 @Entity
 @IdClass(BMWYPK.class)

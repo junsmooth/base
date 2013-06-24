@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.bgrimm.dao.core.ICommonDao;
-import org.bgrimm.domain.bgrimm.extend.AlarmRecord;
+import org.bgrimm.domain.bgrimm.common.AlarmRecord;
 import org.bgrimm.domain.system.PageList;
 import org.bgrimm.domain.system.PagedQuery;
 import org.bgrimm.utils.PagerUtil;

@@ -1,4 +1,4 @@
-package org.bgrimm.domain.bgrimm.extend;
+package org.bgrimm.domain.bgrimm.common;
 /**
  * 报警类型， level为报警级别，级别越大越严重
  * 

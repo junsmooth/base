@@ -1,4 +1,4 @@
-package org.bgrimm.domain.bgrimm.extend;
+package org.bgrimm.domain.bgrimm.common;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;

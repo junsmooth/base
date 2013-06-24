@@ -1,4 +1,4 @@
-package org.bgrimm.domain.bgrimm.extend;
+package org.bgrimm.domain.bgrimm.monitor.provided;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -8,26 +8,24 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.system.IdEntity;
 
 @Entity
-@Table(name = "t_saturation_line_monitoring")
-public class TSaturation extends IdEntity {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 4629631940352641565L;
-	@Column(name = "date_Time")
+@Table(name="drybeach_elevation_monitoring")
+public class DryBeachElevation extends IdEntity{
+
+	
+	@Column( name="date_Time" )
 	private Date dateTime;
-
-	@Column(name = "monitoring_position")
-	private Integer monitoringPosition;
-
-	@Column(name = "water_depth")
-	private BigDecimal value;
-
+	@Column(name="monitoring_position")
+	private Integer monitoringPosition; 
+	private BigDecimal drybeach_elevation;
+	
 	@Transient
 	private MonitoringPoint point;
+
+
 
 	public Date getDateTime() {
 		return dateTime;
@@ -45,12 +43,12 @@ public class TSaturation extends IdEntity {
 		this.monitoringPosition = monitoringPosition;
 	}
 
-	public BigDecimal getValue() {
-		return value;
+	public BigDecimal getDrybeach_elevation() {
+		return drybeach_elevation;
 	}
 
-	public void setValue(BigDecimal value) {
-		this.value = value;
+	public void setDrybeach_elevation(BigDecimal drybeach_elevation) {
+		this.drybeach_elevation = drybeach_elevation;
 	}
 
 	public MonitoringPoint getPoint() {
@@ -60,9 +58,6 @@ public class TSaturation extends IdEntity {
 	public void setPoint(MonitoringPoint point) {
 		this.point = point;
 	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
+	
+	
 }

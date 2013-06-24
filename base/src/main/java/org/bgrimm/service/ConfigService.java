@@ -3,10 +3,10 @@ package org.bgrimm.service;
 import java.util.List;
 
 import org.bgrimm.dao.core.impl.CommonDao;
-import org.bgrimm.domain.bgrimm.extend.MonitoringPoint;
-import org.bgrimm.domain.bgrimm.extend.MonitoringType;
-import org.bgrimm.domain.bgrimm.extend.MonitoringTypeAttribute;
-import org.bgrimm.domain.bgrimm.extend.Threshold;
+import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
+import org.bgrimm.domain.bgrimm.common.MonitoringType;
+import org.bgrimm.domain.bgrimm.common.MonitoringTypeAttribute;
+import org.bgrimm.domain.bgrimm.common.Threshold;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

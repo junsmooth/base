@@ -1,4 +1,4 @@
-package org.bgrimm.domain.bgrimm;
+package org.bgrimm.domain.bgrimm.monitor.provided;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

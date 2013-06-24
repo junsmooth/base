@@ -6,10 +6,10 @@ import java.util.Date;
 import java.util.List;
 
 import org.bgrimm.dao.core.impl.CommonDao;
-import org.bgrimm.domain.bgrimm.Saturation;
-import org.bgrimm.domain.bgrimm.TSaturation;
-import org.bgrimm.domain.bgrimm.extend.MonitoringPoint;
-import org.bgrimm.domain.bgrimm.extend.MonitoringType;
+import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
+import org.bgrimm.domain.bgrimm.common.MonitoringType;
+import org.bgrimm.domain.bgrimm.monitor.datamigration.TSaturation;
+import org.bgrimm.domain.bgrimm.monitor.provided.Saturation;
 import org.bgrimm.utils.Constants;
 import org.bgrimm.utils.DateUtils;
 import org.hibernate.Criteria;
@@ -76,7 +76,8 @@ public class PackingDataServiceImpl {
 					} else {
 
 						double dayValue = sqrtValue / d;
-						TSaturation tsa=new TSaturation(initDateOfhour, new BigDecimal(dayValue).setScale(3, BigDecimal.ROUND_HALF_UP));
+						TSaturation tsa=null;
+//								new TSaturation(initDateOfhour, new BigDecimal(dayValue).setScale(3, BigDecimal.ROUND_HALF_UP));
 						commonDao.save(tsa);
 						initDateOfhour = satDate;
 						newDate = dateString_hour;
@@ -146,7 +147,8 @@ public class PackingDataServiceImpl {
 						
 	
 						double dayValue = sqrtValue / d;
-						TSaturation tsa=new TSaturation(initDateOfhour, new BigDecimal(dayValue).setScale(3, BigDecimal.ROUND_HALF_UP));
+						TSaturation tsa=null;
+//								new TSaturation(initDateOfhour, new BigDecimal(dayValue).setScale(3, BigDecimal.ROUND_HALF_UP));
 						commonDao.save(tsa);
 						initDateOfhour = satDate;
 						newDate = dateString_hour_sat;

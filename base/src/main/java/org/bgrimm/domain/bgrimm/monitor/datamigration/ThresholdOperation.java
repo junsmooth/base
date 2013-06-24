@@ -1,4 +1,4 @@
-package org.bgrimm.domain.bgrimm.extend;
+package org.bgrimm.domain.bgrimm.monitor.datamigration;
 
 import java.math.BigDecimal;
 

@@ -1,34 +1,29 @@
-package org.bgrimm.domain.bgrimm;
+package org.bgrimm.domain.bgrimm.monitor.datamigration;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.bgrimm.domain.bgrimm.extend.MonitoringPoint;
+import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.system.IdEntity;
-import org.hibernate.validator.constraints.NotEmpty;
 
+@Entity
+@Table(name="rainfall_monitoring")
+public class TRainfall extends IdEntity {
 
-@Entity(name="saturation_line_monitoring")
-public class Saturation extends IdEntity implements java.io.Serializable {
-	private static final long serialVersionUID = 2048463947914157677L;
-	@NotEmpty
-	@Temporal(TemporalType.TIMESTAMP)
-	
 	@Column(name="date_Time")
 	private Date dateTime;
 	
 	@Column(name="monitoring_position")
-	private Integer monitoringPosition;
+	private Integer monitoringPosition; 
 	
-	@Column(name="water_depth")
+	@Column(name="rainfall")
 	private BigDecimal value;
-
+	
 	@Transient
 	private MonitoringPoint point;
 
@@ -63,13 +58,6 @@ public class Saturation extends IdEntity implements java.io.Serializable {
 	public void setPoint(MonitoringPoint point) {
 		this.point = point;
 	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
 	
-
-
-
 	
 }

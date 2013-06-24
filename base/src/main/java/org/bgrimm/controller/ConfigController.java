@@ -5,8 +5,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
-import org.bgrimm.domain.bgrimm.extend.MonitoringPoint;
-import org.bgrimm.domain.bgrimm.extend.MonitoringType;
+import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
+import org.bgrimm.domain.bgrimm.common.MonitoringType;
 import org.bgrimm.service.ConfigService;
 import org.bgrimm.utils.JsonMsg;
 import org.springframework.beans.factory.annotation.Autowired;

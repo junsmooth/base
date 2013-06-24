@@ -1,4 +1,4 @@
-package org.bgrimm.domain.bgrimm;
+package org.bgrimm.domain.bgrimm.monitor.datamigration;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -10,14 +10,13 @@ import javax.persistence.IdClass;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.bgrimm.domain.bgrimm.extend.MonitoringPoint;
+import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 
 
 
 @Entity
-@IdClass(InnerDisplacementPK.class)
 @Table(name="inner_dam_deformation_monitoring")
-public class InnerDisplacement {
+public class TInnerDisplacement {
 
 	@Id
 	@Column(name="date_Time")

@@ -1,4 +1,4 @@
-package org.bgrimm.domain.bgrimm.extend;
+package org.bgrimm.domain.bgrimm.monitor.extended;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.system.IdEntity;
 
 @Entity
