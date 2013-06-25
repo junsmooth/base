@@ -74,6 +74,10 @@ public class AlarmService {
 		// 2.
 		for (MonitoringPoint mp : points) {
 			Object pointData = getLatestPointData(mp);
+			//TODO why null point
+			if(pointData==null){
+				continue;
+			}
 			// for Every Attribute
 			Map<String, List<Threshold>> map = classifyPointsThresholds(mp,
 					thresholds);
