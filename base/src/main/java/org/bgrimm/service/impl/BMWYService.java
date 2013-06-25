@@ -73,7 +73,7 @@ public class BMWYService {
 				}
 
 				List<Order> list=new ArrayList();
-				Order or=Order.desc("logtime");
+				Order or=Order.desc("dateTime");
 				return dao.getPagedList(pq,list);
 			}
 		});
