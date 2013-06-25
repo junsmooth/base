@@ -1,7 +1,7 @@
 package org.bgrimm.controller;
 
 import org.bgrimm.domain.bgrimm.TableParam;
-import org.bgrimm.service.impl.GTCDServiceImpl;
+import org.bgrimm.service.impl.GTCDService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class GTCDController {
 
 	@Autowired
-	private GTCDServiceImpl gtcdService;
+	private GTCDService gtcdService;
 	@RequestMapping("data")
 	public String dataIndex(){
 		

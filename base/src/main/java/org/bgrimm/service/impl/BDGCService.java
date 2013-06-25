@@ -9,7 +9,8 @@ import org.bgrimm.dao.core.impl.CommonDao;
 import org.bgrimm.domain.bgrimm.TableParam;
 import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.bgrimm.common.MonitoringType;
-import org.bgrimm.domain.bgrimm.monitor.provided.JRX;
+import org.bgrimm.domain.bgrimm.monitor.extended.BDGC;
+import org.bgrimm.domain.bgrimm.monitor.extended.AQCG;
 import org.bgrimm.domain.system.PageList;
 import org.bgrimm.domain.system.PagedQuery;
 import org.bgrimm.utils.Constants;
@@ -23,47 +24,39 @@ import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
-
-@Service("JRXService")
+@Service("BDGCService")
 @Transactional
-public class JRXService {
+public class BDGCService {
 
-	
 	@Autowired
-	@Qualifier("commonDao")
 	private CommonDao commonDao;
-	
-	
-	@Autowired
-	PackingDataServiceImpl packingDataServiceImpl;
-	
 	/**
 	 * 获取所有测点
 	 */
 	public Object getAllPoints() {
 		
 		MonitoringType t = commonDao.findUniqueBy(MonitoringType.class, "code",
-				Constants.JCD_JRX);
-		final List<MonitoringPoint> jrxPoint = commonDao.findByCriterions(
+				Constants.JCD_BDGC);
+		final List<MonitoringPoint> bdgcPoint = commonDao.findByCriterions(
 				MonitoringPoint.class, Restrictions.eq("type.id", t.getId()));
-		return jrxPoint;
+		return bdgcPoint;
 
 	}
-	
+
+
 	/**
 	 * 获取测点数据
 	 */
-	public Object getJRXMonitorPosition(TableParam param) {
+	public Object getDamCrestPageList(TableParam param) {
 
 		List<Order> list=new ArrayList();
-		MonitoringType t=commonDao.findUniqueBy(MonitoringType.class, "code", Constants.JCD_JRX);
-		List<MonitoringPoint> jrxPointList=commonDao.findByCriterions(MonitoringPoint.class, Restrictions.eq("type.id", t.getId()));
-		PagedQuery pq = new PagedQuery(JRX.class, param.getPage(), param.getRows());
+		MonitoringType t=commonDao.findUniqueBy(MonitoringType.class, "code", Constants.JCD_BDGC);
+		List<MonitoringPoint> bdgcPointList=commonDao.findByCriterions(MonitoringPoint.class, Restrictions.eq("type.id", t.getId()));
+		PagedQuery pq = new PagedQuery(BDGC.class, param.getPage(), param.getRows());
 		DetachedCriteria criteria = pq.getDetachedCriteria();
 		Integer[] arr = PagerUtil.strToArray(param.getStr());
 		if (StringUtils.isNotEmpty(param.getMin())) {
@@ -79,40 +72,38 @@ public class JRXService {
 		} else {
 			// 设置测点
 			List<Integer> positions = new ArrayList();
-			for (MonitoringPoint p : jrxPointList) {
+			for (MonitoringPoint p : bdgcPointList) {
 				positions.add(p.getPosition());
 			}
 			criteria.add(Restrictions.in("monitoringPosition", positions.toArray()));
 		}
 		Order or=Order.desc("dateTime");
 		list.add(or);
-		PageList<JRX> pl= commonDao.getPagedList(pq,list);
+		PageList<BDGC> pl= commonDao.getPagedList(pq,list);
 		//将DryBeachLength与MonitoringPoint关联起来，主要是为了在页面根据测点获取对应名称
-		for (JRX sa : pl.getRows()) {
-			for (MonitoringPoint point : jrxPointList) {
-				if (sa.getMonitoringPosition()== point.getPosition()) {
-					sa.setPoint(point);
+		for (BDGC bdgc : pl.getRows()) {
+			for (MonitoringPoint point : bdgcPointList) {
+				if (bdgc.getMonitoringPosition()== point.getPosition()) {
+					bdgc.setPoint(point);
 				}
 			}
 		}
 		return pl;
 	}
 
+	
 	/**
-	 * 获取浸润线的时间和的值List
+	 * 获取坝顶高程的时间和的值List
 	 * @param param
 	 * @return
 	 */
 	@Transactional(isolation=Isolation.DEFAULT,readOnly=false)
-	public Object getJrxChartData(TableParam param) {
+	public Object getBDGCChartList(TableParam param) {
 		List<Order> list=new ArrayList();
-		MonitoringType t=commonDao.findUniqueBy(MonitoringType.class, "code", Constants.JCD_JRX);
-		List<MonitoringPoint> jrxPointList=commonDao.findByCriterions(MonitoringPoint.class, Restrictions.eq("type.id", t.getId()));
-		Criteria criteria=commonDao.getSession().createCriteria(JRX.class);
+		MonitoringType t=commonDao.findUniqueBy(MonitoringType.class, "code", Constants.JCD_BDGC);
+		List<MonitoringPoint> bdgcPointList=commonDao.findByCriterions(MonitoringPoint.class, Restrictions.eq("type.id", t.getId()));
+		Criteria criteria=commonDao.getSession().createCriteria(BDGC.class);
 		ProjectionList pList=Projections.projectionList();
-//		pList.add(Projections.property("dateTime"));
-//		pList.add(Projections.property("value"));
-//		criteria.setProjection(pList);
 		Integer[] arr = PagerUtil.strToArray(param.getStr());
 		if (StringUtils.isNotEmpty(param.getMin())) {
 			Date startDate = DateUtils.strToDate(param.getMin());
@@ -127,7 +118,7 @@ public class JRXService {
 		} else {
 			// 设置测点
 			List<Integer> positions = new ArrayList();
-			for (MonitoringPoint p : jrxPointList) {
+			for (MonitoringPoint p : bdgcPointList) {
 				positions.add(p.getPosition());
 			}
 			criteria.add(Restrictions.in("monitoringPosition", positions.toArray()));
@@ -135,14 +126,14 @@ public class JRXService {
 
 		criteria.addOrder(Order.asc("dateTime"));
 		List li= criteria.list();
-		//List showList= DataUtils.convert2JSonList(li);
+		
 		
 		if(li.size()>100000){
 			List nameList=new ArrayList();
 			nameList.add("value");
 			return DataUtils.packingData(nameList, li);
 		}else{
-			//packingDataServiceImpl.packingDataOfHour();
+		//	packingDataServiceImpl.packingDataOfHour();
 			return toPageJSonList(li);
 		}
 //		return li;
@@ -152,15 +143,13 @@ public class JRXService {
 
 		List listData=new ArrayList();
 		for(Object obj:li){
-			JRX sa=(JRX)obj;
+			BDGC bdgc=(BDGC)obj;
 			List list=new ArrayList();
-			list.add(sa.getDateTime());
-			list.add(sa.getValue());
+			list.add(bdgc.getDateTime());
+			list.add(bdgc.getValue());
 			listData.add(list);
 		}
 		return listData;
 	}
-
-
 
 }

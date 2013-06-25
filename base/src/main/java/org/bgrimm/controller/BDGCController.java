@@ -1,47 +1,49 @@
 package org.bgrimm.controller;
 
 import org.bgrimm.domain.bgrimm.TableParam;
-import org.bgrimm.service.impl.GTGCService;
+import org.bgrimm.service.impl.BDGCService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
 @Controller
-@RequestMapping("gtgc")
-public class GTGCController {
+@RequestMapping("bdgc")
+public class BDGCController {
 
 	@Autowired
-	private GTGCService gtgcService;
+	private BDGCService bdgcService;
 	@RequestMapping("data")
-	public String datIndex(){
+	public String dataIndex(){
 		
-		return "data/gtgc/gtgcData";
+		return "data/bdgc/bdgcData";
 	}
 	@RequestMapping("chart")
 	public String chartIndex(){
 		
-		return "data/gtgc/gtgcChart";
+		return "data/bdgc/bdgcChart";
 	}
+	
 	@RequestMapping("data/points")
 	@ResponseBody
 	public Object points(){
 		
-		return gtgcService.getAllPoints();
-	}
-	
-	@RequestMapping("data/gtgcData")
-	@ResponseBody
-	public Object gtgcList(TableParam param) {
-
-		return gtgcService.getGTGCPageList(param);
+		return bdgcService.getAllPoints();
 	}
 	
 
-	@RequestMapping("chart/gtgcChart")
+	@RequestMapping("data/bdgcData")
 	@ResponseBody
-	public Object gtgcChart(TableParam param){
+	public Object DamCrestList(TableParam param) {
+
+		return bdgcService.getDamCrestPageList(param);
+	}
+	
+	@RequestMapping("chart/bdgcChart")
+	@ResponseBody
+	public Object bdgcChart(TableParam param){
 		
-		return gtgcService.getGCGCChartList(param);
+		return bdgcService.getBDGCChartList(param);
 	}
 }

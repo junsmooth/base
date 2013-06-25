@@ -11,12 +11,12 @@ public class Constants {
 	public static final String JCD_BMWY="BMWY";
 	public static final String JCD_GTGC="GTGC";
 	public static final String JCD_GTCD="GTCD";
-	public static final String JCD_WATERLEVEL="KSW";
-	public static final String JCD_RAINFALL="JYL";
-	public static final String JCD_FREEBOARD="AQCG";
-	public static final String JCD_DAMCREST="BDGC";
-	public static final String JCD_SEEPAGE="SLL";
-	public static final String JCD_INNERDISP="NBWY";
+	public static final String JCD_KSW="KSW";
+	public static final String JCD_JYL="JYL";
+	public static final String JCD_AQCG="AQCG";
+	public static final String JCD_BDGC="BDGC";
+	public static final String JCD_SLL="SLL";
+	public static final String JCD_NBWY="NBWY";
 	public static final String JCD_SP = "SP";
 	
 }

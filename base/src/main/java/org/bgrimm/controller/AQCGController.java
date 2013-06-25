@@ -1,47 +1,49 @@
 package org.bgrimm.controller;
 
 import org.bgrimm.domain.bgrimm.TableParam;
-import org.bgrimm.service.impl.GTGCService;
+import org.bgrimm.service.impl.AQCGService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
 @Controller
-@RequestMapping("gtgc")
-public class GTGCController {
+@RequestMapping("aqcg")
+public class AQCGController {
 
 	@Autowired
-	private GTGCService gtgcService;
+	private AQCGService aqcgService;
 	@RequestMapping("data")
-	public String datIndex(){
+	public String dataIndex(){
 		
-		return "data/gtgc/gtgcData";
+		return "data/aqcg/aqcgData";
 	}
+	
 	@RequestMapping("chart")
 	public String chartIndex(){
 		
-		return "data/gtgc/gtgcChart";
+		return "data/aqcg/aqcgChart";
 	}
+	
 	@RequestMapping("data/points")
 	@ResponseBody
 	public Object points(){
 		
-		return gtgcService.getAllPoints();
+		return aqcgService.getAllPoints();
 	}
 	
-	@RequestMapping("data/gtgcData")
+	@RequestMapping("data/aqcgData")
 	@ResponseBody
-	public Object gtgcList(TableParam param) {
+	public Object aqcgList(TableParam param) {
 
-		return gtgcService.getGTGCPageList(param);
+		return aqcgService.getAQCGPageList(param);
 	}
 	
-
-	@RequestMapping("chart/gtgcChart")
+	@RequestMapping("chart/aqcgChart")
 	@ResponseBody
-	public Object gtgcChart(TableParam param){
+	public Object aqcgChart(TableParam param){
 		
-		return gtgcService.getGCGCChartList(param);
+		return aqcgService.getAQCGChartList(param);
 	}
 }

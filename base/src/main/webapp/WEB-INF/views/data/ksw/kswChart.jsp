@@ -5,31 +5,25 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <script type="text/javascript">
-	Namespace.register("jrxChart.list", {
+	Namespace.register("kswChart.list", {
 
-		formatJRXTime : function(value) {
-			return formatDateTime(value);
-		},
-		formatJRXPoint : function(value) {
-			return value.monitoringName;
-		},
 		myDate : function(value) {
 			return formatDateTime(value);
 		},
 		initToolBarValue:function(){
 			var date=new Date(); 
 			var oldDate=new Date(date.getTime()-7*24*60*60*1000);
-			$("#jrxChart_max").attr("value",formatDateTime(date));  
-			$("#jrxChart_min").attr("value",formatDateTime(oldDate));
+			$("#kswChart_max").attr("value",formatDateTime(date));  
+			$("#kswChart_min").attr("value",formatDateTime(oldDate));
 			getChartData();
 		},
 		change_min:function(){
-			var minv=$("#jrxChart_min").datetimebox('getValue');
-			$("#jrxChart_min").attr("value",minv);
+			var minv=$("#kswChart_min").datetimebox('getValue');
+			$("#kswChart_min").attr("value",minv);
 		},
 		change_max:function(){
-			var maxv=$("#jrxChart_max").datetimebox('getValue');
-			$("#jrxChart_max").attr("value",maxv);
+			var maxv=$("#kswChart_max").datetimebox('getValue');
+			$("#kswChart_max").attr("value",maxv);
 		}
 	});
 	
@@ -49,13 +43,13 @@
 		var value =new Date(max1).getTime()-new Date(min1).getTime()-365*24*60*60*1000;
 		return value;
 	};
-	function jrxHighCharts(result) {
+	function kswHighCharts(result) {
 		
 			if(result.length==0){
 				 alert("您所查日期内无监测数据，请重新选择查询日期");
 				 return;
 			}
-			$('#jrx_chart').highcharts('StockChart', {
+			$('#ksw_chart').highcharts('StockChart', {
 						
 				chart : {renderTo : 'container'},
 						rangeSelector : {
@@ -63,36 +57,36 @@
 						},
 			
 						title : {
-							text : '浸润线监测过程曲线'
+							text : '库水位监测过程曲线'
 						},
 						yAxis : {
-							title : {text : '浸润线(mm)'},
+							title : {text : '库水位(mm)'},
 							plotLines : [{value : 0 ,color : 'green',dashStyle : 'shortdash',width : 2,label : {text : '零界线'}}]
 						},
 						series : [{
-							name : '浸润线',
+							name : '库水位',
 							data : result,
-							 tooltip: {
+							/* tooltip: {
 								valueDecimals: 2
-							} 
-							/* tooltip:{yDecimals : 2} */ 
+							} */
+							tooltip:{yDecimals : 2} 
 						}]
 					});
     }
 	function getChartData(){
-		var validFormDate = $("#jrxChart_tb").form('validate');
+		var validFormDate = $("#kswChart_tb").form('validate');
 		if (!validFormDate) {
 			return;
 		}
 				var str1 = '', mp, min1, max1;
 			
-				mp = $('#jrxChart_monitorPosition').combobox('getValues');
+				mp = $('#kswChart_monitorPosition').combobox('getValues');
 				 for ( var i = 0; i < mp.length; i++) {
 					str1 += mp[i] + ',';
 				} 
 				str1 = str1.substring(0, str1.length - 1);
-				min1=$('#jrxChart_min').val();	
-			    max1 = $('#jrxChart_max').val();
+				min1=$('#kswChart_min').val();	
+			    max1 = $('#kswChart_max').val();
 			    var value= checkTime(min1,max1);
 			   if(value>0){
 					alert("【查询时间超过一年,请重新输入！】");
@@ -101,12 +95,12 @@
 				
 	 	$.ajax({
 			type : 'POST',
-			url : "jrx/chart/jrxChart",
+			url : "ksw/chart/kswChart",
 			data:{min : min1,
 				max : max1,
 				str : str1
 				},
-			success:jrxHighCharts
+			success:kswHighCharts
 		}); 
 	}
 	
@@ -115,35 +109,35 @@
 	<div data-options="region:'center'" style="padding: 10px 0 10px 10px">
 
 
-		<table id="jrxgrid" class="easyui-datagrid"
-			data-options="fit:true,toolbar:'#jrxChart_tb'">
+		<table id="kswId" class="easyui-datagrid"
+			data-options="fit:true,toolbar:'#kswChart_tb'">
 			
 		</table>
 	</div>
 </div>
-<div id="jrxChart_tb" style="padding: 5px; height: auto">
+<div id="kswChart_tb" style="padding: 5px; height: auto">
 	<div>
-		时间 从: <input id='jrxChart_min' class="easyui-datetimebox"
-			data-options="onChange:jrxChart.list.change_min,formatter:jrxChart.list.myDate,validType:'checkDate[\'yyyy-MM-dd HH:mm:ss\']'"></input>
-		到: <input id='jrxChart_max' class="easyui-datetimebox"
-			data-options="onChange:jrxChart.list.change_max,formatter:jrxChart.list.myDate,
+		时间 从: <input id='kswChart_min' class="easyui-datetimebox"
+			data-options="onChange:kswChart.list.change_min,formatter:kswChart.list.myDate,validType:'checkDate[\'yyyy-MM-dd HH:mm:ss\']'"></input>
+		到: <input id='kswChart_max' class="easyui-datetimebox"
+			data-options="onChange:kswChart.list.change_max,formatter:kswChart.list.myDate,
 						  validType:'checkDate[\'yyyy-MM-dd HH:mm:ss\']'
 			
 			"></input>
-		测点: <input id="jrxChart_monitorPosition" class="easyui-combobox"
-			name="jrxChart_monitorPosition"
+		测点: <input id="kswChart_monitorPosition" class="easyui-combobox"
+			name="kswChart_monitorPosition"
 			data-options="  
-                    url:'jrx/data/points',  
+                    url:'ksw/data/points',  
                     valueField:'position',  
                     textField:'monitoringName',  
                     multiple:true,  
                     panelHeight:'auto',
                     editable:false,
                     value:1,
-                    onLoadSuccess:jrxChart.list.initToolBarValue
+                    onLoadSuccess:kswChart.list.initToolBarValue
             "
 			readonly="readonly"> <a href="#" class="easyui-linkbutton"
 			iconCls="icon-search" onclick="getChartData()">查询</a>
 	</div>
-		<div id="jrx_chart"></div>
+		<div id="ksw_chart"></div>
 </div>

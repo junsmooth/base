@@ -61,6 +61,29 @@ public  class DataUtils {
 		}
 		return listdata;
 	}
+
+	public static List convert2JSonList(List li, Object ...object) {
+
+	
+		for(Object o: li){
+			try {
+				
+				Field datetime=o.getClass().getDeclaredField(object[1].toString());
+				Field value=o.getClass().getDeclaredField(object[2].toString());
+				Field position=o.getClass().getDeclaredField(object[0].toString());
+				datetime.setAccessible(true);
+				value.setAccessible(true);
+				position.setAccessible(true);
+				Date date=(Date)datetime.get(o);
+				BigDecimal val=(BigDecimal)value.get(o);
+				Integer pos=(Integer)position.get(o);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
 	
 	
 }

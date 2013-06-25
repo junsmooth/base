@@ -1,47 +1,49 @@
 package org.bgrimm.controller;
 
 import org.bgrimm.domain.bgrimm.TableParam;
-import org.bgrimm.service.impl.GTGCService;
+import org.bgrimm.service.impl.SLLService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
 @Controller
-@RequestMapping("gtgc")
-public class GTGCController {
+@RequestMapping("sll")
+public class SLLController {
 
 	@Autowired
-	private GTGCService gtgcService;
+	private SLLService sslService;
+	
 	@RequestMapping("data")
-	public String datIndex(){
-		
-		return "data/gtgc/gtgcData";
+	public String dataIndex(){
+		return "data/sll/sllData";
 	}
+	
 	@RequestMapping("chart")
 	public String chartIndex(){
-		
-		return "data/gtgc/gtgcChart";
+		return "data/sll/sllChart";
 	}
+	
 	@RequestMapping("data/points")
 	@ResponseBody
 	public Object points(){
 		
-		return gtgcService.getAllPoints();
-	}
-	
-	@RequestMapping("data/gtgcData")
-	@ResponseBody
-	public Object gtgcList(TableParam param) {
-
-		return gtgcService.getGTGCPageList(param);
+		return sslService.getAllPoints();
 	}
 	
 
-	@RequestMapping("chart/gtgcChart")
+	@RequestMapping("data/sllData")
 	@ResponseBody
-	public Object gtgcChart(TableParam param){
+	public Object sllList(TableParam param) {
+
+		return sslService.getSLLList(param);
+	}
+	
+	@RequestMapping("chart/sllChart")
+	@ResponseBody
+	public Object sllChart(TableParam param){
 		
-		return gtgcService.getGCGCChartList(param);
+		return sslService.getSLLChartData(param);
 	}
 }

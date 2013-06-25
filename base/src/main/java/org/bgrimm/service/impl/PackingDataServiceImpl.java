@@ -9,7 +9,7 @@ import org.bgrimm.dao.core.impl.CommonDao;
 import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.bgrimm.common.MonitoringType;
 import org.bgrimm.domain.bgrimm.monitor.datamigration.TSaturation;
-import org.bgrimm.domain.bgrimm.monitor.provided.Saturation;
+import org.bgrimm.domain.bgrimm.monitor.provided.JRX;
 import org.bgrimm.utils.Constants;
 import org.bgrimm.utils.DateUtils;
 import org.hibernate.Criteria;
@@ -46,19 +46,19 @@ public class PackingDataServiceImpl {
 //			 List<Saturation> jrxList= commonDao.loadAll(Saturation.class);
 				MonitoringType t=commonDao.findUniqueBy(MonitoringType.class, "code", Constants.JCD_JRX);
 				List<MonitoringPoint> jrxPointList=commonDao.findByCriterions(MonitoringPoint.class, Restrictions.eq("type.id", t.getId()));
-				Criteria criteria=commonDao.getSession().createCriteria(Saturation.class);
+				Criteria criteria=commonDao.getSession().createCriteria(JRX.class);
 				List<Integer> positions = new ArrayList();
 				for (MonitoringPoint p : jrxPointList) {
 					positions.add(p.getPosition());
 				}
 				criteria.add(Restrictions.in("monitoringPosition", positions.toArray()));
-				List<Saturation> jrxList=criteria.list();
+				List<JRX> jrxList=criteria.list();
 				
 				Double sqrtValue = 0.0;
 				String newDate="";
 				Date initDateOfhour=new Date() ;
 				double d = 0;
-			 for(Saturation saturation: jrxList){
+			 for(JRX saturation: jrxList){
 				 Date satDate=saturation.getDateTime();
 				 double value=	saturation.getValue().doubleValue();
 				 String dateString=DateUtils.date2String(satDate);
@@ -105,11 +105,11 @@ public class PackingDataServiceImpl {
 			 String nowDate_hour=(nowDateString.substring(0, 13)).split(":")[0];
 			
 			 
-			 Criteria cri=commonDao.getSession().createCriteria(Saturation.class);
+			 Criteria cri=commonDao.getSession().createCriteria(JRX.class);
 //			 cri.add(Restrictions.between("dateTime", initDate, nowDate));
 			 cri.add(Restrictions.gt("dateTime", initDate));
 			 cri.add(Restrictions.lt("dateTime", nowDate));
-			List<Saturation> listByCon= cri.list();
+			List<JRX> listByCon= cri.list();
 			if(listByCon.size()>0){
 				System.out.println("listByCon.size():"+listByCon.size());
 				Double sqrtValue = 0.0;
@@ -119,7 +119,7 @@ public class PackingDataServiceImpl {
 				double d = 0;
 				
 				
-				for(Saturation sat: listByCon){
+				for(JRX sat: listByCon){
 					
 					 Date satDate=sat.getDateTime();
 					 double value=	sat.getValue().doubleValue();

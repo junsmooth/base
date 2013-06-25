@@ -4,28 +4,29 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script type="text/javascript">
-	Namespace.register("jrx.list", {
+	Namespace.register("aqcg.list", {
 		
-		formatJRXTime : function(value) {
+		formatAQCGTime : function(value) {
 			return formatDateTime(value);
 		},
-		formatJRXPoint : function(value) {
+		formatAQCGPoint : function(value) {
 			return value.monitoringName;
 		},
 		myDate : function(value) {
 			//var d = formatDateTime(value);
 			return formatDateTime(value);
 		}
+
 	});
 
 	function submit() {
-		var validFormDate = $("#jrx_tb").form('validate');
+		var validFormDate = $("#aqcg_tb").form('validate');
 		if (!validFormDate) {
 			return;
 		}
 		var str1 = '', mp, min1, max1;
 
-		mp = $('#jrx_monitorPosition').combobox('getValues');
+		mp = $('#aqcg_mp').combobox('getValues');
 
 		for ( var i = 0; i < mp.length; i++) {
 			str1 += mp[i] + ',';
@@ -33,11 +34,11 @@
 		str1 = str1.substring(0, str1.length - 1);
 		//return ;
 
-		min1 = $('#jrx_min').combobox('getText');
+		min1 = $('#aqcg_min').combobox('getText');
 
-		max1 = $('#jrx_max').combobox('getText');
+		max1 = $('#aqcg_max').combobox('getText');
 
-		$('#jrxgrid').datagrid('load', {
+		$('#aqcgId').datagrid('load', {
 			min : min1,
 			max : max1,
 			str : str1
@@ -57,17 +58,17 @@
 	<div data-options="region:'center'" style="padding: 10px 0 10px 10px">
 
 
-		<table id="jrxgrid" class="easyui-datagrid"
-			data-options="rownumbers:true,singleSelect:true, idField: 'id',url:'jrx/data/jrxMonitorPostion',pagination:'true',fitColumns:true,fit:true,toolbar:'#jrx_tb'">
+		<table id="aqcgId" class="easyui-datagrid"
+			data-options="rownumbers:true,singleSelect:true, idField: 'id',url:'aqcg/data/aqcgData',pagination:'true',fitColumns:true,fit:true,toolbar:'#aqcg_tb'">
 			<thead>
 
 				<tr>
 					<th id="dt"
-						data-options="field:'dateTime',formatter:jrx.list.formatJRXTime,width:80,align:'left'">
+						data-options="field:'dateTime',formatter:aqcg.list.formatAQCGTime,width:80,align:'left'">
 
 						时间</th>
 					<th
-						data-options="field:'point',width:80,align:'left',formatter:jrx.list.formatJRXPoint">
+						data-options="field:'point',width:80,align:'left',formatter:aqcg.list.formatAQCGPoint">
 						测点</th>
 					<th data-options="field:'value',width:120,align:'left'">
 						深度</th>
@@ -77,16 +78,16 @@
 		</table>
 	</div>
 </div>
-<div id="jrx_tb" style="padding: 5px; height: auto">
+<div id="aqcg_tb" style="padding: 5px; height: auto">
 	<div>
-		时间 从: <input id='jrx_min' class="easyui-datetimebox"
-			data-options="formatter:jrx.list.myDate,validType:'checkDate[\'yyyy-MM-dd HH:mm:ss\']'"></input>
-		到: <input id='jrx_max' class="easyui-datetimebox"
-			data-options="formatter:jrx.list.myDate,validType:'checkDate[\'yyyy-MM-dd HH:mm:ss\']'"></input>
-		测点: <input id="jrx_monitorPosition" class="easyui-combobox"
-			name="jrx_monitorPosition"
+		时间 从: <input id='aqcg_min' class="easyui-datetimebox"
+			data-options="formatter:aqcg.list.myDate,validType:'checkDate[\'yyyy-MM-dd HH:mm:ss\']'"></input>
+		到: <input id='aqcg_max' class="easyui-datetimebox"
+			data-options="formatter:aqcg.list.myDate,validType:'checkDate[\'yyyy-MM-dd HH:mm:ss\']'"></input>
+		测点: <input id="aqcg_mp" class="easyui-combobox"
+			name="aqcg_mp"
 			data-options="  
-                    url:'jrx/data/points',  
+                    url:'aqcg/data/points',  
                     valueField:'position',  
                     textField:'monitoringName',  
                     multiple:true,  

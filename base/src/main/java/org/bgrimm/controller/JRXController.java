@@ -11,7 +11,7 @@ public class JRXController {
 
 	//@Resource(name="JRXServiceImpl")
 	@Autowired
-	private JRXService JRXServiceImpl;
+	private JRXService jrxService;
 	
 	@RequestMapping("data")
 	public String toJrxPage() {
@@ -30,13 +30,13 @@ public class JRXController {
 	@ResponseBody
 	public Object points(){
 		
-		return JRXServiceImpl.getAllPoints();
+		return jrxService.getAllPoints();
 	}
 	@RequestMapping("data/jrxMonitorPostion")
 	@ResponseBody
 	public Object JRXMonitorPosition(TableParam param){
 		
-		return JRXServiceImpl.getJRXMonitorPosition(param);
+		return jrxService.getJRXMonitorPosition(param);
 	}
 	
 	
@@ -44,7 +44,7 @@ public class JRXController {
 	@ResponseBody
 	public Object JRXChart(TableParam param){
 		
-		return JRXServiceImpl.getJrxChartData(param);
+		return jrxService.getJrxChartData(param);
 	}
 	
 }
