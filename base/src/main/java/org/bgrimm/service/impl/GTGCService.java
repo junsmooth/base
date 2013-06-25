@@ -8,7 +8,7 @@ import org.bgrimm.dao.core.impl.CommonDao;
 import org.bgrimm.domain.bgrimm.TableParam;
 import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.bgrimm.common.MonitoringType;
-import org.bgrimm.domain.bgrimm.monitor.provided.KSW;
+import org.bgrimm.domain.bgrimm.monitor.provided.GTGC;
 import org.bgrimm.domain.system.PageList;
 import org.bgrimm.domain.system.PagedQuery;
 import org.bgrimm.utils.Constants;
@@ -45,7 +45,7 @@ public class GTGCService {
 		List<Order> list=new ArrayList();
 		MonitoringType t=commonDao.findUniqueBy(MonitoringType.class, "code", Constants.JCD_GTGC);
 		List<MonitoringPoint> gtgcPointList=commonDao.findByCriterions(MonitoringPoint.class, Restrictions.eq("type.id", t.getId()));
-		PagedQuery pq = new PagedQuery(KSW.class, param.getPage(), param.getRows());
+		PagedQuery pq = new PagedQuery(GTGC.class, param.getPage(), param.getRows());
 		DetachedCriteria criteria = pq.getDetachedCriteria();
 		Integer[] arr = PagerUtil.strToArray(param.getStr());
 		if (StringUtils.isNotEmpty(param.getMin())) {
@@ -68,9 +68,9 @@ public class GTGCService {
 		}
 		Order or=Order.desc("dateTime");
 		list.add(or);
-		PageList<KSW> pl= commonDao.getPagedList(pq,list);
+		PageList<GTGC> pl= commonDao.getPagedList(pq,list);
 		//将DryBeachLength与MonitoringPoint关联起来，主要是为了在页面根据测点获取对应名称
-		for (KSW gtgc : pl.getRows()) {
+		for (GTGC gtgc : pl.getRows()) {
 			for (MonitoringPoint point : gtgcPointList) {
 				if (gtgc.getMonitoringPosition()== point.getPosition()) {
 					gtgc.setPoint(point);
@@ -104,7 +104,7 @@ public class GTGCService {
 		List<Order> list=new ArrayList();
 		MonitoringType t=commonDao.findUniqueBy(MonitoringType.class, "code", Constants.JCD_GTGC);
 		List<MonitoringPoint> gtgcPointList=commonDao.findByCriterions(MonitoringPoint.class, Restrictions.eq("type.id", t.getId()));
-		Criteria criteria=commonDao.getSession().createCriteria(KSW.class);
+		Criteria criteria=commonDao.getSession().createCriteria(GTGC.class);
 		ProjectionList pList=Projections.projectionList();
 		Integer[] arr = PagerUtil.strToArray(param.getStr());
 		if (StringUtils.isNotEmpty(param.getMin())) {
@@ -145,7 +145,7 @@ public class GTGCService {
 
 		List listData=new ArrayList();
 		for(Object obj:li){
-			KSW gtgc=(KSW)obj;
+			GTGC gtgc=(GTGC)obj;
 			List list=new ArrayList();
 			list.add(gtgc.getDateTime());
 			list.add(gtgc.getValue());

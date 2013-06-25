@@ -13,7 +13,7 @@ import org.bgrimm.domain.system.IdEntity;
 
 @Entity
 @Table(name="t_water_level_monitoring")
-public class TWaterLevel extends IdEntity{
+public class TKSW extends IdEntity{
 
 	@Column( name="date_Time" )
 	private Date dateTime;

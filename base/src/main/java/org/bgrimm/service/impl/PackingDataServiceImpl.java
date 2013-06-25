@@ -8,7 +8,7 @@ import java.util.List;
 import org.bgrimm.dao.core.impl.CommonDao;
 import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.bgrimm.common.MonitoringType;
-import org.bgrimm.domain.bgrimm.monitor.datamigration.TSaturation;
+import org.bgrimm.domain.bgrimm.monitor.datamigration.TJRX;
 import org.bgrimm.domain.bgrimm.monitor.provided.JRX;
 import org.bgrimm.utils.Constants;
 import org.bgrimm.utils.DateUtils;
@@ -41,7 +41,7 @@ public class PackingDataServiceImpl {
 		//get CurrentDate
 		//
 		
-		 List<TSaturation> newJrxList=	commonDao.loadAll(TSaturation.class);
+		 List<TJRX> newJrxList=	commonDao.loadAll(TJRX.class);
 		 if(newJrxList.size()==0){
 //			 List<Saturation> jrxList= commonDao.loadAll(Saturation.class);
 				MonitoringType t=commonDao.findUniqueBy(MonitoringType.class, "code", Constants.JCD_JRX);
@@ -76,7 +76,7 @@ public class PackingDataServiceImpl {
 					} else {
 
 						double dayValue = sqrtValue / d;
-						TSaturation tsa=null;
+						TJRX tsa=null;
 //								new TSaturation(initDateOfhour, new BigDecimal(dayValue).setScale(3, BigDecimal.ROUND_HALF_UP));
 						commonDao.save(tsa);
 						initDateOfhour = satDate;
@@ -89,12 +89,12 @@ public class PackingDataServiceImpl {
 			 }
 		 }else {
 			 
-			 Criteria criteria=commonDao.getSession().createCriteria(TSaturation.class);
+			 Criteria criteria=commonDao.getSession().createCriteria(TJRX.class);
 			 criteria.addOrder(Order.desc("dateTime"));
 			 List dataList=criteria.list();
 			 
 			
-			TSaturation sa=(TSaturation)dataList.get(0);
+			TJRX sa=(TJRX)dataList.get(0);
 			Date initDate= sa.getDateTime();
 			String initDateString=DateUtils.date2String(initDate);
 			String initDate_hour=(initDateString.substring(0, 13)).split(":")[0];
@@ -147,7 +147,7 @@ public class PackingDataServiceImpl {
 						
 	
 						double dayValue = sqrtValue / d;
-						TSaturation tsa=null;
+						TJRX tsa=null;
 //								new TSaturation(initDateOfhour, new BigDecimal(dayValue).setScale(3, BigDecimal.ROUND_HALF_UP));
 						commonDao.save(tsa);
 						initDateOfhour = satDate;

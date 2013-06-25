@@ -12,22 +12,20 @@ import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.system.IdEntity;
 
 @Entity
-@Table(name="t_dam_crest_elevation")
-public class TDamCrest extends IdEntity {
+@Table(name="t_drybeach_elevation_monitoring")
+public class TGTGC extends IdEntity{
 
-	@Column(name="date_Time")
+	
+	@Column( name="date_Time" )
 	private Date dateTime;
-
-	
-	@Column(name="elevation")
-	private BigDecimal value;
-	
-
 	@Column(name="monitoring_position")
 	private Integer monitoringPosition; 
+	private BigDecimal drybeach_elevation;
 	
 	@Transient
 	private MonitoringPoint point;
+
+
 
 	public Date getDateTime() {
 		return dateTime;
@@ -37,20 +35,20 @@ public class TDamCrest extends IdEntity {
 		this.dateTime = dateTime;
 	}
 
-	public BigDecimal getValue() {
-		return value;
-	}
-
-	public void setValue(BigDecimal value) {
-		this.value = value;
-	}
-	
 	public Integer getMonitoringPosition() {
 		return monitoringPosition;
 	}
 
 	public void setMonitoringPosition(Integer monitoringPosition) {
 		this.monitoringPosition = monitoringPosition;
+	}
+
+	public BigDecimal getDrybeach_elevation() {
+		return drybeach_elevation;
+	}
+
+	public void setDrybeach_elevation(BigDecimal drybeach_elevation) {
+		this.drybeach_elevation = drybeach_elevation;
 	}
 
 	public MonitoringPoint getPoint() {
@@ -60,7 +58,6 @@ public class TDamCrest extends IdEntity {
 	public void setPoint(MonitoringPoint point) {
 		this.point = point;
 	}
-
 	
 	
 }

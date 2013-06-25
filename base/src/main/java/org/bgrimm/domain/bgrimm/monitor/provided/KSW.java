@@ -12,22 +12,20 @@ import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.system.IdEntity;
 
 @Entity
-@Table(name="drybeach_elevation_monitoring")
+@Table(name="water_level_monitoring")
 public class KSW extends IdEntity{
 
-	
 	@Column( name="date_Time" )
 	private Date dateTime;
 	
 	@Column(name="monitoring_position")
-	private Integer monitoringPosition; 
+	private Integer monitoringPosition;
 	
-	@Column(name="drybeach_elevation")
-	private BigDecimal value;
+	@Column(name="water_level")
+	private  BigDecimal value;
 	
 	@Transient
 	private MonitoringPoint point;
-
 
 
 	public Date getDateTime() {
@@ -46,7 +44,6 @@ public class KSW extends IdEntity{
 		this.monitoringPosition = monitoringPosition;
 	}
 
-
 	public BigDecimal getValue() {
 		return value;
 	}
@@ -62,6 +59,7 @@ public class KSW extends IdEntity{
 	public void setPoint(MonitoringPoint point) {
 		this.point = point;
 	}
+
 	
 	
 }

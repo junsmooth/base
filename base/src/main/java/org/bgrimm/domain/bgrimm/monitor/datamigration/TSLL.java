@@ -12,14 +12,14 @@ import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.system.IdEntity;
 
 @Entity
-@Table(name="t_free_board")
-public class TFreeBoard extends IdEntity {
+@Table(name="t_seepage_flow_monitoring")
+public class TSLL extends IdEntity {
 
 	@Column(name="date_Time")
 	private Date dateTime;
 
 	
-	@Column(name="freeboard")
+	@Column(name="seepage_flow")
 	private BigDecimal value;
 	
 

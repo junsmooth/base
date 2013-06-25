@@ -5,28 +5,24 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.system.IdEntity;
 
-
-
 @Entity
-@Table(name="t_inner_dam_deformation_monitoring")
-public class TInnerDisplacement extends IdEntity {
+@Table(name="t_rainfall_monitoring")
+public class TJYL extends IdEntity {
 
 	@Column(name="date_Time")
 	private Date dateTime;
-
-	@Column(precision=24,scale=0, name="value")
-	private BigDecimal value;
-
+	
 	@Column(name="monitoring_position")
 	private Integer monitoringPosition; 
+	
+	@Column(name="rainfall")
+	private BigDecimal value;
 	
 	@Transient
 	private MonitoringPoint point;
@@ -39,20 +35,20 @@ public class TInnerDisplacement extends IdEntity {
 		this.dateTime = dateTime;
 	}
 
-	public BigDecimal getValue() {
-		return value;
-	}
-
-	public void setValue(BigDecimal value) {
-		this.value = value;
-	}
-
 	public Integer getMonitoringPosition() {
 		return monitoringPosition;
 	}
 
 	public void setMonitoringPosition(Integer monitoringPosition) {
 		this.monitoringPosition = monitoringPosition;
+	}
+
+	public BigDecimal getValue() {
+		return value;
+	}
+
+	public void setValue(BigDecimal value) {
+		this.value = value;
 	}
 
 	public MonitoringPoint getPoint() {
@@ -62,7 +58,6 @@ public class TInnerDisplacement extends IdEntity {
 	public void setPoint(MonitoringPoint point) {
 		this.point = point;
 	}
-	
 	
 	
 }

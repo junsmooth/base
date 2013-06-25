@@ -5,28 +5,29 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.system.IdEntity;
 
+
+
 @Entity
-@Table(name = "t_saturation_line_monitoring")
-public class TSaturation extends IdEntity {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 4629631940352641565L;
-	@Column(name = "date_Time")
+@Table(name="t_inner_dam_deformation_monitoring")
+public class TNBWY extends IdEntity {
+
+	@Column(name="date_Time")
 	private Date dateTime;
 
-	@Column(name = "monitoring_position")
-	private Integer monitoringPosition;
-
-	@Column(name = "water_depth")
+	@Column(precision=24,scale=0, name="value")
 	private BigDecimal value;
 
+	@Column(name="monitoring_position")
+	private Integer monitoringPosition; 
+	
 	@Transient
 	private MonitoringPoint point;
 
@@ -38,20 +39,20 @@ public class TSaturation extends IdEntity {
 		this.dateTime = dateTime;
 	}
 
-	public Integer getMonitoringPosition() {
-		return monitoringPosition;
-	}
-
-	public void setMonitoringPosition(Integer monitoringPosition) {
-		this.monitoringPosition = monitoringPosition;
-	}
-
 	public BigDecimal getValue() {
 		return value;
 	}
 
 	public void setValue(BigDecimal value) {
 		this.value = value;
+	}
+
+	public Integer getMonitoringPosition() {
+		return monitoringPosition;
+	}
+
+	public void setMonitoringPosition(Integer monitoringPosition) {
+		this.monitoringPosition = monitoringPosition;
 	}
 
 	public MonitoringPoint getPoint() {
@@ -61,9 +62,7 @@ public class TSaturation extends IdEntity {
 	public void setPoint(MonitoringPoint point) {
 		this.point = point;
 	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
+	
+	
+	
 }

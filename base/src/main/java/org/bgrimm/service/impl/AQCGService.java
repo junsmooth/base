@@ -10,7 +10,7 @@ import org.bgrimm.domain.bgrimm.TableParam;
 import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.bgrimm.common.MonitoringType;
 import org.bgrimm.domain.bgrimm.monitor.extended.AQCG;
-import org.bgrimm.domain.bgrimm.monitor.provided.KSW;
+import org.bgrimm.domain.bgrimm.monitor.provided.GTGC;
 import org.bgrimm.domain.system.PageList;
 import org.bgrimm.domain.system.PagedQuery;
 import org.bgrimm.utils.Constants;

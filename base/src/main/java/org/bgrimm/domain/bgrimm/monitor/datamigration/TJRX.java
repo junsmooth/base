@@ -1,4 +1,4 @@
-package org.bgrimm.domain.bgrimm.monitor.provided;
+package org.bgrimm.domain.bgrimm.monitor.datamigration;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -12,21 +12,23 @@ import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.system.IdEntity;
 
 @Entity
-@Table(name="water_level_monitoring")
-public class WaterLevel extends IdEntity{
-
-	@Column( name="date_Time" )
+@Table(name = "t_saturation_line_monitoring")
+public class TJRX extends IdEntity {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4629631940352641565L;
+	@Column(name = "date_Time")
 	private Date dateTime;
-	
-	@Column(name="monitoring_position")
+
+	@Column(name = "monitoring_position")
 	private Integer monitoringPosition;
-	
-	@Column(name="water_level")
-	private  BigDecimal value;
-	
+
+	@Column(name = "water_depth")
+	private BigDecimal value;
+
 	@Transient
 	private MonitoringPoint point;
-
 
 	public Date getDateTime() {
 		return dateTime;
@@ -60,6 +62,8 @@ public class WaterLevel extends IdEntity{
 		this.point = point;
 	}
 
-	
-	
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 }

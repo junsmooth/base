@@ -1,4 +1,4 @@
-package org.bgrimm.domain.bgrimm.monitor.datamigration;
+package org.bgrimm.domain.bgrimm.monitor.provided;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -12,38 +12,53 @@ import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.system.IdEntity;
 
 @Entity
-@Table(name="t_drybeach_length_monitoring")
-public class TDryBeachLength extends IdEntity{
+@Table(name="drybeach_elevation_monitoring")
+public class GTGC extends IdEntity{
 
+	
 	@Column( name="date_Time" )
 	private Date dateTime;
+	
 	@Column(name="monitoring_position")
 	private Integer monitoringPosition; 
 	
-	private BigDecimal drybeach_length;
+	@Column(name="drybeach_elevation")
+	private BigDecimal value;
+	
 	@Transient
 	private MonitoringPoint point;
+
+
+
 	public Date getDateTime() {
 		return dateTime;
 	}
+
 	public void setDateTime(Date dateTime) {
 		this.dateTime = dateTime;
 	}
+
 	public Integer getMonitoringPosition() {
 		return monitoringPosition;
 	}
+
 	public void setMonitoringPosition(Integer monitoringPosition) {
 		this.monitoringPosition = monitoringPosition;
 	}
-	public BigDecimal getDrybeach_length() {
-		return drybeach_length;
+
+
+	public BigDecimal getValue() {
+		return value;
 	}
-	public void setDrybeach_length(BigDecimal drybeach_length) {
-		this.drybeach_length = drybeach_length;
+
+	public void setValue(BigDecimal value) {
+		this.value = value;
 	}
+
 	public MonitoringPoint getPoint() {
 		return point;
 	}
+
 	public void setPoint(MonitoringPoint point) {
 		this.point = point;
 	}
