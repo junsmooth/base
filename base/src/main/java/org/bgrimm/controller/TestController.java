@@ -18,7 +18,7 @@ public class TestController {
 	
 	@RequestMapping("info")
 	public @ResponseBody String infoView(Model model) {
-		service.getT4ddb();
+//		service.getT4ddb();
 		return "test/info";
 	}
 
