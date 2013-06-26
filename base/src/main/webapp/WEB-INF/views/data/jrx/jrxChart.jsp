@@ -87,10 +87,13 @@
 				var str1 = '', mp, min1, max1;
 			
 				mp = $('#jrxChart_monitorPosition').combobox('getValues');
-				 for ( var i = 0; i < mp.length; i++) {
-					str1 += mp[i] + ',';
-				} 
-				str1 = str1.substring(0, str1.length - 1);
+				
+					
+					 for ( var i = 0; i < mp.length; i++) {
+						str1 += mp[i] + ',';
+					} 
+					str1 = str1.substring(0, str1.length - 1);
+			
 				min1=$('#jrxChart_min').val();	
 			    max1 = $('#jrxChart_max').val();
 			    var value= checkTime(min1,max1);
@@ -140,6 +143,7 @@
                     panelHeight:'auto',
                     editable:false,
                     value:1,
+                    multiple:false,
                     onLoadSuccess:jrxChart.list.initToolBarValue
             "
 			readonly="readonly"> <a href="#" class="easyui-linkbutton"

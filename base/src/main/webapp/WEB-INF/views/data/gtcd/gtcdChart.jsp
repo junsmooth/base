@@ -126,6 +126,7 @@
                     panelHeight:'auto',
                     editable:false,
                     value:1,
+                    multiple:false,
                     onLoadSuccess:gtcdChart.list.initToolBarValue
             "
 			readonly="readonly"> <a href="#" class="easyui-linkbutton"

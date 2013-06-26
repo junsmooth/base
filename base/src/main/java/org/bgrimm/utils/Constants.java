@@ -19,4 +19,5 @@ public class Constants {
 	public static final String JCD_SP = "SP";
 	public static String MIGRATION_PACKAGE = "org.bgrimm.domain.bgrimm.monitor.datamigration";
 
+	public static final int MAXIMUM_ALLOWED_VALUE=10000;
 }

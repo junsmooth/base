@@ -9,6 +9,7 @@ import org.bgrimm.dao.core.impl.CommonDao;
 import org.bgrimm.domain.bgrimm.TableParam;
 import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.bgrimm.common.MonitoringType;
+import org.bgrimm.domain.bgrimm.monitor.datamigration.TJRX;
 import org.bgrimm.domain.bgrimm.monitor.provided.JRX;
 import org.bgrimm.domain.system.PageList;
 import org.bgrimm.domain.system.PagedQuery;
@@ -106,14 +107,22 @@ public class JRXService {
 	@Transactional(isolation=Isolation.DEFAULT,readOnly=false)
 	public Object getJrxChartData(TableParam param) {
 		List<Order> list=new ArrayList();
-		MonitoringType t=commonDao.findUniqueBy(MonitoringType.class, "code", Constants.JCD_JRX);
-		List<MonitoringPoint> jrxPointList=commonDao.findByCriterions(MonitoringPoint.class, Restrictions.eq("type.id", t.getId()));
 		Criteria criteria=commonDao.getSession().createCriteria(JRX.class);
-		ProjectionList pList=Projections.projectionList();
-//		pList.add(Projections.property("dateTime"));
-//		pList.add(Projections.property("value"));
-//		criteria.setProjection(pList);
-		Integer[] arr = PagerUtil.strToArray(param.getStr());
+		List li= getJRXChartData(criteria, param);
+		if(li.size()>Constants.MAXIMUM_ALLOWED_VALUE){
+			Criteria tCriteria=commonDao.getSession().createCriteria(TJRX.class);
+			List tList=getJRXChartData(tCriteria,param);
+			return DataUtils.objectList2JSonList(tList, new Object[]{"dateTime","value"});
+			
+		}else{
+			return DataUtils.objectList2JSonList(li, new Object[]{"dateTime","value"});
+		}
+	}
+
+	//根据条件从表中获取浸润线时间和值
+	private List getJRXChartData(Criteria criteria,TableParam param) {
+
+		Integer arr =Integer.parseInt(param.getStr());
 		if (StringUtils.isNotEmpty(param.getMin())) {
 			Date startDate = DateUtils.strToDate(param.getMin());
 			criteria.add(Restrictions.ge("dateTime", startDate));
@@ -123,44 +132,13 @@ public class JRXService {
 			criteria.add(Restrictions.le("dateTime", endDate));
 		}
 		if (StringUtils.isNotEmpty(param.getStr())) {
-			criteria.add(Restrictions.in("monitoringPosition", arr));
-		} else {
-			// 设置测点
-			List<Integer> positions = new ArrayList();
-			for (MonitoringPoint p : jrxPointList) {
-				positions.add(p.getPosition());
-			}
-			criteria.add(Restrictions.in("monitoringPosition", positions.toArray()));
-		}
+			criteria.add(Restrictions.eq("monitoringPosition", arr));
+		} 
 
 		criteria.addOrder(Order.asc("dateTime"));
-		List li= criteria.list();
-		//List showList= DataUtils.convert2JSonList(li);
-		
-		if(li.size()>100000){
-			List nameList=new ArrayList();
-			nameList.add("value");
-			return DataUtils.packingData(nameList, li);
-		}else{
-			//packingDataServiceImpl.packingDataOfHour();
-			return toPageJSonList(li);
-		}
-//		return li;
+		return criteria.list();
 	}
-
-	private List toPageJSonList(List li) {
-
-		List listData=new ArrayList();
-		for(Object obj:li){
-			JRX sa=(JRX)obj;
-			List list=new ArrayList();
-			list.add(sa.getDateTime());
-			list.add(sa.getValue());
-			listData.add(list);
-		}
-		return listData;
-	}
-
+	
 
 
 }
