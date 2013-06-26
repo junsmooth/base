@@ -39,28 +39,6 @@ public class BMWYService {
 	@Qualifier("commonDao")
 	private CommonDao commonDao;
 
-	public List getT4ddb() {
-		List list1 = loadBMWYTypes();
-		loadBMWYDATA();
-		return new ArrayList();
-	}
-
-	private List loadBMWYTypes() {
-		List<MonitoringPoint> list = commonDao.loadAll(MonitoringPoint.class);
-		return list;
-	}
-
-	private List loadBMWYDATA() {
-
-		List result = template.execute(new TransactionCallback() {
-
-			public List doInTransaction(TransactionStatus status) {
-				List l = dao.loadAll(BMWY.class);
-				return l;
-			}
-		});
-		return result;
-	}
 
 	public Object getPagedList(final TableParam param) {
 		MonitoringType t = commonDao.findUniqueBy(MonitoringType.class, "code",
@@ -77,25 +55,25 @@ public class BMWYService {
 				Integer[] arr = PagerUtil.strToArray(param.getStr());
 				if (StringUtils.isNotEmpty(param.getMin())) {
 					Date startDate = DateUtils.strToDate(param.getMin());
-					criteria.add(Restrictions.ge("logtime", startDate));
+					criteria.add(Restrictions.ge("dateTime", startDate));
 				}
 				if (StringUtils.isNotEmpty(param.getMax())) {
 					Date endDate = DateUtils.strToDate(param.getMax());
-					criteria.add(Restrictions.le("logtime", endDate));
+					criteria.add(Restrictions.le("dateTime", endDate));
 				}
 				if (StringUtils.isNotEmpty(param.getStr())) {
-					criteria.add(Restrictions.in("stationId", arr));
+					criteria.add(Restrictions.in("monitoringPosition", arr));
 				} else {
 					// use all ids
 					List<Integer> idList = new ArrayList();
 					for (MonitoringPoint p : bmwyPointList) {
 						idList.add(p.getPosition());
 					}
-					criteria.add(Restrictions.in("stationId", idList.toArray()));
+					criteria.add(Restrictions.in("monitoringPosition", idList.toArray()));
 				}
 
 				List<Order> list=new ArrayList();
-				Order or=Order.desc("logtime");
+				Order or=Order.desc("dateTime");
 				return dao.getPagedList(pq,list);
 			}
 		});
