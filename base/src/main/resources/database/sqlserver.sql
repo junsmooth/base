@@ -45,6 +45,15 @@ INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parenti
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 27 , '报警级别' , 'ALARMTYPE' , 'alarm/alarmtype' , 1 , 6 )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 28 , '报警颜色' , 'ALARMCOLOR' , 'alarm/alarmcolor' , 1 , 6 )
 
+  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 29 , '干滩高程过程线' , 'GANTANGAOCHENGXIAN' , 'gtgc/chart' , 2 , 9 )
+ INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 30 , '干滩长度过程线' , 'GANTANCHANGDUXIAN' , 'gtcd/chart' , 1 , 9 )
+ INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 31 , '库水位过程线' , 'KSWGUOCHENGXIAN' , 'ksw/chart' , 1 , 9 )
+ INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 32 , '降雨量过程线' , 'JIANGYULIANGXIAN' , 'jyl/chart' , 1 , 9 )
+ INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 33 , '安全超高过程线' , 'ANQUANCHAOGAOXIAN' , 'aqcg/chart' , 1 , 9 )
+ INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 34 , '坝顶高程过程线' , 'BADINGGAOCHENGXIAN' , 'bdgc/chart' , 1 , 9 )
+ INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 35 , '渗流量过程线' , 'SHELIULIANGXIAN' , 'sll/chart' , 1 , 9 )
+ INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 36 , '内部位移过程线' , 'NEIBUWEIYIXIAN' , 'nbwy/chart' , 1 , 9 )
+
  
  SET IDENTITY_INSERT [t_menu] OFF
 
