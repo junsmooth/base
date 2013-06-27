@@ -16,11 +16,15 @@
 		myDate : function(value) {
 			return formatDateTime(value);
 		},
-		initToolBarValue:function(){
+		initToolBarValue:function(value){
 			var date=new Date(); 
 			var oldDate=new Date(date.getTime()-7*24*60*60*1000);
 			$("#jrxChart_max").attr("value",formatDateTime(date));  
 			$("#jrxChart_min").attr("value",formatDateTime(oldDate));
+			if(value==''){
+				return;
+			}
+			
 			getChartData();
 		},
 		change_min:function(){
@@ -53,7 +57,7 @@
 		
 			if(result.length==0){
 				// alert("您所查日期内无监测数据，请重新选择查询日期");
-				 $.dialog.tips("您所查日期内无监测数据，请重新选择查询日期",2,'error.gif');
+				 $.dialog.tips("您所查日期内无监测数据，请重新选择查询日期",1,'error.gif');
 				 return;
 			}
 			$('#jrx_chart').highcharts('StockChart', {
@@ -99,7 +103,7 @@
 			    max1 = $('#jrxChart_max').val();
 			    var value= checkTime(min1,max1);
 			   if(value>0){
-					alert("【查询时间超过一年,请重新输入！】");
+					 $.dialog.tips("查询时间超过一年,请重新输入！",1,'error.gif');
 					return;
 				} 
 				
@@ -140,7 +144,6 @@
                     url:'jrx/data/points',  
                     valueField:'position',  
                     textField:'monitoringName',  
-                    multiple:true,  
                     panelHeight:'auto',
                     editable:false,
                     value:1,
