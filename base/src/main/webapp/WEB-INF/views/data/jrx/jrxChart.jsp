@@ -52,7 +52,8 @@
 	function jrxHighCharts(result) {
 		
 			if(result.length==0){
-				 alert("您所查日期内无监测数据，请重新选择查询日期");
+				// alert("您所查日期内无监测数据，请重新选择查询日期");
+				 $.dialog.tips("您所查日期内无监测数据，请重新选择查询日期",2,'error.gif');
 				 return;
 			}
 			$('#jrx_chart').highcharts('StockChart', {
