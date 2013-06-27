@@ -72,10 +72,10 @@
 						series : [{
 							name : '浸润线',
 							data : result,
-							 tooltip: {
+							tooltip: {
 								valueDecimals: 2
 							} 
-							/* tooltip:{yDecimals : 2} */ 
+							/* tooltip:{yDecimals : 2}   */
 						}]
 					});
     }
@@ -139,7 +139,6 @@
                     url:'jrx/data/points',  
                     valueField:'position',  
                     textField:'monitoringName',  
-                    multiple:true,  
                     panelHeight:'auto',
                     editable:false,
                     value:1,

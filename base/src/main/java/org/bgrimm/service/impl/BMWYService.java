@@ -10,6 +10,7 @@ import org.bgrimm.dao.core.impl.CommonDao;
 import org.bgrimm.domain.bgrimm.TableParam;
 import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.bgrimm.common.MonitoringType;
+import org.bgrimm.domain.bgrimm.monitor.provided.Montypeattr;
 import org.bgrimm.domain.system.PageList;
 import org.bgrimm.domain.system.PagedQuery;
 import org.bgrimm.domain.t4ddb.BMWY;
@@ -100,5 +101,21 @@ public class BMWYService {
 		final List<MonitoringPoint> bmwyPointList = commonDao.findByCriterions(
 				MonitoringPoint.class, Restrictions.eq("type.id", t.getId()));
 		return bmwyPointList;
+	}
+
+	public Object getBMWYChartList(TableParam param) {
+
+		
+		
+		return null;
+	}
+
+	public Object getAllDirections() {
+
+		MonitoringType t = commonDao.findUniqueBy(MonitoringType.class, "code",
+				Constants.JCD_BMWY);
+		final List<Montypeattr> bmwyDirectionList = commonDao.findByCriterions(
+				Montypeattr.class, Restrictions.eq("type.id", t.getId()));
+		return bmwyDirectionList;
 	}
 }

@@ -106,7 +106,6 @@ public class JRXService {
 	 */
 	@Transactional(isolation=Isolation.DEFAULT,readOnly=false)
 	public Object getJrxChartData(TableParam param) {
-		List<Order> list=new ArrayList();
 		Criteria criteria=commonDao.getSession().createCriteria(JRX.class);
 		List li= getJRXChartData(criteria, param);
 		if(li.size()>Constants.MAXIMUM_ALLOWED_VALUE){

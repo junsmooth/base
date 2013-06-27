@@ -18,6 +18,25 @@ public class BMWYController {
 		return "data/bmwy/list";
 	}
 
+	@RequestMapping("chart")
+	public String chartIndex() {
+		return "data/bmwy/bmwyChart";
+	}
+	@RequestMapping("data/points")
+	@ResponseBody
+	public Object points(){
+		
+		return service.getAllPoints();
+	}
+	@RequestMapping("data/directions")
+	@ResponseBody
+	public Object directions(){
+		
+		return service.getAllDirections();
+	}
+	
+	
+	
 	@RequestMapping("data/bmwyData")
 	@ResponseBody
 	public Object list(TableParam param) {
@@ -25,10 +44,11 @@ public class BMWYController {
 		return service.getPagedList(param);
 	}
 	
-	@RequestMapping("data/points")
+	
+	@RequestMapping("chart/bmwyChart")
 	@ResponseBody
-	public Object points(){
+	public Object bmwyChart(TableParam param){
 		
-		return service.getAllPoints();
+		return service.getBMWYChartList(param);
 	}
 }

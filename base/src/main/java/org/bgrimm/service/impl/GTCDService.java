@@ -3,11 +3,13 @@ package org.bgrimm.service.impl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.bgrimm.dao.core.impl.CommonDao;
 import org.bgrimm.domain.bgrimm.TableParam;
 import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.bgrimm.common.MonitoringType;
+import org.bgrimm.domain.bgrimm.monitor.datamigration.TGTCD;
 import org.bgrimm.domain.bgrimm.monitor.provided.GTCD;
 import org.bgrimm.domain.system.PageList;
 import org.bgrimm.domain.system.PagedQuery;
@@ -18,8 +20,6 @@ import org.bgrimm.utils.PagerUtil;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.ProjectionList;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -95,19 +95,32 @@ public class GTCDService {
 	}
 
 	
+
+
 	/**
-	 * 获取干滩长度的时间和的值List
+	 *  获取干滩长度的时间和的值List
 	 * @param param
 	 * @return
 	 */
 	@Transactional(isolation=Isolation.DEFAULT,readOnly=false)
 	public Object getGTCDChartList(TableParam param) {
 		List<Order> list=new ArrayList();
-		MonitoringType t=commonDao.findUniqueBy(MonitoringType.class, "code", Constants.JCD_GTCD);
-		List<MonitoringPoint> gtcdPointList=commonDao.findByCriterions(MonitoringPoint.class, Restrictions.eq("type.id", t.getId()));
 		Criteria criteria=commonDao.getSession().createCriteria(GTCD.class);
-		ProjectionList pList=Projections.projectionList();
-		Integer[] arr = PagerUtil.strToArray(param.getStr());
+		List li= getJRXChartData(criteria, param);
+		if(li.size()>Constants.MAXIMUM_ALLOWED_VALUE){
+			Criteria tCriteria=commonDao.getSession().createCriteria(TGTCD.class);
+			List tList=getJRXChartData(tCriteria,param);
+			return DataUtils.objectList2JSonList(tList, new Object[]{"dateTime","value"});
+			
+		}else{
+			return DataUtils.objectList2JSonList(li, new Object[]{"dateTime","value"});
+		}
+	}
+
+	//根据条件从表中获取干滩长度时间和值
+	private List getJRXChartData(Criteria criteria,TableParam param) {
+
+		Integer arr =Integer.parseInt(param.getStr());
 		if (StringUtils.isNotEmpty(param.getMin())) {
 			Date startDate = DateUtils.strToDate(param.getMin());
 			criteria.add(Restrictions.ge("dateTime", startDate));
@@ -117,42 +130,12 @@ public class GTCDService {
 			criteria.add(Restrictions.le("dateTime", endDate));
 		}
 		if (StringUtils.isNotEmpty(param.getStr())) {
-			criteria.add(Restrictions.in("monitoringPosition", arr));
-		} else {
-			// 设置测点
-			List<Integer> positions = new ArrayList();
-			for (MonitoringPoint p : gtcdPointList) {
-				positions.add(p.getPosition());
-			}
-			criteria.add(Restrictions.in("monitoringPosition", positions.toArray()));
-		}
+			criteria.add(Restrictions.eq("monitoringPosition", arr));
+		} 
 
 		criteria.addOrder(Order.asc("dateTime"));
-		List li= criteria.list();
-		
-		
-		if(li.size()>100000){
-			List nameList=new ArrayList();
-			nameList.add("value");
-			return DataUtils.packingData(nameList, li);
-		}else{
-		//	packingDataServiceImpl.packingDataOfHour();
-			return toPageJSonList(li);
-		}
-//		return li;
+		return criteria.list();
 	}
-
-	private List toPageJSonList(List li) {
-
-		List listData=new ArrayList();
-		for(Object obj:li){
-			GTCD gtcd=(GTCD)obj;
-			List list=new ArrayList();
-			list.add(gtcd.getDateTime());
-			list.add(gtcd.getValue());
-			listData.add(list);
-		}
-		return listData;
-	}
+	
 
 }

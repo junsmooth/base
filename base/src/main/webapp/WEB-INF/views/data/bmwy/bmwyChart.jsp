@@ -5,7 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <script type="text/javascript">
-	Namespace.register("aqcgChart.list", {
+	Namespace.register("bmwyChart.list", {
 
 		myDate : function(value) {
 			return formatDateTime(value);
@@ -13,17 +13,17 @@
 		initToolBarValue:function(){
 			var date=new Date(); 
 			var oldDate=new Date(date.getTime()-7*24*60*60*1000);
-			$("#aqcgChart_max").attr("value",formatDateTime(date));  
-			$("#aqcgChart_min").attr("value",formatDateTime(oldDate));
+			$("#bmwyChart_max").attr("value",formatDateTime(date));  
+			$("#bmwyChart_min").attr("value",formatDateTime(oldDate));
 			getChartData();
 		},
 		change_min:function(){
-			var minv=$("#aqcgChart_min").datetimebox('getValue');
-			$("#aqcgChart_min").attr("value",minv);
+			var minv=$("#bmwyChart_min").datetimebox('getValue');
+			$("#bmwyChart_min").attr("value",minv);
 		},
 		change_max:function(){
-			var maxv=$("#aqcgChart_max").datetimebox('getValue');
-			$("#aqcgChart_max").attr("value",maxv);
+			var maxv=$("#bmwyChart_max").datetimebox('getValue');
+			$("#bmwyChart_max").attr("value",maxv);
 		}
 	});
 	
@@ -43,13 +43,13 @@
 		var value =new Date(max1).getTime()-new Date(min1).getTime()-365*24*60*60*1000;
 		return value;
 	};
-	function aqcgHighCharts(result) {
+	function bmwyHighCharts(result) {
 		
 			if(result.length==0){
 				 alert("您所查日期内无监测数据，请重新选择查询日期");
 				 return;
 			}
-			$('#aqcg_chart').highcharts('StockChart', {
+			$('#bmwy_chart').highcharts('StockChart', {
 						
 				chart : {renderTo : 'container'},
 						rangeSelector : {
@@ -57,14 +57,14 @@
 						},
 			
 						title : {
-							text : '安全超高监测过程曲线'
+							text : '表面位移监测过程曲线'
 						},
 						yAxis : {
-							title : {text : '安全超高(mm)'},
+							title : {text : '表面位移(mm)'},
 							plotLines : [{value : 0 ,color : 'green',dashStyle : 'shortdash',width : 2,label : {text : '零界线'}}]
 						},
 						series : [{
-							name : '安全超高',
+							name : '表面位移',
 							data : result,
 							/* tooltip: {
 								valueDecimals: 2
@@ -74,19 +74,19 @@
 					});
     }
 	function getChartData(){
-		var validFormDate = $("#aqcgChart_tb").form('validate');
+		var validFormDate = $("#bmwyChart_tb").form('validate');
 		if (!validFormDate) {
 			return;
 		}
 				var str1 = '', mp, min1, max1;
 			
-				mp = $('#aqcgChart_monitorPosition').combobox('getValues');
+				mp = $('#bmwyChart_monitorPosition').combobox('getValues');
 				 for ( var i = 0; i < mp.length; i++) {
 					str1 += mp[i] + ',';
 				} 
 				str1 = str1.substring(0, str1.length - 1);
-				min1=$('#aqcgChart_min').val();	
-			    max1 = $('#aqcgChart_max').val();
+				min1=$('#bmwyChart_min').val();	
+			    max1 = $('#bmwyChart_max').val();
 			    var value= checkTime(min1,max1);
 			   if(value>0){
 					alert("【查询时间超过一年,请重新输入！】");
@@ -95,12 +95,12 @@
 				
 	 	$.ajax({
 			type : 'POST',
-			url : "aqcg/chart/aqcgChart",
+			url : "bmwy/chart/bmwyChart",
 			data:{min : min1,
 				max : max1,
 				str : str1
 				},
-			success:aqcgHighCharts
+			success:bmwyHighCharts
 		}); 
 	}
 	
@@ -111,36 +111,47 @@
 	<div data-options="region:'center'" style="padding: 10px 0 10px 10px">
 
 
-		<table id="aqcgId" class="easyui-datagrid"
-			data-options="fit:true,toolbar:'#aqcgChart_tb'">
+		<table id="bmwyId" class="easyui-datagrid"
+			data-options="fit:true,toolbar:'#bmwyChart_tb'">
 			
 		</table>
 	</div>
 </div>
-<div id="aqcgChart_tb" style="padding: 5px; height: auto">
+<div id="bmwyChart_tb" style="padding: 5px; height: auto">
 	<div>
-		时间 从: <input id='aqcgChart_min' class="easyui-datetimebox"
-			data-options="onChange:aqcgChart.list.change_min,formatter:aqcgChart.list.myDate,validType:'checkDate[\'yyyy-MM-dd HH:mm:ss\']'"></input>
-		到: <input id='aqcgChart_max' class="easyui-datetimebox"
-			data-options="onChange:aqcgChart.list.change_max,formatter:aqcgChart.list.myDate,
+		时间 从: <input id='bmwyChart_min' class="easyui-datetimebox"
+			data-options="onChange:bmwyChart.list.change_min,formatter:bmwyChart.list.myDate,validType:'checkDate[\'yyyy-MM-dd HH:mm:ss\']'"></input>
+		到: <input id='bmwyChart_max' class="easyui-datetimebox"
+			data-options="onChange:bmwyChart.list.change_max,formatter:bmwyChart.list.myDate,
 						  validType:'checkDate[\'yyyy-MM-dd HH:mm:ss\']'
 			
 			"></input>
-		测点: <input id="aqcgChart_monitorPosition" class="easyui-combobox"
-			name="aqcgChart_monitorPosition"
+		测点: <input id="bmwyChart_monitorPosition" class="easyui-combobox"
+			name="bmwyChart_monitorPosition"
 			data-options="  
-                    url:'aqcg/data/points',  
+                    url:'bmwy/data/points',  
                     valueField:'position',  
                     textField:'monitoringName',  
-                    multiple:true,  
                     panelHeight:'auto',
                     editable:false,
                     value:1,
                     multiple:false,
-                    onLoadSuccess:aqcgChart.list.initToolBarValue
+                    onLoadSuccess:bmwyChart.list.initToolBarValue
             "
-			readonly="readonly"> <a href="#" class="easyui-linkbutton"
+			readonly="readonly"/>
+			方位: <input id="bmwyChart_monitorPosition" class="easyui-combobox"
+			name="bmwyChart_monitorPosition"
+			data-options="  
+                    url:'bmwy/data/directions', 
+                    valueField:'id',   
+                    textField:'directionName',  
+                    panelHeight:'auto',
+                    editable:false,
+                    multiple:false
+                 
+            "
+			readonly="readonly"/> <a href="#" class="easyui-linkbutton"
 			iconCls="icon-search" onclick="getChartData()">查询</a>
 	</div>
-		<div id="aqcg_chart"></div>
+		<div id="bmwy_chart"></div>
 </div>
