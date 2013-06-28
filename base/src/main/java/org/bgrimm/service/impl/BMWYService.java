@@ -17,7 +17,9 @@ import org.bgrimm.domain.t4ddb.BMWY;
 import org.bgrimm.utils.Constants;
 import org.bgrimm.utils.DateUtils;
 import org.bgrimm.utils.PagerUtil;
+import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,7 +76,7 @@ public class BMWYService {
 				}
 
 				List<Order> list=new ArrayList();
-				Order or=Order.desc("dateTime");
+				Order or=Order.desc("dateTime");	
 				return dao.getPagedList(pq,list);
 			}
 		});
@@ -103,12 +105,6 @@ public class BMWYService {
 		return bmwyPointList;
 	}
 
-	public Object getBMWYChartList(TableParam param) {
-
-		
-		
-		return null;
-	}
 
 	public Object getAllDirections() {
 
@@ -118,4 +114,59 @@ public class BMWYService {
 				Montypeattr.class, Restrictions.eq("type.id", t.getId()));
 		return bmwyDirectionList;
 	}
+	
+	
+	
+	public Object getBMWYChartList(final TableParam param) {
+
+		final Montypeattr montypeattr=commonDao.findUniqueBy(Montypeattr.class, "id",Long.parseLong(param.getDirId()));
+		Criteria criteria=commonDao.getSession().createCriteria(BMWY.class);
+		
+		List bmwyDataList=template.execute(new TransactionCallback() {
+			
+			public List doInTransaction(TransactionStatus status) {
+				Integer arr =Integer.parseInt(param.getStr());
+				Criteria criteria=dao.getSession().createCriteria(BMWY.class);
+				if (StringUtils.isNotEmpty(param.getMin())) {
+					Date startDate = DateUtils.strToDate(param.getMin());
+					criteria.add(Restrictions.ge("dateTime", startDate));
+				}
+				if (StringUtils.isNotEmpty(param.getMax())) {
+					Date endDate = DateUtils.strToDate(param.getMax());
+					criteria.add(Restrictions.le("dateTime", endDate));
+				}
+				if (StringUtils.isNotEmpty(param.getStr())) {
+					criteria.add(Restrictions.eq("monitoringPosition", arr));
+				} 
+				
+				return criteria.list();
+			}
+				
+			
+			
+		});
+		
+		
+		List dataList=new ArrayList();
+		for(Object object: bmwyDataList){
+			List li=new ArrayList();
+			BMWY bmwy=(BMWY)object;
+			Date date=bmwy.getDateTime();
+			double value;
+			if("dN".equals(montypeattr.getAttr())){
+				value=bmwy.getdN();
+			}else if("dE".equals(montypeattr.getAttr())){
+				value=bmwy.getdE();
+			}else{
+				value=bmwy.getdH();
+			}
+			li.add(date);
+			li.add(value);
+			dataList.add(li);
+		
+		
+		}
+			return dataList;
+	}
+
 }

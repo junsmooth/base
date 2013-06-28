@@ -8,6 +8,7 @@ public class TableParam {
 	private int page;
 	private int rows;
 	private String str;
+	private String dirId;
 	public String getMax() {
 		return max;
 	}
@@ -38,5 +39,13 @@ public class TableParam {
 	public void setStr(String str) {
 		this.str = str;
 	}
+	public String getDirId() {
+		return dirId;
+	}
+	public void setDirId(String dirId) {
+		this.dirId = dirId;
+	}
+
+	
 	
 }

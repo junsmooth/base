@@ -15,7 +15,7 @@
 			var oldDate=new Date(date.getTime()-7*24*60*60*1000);
 			$("#gtcdChart_max").attr("value",formatDateTime(date));  
 			$("#gtcdChart_min").attr("value",formatDateTime(oldDate));
-			getChartData();
+			gtcdChart.list.getChartData;
 		},
 		change_min:function(){
 			var minv=$("#gtcdChart_min").datetimebox('getValue');
@@ -24,6 +24,36 @@
 		change_max:function(){
 			var maxv=$("#gtcdChart_max").datetimebox('getValue');
 			$("#gtcdChart_max").attr("value",maxv);
+		},
+		getChartData:function (){
+			var validFormDate = $("#gtcdChart_tb").form('validate');
+			if (!validFormDate) {
+				return;
+			}
+					var str1 = '', mp, min1, max1;
+				
+					mp = $('#gtcdChart_monitorPosition').combobox('getValues');
+					 for ( var i = 0; i < mp.length; i++) {
+						str1 += mp[i] + ',';
+					} 
+					str1 = str1.substring(0, str1.length - 1);
+					min1=$('#gtcdChart_min').val();	
+				    max1 = $('#gtcdChart_max').val();
+				    var value= checkTime(min1,max1);
+				   if(value>0){
+						alert("【查询时间超过一年,请重新输入！】");
+						return;
+					} 
+					
+		 	$.ajax({
+				type : 'POST',
+				url : "gtcd/chart/gtcdChart",
+				data:{min : min1,
+					max : max1,
+					str : str1
+					},
+				success:gtcdHighCharts
+			}); 
 		}
 	});
 	
@@ -65,36 +95,7 @@
 						}]
 					});
     }
-	function getChartData(){
-		var validFormDate = $("#gtcdChart_tb").form('validate');
-		if (!validFormDate) {
-			return;
-		}
-				var str1 = '', mp, min1, max1;
-			
-				mp = $('#gtcdChart_monitorPosition').combobox('getValues');
-				 for ( var i = 0; i < mp.length; i++) {
-					str1 += mp[i] + ',';
-				} 
-				str1 = str1.substring(0, str1.length - 1);
-				min1=$('#gtcdChart_min').val();	
-			    max1 = $('#gtcdChart_max').val();
-			    var value= checkTime(min1,max1);
-			   if(value>0){
-					alert("【查询时间超过一年,请重新输入！】");
-					return;
-				} 
-				
-	 	$.ajax({
-			type : 'POST',
-			url : "gtcd/chart/gtcdChart",
-			data:{min : min1,
-				max : max1,
-				str : str1
-				},
-			success:gtcdHighCharts
-		}); 
-	}
+	
 	
 </script>
 <div class="easyui-layout" data-options="fit:true">
@@ -130,7 +131,7 @@
                     onLoadSuccess:gtcdChart.list.initToolBarValue
             "
 			readonly="readonly"> <a href="#" class="easyui-linkbutton"
-			iconCls="icon-search" onclick="getChartData()">查询</a>
+			iconCls="icon-search" onclick="gtcdChart.list.getChartData()">查询</a>
 	</div>
 		<div id="jrx_chart"></div>
 </div>

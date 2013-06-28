@@ -10,6 +10,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
+import org.bgrimm.domain.bgrimm.monitor.provided.Montypeattr;
 
 @Entity
 @IdClass(BMWYPK.class)
@@ -30,6 +31,7 @@ public class BMWY{
 	
 	@Transient
 	private MonitoringPoint point;
+	
 	public MonitoringPoint getPoint() {
 		return point;
 	}

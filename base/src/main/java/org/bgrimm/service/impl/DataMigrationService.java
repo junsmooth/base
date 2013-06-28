@@ -44,7 +44,7 @@ public class DataMigrationService {
 	@Autowired
 	private T4DDBDao dao;
 
-	@Scheduled(fixedRate = 60 * 60 * 1000 * 24)
+//	@Scheduled(fixedRate = 60 * 60 * 1000 * 24)
 	public void dataMigration() {
 		// Current Time->00:00:00
 		DateTime end = new DateTime().toDateMidnight().toDateTime();
