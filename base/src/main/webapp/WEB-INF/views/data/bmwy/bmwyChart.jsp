@@ -22,12 +22,13 @@
 				$("#bmwyChart_monitorPosition").combobox("setValue",value[0].position);
 				//$("#bmwyChart_monitorPosition").combobox("setText",value[0].monitoringName);
 			}
-			bmwyChart.list.getChartData();
+			
+			bmwyChart.list.getChartData(value[value.length-1].dId);
 		},
 		initToolBarValue1:function(value){
-		
+			//alert("initToolBarValue1");
 			if(value.length>0){
-				//alert(value[0].directionName);
+				//alert("directionName:"+value[0].directionName+"value:"+value[0].id);
 				$("#bmwyChart_direction").combobox('setValue',value[0].id);
 			}
 			
@@ -40,7 +41,8 @@
 			var maxv=$("#bmwyChart_max").datetimebox('getValue');
 			$("#bmwyChart_max").attr("value",maxv);
 		},
-		 getChartData:function(){
+		 getChartData:function(data){
+			
 			var validFormDate = $("#bmwyChart_tb").form('validate');
 			if (!validFormDate) {
 				return;
@@ -48,14 +50,19 @@
 					var str1 = '', mp, min1, max1,dirId;
 				
 					mp = $('#bmwyChart_monitorPosition').combobox('getValue');
+				   dirId=$('#bmwyChart_direction').combobox('getValue');
 					min1=$('#bmwyChart_min').val();	
 				    max1 = $('#bmwyChart_max').val();
-				    var value= checkTime(min1,max1);
-				   if(value>0){
-						alert("【查询时间超过一年,请重新输入！】");
+				    var timeValue= checkTime(min1,max1);
+				    if(timeValue>0){
+						 $.dialog.tips("查询时间超过一年,请重新输入！",1,'error.gif');
 						return;
 					} 
-				   dirId=$('#bmwyChart_direction').combobox('getValue');
+					/* alert("dirId:"+typeof dirId+dirId);
+					alert(dirId==""); */
+				if(dirId==""){
+						dirId=data;					
+				}
 		 	$.ajax({
 				type : 'POST',
 				url : "bmwy/chart/bmwyChart",
@@ -89,7 +96,7 @@
 	function bmwyHighCharts(result) {
 		
 			if(result.length==0){
-				 alert("您所查日期内无监测数据，请重新选择查询日期");
+				 $.dialog.tips("您所查日期内无监测数据，请重新选择查询日期",1,'error.gif');
 				 return;
 			}
 			$('#bmwy_chart').highcharts('StockChart', {
@@ -148,6 +155,7 @@
                     panelHeight:'auto',
                     editable:false,
                     multiple:false,
+                    readonly:false,
                     onLoadSuccess:bmwyChart.list.initToolBarValue
             "
 			readonly="readonly"/>
@@ -160,11 +168,15 @@
                     panelHeight:'auto',
                     editable:false,
                     multiple:false,
+                     readonly:false,
                   	onLoadSuccess:bmwyChart.list.initToolBarValue1
                  
             "
-			readonly="readonly"/> <a href="#" id="bmwyChartSearch" class="easyui-linkbutton"
+			/> <a href="#" id="bmwyChartSearch" class="easyui-linkbutton"
 			iconCls="icon-search" onclick="bmwyChart.list.getChartData()">查询</a>
 	</div>
 		<div id="bmwy_chart"></div>
+		
+		
+		
 </div>

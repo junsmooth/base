@@ -10,12 +10,18 @@
 		myDate : function(value) {
 			return formatDateTime(value);
 		},
-		initToolBarValue:function(){
+		initToolBarValue:function(value){
 			var date=new Date(); 
 			var oldDate=new Date(date.getTime()-7*24*60*60*1000);
 			$("#bdgcChart_max").attr("value",formatDateTime(date));  
 			$("#bdgcChart_min").attr("value",formatDateTime(oldDate));
-			getChartData();
+			if(value==''){
+				return;
+			}
+			if(value.length>0){
+				$("#bdgcChart_monitorPosition").combobox("setValue",value[0].position);
+			}
+			bdgcChart.list.getChartData();
 		},
 		change_min:function(){
 			var minv=$("#bdgcChart_min").datetimebox('getValue');
@@ -24,6 +30,32 @@
 		change_max:function(){
 			var maxv=$("#bdgcChart_max").datetimebox('getValue');
 			$("#bdgcChart_max").attr("value",maxv);
+		},
+		getChartData:function(){
+			var validFormDate = $("#bdgcChart_tb").form('validate');
+			if (!validFormDate) {
+				return;
+			}
+					var str1 = '', mp, min1, max1;
+				
+					mp = $('#bdgcChart_monitorPosition').combobox('getValue');
+					min1=$('#bdgcChart_min').val();	
+				    max1 = $('#bdgcChart_max').val();
+				    var timeValue= checkTime(min1,max1);
+
+				    if(timeValue>0){
+						 $.dialog.tips("查询时间超过一年,请重新输入！",1,'error.gif');
+						return;
+					} 
+		 	$.ajax({
+				type : 'POST',
+				url : "bdgc/chart/bdgcChart",
+				data:{min : min1,
+					max : max1,
+					str : mp
+					},
+				success:bdgcHighCharts
+			}); 
 		}
 	});
 	
@@ -46,7 +78,7 @@
 	function bdgcHighCharts(result) {
 		
 			if(result.length==0){
-				 alert("您所查日期内无监测数据，请重新选择查询日期");
+				 $.dialog.tips("您所查日期内无监测数据，请重新选择查询日期",1,'error.gif');
 				 return;
 			}
 			$('#bdgc_chart').highcharts('StockChart', {
@@ -73,36 +105,7 @@
 						}]
 					});
     }
-	function getChartData(){
-		var validFormDate = $("#bdgcChart_tb").form('validate');
-		if (!validFormDate) {
-			return;
-		}
-				var str1 = '', mp, min1, max1;
-			
-				mp = $('#bdgcChart_monitorPosition').combobox('getValues');
-				 for ( var i = 0; i < mp.length; i++) {
-					str1 += mp[i] + ',';
-				} 
-				str1 = str1.substring(0, str1.length - 1);
-				min1=$('#bdgcChart_min').val();	
-			    max1 = $('#bdgcChart_max').val();
-			    var value= checkTime(min1,max1);
-			   if(value>0){
-					alert("【查询时间超过一年,请重新输入！】");
-					return;
-				} 
-				
-	 	$.ajax({
-			type : 'POST',
-			url : "bdgc/chart/bdgcChart",
-			data:{min : min1,
-				max : max1,
-				str : str1
-				},
-			success:bdgcHighCharts
-		}); 
-	}
+
 	
 </script>
 <div class="easyui-layout" data-options="fit:true">
@@ -130,15 +133,14 @@
                     url:'bdgc/data/points',  
                     valueField:'position',  
                     textField:'monitoringName',  
-                    multiple:true,  
                     panelHeight:'auto',
                     editable:false,
-                    value:1,
                     multiple:false,
+                    readonly:false,
                     onLoadSuccess:bdgcChart.list.initToolBarValue
             "
-			readonly="readonly"> <a href="#" class="easyui-linkbutton"
-			iconCls="icon-search" onclick="getChartData()">查询</a>
+			> <a href="#" class="easyui-linkbutton"
+			iconCls="icon-search" onclick="bdgcChart.list.getChartData()">查询</a>
 	</div>
 		<div id="bdgc_chart"></div>
 </div>

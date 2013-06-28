@@ -24,8 +24,11 @@
 			if(value==''){
 				return;
 			}
+			if(value.length>0){
+				$("#jrxChart_monitorPosition").combobox("setValue",value[0].position);
+			}
 			
-			getChartData();
+			jrxChart.list.getChartData();
 		},
 		change_min:function(){
 			var minv=$("#jrxChart_min").datetimebox('getValue');
@@ -34,6 +37,32 @@
 		change_max:function(){
 			var maxv=$("#jrxChart_max").datetimebox('getValue');
 			$("#jrxChart_max").attr("value",maxv);
+		},
+		getChartData:function(){
+			var validFormDate = $("#jrxChart_tb").form('validate');
+			if (!validFormDate) {
+				return;
+			}
+					var mp, min1, max1;
+				
+					mp = $('#jrxChart_monitorPosition').combobox('getValue');
+					min1=$('#jrxChart_min').val();	
+				    max1 = $('#jrxChart_max').val();
+				    var timeValue= checkTime(min1,max1);
+				   if(timeValue>0){
+						 $.dialog.tips("查询时间超过一年,请重新输入！",1,'error.gif');
+						return;
+					} 
+					
+		 	$.ajax({
+				type : 'POST',
+				url : "jrx/chart/jrxChart",
+				data:{min : min1,
+					max : max1,
+					str : mp
+					},
+				success:jrxHighCharts
+			}); 
 		}
 	});
 	
@@ -84,39 +113,7 @@
 						}]
 					});
     }
-	function getChartData(){
-		var validFormDate = $("#jrxChart_tb").form('validate');
-		if (!validFormDate) {
-			return;
-		}
-				var str1 = '', mp, min1, max1;
-			
-				mp = $('#jrxChart_monitorPosition').combobox('getValues');
-				
-					
-					 for ( var i = 0; i < mp.length; i++) {
-						str1 += mp[i] + ',';
-					} 
-					str1 = str1.substring(0, str1.length - 1);
-			
-				min1=$('#jrxChart_min').val();	
-			    max1 = $('#jrxChart_max').val();
-			    var value= checkTime(min1,max1);
-			   if(value>0){
-					 $.dialog.tips("查询时间超过一年,请重新输入！",1,'error.gif');
-					return;
-				} 
-				
-	 	$.ajax({
-			type : 'POST',
-			url : "jrx/chart/jrxChart",
-			data:{min : min1,
-				max : max1,
-				str : str1
-				},
-			success:jrxHighCharts
-		}); 
-	}
+	
 	
 </script>
 <div class="easyui-layout" data-options="fit:true">
@@ -146,12 +143,12 @@
                     textField:'monitoringName',  
                     panelHeight:'auto',
                     editable:false,
-                    value:1,
                     multiple:false,
+                    readonly:false,
                     onLoadSuccess:jrxChart.list.initToolBarValue
             "
-			readonly="readonly"> <a href="#" class="easyui-linkbutton"
-			iconCls="icon-search" onclick="getChartData()">查询</a>
+			> <a href="#" class="easyui-linkbutton"
+			iconCls="icon-search" onclick="jrxChart.list.getChartData()">查询</a>
 	</div>
 		<div id="jrx_chart"></div>
 </div>

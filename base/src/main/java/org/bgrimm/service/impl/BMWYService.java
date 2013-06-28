@@ -2,7 +2,9 @@ package org.bgrimm.service.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.bgrimm.dao.bgrimm.T4DDBDao;
@@ -19,7 +21,6 @@ import org.bgrimm.utils.DateUtils;
 import org.bgrimm.utils.PagerUtil;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,8 +101,14 @@ public class BMWYService {
 	public Object getAllPoints() {
 		MonitoringType t = commonDao.findUniqueBy(MonitoringType.class, "code",
 				Constants.JCD_BMWY);
-		final List<MonitoringPoint> bmwyPointList = commonDao.findByCriterions(
+		List<Montypeattr> montypeattr=commonDao.findByCriterions(Montypeattr.class,Restrictions.eq("type.id",t.getId()));
+		Map mp=new HashMap();
+		if(montypeattr.size()>0){
+			mp.put("dId",montypeattr.get(0).getId());
+		}
+		final List bmwyPointList = commonDao.findByCriterions(
 				MonitoringPoint.class, Restrictions.eq("type.id", t.getId()));
+			bmwyPointList.add(mp);
 		return bmwyPointList;
 	}
 
@@ -141,11 +148,8 @@ public class BMWYService {
 				
 				return criteria.list();
 			}
-				
-			
 			
 		});
-		
 		
 		List dataList=new ArrayList();
 		for(Object object: bmwyDataList){
@@ -163,7 +167,6 @@ public class BMWYService {
 			li.add(date);
 			li.add(value);
 			dataList.add(li);
-		
 		
 		}
 			return dataList;
