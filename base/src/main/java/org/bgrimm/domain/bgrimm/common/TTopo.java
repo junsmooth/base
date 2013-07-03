@@ -11,6 +11,17 @@ import org.bgrimm.domain.system.IdEntity;
 @Entity
 @Table(name = "t_topo_img")
 public class TTopo extends IdEntity {
+
+	private String imageName;
+
+	public String getImageName() {
+		return imageName;
+	}
+
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
+	}
+
 	public double getPosX() {
 		return posX;
 	}
