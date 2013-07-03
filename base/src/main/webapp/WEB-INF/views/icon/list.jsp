@@ -1,17 +1,17 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <script>
-Namespace.register("menu.list",{
-	formatOperation:function(value){
+Namespace.register("icon.list",{
+	formatOperation:function(value,row,index){
 		 if(value){
-		        var edit='['+'<a href="#" onclick="menu.list.edit('+value+')">编辑</a>' +']';
-		        var del='['+ '<a href="#" onclick="menu.list.remove('+value+' )">删除</a>'+']';
+		        var edit='['+'<a href="#" onclick="icon.list.edit('+value+')">编辑</a>' +']';
+		        var del='['+ '<a href="#" onclick="icon.list.remove('+value+' )">删除</a>'+']';
 		        return edit+del;
 		        }
 	},
-	formatIcon:function(value){
+	formatIcon:function(value,row,index){
 		 if(value)
-			    return '<image border="0" src='+value.iconPath+'/'+value.iconName+value.iconExtension+'/>'
+			    return '<image border="0" src='+row["iconPath"]+'/'+row["iconName"]+row["iconExtension"]+'/>'
 	},
 	
 	remove:function(value){
@@ -19,9 +19,9 @@ Namespace.register("menu.list",{
              if (r){  
               $.post('menu/remove',{id:value},function(data){
 	    			if(data.success){
-	    				console.log(menu.list);
+	    				console.log(icon.list);
 	    				return;
-	    				menu.list.reload();
+	    				icon.list.reload();
 	    				freshLeftMenu();
 	    				$.dialog.tips(data.msg);
 	    	}
@@ -32,7 +32,7 @@ Namespace.register("menu.list",{
          });  
 	},
 	edit:function(value){
-		   $('#menudialog').dialog({
+		   $('#iconDialog').dialog({
 		        title: '修改菜单',
 		        width: 600,
 		        height: 300,
@@ -44,19 +44,19 @@ Namespace.register("menu.list",{
 		        });
 		  },
 	reload:function(){
-		$('#menutable').treegrid('reload');
+		$('#icon_table').treegrid('reload');
 	},
 	closeDialog:function(){
-		$('#menudialog').dialog('close');
+		$('#iconDialog').dialog('close');
 	}
 	
 });
-menu.list.toolbar = [{
+icon.list.toolbar = [{
     text:'增加',
     iconCls:'icon-add',
     disabled:!hasRole('ROLE_MENU_EDIT'),
     handler:function(){
-      $('#menudialog').dialog({
+      $('#iconDialog').dialog({
         title: '增加菜单',
         width: 600,
         height: 300,
@@ -71,25 +71,25 @@ menu.list.toolbar = [{
     text:'刷新',
     iconCls:'icon-reload',
   handler:function(){
-	  menu.list.reload();
+	  icon.list.reload();
   }
   }];
 
 
 </script>
-<table id="menutable" class="easyui-treegrid"
-	data-options="rownumbers:true,singleSelect:true, idField: 'id', treeField: 'menuName',url:'menu/list/data',toolbar:menu.list.toolbar">
+<table id="icon_table" class="easyui-datagrid"
+	data-options="rownumbers:true,singleSelect:true, idField: 'id',url:'icon/list/data',toolbar:icon.list.toolbar,pagination:'true',fitColumns:true,fit:true">
 	<thead>
 		<tr>
-			<th data-options="field:'menuName',width:200,align:'left'">菜单名称</th>
+			<th data-options="field:'iconName',width:200,align:'left'">图标名称</th>
 			<th
-				data-options="field:'icon',width:80,align:'left',formatter:menu.list.formatIcon">
+				data-options="field:'iconPath',width:80,align:'left',formatter:icon.list.formatIcon">
 				图标</th>
-			<th data-options="field:'url',width:280,align:'left'">菜单地址</th>
+			<th data-options="field:'iconExtension',width:280,align:'left'">类型</th>
 			<th
-				data-options="field:'id',width:200,align:'left',formatter:menu.list.formatOperation">
+				data-options="field:'id',width:200,align:'left',formatter:icon.list.formatOperation">
 				操作</th>
 		</tr>
 	</thead>
 </table>
-<div id="menudialog"></div>
+<div id="iconDialog"></div>

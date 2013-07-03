@@ -8,7 +8,7 @@
 .folder{background:url('../images/folder.png') no-repeat;}
 .pie{background:url('../images/pie.png') no-repeat;}
 .group_add{background:url('../images/group_add.png') no-repeat;}
-
+.tabtest{background:url('../images/tabicons.png') no-repeat -16px -16px}
 .easyui-accordion ul{list-style-type:none;margin:0px; padding:0px;}
 .easyui-accordion ul li{ padding:0px;}
 .easyui-accordion ul li a{line-height:24px;text-decoration: none}

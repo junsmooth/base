@@ -20,4 +20,6 @@ public class Constants {
 	public static String MIGRATION_PACKAGE = "org.bgrimm.domain.bgrimm.monitor.datamigration";
 
 	public static final int MAXIMUM_ALLOWED_VALUE=10000;
+	
+	public static final String CUSTOME_ICON_PATH="resources/custom/images";
 }
