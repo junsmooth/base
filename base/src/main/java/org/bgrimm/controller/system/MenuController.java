@@ -41,10 +41,7 @@ public class MenuController {
 		return "menu/left";
 	}
 
-	@RequestMapping("main")
-	public String main(Model model) {
-		return "menu/main";
-	}
+
 	
 	public MenuService getMenuService() {
 		return menuService;
