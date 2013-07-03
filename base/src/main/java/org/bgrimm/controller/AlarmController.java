@@ -53,4 +53,10 @@ public class AlarmController {
 	Object alarmColorList() {
 		return service.getAllAlarmColor();
 	}
+	
+	@RequestMapping("showAlarmrecord/data")
+	public @ResponseBody
+	Object showAlarmRecordList(TableParam param) {
+		return service.getShowAlarmRecordList();
+	}
 }

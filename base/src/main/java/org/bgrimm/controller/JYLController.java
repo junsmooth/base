@@ -48,4 +48,11 @@ public class JYLController {
 		
 		return jylService.getJYLChartList(param);
 	}
+	
+	@RequestMapping("chart/jylHistogram")
+	@ResponseBody
+	public Object	jylHistogram(TableParam param){
+		
+		return jylService.getEverydayJYLData(param);
+	}
 }

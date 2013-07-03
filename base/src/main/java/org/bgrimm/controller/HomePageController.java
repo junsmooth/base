@@ -28,4 +28,11 @@ public class HomePageController {
 		//return "{type: 'circle', radius: 10, fill: '#f00', x: 10, y: 10,group: 'circles'}";
 		return "["+Print.getSVGData()+"]";
 	}
+	
+	
+	@RequestMapping("information")
+	public String home(){
+		
+		return "information";
+	}
 }

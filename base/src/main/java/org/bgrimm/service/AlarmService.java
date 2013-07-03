@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.bgrimm.dao.bgrimm.AlarmDao;
 import org.bgrimm.dao.bgrimm.T4DDBDao;
+import org.bgrimm.dao.core.impl.CommonDao;
 import org.bgrimm.domain.bgrimm.TableParam;
 import org.bgrimm.domain.bgrimm.TimeValue;
 import org.bgrimm.domain.bgrimm.common.AlarmColor;
@@ -17,7 +18,6 @@ import org.bgrimm.domain.bgrimm.common.AlarmType;
 import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.bgrimm.common.Threshold;
 import org.bgrimm.domain.bgrimm.common.ThresholdOperation;
-import org.bgrimm.domain.bgrimm.monitor.provided.JRX;
 import org.bgrimm.domain.system.PagedQuery;
 import org.bgrimm.utils.Constants;
 import org.hibernate.Criteria;
@@ -48,6 +48,9 @@ public class AlarmService {
 	@Autowired
 	private T4DDBDao dao;
 
+	@Autowired
+	private CommonDao commonDao;
+	
 	public Object getAllThreshold() {
 		return alarmDao.loadNotDeletedThresholds();
 	}
@@ -288,5 +291,10 @@ public class AlarmService {
 		List<Order> orders=new ArrayList<Order>();
 		orders.add(Order.desc("collectTime"));
 		return alarmDao.getPagedList(pq, orders);
+	}
+
+	public Object getShowAlarmRecordList() {
+		List<AlarmRecord> alarmList=commonDao.findByCriterions(AlarmRecord.class, Restrictions.eq("closed", false));
+		return alarmList;
 	}
 }

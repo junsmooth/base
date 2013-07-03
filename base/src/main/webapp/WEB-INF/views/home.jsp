@@ -10,6 +10,8 @@
     <link rel="stylesheet" type="text/css" href="resources/themes/metro/easyui.css">
     <link rel="stylesheet" type="text/css" href="resources/themes/icon.css">
      <link rel="stylesheet" type="text/css" href="resources/custom/css/icon.css">
+     
+     <link rel="stylesheet" type="text/css" href="resources/themes/portal.css">
     <script type="text/javascript" src="resources/jquery-1.8.0.min.js">
     </script>
        <script type="text/javascript" src="resources/lhgdialog.min.js">
@@ -32,6 +34,8 @@
   <!--   <script src="resources/highcharts.js"></script> -->
     <script src="resources/highstock.js"></script>
 	<script src="resources/modules/exporting.js"></script>
+    <script type="text/javascript" src="resources/jquery.portal.js"></script>
+	
   </head>
   <body class="easyui-layout">
     <div 
@@ -65,10 +69,6 @@
     <div data-options="region:'center'">
       <div id="tabs" class="easyui-tabs"  data-options="fit:true,border:false">
         <div title="欢迎使用" style="padding: 20px; overflow: hidden;" id="home">
-
-          <h1>
-            Welcome!
-          </h1>
 
         </div>
       </div>

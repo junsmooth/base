@@ -3,7 +3,7 @@ $(function() {
 	tabClose();
 	tabCloseEven();
 	registryLogout();
-
+	delayRun();
 })
 function registryLogout() {
 	$('#loginOut').click(function() {
@@ -169,3 +169,41 @@ function clockon() {
 
 	var timer = setTimeout("clockon()", 200);
 }
+
+function triggerAlarm(data){
+	$.messager.show({
+        title:'报警信息',
+        msg:"<a href='#' onclick='showDetailAlarmRecord()'>"+"共有"+data.length+"条报警记录。"+"</a>",
+        showType:'show',
+        timeout:5000,
+        style:{
+            left:'',
+            right:0,
+            top:document.body.scrollTop+document.documentElement.scrollTop,
+            bottom:''/* ,
+             width:'100px',
+            height:'80px'  */
+        }
+    });
+}
+function AlarmData(){
+	$.ajax({
+			type:'get',
+			url:'alarm/showAlarmrecord/data',
+			success:triggerAlarm
+	});
+	
+}
+
+function showDetailAlarmRecord(){
+	addTab('报警记录','alarm/alarmrecord','');
+}
+
+function delayRun(){
+	setInterval("AlarmData()", 10000); 
+}
+
+
+	/*function homePage(){
+		addTab('首页','homepage/information','');
+	}*/

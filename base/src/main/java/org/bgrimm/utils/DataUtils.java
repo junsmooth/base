@@ -74,7 +74,7 @@ public  class DataUtils {
 						datetime.setAccessible(true);
 						value.setAccessible(true);
 						Date date=(Date)datetime.get(o);
-						BigDecimal val=(BigDecimal)value.get(o);
+						BigDecimal val=new BigDecimal(value.get(o).toString());
 						l.add(date);
 						l.add(val);
 						list.add(l);

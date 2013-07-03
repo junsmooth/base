@@ -1,5 +1,6 @@
 package org.bgrimm.service.impl;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -17,6 +18,7 @@ import org.bgrimm.domain.system.PageList;
 import org.bgrimm.domain.system.PagedQuery;
 import org.bgrimm.domain.t4ddb.BMWY;
 import org.bgrimm.utils.Constants;
+import org.bgrimm.utils.DataUtils;
 import org.bgrimm.utils.DateUtils;
 import org.bgrimm.utils.PagerUtil;
 import org.hibernate.Criteria;
@@ -150,26 +152,9 @@ public class BMWYService {
 			}
 			
 		});
-		
-		List dataList=new ArrayList();
-		for(Object object: bmwyDataList){
-			List li=new ArrayList();
-			BMWY bmwy=(BMWY)object;
-			Date date=bmwy.getDateTime();
-			double value;
-			if("dN".equals(montypeattr.getAttr())){
-				value=bmwy.getdN();
-			}else if("dE".equals(montypeattr.getAttr())){
-				value=bmwy.getdE();
-			}else{
-				value=bmwy.getdH();
-			}
-			li.add(date);
-			li.add(value);
-			dataList.add(li);
-		
-		}
-			return dataList;
+
+		return DataUtils.objectList2JSonList(bmwyDataList, new Object[]{"dateTime",montypeattr.getAttr()});
+	
 	}
 
 }

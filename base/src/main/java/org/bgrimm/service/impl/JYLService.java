@@ -1,5 +1,8 @@
 package org.bgrimm.service.impl;
 
+import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,6 +24,7 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -98,20 +102,89 @@ public class JYLService{
 	@Transactional(isolation=Isolation.DEFAULT,readOnly=false)
 	public Object getJYLChartList(TableParam param) {
 		List<Order> list=new ArrayList();
+//		List result=new ArrayList();
 		Criteria criteria=commonDao.getSession().createCriteria(JYL.class);
-		List li= getJRXChartData(criteria, param);
+		List li= getJYLChartData(criteria, param);
+//		List everydayJYLData=getEverydayJYLData(li);
 		if(li.size()>Constants.MAXIMUM_ALLOWED_VALUE){
 			Criteria tCriteria=commonDao.getSession().createCriteria(TJYL.class);
-			List tList=getJRXChartData(tCriteria,param);
-			return DataUtils.objectList2JSonList(tList, new Object[]{"dateTime","value"});
-			
+			List tList=getJYLChartData(tCriteria,param);
+			 return DataUtils.objectList2JSonList(tList, new Object[]{"dateTime","value"});
+//			 result.add(listData1);
+//			 result.add(everydayJYLData);
+//			 return result;
 		}else{
 			return DataUtils.objectList2JSonList(li, new Object[]{"dateTime","value"});
+//			result.add(listData2);
+//			result.add(everydayJYLData);
+//			return result;
 		}
 	}
 
+	/**
+	 * 获取 每日降雨量时间和值
+	 * @param li
+	 * @return
+	 */
+	public List getEverydayJYLData(TableParam param) {
+		List<Order> list=new ArrayList();
+		List result=new ArrayList();
+		Criteria criteria=commonDao.getSession().createCriteria(JYL.class);
+		List li= getJYLChartData(criteria, param);
+		Date iniDate=new Date();
+		double iniValue=0;
+		double sumValueOfDay=0;
+		Boolean flag=true;
+		List everydayDataList=new ArrayList();
+		for(Object object:li){
+			JYL jyl=(JYL)object;
+			Date date=jyl.getDateTime();
+			if(flag==true){
+				iniDate=date;
+				iniValue=jyl.getValue().doubleValue();
+				flag=false;
+				continue;
+			}
+			if(isSameDay(iniDate,date)){
+				//iniDate=jyl.getDateTime();
+				sumValueOfDay+=jyl.getValue().doubleValue();
+			}else{
+				List l=new ArrayList();
+				//l.add(setDate(iniDate));
+				l.add(iniDate);
+				l.add(new BigDecimal(sumValueOfDay).setScale(2,BigDecimal.ROUND_HALF_UP));
+				everydayDataList.add(l);
+				sumValueOfDay=jyl.getValue().doubleValue();
+				iniDate=jyl.getDateTime();
+			}
+		}
+		return everydayDataList;
+	}
+
+	private Object setDate(Date iniDate) {
+		try {
+			SimpleDateFormat s=new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat s1=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String str= s.format(iniDate)+" 08:00:00";
+			return s1.parse(str);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	private boolean isSameDay(Date iniDate, Date date) {
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+		if(iniDate!=null && date!=null) {        
+		     String time1 = sdf.format(iniDate);        
+		     String time2 = sdf.format(date);    
+		     return time1.equals(time2);
+		    }        
+		return false;
+	}
+
 	//根据条件从表中获取降雨量时间和值
-	private List getJRXChartData(Criteria criteria,TableParam param) {
+	private List getJYLChartData(Criteria criteria,TableParam param) {
 
 		Integer arr =Integer.parseInt(param.getStr());
 		if (StringUtils.isNotEmpty(param.getMin())) {
