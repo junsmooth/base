@@ -2,9 +2,13 @@ package org.bgrimm.domain.bgrimm.common;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.bgrimm.domain.system.IdEntity;
+import org.bgrimm.domain.system.TIcon;
 
 
 @Entity
@@ -16,6 +20,17 @@ public class MonitoringType extends IdEntity {
 	private String code;
 	private String tableName;
 	private String domainClsName;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "iconid")
+	private TIcon icon;
+	
+	public TIcon getIcon() {
+		return icon;
+	}
+	public void setIcon(TIcon icon) {
+		this.icon = icon;
+	}
 	public String getDomainClsName() {
 		return domainClsName;
 	}
