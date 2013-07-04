@@ -20,8 +20,17 @@ public class MonitoringPoint extends IdEntity {
 	@JoinColumn(name = "montypeid")
 	private MonitoringType type;
 	private int position;
+	private String url;
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="drawPointId") 
+	@JoinColumn(name = "drawPointId")
 	private TDrawingPosition drawPosition;
 
 	public TDrawingPosition getDrawPosition() {

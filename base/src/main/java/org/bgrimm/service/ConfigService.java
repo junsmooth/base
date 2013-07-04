@@ -50,6 +50,9 @@ public class ConfigService {
 	}
 
 	public void saveOrUpdateMonPoint(MonitoringPoint mon) {
+		String code=mon.getType().getCode();
+		MonitoringType type=commonDao.findUniqueByProperty(MonitoringType.class, "code", code);
+		mon.setType(type);
 		commonDao.saveOrUpdate(mon);
 	}
 
