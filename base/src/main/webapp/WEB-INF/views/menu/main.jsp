@@ -14,20 +14,18 @@ z-index:-1
 	});
 	
 </script>
- 
 <div style="padding: 5px;  ">
-	<a href="#" class="easyui-linkbutton" data-options="plain:true">Home</a>
 	<a href="#" class="easyui-menubutton"
-		data-options="menu:'#mm1',iconCls:'icon-edit'">Edit</a> <a href="#"
-		class="easyui-menubutton"
-		data-options="menu:'#mm2',iconCls:'icon-help'">Help</a> <a href="#"
-		class="easyui-menubutton" data-options="menu:'#mm3'">About</a>
+		data-options="menu:'#mm1',iconCls:'icon-edit'">工具</a>  
 </div>
 <div id="mm1" style="width: 150px;">
-	<div data-options="iconCls:'icon-undo'">Undo</div>
-	<div data-options="iconCls:'icon-redo'">Redo</div>
 	<div class="menu-sep"></div>
-	<div>Cut</div>
+	 <div>
+	 	<div id="fileQueue"></div>   
+        <input type="file" name="file_upload" id="file_upload" />
+		<a href="javascript:$('#file_upload').uploadify('upload','*')">开始上传</a>
+		|<a href="javascript:$('#file_upload').uploadify('cancel', '*')">取消上传</a> 
+    </div>
 	<div>Copy</div>
 	<div>Paste</div>
 	<div class="menu-sep"></div>
@@ -44,19 +42,8 @@ z-index:-1
 	</div>
 	<div data-options="iconCls:'icon-remove'">Delete</div>
 	<div>Select All</div>
-</div>
-<div id="mm2" style="width: 100px;">
-	<div>Help</div>
-	<div>Update</div>
-	<div>About</div>
-</div>
-<div id="mm3" class="menu-content"
-	style="background: #f0f0f0; padding: 10px; text-align: left">
-	<img src="http://www.jeasyui.com/images/logo1.png"
-		style="width: 150px; height: 50px">
-	<p style="font-size: 14px; color: #444;">Try jQuery EasyUI to build
-		your modem, interactive, javascript applications.</p>
-</div>
+</div> 
+
 
 
 <div id="p" class="easyui-panel" data-options="fit:true"
@@ -66,7 +53,26 @@ z-index:-1
 		style="background-color: green; width: 18px; height: 18px; background-image: url(resources/custom/images/cut.png); background-repeat: no-repeat;"></div>
 
 </div>
+
 <script>
+
+
+     $(function() {
+    	    $("#file_upload").uploadify({
+    	    	'queueSizeLimit' : 1,
+    	        'auto'     : true,
+    	        'swf'      : 'resources/uploadify.swf',
+    	        'uploader' : 'topo/data',
+    	        'folder'   : 'resources/img', 
+    	        'fileTypeExts': '*.gif; *.jpg; *.png',
+    	        'cancelImg'   : 'resources/images/uploadify-cancel.png',
+    	        'buttonText'     : '选择图片' ,
+    	        'onUploadSuccess' : function(file, data, response) {
+    	            alert('文件 ' + file.name + ' 上传成功 ' + response + ':' + data);
+    	        }
+    	    });
+    	});
+    
 	$("#bgimg").click(function(e){
 		console.log($("#bgimg").width()+","+$("#bgimg").height());
 		 p=$("#bgimg").position();

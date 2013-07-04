@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="resources/themes/metro/easyui.css">
     <link rel="stylesheet" type="text/css" href="resources/themes/icon.css">
      <link rel="stylesheet" type="text/css" href="resources/custom/css/icon.css">
+     <link rel="stylesheet" type="text/css" href="resources/themes/uploadify.css">
      
      <link rel="stylesheet" type="text/css" href="resources/themes/portal.css">
     <script type="text/javascript" src="resources/jquery-1.8.0.min.js">
@@ -35,7 +36,7 @@
     <script src="resources/highstock.js"></script>
 	<script src="resources/modules/exporting.js"></script>
     <script type="text/javascript" src="resources/jquery.portal.js"></script>
-	
+	<script src="resources/jquery.uploadify.min.js" type="text/javascript"></script>
   </head>
   <body class="easyui-layout">
     <div 
