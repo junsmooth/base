@@ -40,8 +40,8 @@ public class ConfigController {
 	
 	@RequestMapping("monpoint/data")
 	public @ResponseBody
-	Object monPointList() {
-		return configService.getAllMonPoint();
+	Object monPointList(@RequestParam int page, @RequestParam int rows) {
+		return configService.getAllMonPoint(page,rows);
 	}
 	
 	@RequestMapping("monattr/data")
@@ -51,8 +51,8 @@ public class ConfigController {
 	}
 	
 	@RequestMapping("monpoint/validateMonPointName")
-	public @ResponseBody Object validateMonPointName(@RequestParam String monName){
-		return configService.isValidMonPointName(monName);
+	public @ResponseBody Object validateMonPointName(@RequestParam String monName,@RequestParam String id){
+		return configService.isValidMonPointName(monName,id);
 		
 	}
 	
@@ -104,6 +104,18 @@ public class ConfigController {
 	JsonMsg removeMonType(@RequestParam long id) {
 		try {
 			configService.removeMonTypeById(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return JsonMsg.createJsonMsg(false, "操作失败", e.getMessage());
+		}
+		return JsonMsg.simpleSuccessJson();
+	}
+	
+	@RequestMapping("monpoint/remove")
+	public @ResponseBody
+	JsonMsg removeMonPoint(@RequestParam long id) {
+		try {
+			configService.removeMonPointById(id);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return JsonMsg.createJsonMsg(false, "操作失败", e.getMessage());
