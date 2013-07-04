@@ -20,13 +20,13 @@ z-index:-1
 </div>
 <div id="mm1" style="width: 150px;">
 	<div class="menu-sep"></div>
-	 <div>
+	<!--  <div id="up">
 	 	<div id="fileQueue"></div>   
         <input type="file" name="file_upload" id="file_upload" />
-		<a href="javascript:$('#file_upload').uploadify('upload','*')">开始上传</a>
+		<a href="" onclick="start()">开始上传</a>
 		|<a href="javascript:$('#file_upload').uploadify('cancel', '*')">取消上传</a> 
-    </div>
-	<div>Copy</div>
+    </div> -->
+	<div id="daoru" onclick="addPic()"><a>导入图片</a></div>
 	<div>Paste</div>
 	<div class="menu-sep"></div>
 	<div>
@@ -56,8 +56,21 @@ z-index:-1
 
 <script>
 
+	function addPic(){
+		       $('#daoru').dialog({
+		        title: '增加菜单',
+		        width: 600,
+		        height: 300,
+		        closed: false,
+		        resizable:true,
+		        cache: false,
+		        href: 'menu/uppload',
+		        modal: true
+		        }); 
+		      
+	}
 
-     $(function() {
+    	$(function() {
     	    $("#file_upload").uploadify({
     	    	'queueSizeLimit' : 1,
     	        'auto'     : true,

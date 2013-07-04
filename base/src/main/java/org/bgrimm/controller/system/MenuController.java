@@ -42,6 +42,11 @@ public class MenuController {
 	}
 
 
+	@RequestMapping("uppload")
+	public String uppload(Model model) {
+	
+		return "menu/upploadPage";
+	}
 	
 	public MenuService getMenuService() {
 		return menuService;
