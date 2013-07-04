@@ -14,20 +14,25 @@
 				</tr>
 				<tr>
 					<td>监测类型:</td>
-					<td><select name="type.id">
+					<td><select name="type.code" id="addMonPoint_typeselect" <c:if test="${!empty monpoint.id}">disabled="disabled"</c:if>>
 							
 							<c:forEach items="${montypelist}" var="monType">
-								<option value="${monType.id}"
-									<c:if test="${monpoint.type==monType.id }">selected="selected"</c:if>>
+								<option value="${monType.code}"
+									<c:if test="${monpoint.type.code==monType.code }">selected="selected"</c:if>>
 									${monType.name}</option>
 							</c:forEach>
 					</select></td>
 					
 				</tr>
-				<tr>
+				<tr id="add_monpoint_position">
 					<td>通道号:</td>
 					<td><input class="easyui-validatebox" type="text"
 						name="position" value="${monpoint.position}" data-options="required:true,validType:'number'" > </td>
+				</tr>
+				<tr id="add_monpoint_url">
+				<td>URL:</td>
+				<td><input class="easyui-validatebox" type="text"
+						name="position" value="${monpoint.url}" data-options="validType:'url'" ></td>
 				</tr>
 			</table>
 
@@ -46,6 +51,31 @@
 
 </div>
 <script>
+
+//var txt=$("#addMonPoint_typeselect").text();
+//$("#add_monpoint_url").hide();
+$(document).ready(function(){
+	var txt=$("#addMonPoint_typeselect").val();
+	if(txt=="SP"){
+		$("#add_monpoint_position").hide();
+	}else{
+		$("#add_monpoint_url").hide();
+	}
+});
+
+$("#addMonPoint_typeselect").change(function(){
+	var txt=$("#addMonPoint_typeselect").val();
+	if(txt=="SP"){
+		//$("#add_monpoint_position").hide();
+		$("#add_monpoint_position").attr('disabled',true);
+		$("#add_monpoint_url").show();
+	}else{
+		$("#add_monpoint_url").hide();
+		
+		$("#add_monpoint_position").show();
+	}
+	
+})
 Namespace.register('config.monpoint.add',{
 	save:function(){
 		$('#addMonPointForm').form('submit', {  

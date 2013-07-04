@@ -278,8 +278,9 @@ public class AlarmService {
 			criteria.add(Restrictions.eq("dateTime", obj));
 			criteria.add(Restrictions.eq("monitoringPosition",
 					point.getPosition()));
+			criteria.setFetchSize(1);
 			return criteria.uniqueResult();
-		} catch (ClassNotFoundException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;

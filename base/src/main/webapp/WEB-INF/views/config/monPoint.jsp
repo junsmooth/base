@@ -33,22 +33,22 @@
          });  
 	},
 	edit:function(value){
-		   $('#monpointdialog').dialog({
-		        title: '用户编辑',
+		   $('#add_monpoint_dialog').dialog({
+		        title: '编辑',
 		        width: 600,
 		        height: 336,
 		        closed: false,
 		        resizable:true,
 		        cache: false,
-		        href: 'user/addOrUpdate?id='+value,
+		        href: 'config/monpoint/addOrUpdate?id='+value,
 		        modal: true
 		        });
 		  },
 	closeDialog:function(){
-		  $('#monpointdialog').dialog('close');
+		  $('#add_monpoint_dialog').dialog('close');
 		  },
 	reload:function(){
-		  	$('#monPointGrid').datagrid('reload');
+		  	$('#add_monpoint_dialog').datagrid('reload');
 		  }
 	
 });
@@ -57,7 +57,7 @@ config.monpoint.toolbar = [{
     iconCls:'icon-add',
     disabled:!hasRole('ROLE_USER_EDIT'),
     handler:function(){
-      $('#monpointdialog').dialog({
+      $('#add_monpoint_dialog').dialog({
         title: '添加监测点',
         width: 600,
         height: 360,
@@ -93,8 +93,11 @@ config.monpoint.toolbar = [{
       <th data-options="field:'type',width:80,align:'left',formatter:function(value,row,index){return row['type']['name'];}">
         监测类型
       </th>
-      <th data-options="field:'position',width:120,align:'left'">
+      <th data-options="field:'position',width:40,align:'left'">
       监测点通道号
+      </th>
+           <th data-options="field:'url',width:180,align:'left'">
+   其他
       </th>
 	 <th
 				data-options="field:'id',width:200,align:'left',formatter:config.monpoint.formatOperation">
@@ -104,4 +107,4 @@ config.monpoint.toolbar = [{
 </table>
 </div>
 </div>
-<div id="monpointdialog"></div>
+<div id="add_monpoint_dialog"></div>
