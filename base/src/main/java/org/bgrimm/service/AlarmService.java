@@ -37,6 +37,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import com.sun.corba.se.pept.transport.ContactInfo;
+
 @Service
 @Transactional
 public class AlarmService {
@@ -76,6 +78,9 @@ public class AlarmService {
 		List<Threshold> thresholds = alarmDao.loadNotDeletedThresholds();
 		// 2.
 		for (MonitoringPoint mp : points) {
+			if(mp.getType().getCode().equals(Constants.JCD_SP)){
+				return;
+			}
 			Object pointData = getLatestPointData(mp);
 			//TODO why null point
 			if(pointData==null){
