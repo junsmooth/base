@@ -20,13 +20,7 @@ z-index:-1
 </div>
 <div id="mm1" style="width: 150px;">
 	<div class="menu-sep"></div>
-	<!--  <div id="up">
-	 	<div id="fileQueue"></div>   
-        <input type="file" name="file_upload" id="file_upload" />
-		<a href="" onclick="start()">开始上传</a>
-		|<a href="javascript:$('#file_upload').uploadify('cancel', '*')">取消上传</a> 
-    </div> -->
-	<div id="daoru" onclick="addPic()"><a>导入图片</a></div>
+	<div id="daoru" onclick="addPic()">导入图片</div>
 	<div>Paste</div>
 	<div class="menu-sep"></div>
 	<div>
@@ -54,37 +48,22 @@ z-index:-1
 
 </div>
 
+<div id="upId"></div>
 <script>
 
 	function addPic(){
-		       $('#daoru').dialog({
+		       $('#upId').dialog({
 		        title: '增加菜单',
-		        width: 600,
-		        height: 300,
+		        width: 200,
+		        height: 150,
 		        closed: false,
 		        resizable:true,
 		        cache: false,
 		        href: 'menu/uppload',
 		        modal: true
 		        }); 
-		      
 	}
 
-    	$(function() {
-    	    $("#file_upload").uploadify({
-    	    	'queueSizeLimit' : 1,
-    	        'auto'     : true,
-    	        'swf'      : 'resources/uploadify.swf',
-    	        'uploader' : 'topo/data',
-    	        'folder'   : 'resources/img', 
-    	        'fileTypeExts': '*.gif; *.jpg; *.png',
-    	        'cancelImg'   : 'resources/images/uploadify-cancel.png',
-    	        'buttonText'     : '选择图片' ,
-    	        'onUploadSuccess' : function(file, data, response) {
-    	            alert('文件 ' + file.name + ' 上传成功 ' + response + ':' + data);
-    	        }
-    	    });
-    	});
     
 	$("#bgimg").click(function(e){
 		console.log($("#bgimg").width()+","+$("#bgimg").height());
