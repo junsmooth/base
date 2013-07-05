@@ -1,8 +1,14 @@
+ SET IDENTITY_INSERT [t_icon_type] ON
+
+ INSERT [t_icon_type] ( [id] , [cnname] , [name] ) VALUES ( 1 , '≤Àµ•Õº±Í' , 'MENUICON' )
+ INSERT [t_icon_type] ( [id] , [cnname] , [name] ) VALUES ( 2 , 'º‡≤‚Õº±Í' , 'MONITORICON' )
+
+ SET IDENTITY_INSERT [t_icon_type] OFF
 
 
  SET IDENTITY_INSERT [t_icon] ON
 
- INSERT [t_icon] ( [id] , [iconcls] , [extension] , [iconname] , [iconpath] ) VALUES ( 1 , 'pictures' , '.png' , 'pictures' , 'resources/custom/images' )
+  INSERT [t_icon] ( [id] , [iconcls] , [extension] , [iconname] , [iconpath] , [type_id] ) VALUES ( 1 , 'pictures' , '.png' , 'pictures' , 'resources/custom/images' , 1 )
 
  SET IDENTITY_INSERT [t_icon] OFF
  

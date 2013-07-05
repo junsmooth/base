@@ -18,14 +18,15 @@
 						name="code" value="${montype.code}" data-options="required:true"> </td>
 				</tr>
 				<tr>
-					<td>数据库表:</td>
+					<td>类模型:</td>
 					<td><input class="easyui-validatebox" type="text"
-						name="tableName" value="${montype.tableName}" data-options="required:true"> </td>
+						name="domainClsName" value="${montype.domainClsName}" data-options=""> </td>
 				</tr>
-				<tr>
-					<td>启用:</td>
-					<td><input class="easyui-validatebox" type="checkbox"
-						name="enabled" value="${montype.enabled}" data-options="required:true"> </td>
+				
+					<tr>
+					<td>图标:</td>
+					<td><input id="cc" class="easyui-combobox" name="icon.id"  
+    data-options="valueField:'id',textField:'iconName',url:'icon/type/menuicon',formatter:config.montype.add.formatIcon" />   </td>
 				</tr>
 			</table>
 
@@ -60,14 +61,20 @@ Namespace.register('config.montype.add',{
 		    	data = $.parseJSON(data);  
 		    	if(data.success){
 		    		config.monType.closeDialog();
-		    		config.monType.reload();
+		    		//config.monType.reload();
 		    		 $.dialog.tips(data.msg);
 		    	}
 		    }  
 		}); 
+	},
+	formatIcon:function(row){
+		var iconName=row.iconName;
+		var iconPath=row.iconPath;
+		var wholeName=iconName+row.iconExtension;
+		var nameStr="<span><I><B>"+iconName+"</B></I></span>";
+		var picStr="<span><img src='"+iconPath+"/"+wholeName+"'>"+"</img></span>";
+		return nameStr+":"+picStr;
 	}
-	
-	
 });
 
 

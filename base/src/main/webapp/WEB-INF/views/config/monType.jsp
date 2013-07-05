@@ -107,7 +107,7 @@
 						图标</th>
 					<th data-options="field:'domainClsName',width:120,align:'left'">
 						领域模型类</th>
-					<th data-options="field:'enabled',width:120,align:'left'">启用</th>
+					
 					<th
 						data-options="field:'id',width:200,align:'left',formatter:config.monType.formatOperation">
 						操作</th>

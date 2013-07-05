@@ -2,6 +2,8 @@ package org.bgrimm.domain.system;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -16,6 +18,17 @@ public class TIcon extends IdEntity implements java.io.Serializable {
 	private String iconCls;
 	@Column(name="extension",length=20)
 	private String iconExtension;
+	
+	@ManyToOne
+	@JoinColumn(name="type_id")
+	private TIconType type;
+	public TIconType getType() {
+		return type;
+	}
+
+	public void setType(TIconType type) {
+		this.type = type;
+	}
 
 	public String getIconExtension() {
 		return iconExtension;

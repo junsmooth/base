@@ -7,6 +7,7 @@ import org.bgrimm.dao.core.impl.CommonDao;
 import org.bgrimm.domain.system.PageList;
 import org.bgrimm.domain.system.PagedQuery;
 import org.bgrimm.domain.system.TIcon;
+import org.bgrimm.domain.system.TIconType;
 import org.bgrimm.domain.system.TUser;
 import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,12 @@ public class IconService {
 		list.add(Order.asc("iconName"));
 		PageList pl = commonDao.getPagedList(pq, list);
 		return pl;
+	}
+
+	public Object typedIcons(String type) {
+		TIconType t = commonDao.findUniqueByProperty(TIconType.class, "name",
+				type.toUpperCase());
+		return commonDao.findByProperty(TIcon.class, "type.id", t.getId());
 	}
 
 }
