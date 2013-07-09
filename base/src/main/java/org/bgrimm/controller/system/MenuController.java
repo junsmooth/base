@@ -40,7 +40,12 @@ public class MenuController {
 		model.addAttribute("parentMenus", pMenus);
 		return "menu/left";
 	}
-
+	
+	@RequestMapping("addMonitorPosition")
+	public String MP(){
+		
+		return "menu/monitorPosition";
+	}
 
 	@RequestMapping("uppload")
 	public String uppload(Model model) {
@@ -160,5 +165,27 @@ public class MenuController {
 			result.add(m);
 		}
 		return result;
+	}
+	
+	@RequestMapping("monitorPData")
+	@ResponseBody
+	public List monitorPDataList(){
+		
+		
+		return menuService.getMonitorPDataList();
+	}
+	
+	@RequestMapping(value="/iconData",method=RequestMethod.POST)
+	@ResponseBody
+	public List iconList(@RequestParam("code")String code){
+		
+		return menuService.getIconList(code);
+	}
+	
+	@RequestMapping("mpPath")
+	@ResponseBody
+	public List getMPPath(@RequestParam("v")long v){
+		
+		return menuService.getMPPath(v);
 	}
 }

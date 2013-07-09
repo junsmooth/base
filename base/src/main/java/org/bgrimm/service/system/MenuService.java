@@ -5,9 +5,12 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.bgrimm.dao.core.impl.CommonDao;
+import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
+import org.bgrimm.domain.bgrimm.common.MonitoringType;
 import org.bgrimm.domain.system.TIcon;
 import org.bgrimm.domain.system.TMenu;
 import org.bgrimm.domain.system.TUser;
+import org.bgrimm.utils.Constants;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -87,5 +90,24 @@ public class MenuService {
 			return true;
 		}
 		return false;
+	}
+
+	public List getMonitorPDataList() {
+
+		return commonDao.findByCriterions(MonitoringType.class, Restrictions.eq("enabled", true));
+	}
+
+	public List getIconList(String code) {
+		MonitoringType t = commonDao.findUniqueBy(MonitoringType.class, "code",
+				code);
+		final List<MonitoringPoint> point = commonDao.findByCriterions(
+				MonitoringPoint.class, Restrictions.eq("type.id", t.getId()));
+	
+		return point;
+	}
+
+	public List getMPPath(long v) {
+		
+		return commonDao.findByCriterions(MonitoringType.class, Restrictions.eq("id", v));
 	}
 }
