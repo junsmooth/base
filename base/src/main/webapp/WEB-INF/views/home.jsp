@@ -37,6 +37,9 @@
 	<script src="resources/modules/exporting.js"></script>
     <script type="text/javascript" src="resources/jquery.portal.js"></script>
 	<script src="resources/jquery.uploadify.min.js" type="text/javascript"></script>
+ <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=B22e4be0e2dca29545ef3b52b411e36a"></script>
+ 
+ 
   </head>
   <body class="easyui-layout">
     <div 

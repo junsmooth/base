@@ -20,8 +20,14 @@ public class TopoController {
 	public String main(Model model) {
 		return "menu/main";
 	}
-
-	
+	@RequestMapping("satellite")
+	public String satellite(Model model) {
+		return "topo/satellite";
+	}
+	@RequestMapping("threedimension")
+	public String threedimension(Model model) {
+		return "topo/threedimension";
+	}
 	@RequestMapping("/data")
 	 @ResponseBody
 	  public String upload(HttpServletRequest req, HttpServletResponse resp){
