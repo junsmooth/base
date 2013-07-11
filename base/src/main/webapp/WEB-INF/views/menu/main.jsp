@@ -11,42 +11,133 @@ z-index:-1
 <script>
 	Namespace.register("menu.main", {
 		
-		addPoint:function(value){
+		addPoint:function(sValue,sMP){
 			//alert("success!");
 			$.ajax({
 				type : 'POST',
 				url:"menu/mpPath",
-				data:{v:value},
+				data:{v:sValue,m:sMP},
 				success:setMpPath
 			}); 
 		},
 		closeDialog:function(){
 			$('#mpId').dialog('close');
+		},
+		confirm:function(obj){
+			alert(obj.id+"offsetTop :"+obj.offsetTop+"offsetLeft "+obj.offsetLeft );
+		},
+		saveData:function(){
+			var divList=$("#p").children('div');
+			//alert("divList: "+divList.length);
+				var arr=new Array(divList.length);
+				var jsonData={};
+			for(var i=0;i<divList.length;i++){
+				var offsetLef=divList[i].offsetLeft;
+				var offsetTp=divList[i].offsetTop;
+				//alert("sId: "+sId+"offsetLef: "+offsetLef+"offsetTp: "+offsetTp);
+				var sId=divList[i].id;
+				jsonData[i]={"sId":sId,"x":offsetLef,"y":offsetTp};
+			}
+			$.ajax({
+				type:"POST",
+				data: JSON.stringify(jsonData), 
+                dataType: "json",
+                contentType: "application/json",
+                url:"menu/storeMP",
+                success:reloadPage
+			});
 		}
 		
 	});
 	
+	function reloadPage(){
+	//	alert("保存成功!");
+		 $.dialog.tips("保存成功!");
+	//	msgShow('','保存成功!','info');
+	 	/* $.ajax({
+			type:"get",
+			url:"menu/addMonitorPosition"
+		}); */
+	//	$('#p').treegrid('reload');
+		//$.load("/menu/addMonitorPosition");
+	//	$("#p").load(location.href + ' #p>*');
+	
+		 window.location.reload();
+	}
+	function msgShow(title, msgString, msgType) {
+		$.messager.alert(title, msgString, msgType);
+	}
+	
 	function setMpPath(data){
 		var path=data[0].icon.iconPath+'/'+data[0].icon.iconName+data[0].icon.iconExtension;
-	    var parentdiv=$('<div class="easyui-draggable" style="background-color: green; width: 20px; height: 20px;  background-repeat: no-repeat;"></div>').appendTo('#p');        
-	     
-	   	parentdiv.attr('id',data[0].code+data[0].id);   
-	     
-	  	parentdiv.css("background-image",'url('+path+')'); 
-		parentdiv.css("position","absolute");
-		parentdiv.css("left",x+"px");
-		parentdiv.css("top",y+"px"); 
-		$('#'+data[0].code+data[0].id).draggable({  
-		   // handle:'#title'  
-		});  
+	    var imgId;
+	    if(data[2].drawPosition!=""&&data[2].drawPosition!=null){
+	    	imgId=data[0].code+"_"+data[2].drawPosition.id+"_"+data[1];
+	    /* 	parentdiv.attr('id',imgId);   
+	    	parentdiv.css("background-image",'url('+path+')'); 
+	    	parentdiv.css("position","absolute");
+	    	parentdiv.css("left",data[2].drawPosition.x+"px");
+	    	parentdiv.css("top",data[2].drawPosition.y+"px"); 
+	    	alert("imgId--"+imgId+"--"); */
+	    	$('#'+imgId).draggable({  
+	    		
+			});  
+	    }else{
+	        var parentdiv=$('<div class="easyui-draggable" ondblclick="menu.main.confirm(this)" style="background-color: white; width: 20px; height: 20px;  background-repeat: no-repeat;"></div>').appendTo('#p');
+	    	imgId=data[0].code+"_"+data[1];
+		   	parentdiv.attr('id',imgId);   
+		  	parentdiv.css("background-image",'url('+path+')'); 
+			parentdiv.css("position","absolute");
+			parentdiv.css("left",x+"px");
+			parentdiv.css("top",y+"px"); 
+			$('#'+imgId).draggable({  
+			});  
+	    }
+	    //alert("imgId: "+imgId);
+	
 	  	menu.main.closeDialog();
 	  	
 	}
 
+ 	$(function (){
+ 			getMpPic();
+ 			
+ 	}
+	);
+ 	function getMpPic(){	
+ 		$.ajax({
+		type:"POST",
+		url :"menu/mpPic",
+		success:showMpPic
+		});
+	}
+ 	function showMpPic(sData){
+		for(var i=0;i<sData.length;i++){
+			var newDiv=$('<div class="easyui-draggable" ondblclick="menu.main.confirm(this)" style="background-color: white; width: 20px; height: 20px;  background-repeat: no-repeat;"></div>').appendTo('#p');
+			var path=sData[i].type.icon.iconPath+'/'+sData[i].type.icon.iconName+sData[i].type.icon.iconExtension;
+			var imgId=sData[i].type.code+"_"+sData[i].drawPosition.id+"_"+sData[i].position;
+			newDiv.attr('id',imgId);   
+			newDiv.css("background-image",'url('+path+')'); 
+			newDiv.css("position","absolute");
+			newDiv.css("left",sData[i].drawPosition.x+"px");
+			newDiv.css("top",sData[i].drawPosition.y+"px"); 
+			
+		
+		}
+	} 
+	
+ 	function editDiv(){
+ 		var divList=$("#p").children('div');
+ 		for(var i=0;i<divList.length;i++){
+ 			$('#'+divList[i].id).draggable({});
+ 		}
+ 	}
 </script>
 <div style="padding: 5px;  ">
 	<a href="#" class="easyui-menubutton"
 		data-options="menu:'#mm1',iconCls:'icon-edit'">工具</a>  
+	<a href="javascript:void(0)" class="easyui-linkbutton" plain="true" onclick="menu.main.saveData()" >保存</a>  
+	<a href="javascript:void(0)" class="easyui-linkbutton" plain="true" onclick="editDiv()">编辑</a>  
 </div>
 <div id="mm1" style="width: 150px;">
 	<div class="menu-sep"></div>
@@ -75,8 +166,8 @@ z-index:-1
 <div id="p" class="easyui-panel" data-options="fit:true"
 	>
 	<img id="bgimg"   src="resources/custom/images/bg.png" width="99%" height=99%/>
-	<div class="easyui-draggable" id="subdiv"
-		style="background-color: green; width: 18px; height: 18px; background-image: url(resources/custom/images/pie.png); background-repeat: no-repeat;"></div>
+	<!-- <div class="easyui-draggable" id="subdiv" ondblclick="menu.main.confirm(this)"
+		style="background-color: green; width: 18px; height: 18px; background-image: url(resources/custom/images/pie.png); background-repeat: no-repeat;"></div> -->
 	
 	
 </div>

@@ -1,7 +1,6 @@
 package org.bgrimm.controller.system;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,12 +15,10 @@ import org.bgrimm.service.system.MenuService;
 import org.bgrimm.utils.BeanUtils;
 import org.bgrimm.utils.JsonMsg;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -184,8 +181,21 @@ public class MenuController {
 	
 	@RequestMapping("mpPath")
 	@ResponseBody
-	public List getMPPath(@RequestParam("v")long v){
+	public List getMPPath(@RequestParam("v")long v,@RequestParam("m")int m){
 		
-		return menuService.getMPPath(v);
+		return menuService.getMPPath(v,m);
+	}
+	
+	@RequestMapping("storeMP")
+	@ResponseBody
+	public void saveMP(@RequestBody Object jsonData){
+		menuService.saveData(jsonData);
+	}
+	
+	@RequestMapping("mpPic")
+	@ResponseBody
+	public List mpPic(){
+		
+		return menuService.getMpPic();
 	}
 }

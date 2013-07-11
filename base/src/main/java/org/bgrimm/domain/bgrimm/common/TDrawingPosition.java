@@ -1,5 +1,6 @@
 package org.bgrimm.domain.bgrimm.common;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,7 +14,11 @@ import org.bgrimm.domain.system.IdEntity;
 
 @Entity
 @Table(name = "t_drawingposition")
-public class TDrawingPosition extends IdEntity {
+public class TDrawingPosition extends IdEntity implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// Position of this point
 	private double x;
 	private double y;
@@ -31,13 +36,13 @@ public class TDrawingPosition extends IdEntity {
 		this.values = values;
 	}
 
-	public MonitoringPoint getMonPoint() {
-		return monPoint;
-	}
-
-	public void setMonPoint(MonitoringPoint monPoint) {
-		this.monPoint = monPoint;
-	}
+//	public MonitoringPoint getMonPoint() {
+//		return monPoint;
+//	}
+//
+//	public void setMonPoint(MonitoringPoint monPoint) {
+//		this.monPoint = monPoint;
+//	}
 
 	public double getX() {
 		return x;

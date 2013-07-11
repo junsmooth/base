@@ -15,15 +15,15 @@
 	                jcdlxId.combobox({  
 	                    disabled:false,  
 	                    url:'menu/iconData?code='+record.code,  
-	                    valueField:'id',  
+	                    valueField:'position',  
 	                    textField:'monitoringName'  
 	                }).combobox('clear');  
 	            }  
 	        });  
 	        var jcdlxId = $('#jcdlx').combobox({  
 	            disabled:true,  
-	            valueField:'id',  
-	            textField:'iconName'  
+	            valueField:'position',  
+	            textField:'monitoringName'  
 	        });  
 	}); 
 	 
@@ -32,9 +32,11 @@
 		function saveMp(){
 			//alert(".....");
 			var sValue=$("#jclx").datetimebox('getValue');
+			var sMP=$("#jcdlx").datetimebox('getValue');
+		//	alert("sMP: "+sMP);
 		//	alert("setValue:"+sValue);
 			if(sValue!=null){
-				menu.main.addPoint(sValue);
+				menu.main.addPoint(sValue,sMP);
 			}
 		}
 		
@@ -51,7 +53,7 @@
 					data-options=''
 					 style="width:100px;"valueField="id" textField="name"></select></td>
 				</tr>
-					<tr><td>监测点&nbsp&nbsp:<select id="jcdlx" class="easyui-combobox" name="jcdlx"  style="width:100px;"valueField="id" textField="iconName"></select></td></tr>
+					<tr><td>监测点&nbsp&nbsp:<select id="jcdlx" class="easyui-combobox" name="jcdlx"  style="width:100px;"valueField="position" textField="monitoringName"></select></td></tr>
 
 			</table>
 
