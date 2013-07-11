@@ -175,15 +175,8 @@ function triggerAlarm(data){
         title:'报警信息',
         msg:"<a href='#' onclick='showDetailAlarmRecord()'>"+"共有"+data.length+"条报警记录。"+"</a>",
         showType:'show',
-        timeout:5000,
-        style:{
-            left:'',
-            right:0,
-            top:document.body.scrollTop+document.documentElement.scrollTop,
-            bottom:''/* ,
-             width:'100px',
-            height:'80px'  */
-        }
+        timeout:3000
+       
     });
 }
 function AlarmData(){
@@ -200,7 +193,7 @@ function showDetailAlarmRecord(){
 }
 
 function delayRun(){
-	setInterval("AlarmData()", 10000); 
+	setInterval("AlarmData()", 20000); 
 }
 
 

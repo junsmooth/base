@@ -7,7 +7,7 @@
     <title> 
       Management System
     </title>
-    <link rel="stylesheet" type="text/css" href="resources/themes/metro/easyui.css">
+    <link rel="stylesheet" type="text/css" href="resources/themes/metro-blue/easyui.css">
     <link rel="stylesheet" type="text/css" href="resources/themes/icon.css">
      <link rel="stylesheet" type="text/css" href="resources/custom/css/icon.css">
      <link rel="stylesheet" type="text/css" href="resources/themes/uploadify.css">

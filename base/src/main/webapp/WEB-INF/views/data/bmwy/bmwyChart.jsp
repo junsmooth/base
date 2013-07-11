@@ -54,10 +54,10 @@
 					min1=$('#bmwyChart_min').val();	
 				    max1 = $('#bmwyChart_max').val();
 				    var timeValue= checkTime(min1,max1);
-				    if(timeValue>0){
+				   /*  if(timeValue>0){
 						 $.dialog.tips("查询时间超过一年,请重新输入！",1,'error.gif');
 						return;
-					} 
+					}  */
 					/* alert("dirId:"+typeof dirId+dirId);
 					alert(dirId==""); */
 				if(dirId==""){
