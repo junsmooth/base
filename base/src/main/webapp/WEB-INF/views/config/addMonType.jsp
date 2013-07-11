@@ -19,7 +19,7 @@
 				</tr>
 				<tr>
 					<td>类模型:</td>
-					<td><input class="easyui-validatebox" type="text"
+					<td><input class="easyui-validatebox" type="text" <c:if test="${!empty montype.id}">readOnly="true"</c:if>
 						name="domainClsName" value="${montype.domainClsName}" data-options=""> </td>
 				</tr>
 				
