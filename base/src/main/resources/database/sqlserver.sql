@@ -60,7 +60,8 @@ INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url] ) VALUE
 INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 37 , 'Õº±Íπ‹¿Ì' , 'ICON' , 'icon' , 1 , 2 )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 38 , 'Portal' , 'Portal' , 'homepage/information' , 1 , 2 )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 39 , 'º‡≤‚Õº' , 'JIANCETU' , 'topo/main' , 1 , 2 )
- 
+  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 40 , 'Œ¿–«Õº' , 'SATPIC' , 'topo/satellite' , 1 , 2 )
+ INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 41 , '»˝Œ¨µÿÕº' , 'THREEDIMENSION' , 'topo/threedimension' , 1 , 2 )
  SET IDENTITY_INSERT [t_menu] OFF
 
 SET IDENTITY_INSERT [t_operation] ON
