@@ -11,7 +11,7 @@ Namespace.register("menu.list",{
 	},
 	formatIcon:function(value){
 		 if(value)
-			    return '<image border="0" src='+value.iconPath+'/'+value.iconName+value.iconExtension+'/>'
+			    return '<image width=16px height=16px border="0" src='+value.iconPath+'/>'
 	},
 	
 	remove:function(value){

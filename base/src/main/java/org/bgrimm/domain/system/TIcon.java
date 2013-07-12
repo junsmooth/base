@@ -62,4 +62,12 @@ public class TIcon extends IdEntity implements java.io.Serializable {
 		this.iconCls = iconCls;
 	}
 
+	@Override
+	public String toString() {
+		return "TIcon [iconName=" + iconName + ", iconPath=" + iconPath
+				+ ", iconCls=" + iconCls + ", iconExtension=" + iconExtension
+				+ ", type=" + type + ", toString()=" + super.toString() + "]";
+	}
+	
+
 }

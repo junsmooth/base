@@ -65,34 +65,34 @@
 						},
 						reload : function() {
 							$('#monTypeGrid').datagrid('reload');
+						},
+						toolbar: [ {
+							text : '增加',
+							iconCls : 'icon-add',
+							disabled : !hasRole('ROLE_MONTYPE_EDIT'),
+							handler : function() {
+								$('#monTypeDialog').dialog({
+									title : '添加类型',
+									width : 600,
+									height : 220,
+									closed : false,
+									//resizable:true,
+									cache : false,
+									href : 'config/montype/addOrUpdate?id=-1',
+									modal : true
+								});
+							}
+						}, '-', {
+							text : '刷新',
+							iconCls : 'icon-reload',
+							handler : function() {
+								config.monType.reload();
+							}
 						}
 
-					});
-	config.monType.toolbar = [ {
-		text : '增加',
-		iconCls : 'icon-add',
-		disabled : !hasRole('ROLE_MONTYPE_EDIT'),
-		handler : function() {
-			$('#monTypeDialog').dialog({
-				title : '添加类型',
-				width : 600,
-				height : 220,
-				closed : false,
-				//resizable:true,
-				cache : false,
-				href : 'config/montype/addOrUpdate?id=-1',
-				modal : true
-			});
-		}
-	}, '-', {
-		text : '刷新',
-		iconCls : 'icon-reload',
-		handler : function() {
-			config.monType.reload();
-		}
-	}
+						]
 
-	];
+					});
 </script>
 <div class="easyui-layout" data-options="fit:true">
 	<div data-options="region:'center'" style="padding: 10px 0 10px 10px">
