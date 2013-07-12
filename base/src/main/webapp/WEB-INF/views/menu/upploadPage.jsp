@@ -14,7 +14,7 @@
     	        'swf'      : 'resources/uploadify.swf',
     	        'uploader' : 'topo/data',
     	        'folder'   : 'resources/img', 
-    	        'fileTypeExts': '*.gif; *.jpg; *.png',
+    	        'fileTypeExts': '*.png',//*.gif; *.jpg; 
     	        'cancelImg'   : 'resources/images/uploadify-cancel.png',
     	        'buttonText'     : '选择图片' ,
     	        'onUploadSuccess' : function(file, data, response) {

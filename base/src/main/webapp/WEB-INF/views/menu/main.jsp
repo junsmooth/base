@@ -24,7 +24,7 @@ z-index:-1
 			$('#mpId').dialog('close');
 		},
 		confirm:function(obj){
-			alert(obj.id+"offsetTop :"+obj.offsetTop+"offsetLeft "+obj.offsetLeft );
+			alert(obj.id+"offsetTop :"+obj.offsetTop+"offsetLeft "+obj.offsetLeft );/*  */
 		},
 		saveData:function(){
 			var divList=$("#p").children('div');
@@ -38,6 +38,15 @@ z-index:-1
 				var sId=divList[i].id;
 				jsonData[i]={"sId":sId,"x":offsetLef,"y":offsetTp};
 			}
+			
+			var bjt=$('#p').children('img');
+	 		var w=bjt.css("width");
+	 		var h=bjt.css("height");
+	 		var pos=bjt.position();
+	 		var lef=pos.left;
+	 		var top=pos.top;
+	 		jsonData[divList.length]={"w":w,"h":h,"lef":lef,"top":top};
+			
 			$.ajax({
 				type:"POST",
 				data: JSON.stringify(jsonData), 
@@ -51,17 +60,7 @@ z-index:-1
 	});
 	
 	function reloadPage(){
-	//	alert("保存成功!");
 		 $.dialog.tips("保存成功!");
-	//	msgShow('','保存成功!','info');
-	 	/* $.ajax({
-			type:"get",
-			url:"menu/addMonitorPosition"
-		}); */
-	//	$('#p').treegrid('reload');
-		//$.load("/menu/addMonitorPosition");
-	//	$("#p").load(location.href + ' #p>*');
-	
 		 window.location.reload();
 	}
 	function msgShow(title, msgString, msgType) {
@@ -69,7 +68,8 @@ z-index:-1
 	}
 	
 	function setMpPath(data){
-		var path=data[0].icon.iconPath+'/'+data[0].icon.iconName+data[0].icon.iconExtension;
+		//var path=data[0].icon.iconPath+'/'+data[0].icon.iconName+data[0].icon.iconExtension;
+		var path=data[0].icon.iconPath;
 	    var imgId;
 	    if(data[2].drawPosition!=""&&data[2].drawPosition!=null){
 	    	imgId=data[0].code+"_"+data[2].drawPosition.id+"_"+data[1];
@@ -112,17 +112,39 @@ z-index:-1
 		});
 	}
  	function showMpPic(sData){
-		for(var i=0;i<sData.length;i++){
+ 	
+ 		var posX=sData.tTopo[0].posX;
+		var posY=sData.tTopo[0].posY;
+		var oldW=sData.tTopo[0].sizeW;
+		var oldH=sData.tTopo[0].sizeH;
+		var mainPic=$("#p").children('img');
+
+		var nowW=mainPic.width();
+		var nowH=mainPic.height();
+		var wRate=nowW/oldW;	
+		var hRate=nowH/oldH;
+		var nowPositon=mainPic.position();
+		
+		var newPosX=mainPic.position().left*wRate;
+		var newPosY=mainPic.position().top*hRate;
+		
+		var resultPosX=newPosX-posX;
+		var resultPosY=newPosY-posY;
+ 	
+		for(var i=0;i<sData.mpList.length;i++){
 			var newDiv=$('<div class="easyui-draggable" ondblclick="menu.main.confirm(this)" style="background-color: white; width: 20px; height: 20px;  background-repeat: no-repeat;"></div>').appendTo('#p');
-			var path=sData[i].type.icon.iconPath+'/'+sData[i].type.icon.iconName+sData[i].type.icon.iconExtension;
-			var imgId=sData[i].type.code+"_"+sData[i].drawPosition.id+"_"+sData[i].position;
+			//var path=sData[i].type.icon.iconPath+'/'+sData[i].type.icon.iconName+sData[i].type.icon.iconExtension;
+			var path=sData.mpList[i].type.icon.iconPath;
+			var imgId=sData.mpList[i].type.code+"_"+sData.mpList[i].drawPosition.id+"_"+sData.mpList[i].position;
 			newDiv.attr('id',imgId);   
 			newDiv.css("background-image",'url('+path+')'); 
 			newDiv.css("position","absolute");
-			newDiv.css("left",sData[i].drawPosition.x+"px");
-			newDiv.css("top",sData[i].drawPosition.y+"px"); 
-			
-		
+			var x1=sData.mpList[i].drawPosition.x*wRate;
+			var y1=sData.mpList[i].drawPosition.y*hRate;
+				x1=x1+resultPosX;
+				y1=y1-resultPosY;
+			newDiv.css("left",x1+"px");
+			newDiv.css("top",y1+"px"); 
 		}
 	} 
 	
@@ -165,7 +187,7 @@ z-index:-1
 
 <div id="p" class="easyui-panel" data-options="fit:true"
 	>
-	<img id="bgimg"   src="resources/custom/images/bg.png" width="99%" height=99%/>
+	<img id="bgimg"   src="resources/custom/images/main.png" width="99%" height="99%" />
 	<!-- <div class="easyui-draggable" id="subdiv" ondblclick="menu.main.confirm(this)"
 		style="background-color: green; width: 18px; height: 18px; background-image: url(resources/custom/images/pie.png); background-repeat: no-repeat;"></div> -->
 	

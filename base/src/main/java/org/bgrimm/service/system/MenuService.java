@@ -1,6 +1,7 @@
 package org.bgrimm.service.system;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -10,9 +11,9 @@ import org.bgrimm.dao.core.impl.CommonDao;
 import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.bgrimm.common.MonitoringType;
 import org.bgrimm.domain.bgrimm.common.TDrawingPosition;
+import org.bgrimm.domain.bgrimm.common.TTopo;
 import org.bgrimm.domain.system.TIcon;
 import org.bgrimm.domain.system.TMenu;
-import org.bgrimm.utils.Constants;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Service("menuService")
 @Transactional
@@ -133,62 +132,97 @@ public class MenuService {
 	public void saveData(Object jsonData) {
 		Map map=(Map)jsonData;
 		Set<Map.Entry> set=map.entrySet();
+		int count=1;
 		for(Map.Entry me: set){
-			TDrawingPosition tdp=null;
-			Object o1=me.getKey();
-			Map  mp=(Map)me.getValue();
-			Set<Map.Entry> s=mp.entrySet();
-			String st="";
-			String mopo="";
-			long dpId=0;
-			for(Map.Entry m:s){
-				if("x".equals(m.getKey())){
-					tdp.setX((Integer)m.getValue());
-				}else if("y".equals(m.getKey())){
-					tdp.setY((Integer)m.getValue());
-				}
-				if("sId".equals(m.getKey())){
-					String str=(String)m.getValue();
-					String [] string=str.split("_");
-					int len=string.length;
-					if(len!=0&&len==3){
-						dpId=Long.parseLong(string[1]);
-						tdp=commonDao.findUniqueBy(TDrawingPosition.class, "id", dpId);
-						mopo=str.split("_")[2];
-					}else{
-						if(tdp==null){
-							tdp=new TDrawingPosition();
-						}
-						mopo=str.split("_")[1];
+			count++;
+			if(map.size()-count>=0){
+				TDrawingPosition tdp=null;
+				Object o1=me.getKey();
+				Map  mp=(Map)me.getValue();
+				Set<Map.Entry> s=mp.entrySet();
+				String st="";
+				String mopo="";
+				long dpId=0;
+				for(Map.Entry m:s){
+					if("x".equals(m.getKey())){
+						tdp.setX((Integer)m.getValue());
+					}else if("y".equals(m.getKey())){
+						tdp.setY((Integer)m.getValue());
 					}
-					 st=string[0];
+					if("sId".equals(m.getKey())){
+						String str=(String)m.getValue();
+						String [] string=str.split("_");
+						int len=string.length;
+						if(len!=0&&len==3){
+							dpId=Long.parseLong(string[1]);
+							tdp=commonDao.findUniqueBy(TDrawingPosition.class, "id", dpId);
+							mopo=str.split("_")[2];
+						}else{
+							if(tdp==null){
+								tdp=new TDrawingPosition();
+							}
+							mopo=str.split("_")[1];
+						}
+						 st=string[0];
+					}
 				}
-//				if("dpId".equals(m.getKey())){
-//					String str=(String)m.getValue();
-//					if(StringUtils.isNotEmpty(str)){
-//						dpId=Long.parseLong(str);
-//						tdp.setId(dpId);
-//					}
-//					
-//				}
+				MonitoringType t = commonDao.findUniqueBy(MonitoringType.class, "code",st);
+				List<Criterion> l=new ArrayList();
+				l.add(Restrictions.eq("type.id",t.getId()));
+				l.add(Restrictions.eq("position", Integer.parseInt(mopo)));
+				List<MonitoringPoint> li=commonDao.findByCriterions(MonitoringPoint.class, l);
+				commonDao.saveOrUpdate(tdp);
+				if(li.size()>0){
+					li.get(0).setDrawPosition(tdp);
+				}
+			}else{
+					Map  mp=(Map)me.getValue();
+					Set<Map.Entry> s=mp.entrySet();
+					TTopo tTopo=null;
+					List lis=commonDao.loadAll(TTopo.class);
+					if(lis.size()>0){
+						tTopo=(TTopo)lis.get(0);
+					}
+					if(tTopo==null){
+						tTopo=new TTopo();
+					}
+					for(Map.Entry m:s){
+						if("w".equals(m.getKey())){
+							String str=(String)m.getValue();
+							float f=Float.parseFloat(str.split("px")[0]);
+							tTopo.setSizeW(f);
+						}
+						if("h".equals(m.getKey())){
+							String str=(String)m.getValue();
+							float fl=Float.parseFloat(str.split("px")[0]);
+							tTopo.setSizeH(fl);
+						}
+						if("lef".equals(m.getKey())){
+//							float lefF=new BigDecimal((BigInteger)m.getValue()).floatValue();
+							float lefF=((Number)m.getValue()).floatValue();
+							tTopo.setPosX(lefF);
+						}
+						if("top".equals(m.getKey())){
+							float topF=((Number)m.getValue()).floatValue();
+							tTopo.setPosY(topF);
+						}
+						tTopo.setImageName("main.png");
+						
+					}
+					commonDao.saveOrUpdate(tTopo);
 				
-			}
-
-			MonitoringType t = commonDao.findUniqueBy(MonitoringType.class, "code",st);
-			List<Criterion> l=new ArrayList();
-			l.add(Restrictions.eq("type.id",t.getId()));
-			l.add(Restrictions.eq("position", Integer.parseInt(mopo)));
-			List<MonitoringPoint> li=commonDao.findByCriterions(MonitoringPoint.class, l);
-			commonDao.saveOrUpdate(tdp);
-			if(li.size()>0){
-				li.get(0).setDrawPosition(tdp);
 			}
 		}
 	}
 
-	public List getMpPic() {
+	public Map getMpPic() {
 
-		return commonDao.findByCriterions(MonitoringPoint.class, Restrictions.isNotNull("drawPosition.id"));
+		Map map=new HashMap();
+		List list= commonDao.findByCriterions(MonitoringPoint.class, Restrictions.isNotNull("drawPosition.id"));
+		List tTopoList=commonDao.loadAll(TTopo.class);
+		map.put("mpList", list);
+		map.put("tTopo", tTopoList);
+		return map;
 	}
 	
 

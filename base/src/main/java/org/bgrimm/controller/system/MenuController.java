@@ -166,7 +166,7 @@ public class MenuController {
 	
 	@RequestMapping("monitorPData")
 	@ResponseBody
-	public List monitorPDataList(){
+	public Object monitorPDataList(){
 		
 		
 		return menuService.getMonitorPDataList();
@@ -174,14 +174,14 @@ public class MenuController {
 	
 	@RequestMapping(value="/iconData",method=RequestMethod.POST)
 	@ResponseBody
-	public List iconList(@RequestParam("code")String code){
+	public Object iconList(@RequestParam("code")String code){
 		
 		return menuService.getIconList(code);
 	}
 	
 	@RequestMapping("mpPath")
 	@ResponseBody
-	public List getMPPath(@RequestParam("v")long v,@RequestParam("m")int m){
+	public Object getMPPath(@RequestParam("v")long v,@RequestParam("m")int m){
 		
 		return menuService.getMPPath(v,m);
 	}
@@ -194,7 +194,7 @@ public class MenuController {
 	
 	@RequestMapping("mpPic")
 	@ResponseBody
-	public List mpPic(){
+	public Object mpPic(){
 		
 		return menuService.getMpPic();
 	}

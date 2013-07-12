@@ -42,7 +42,7 @@ public class TopoService {
 			            
 			        String firstFileName="";   
 			        // 获得容器中上传文件夹所在的物理路径    
-			        String savePath=req.getSession().getServletContext().getRealPath("/")+"resources/custom/images\\";
+			        String savePath=req.getSession().getServletContext().getRealPath("/")+"/resources/custom/images\\";
 			        System.out.println("路径" + savePath+"; name:"+name);   
 			        File file = new File(savePath);   
 			        if (!file.isDirectory()) {   
