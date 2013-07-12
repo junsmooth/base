@@ -38,17 +38,6 @@ public class MenuController {
 		return "menu/left";
 	}
 	
-	@RequestMapping("addMonitorPosition")
-	public String MP(){
-		
-		return "menu/monitorPosition";
-	}
-
-	@RequestMapping("uppload")
-	public String uppload(Model model) {
-	
-		return "menu/upploadPage";
-	}
 	
 	public MenuService getMenuService() {
 		return menuService;
@@ -164,38 +153,5 @@ public class MenuController {
 		return result;
 	}
 	
-	@RequestMapping("monitorPData")
-	@ResponseBody
-	public Object monitorPDataList(){
-		
-		
-		return menuService.getMonitorPDataList();
-	}
-	
-	@RequestMapping(value="/iconData",method=RequestMethod.POST)
-	@ResponseBody
-	public Object iconList(@RequestParam("code")String code){
-		
-		return menuService.getIconList(code);
-	}
-	
-	@RequestMapping("mpPath")
-	@ResponseBody
-	public Object getMPPath(@RequestParam("v")long v,@RequestParam("m")int m){
-		
-		return menuService.getMPPath(v,m);
-	}
-	
-	@RequestMapping("storeMP")
-	@ResponseBody
-	public void saveMP(@RequestBody Object jsonData){
-		menuService.saveData(jsonData);
-	}
-	
-	@RequestMapping("mpPic")
-	@ResponseBody
-	public Object mpPic(){
-		
-		return menuService.getMpPic();
-	}
+
 }

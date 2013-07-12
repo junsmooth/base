@@ -12,10 +12,9 @@ z-index:-1
 	Namespace.register("menu.main", {
 		
 		addPoint:function(sValue,sMP){
-			//alert("success!");
 			$.ajax({
 				type : 'POST',
-				url:"menu/mpPath",
+				url:"topo/mpPath",
 				data:{v:sValue,m:sMP},
 				success:setMpPath
 			}); 
@@ -28,13 +27,11 @@ z-index:-1
 		},
 		saveData:function(){
 			var divList=$("#p").children('div');
-			//alert("divList: "+divList.length);
 				var arr=new Array(divList.length);
 				var jsonData={};
 			for(var i=0;i<divList.length;i++){
 				var offsetLef=divList[i].offsetLeft;
 				var offsetTp=divList[i].offsetTop;
-				//alert("sId: "+sId+"offsetLef: "+offsetLef+"offsetTp: "+offsetTp);
 				var sId=divList[i].id;
 				jsonData[i]={"sId":sId,"x":offsetLef,"y":offsetTp};
 			}
@@ -52,7 +49,7 @@ z-index:-1
 				data: JSON.stringify(jsonData), 
                 dataType: "json",
                 contentType: "application/json",
-                url:"menu/storeMP",
+                url:"topo/storeMP",
                 success:reloadPage
 			});
 		}
@@ -68,7 +65,6 @@ z-index:-1
 	}
 	
 	function setMpPath(data){
-		//var path=data[0].icon.iconPath+'/'+data[0].icon.iconName+data[0].icon.iconExtension;
 		var path=data[0].icon.iconPath;
 	    var imgId;
 	    if(data[2].drawPosition!=""&&data[2].drawPosition!=null){
@@ -88,8 +84,8 @@ z-index:-1
 		   	parentdiv.attr('id',imgId);   
 		  	parentdiv.css("background-image",'url('+path+')'); 
 			parentdiv.css("position","absolute");
-			parentdiv.css("left",x+"px");
-			parentdiv.css("top",y+"px"); 
+			parentdiv.css("left",518+"px");
+			parentdiv.css("top",262+"px"); 
 			$('#'+imgId).draggable({  
 			});  
 	    }
@@ -100,14 +96,15 @@ z-index:-1
 	}
 
  	$(function (){
- 			getMpPic();
+ 		
+ 		getMpPic();
  			
  	}
 	);
  	function getMpPic(){	
  		$.ajax({
 		type:"POST",
-		url :"menu/mpPic",
+		url :"topo/mpPic",
 		success:showMpPic
 		});
 	}
@@ -132,7 +129,7 @@ z-index:-1
 		var resultPosY=newPosY-posY;
  	
 		for(var i=0;i<sData.mpList.length;i++){
-			var newDiv=$('<div class="easyui-draggable" ondblclick="menu.main.confirm(this)" style="background-color: white; width: 20px; height: 20px;  background-repeat: no-repeat;"></div>').appendTo('#p');
+			var newDiv=$('<div class="easyui-draggable"  style="background-color: white; width: 20px; height: 20px;  background-repeat: no-repeat;"></div>').appendTo('#p');
 			//var path=sData[i].type.icon.iconPath+'/'+sData[i].type.icon.iconName+sData[i].type.icon.iconExtension;
 			var path=sData.mpList[i].type.icon.iconPath;
 			var imgId=sData.mpList[i].type.code+"_"+sData.mpList[i].drawPosition.id+"_"+sData.mpList[i].position;
@@ -167,20 +164,7 @@ z-index:-1
 	<div onclick="addMonP()">
 		添加测点
 	</div>
-	<div class="menu-sep"></div>
-	<div>
-		<span>Toolbar</span>
-		<div style="width: 150px;">
-			<div>Address</div>
-			<div>Link</div>
-			<div>Navigation Toolbar</div>
-			<div>Bookmark Toolbar</div>
-			<div class="menu-sep"></div>
-			<div>New Toolbar...</div>
-		</div>
-	</div>
-	<div data-options="iconCls:'icon-remove'">Delete</div>
-	<div>Select All</div>
+
 </div> 
 
 
@@ -188,10 +172,6 @@ z-index:-1
 <div id="p" class="easyui-panel" data-options="fit:true"
 	>
 	<img id="bgimg"   src="resources/custom/images/main.png" width="99%" height="99%" />
-	<!-- <div class="easyui-draggable" id="subdiv" ondblclick="menu.main.confirm(this)"
-		style="background-color: green; width: 18px; height: 18px; background-image: url(resources/custom/images/pie.png); background-repeat: no-repeat;"></div> -->
-	
-	
 </div>
 
 <div id="upId"></div>
@@ -208,7 +188,7 @@ z-index:-1
 		        closed: false,
 		        resizable:true,
 		        cache: false,
-		        href: 'menu/uppload',
+		        href: 'topo/uppload',
 		        modal: true
 		        }); 
 	}
@@ -221,49 +201,12 @@ z-index:-1
 	        closed: false,
 	        resizable:true,
 	        cache: false,
-	        href: 'menu/addMonitorPosition',
+	        href: 'topo/addMonitorPosition',
 	        modal: true
 	        }); 
 	}
     
-	$("#bgimg").click(function(e){
-		console.log($("#bgimg").width()+","+$("#bgimg").height());
-		 p=$("#bgimg").position();
-		 console.log("px="+p.left+",py="+p.top);
-	})
-	
-	$("#subdiv").click(function(e){
-		
-		console.log("x="+e.pageX+",y="+e.pageY);
-		 x=$("#subdiv").offset();
-		 console.log("ofx="+x.left+",ofy="+x.top);
-		
-		 p=$("#subdiv").position();
-		 console.log("px="+p.left+",py="+p.top);
-	})
-	
-	//1. image position, size
-	//2.resize image, postion ,size
-	//3.calcute new position
-	
-	
-	
-	//$("#bgimg").width(1122);
-	x=711;
-	x=643;
-	y=187;
-	y=160.7;
-	sx=1091;
-	sy=269;
-	sx1=$("#tabs").width();
-	sy1=$("#tabs").height();
-	//x=710*sx1/1091;
-	//y=147*sy1/269;
-	 $("#subdiv").css("position","absolute");
-	$("#subdiv").css("left",x+"px");
-	$("#subdiv").css("top",y+"px");
-	
-	
+
 	
 </script>
 

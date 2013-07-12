@@ -6,15 +6,15 @@
 <script>
 	 $(function(){  
 	        var typeId = $('#jclx').combobox({  
-	            url:'menu/monitorPData',  
+	            url:'topo/monitorPData',  
 	            editable:false,  
 	            valueField:'id',  
 	            textField:'name',  
 	            onSelect:function(record){  
-	                //刷新数据，重新读取省份下的城市，并清空当前输入的值  
+	                //刷新数据，重新读取数据，并清空当前输入的值  
 	                jcdlxId.combobox({  
 	                    disabled:false,  
-	                    url:'menu/iconData?code='+record.code,  
+	                    url:'topo/iconData?code='+record.code,  
 	                    valueField:'position',  
 	                    textField:'monitoringName'  
 	                }).combobox('clear');  
