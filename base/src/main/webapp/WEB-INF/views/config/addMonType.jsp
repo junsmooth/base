@@ -26,7 +26,7 @@
 					<tr>
 					<td>图标:</td>
 					<td><input id="cc" class="easyui-combobox" name="icon.id"  
-    data-options="valueField:'id',textField:'iconName',url:'icon/type/menuicon',formatter:config.montype.add.formatIcon" />   </td>
+    data-options="valueField:'id',textField:'iconName',url:'icon/menuicon',formatter:config.montype.add.formatIcon" />   </td>
 				</tr>
 			</table>
 
@@ -72,7 +72,7 @@ Namespace.register('config.montype.add',{
 		var iconPath=row.iconPath;
 		var wholeName=iconName+row.iconExtension;
 		var nameStr="<span><I><B>"+iconName+"</B></I></span>";
-		var picStr="<span><img src='"+iconPath+"/"+wholeName+"'>"+"</img></span>";
+		var picStr="<span><img src='"+iconPath+"'>"+"</img></span>";
 		return nameStr+":"+picStr;
 	}
 });

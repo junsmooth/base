@@ -23,7 +23,7 @@
 						},
 						formatIcon : function(value, row, index) {
 							if (value)
-								return '<image border="0" src='+value.iconPath+'/'+value.iconName+value.iconExtension+'/>'
+								return '<image border="0" src='+value.iconPath+'/>'
 						},
 						remove : function(value) {
 							$.messager.confirm('提示', '确定要删除吗?', function(r) {
