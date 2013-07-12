@@ -34,7 +34,7 @@
 					closable:true,
 					collapsible:true,
 				});
-				p.panel('open').panel('refresh','bmwy/chart');
+				p.panel('open').panel('refresh','topo/threedimension');
 				$('#pp').portal('add', {
 					panel:p,
 					columnIndex:0
