@@ -83,9 +83,9 @@
 	<div data-options="region:'center'">
 		<div id="tabs" class="easyui-tabs"
 			data-options="fit:true,border:false">
-			<div title="欢迎使用" style="padding: 20px; overflow: hidden;" id="home">
+			<!-- <div title="欢迎使用" style="padding: 20px; overflow: hidden;" id="home">
 
-			</div>
+			</div> -->
 		</div>
 	</div>
 

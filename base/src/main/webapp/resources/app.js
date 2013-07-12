@@ -4,6 +4,8 @@ $(function() {
 	tabCloseEven();
 	registryLogout();
 	delayRun();
+	//
+	addTab('三维地图','/topo/threedimension');
 })
 function registryLogout() {
 	$('#loginOut').click(function() {
