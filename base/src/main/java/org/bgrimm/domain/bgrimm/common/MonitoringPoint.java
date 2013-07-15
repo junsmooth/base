@@ -1,13 +1,16 @@
 package org.bgrimm.domain.bgrimm.common;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.bgrimm.domain.system.IdEntity;
 
@@ -24,6 +27,8 @@ public class MonitoringPoint extends IdEntity {
 	public String getUrl() {
 		return url;
 	}
+	@Transient
+	private Map<String,String> latestValue=new HashMap();
 
 	public void setUrl(String url) {
 		this.url = url;
@@ -65,4 +70,14 @@ public class MonitoringPoint extends IdEntity {
 		this.monitoringName = monitoringName;
 	}
 
+	public Map<String, String> getLatestValue() {
+		return latestValue;
+	}
+
+	public void setLatestValue(Map<String, String> latestValue) {
+		this.latestValue = latestValue;
+	}
+
+	
+	
 }

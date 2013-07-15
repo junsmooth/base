@@ -1,7 +1,10 @@
 package org.bgrimm.controller.system;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.bgrimm.service.system.TopoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 
 @Controller
 @RequestMapping("topo")
@@ -85,5 +89,26 @@ public class TopoController {
 	
 		return "menu/upploadPage";
 	}
+	
+	
+	@RequestMapping("mainData")
+	public @ResponseBody
+	 Object mainData(){
+		
+		try {
+			Object obj= topoService.getMainData();
+			return obj;
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ArrayList();
+		}
+	}
+//	@RequestMapping("mainData")
+//	@ResponseBody
+//	public Object mainData(){
+//		
+//		return null;
+//	}
 
 }

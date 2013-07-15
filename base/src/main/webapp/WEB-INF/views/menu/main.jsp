@@ -98,7 +98,7 @@ z-index:-1
  	$(function (){
  		
  		getMpPic();
- 			
+ 		getAllData();
  	}
 	);
  	function getMpPic(){	
@@ -108,6 +108,19 @@ z-index:-1
 		success:showMpPic
 		});
 	}
+	function getAllData() {
+		$.ajax({
+			type:"POST",
+			url:"topo/mainData",
+			//success:setData
+			
+		});
+	}
+	function setData(data){
+		
+		
+	}
+	
  	function showMpPic(sData){
  	
  		var posX=sData.tTopo[0].posX;

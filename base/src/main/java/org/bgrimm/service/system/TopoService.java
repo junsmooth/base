@@ -19,24 +19,40 @@ import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.util.Streams;
+import org.bgrimm.dao.bgrimm.T4DDBDao;
 import org.bgrimm.dao.core.impl.CommonDao;
 import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.bgrimm.common.MonitoringType;
 import org.bgrimm.domain.bgrimm.common.TDrawingPosition;
 import org.bgrimm.domain.bgrimm.common.TTopo;
+import org.bgrimm.domain.t4ddb.BMWY;
+import org.bgrimm.utils.Constants;
+import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionTemplate;
 
 @Service("topoService")
 @Transactional
 public class TopoService {
 	
 	@Autowired
+	private TransactionTemplate template;
+	
+	@Autowired
 	private CommonDao commonDao;
+	
+	@Autowired
+	private T4DDBDao t4ddbDao;
 
 	public String uploadFile(HttpServletRequest req, HttpServletResponse resp) {
 
@@ -196,7 +212,7 @@ public class TopoService {
 	public Map getMpPic() {
 
 		Map map=new HashMap();
-		List list= commonDao.findByCriterions(MonitoringPoint.class, Restrictions.isNotNull("drawPosition.id"));
+		List list= commonDao.findByCriterions(MonitoringPoint.class, Restrictions.isNotNull("drawPosition.id"));					
 		List tTopoList=commonDao.loadAll(TTopo.class);
 		map.put("mpList", list);
 		map.put("tTopo", tTopoList);
@@ -232,6 +248,49 @@ public class TopoService {
 			}
 		}
 		return li;
+	}
+
+
+	public List getMainData() {
+
+		//BMWY List
+		 MonitoringType monitoringType=commonDao.findUniqueBy(MonitoringType.class, "code", Constants.JCD_BMWY);
+		List<MonitoringPoint> dataList=commonDao.findByCriterions(MonitoringPoint.class, Restrictions.isNotNull("drawPosition.id"),
+																	Restrictions.eq("type.id", monitoringType.getId()));
+		final Integer [] posArr=new Integer [dataList.size()];
+		if(dataList.size()>0){
+			int i=0;
+			for(MonitoringPoint mp: dataList){
+				int pos=mp.getPosition();
+				posArr[i++]=pos;
+			}
+		}
+		List<BMWY> bmwyList=template.execute(new TransactionCallback() {
+			public Object doInTransaction(TransactionStatus status) {
+
+				Criteria criteria=t4ddbDao.getSession().createCriteria(BMWY.class);
+				criteria.setMaxResults(posArr.length);
+				criteria.add(Restrictions.in("monitoringPosition", posArr));
+				criteria.addOrder(Order.desc("dateTime"));
+				return criteria.list();
+			}
+		});
+		if(bmwyList.size()>0){
+			for(MonitoringPoint mp: dataList){
+				for(BMWY bmwy: bmwyList){
+					if(mp.getPosition()==bmwy.getMonitoringPosition()){
+						Map map=mp.getLatestValue();
+						map.put("de", bmwy.getdE());
+						map.put("dh", bmwy.getdH());
+						map.put("dn", bmwy.getdN());
+						map.put("bmwy", Constants.JCD_BMWY);
+					}
+				}
+			}
+		}
+		
+		
+		return dataList;
 	}
 
 }
