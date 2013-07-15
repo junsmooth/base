@@ -27,7 +27,7 @@ public class ConfigService {
 	public CommonDao commonDao;
 
 	public List<MonitoringType> getAllMonType() {
-			return commonDao.loadAll(MonitoringType.class);
+		return commonDao.loadAll(MonitoringType.class);
 	}
 
 	public void saveOrUpdateMonType(MonitoringType mon) {
@@ -41,10 +41,11 @@ public class ConfigService {
 	public void removeMonTypeById(long id) {
 		commonDao.deleteEntityById(MonitoringType.class, id);
 	}
+
 	public void removeMonPointById(long id) {
 		commonDao.deleteEntityById(MonitoringPoint.class, id);
 	}
-	
+
 	public Object getAllMonPoint(int page, int rows) {
 		PagedQuery pq = new PagedQuery(MonitoringPoint.class, page, rows);
 		List<Order> list = new ArrayList();
@@ -57,35 +58,39 @@ public class ConfigService {
 		return commonDao.findUniqueByProperty(MonitoringPoint.class, "id", pid);
 	}
 
-	public Object isValidMonPointName(String monName,String id) {
-		if(StringUtils.isNumeric(id)){
-			MonitoringPoint m1=commonDao.findUniqueByProperty(MonitoringPoint.class, "id", Long.parseLong(id));
-			if(m1.getMonitoringName().equals(monName)){
+	public Object isValidMonPointName(String monName, String id) {
+		if (StringUtils.isNumeric(id)) {
+			MonitoringPoint m1 = commonDao.findUniqueByProperty(
+					MonitoringPoint.class, "id", Long.parseLong(id));
+			if (m1.getMonitoringName().equals(monName)) {
 				return true;
 			}
 		}
-		MonitoringPoint mp=commonDao.findUniqueByProperty(MonitoringPoint.class, "monitoringName", monName);
-		if(mp==null){
+		MonitoringPoint mp = commonDao.findUniqueByProperty(
+				MonitoringPoint.class, "monitoringName", monName);
+		if (mp == null) {
 			return true;
 		}
 		return false;
 	}
 
 	public void saveOrUpdateMonPoint(MonitoringPoint mon) {
-		MonitoringType type=mon.getType();
-		if(type==null){
-			MonitoringPoint mo=commonDao.findUniqueBy(MonitoringPoint.class, "id", mon.getId());
-			type=mo.getType();
+		MonitoringType type = mon.getType();
+		if (type == null) {
+			MonitoringPoint mo = commonDao.findUniqueBy(MonitoringPoint.class,
+					"id", mon.getId());
+			type = mo.getType();
 			try {
 				org.apache.commons.beanutils.BeanUtils.copyProperties(mo, mon);
-				mon=mo;
+				mon = mo;
 				mon.setType(type);
 			} catch (Exception e) {
 				e.printStackTrace();
-			} 
-		}else{
-			String code=mon.getType().getCode();
-			type=commonDao.findUniqueByProperty(MonitoringType.class, "code", code);
+			}
+		} else {
+			String code = mon.getType().getCode();
+			type = commonDao.findUniqueByProperty(MonitoringType.class, "code",
+					code);
 		}
 		mon.setType(type);
 		commonDao.saveOrUpdate(mon);
@@ -95,6 +100,14 @@ public class ConfigService {
 		return commonDao.loadAll(MonitoringTypeAttribute.class);
 	}
 
-	
+	public void saveOrUpdate(MonitoringTypeAttribute monattr) {
+		commonDao.saveOrUpdate(monattr);
+
+	}
+
+	public MonitoringTypeAttribute getUniqueMonAttr(long id) {
+		return commonDao.findUniqueByProperty(MonitoringTypeAttribute.class,
+				"id", id);
+	}
 
 }
