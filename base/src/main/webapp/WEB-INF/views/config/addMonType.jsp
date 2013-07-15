@@ -26,7 +26,7 @@
 					<tr>
 					<td>图标:</td>
 					<td><input id="cc" class="easyui-combobox" name="icon.id"  
-    data-options="valueField:'id',textField:'iconName',url:'icon/menuicon',formatter:config.montype.add.formatIcon" />   </td>
+    data-options="required:true,valueField:'id',textField:'iconName',url:'icon/monitoricon',formatter:config.montype.add.formatIcon" />   </td>
 				</tr>
 			</table>
 
@@ -61,7 +61,7 @@ Namespace.register('config.montype.add',{
 		    	data = $.parseJSON(data);  
 		    	if(data.success){
 		    		config.monType.closeDialog();
-		    		//config.monType.reload();
+		    		config.monType.reload();
 		    		 $.dialog.tips(data.msg);
 		    	}
 		    }  
@@ -72,7 +72,7 @@ Namespace.register('config.montype.add',{
 		var iconPath=row.iconPath;
 		var wholeName=iconName+row.iconExtension;
 		var nameStr="<span><I><B>"+iconName+"</B></I></span>";
-		var picStr="<span><img src='"+iconPath+"'>"+"</img></span>";
+		var picStr="<span><img width=16px height=16px src='"+iconPath+"'>"+"</img></span>";
 		return nameStr+":"+picStr;
 	}
 });

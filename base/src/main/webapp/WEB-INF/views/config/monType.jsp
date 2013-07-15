@@ -23,11 +23,13 @@
 						},
 						formatIcon : function(value, row, index) {
 							if (value)
-								return '<image border="0" src='+value.iconPath+'/>'
+								return '<image border="0" width=16px height=16px src='+value.iconPath+'/>'
 						},
 						remove : function(value) {
-							$.messager.confirm('提示', '确定要删除吗?', function(r) {
+							$.messager.confirm('提示', '确定要删除吗?(非开发人员请勿执行此操作！)', function(r) {
 								if (r) {
+									//don't allow to delete
+									return;
 									$.post('config/montype/remove', {
 										id : value
 									},
