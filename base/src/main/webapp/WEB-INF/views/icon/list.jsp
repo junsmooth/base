@@ -48,7 +48,7 @@
 						},
 						edit : function(value) {
 							$('#iconDialog').dialog({
-								title : '修改菜单',
+								title : '修改图标',
 								width : 600,
 								height : 300,
 								closed : false,
