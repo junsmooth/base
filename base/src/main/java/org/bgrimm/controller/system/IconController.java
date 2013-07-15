@@ -1,5 +1,7 @@
 package org.bgrimm.controller.system;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,10 +35,21 @@ public class IconController {
 	public @ResponseBody
 	Object create(@Valid TIcon icon, BindingResult result) {
 		if (result.hasErrors()) {
-			return null;
+			List<ObjectError> errors = result.getAllErrors();
+			String err = "";
+			for (ObjectError e : errors) {
+				err += e.getObjectName() + ":" + e.getDefaultMessage()+"\n";
+			}
+
+			return JsonMsg.createJsonMsg(false, "操作失败", err);
 		}
-		service.saveOrUpdate(icon);
-		return JsonMsg.simpleSuccessJson();
+		try {
+			service.saveOrUpdate(icon);
+			return JsonMsg.simpleSuccessJson();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return JsonMsg.createJsonMsg(false, "操作失败", e.getMessage());
+		}
 
 	}
 

@@ -19,14 +19,14 @@
 					<td>图标类型:</td>
 					<td><input id="icon_new_type" class="easyui-combobox"
 						name="type.id"
-						data-options="required:true,valueField:'id',textField:'cnname',url:'icon/types',formatter:icon.new.formatIconType" />
+						data-options="required:true,valueField:'id',textField:'cnname',url:'icon/types',formatter:icon.new.formatIconType,onLoadSuccess:icon.new.iconTypesLoaded" />
 					</td>
 				</tr>
 				<tr>
 					<td>图标:</td>
 					<td><input id="icon_new_iconpath" type="hidden"
-						name="iconPath" value="" /><span><img id="icon_new_iconid"
-							src="" width=16px height=16px /></span></td>
+						name="iconPath" value="${icon.iconPath}" /><span><img id="icon_new_iconid"
+							src="${icon.iconPath}" width=16px height=16px /></span></td>
 					<td><input name="file_upload" id="icon_uploader" /></td>
 
 				</tr>
@@ -40,7 +40,7 @@
 		<a class="easyui-linkbutton" data-options="iconCls:'icon-ok'"
 			href="javascript:void(0)" onclick="icon.new.save(${icon.id})"> 保存
 		</a> <a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'"
-			href="javascript:void(0)" onclick="icon.new.closeDialog();"> 取消 </a>
+			href="javascript:void(0)" onclick="icon.list.closeDialog();"> 取消 </a>
 	</div>
 
 
@@ -66,6 +66,9 @@ Namespace.register("icon.new",{
 	formatIconType:function(value,row,index){
 			return value.cnname;
 	},
+	iconTypesLoaded:function(){
+		//$("#icon_new_type").combobox('select', '${icon.type.cnname}');
+	},
 	save:function(id){
 		$('#iconForm').form('submit', {  
 		    url:"icon", 
@@ -81,7 +84,11 @@ Namespace.register("icon.new",{
 		    		icon.list.reload();
 		    		 $.dialog.tips(data.msg);
 		    	}else{
-		    		
+		    		icon.list.closeDialog();
+		    		icon.list.reload();
+		    		$.dialog.tips(data.msg + ":"
+							+ data.obj, 3,
+							'error.gif');
 		    	}
 		    }  
 		});  
