@@ -17,10 +17,10 @@ import org.bgrimm.domain.bgrimm.common.AlarmColor;
 import org.bgrimm.domain.bgrimm.common.AlarmRecord;
 import org.bgrimm.domain.bgrimm.common.AlarmType;
 import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
+import org.bgrimm.domain.bgrimm.common.MonitoringTypeAttribute;
 import org.bgrimm.domain.bgrimm.common.Threshold;
 import org.bgrimm.domain.bgrimm.common.ThresholdOperation;
 import org.bgrimm.domain.system.PagedQuery;
-import org.bgrimm.domain.system.TIcon;
 import org.bgrimm.utils.Constants;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
@@ -38,8 +38,6 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
-
-import com.sun.corba.se.pept.transport.ContactInfo;
 
 @Service
 @Transactional
@@ -96,6 +94,10 @@ public class AlarmService {
 				List<Threshold> classifiedThresholds = map.get(attr);
 				Threshold effectThs = effectiveThreshold(tv,
 						classifiedThresholds);
+				// No threshold takes effect
+				if (effectThs == null) {
+					continue;
+				}
 				AlarmRecord aRecord = retriveNotClosedAlarmOfPoint(effectThs,
 						tv);
 				if (aRecord == null) {
@@ -352,8 +354,34 @@ public class AlarmService {
 
 	}
 
-	public AlarmType getUniqueObjectById(Class cls, long id) {
-		return commonDao.findUniqueBy(AlarmType.class, "id", id);
+	public Object getUniqueObjectById(Class cls, long id) {
+		return commonDao.findUniqueBy(cls, "id", id);
+	}
+
+	public Object getAllMonPoints() {
+		List<MonitoringPoint> list = commonDao.loadAll(MonitoringPoint.class);
+		// remove SP
+		List result = new ArrayList();
+		for (MonitoringPoint point : list) {
+			if (point.getType().getCode().equals(Constants.JCD_SP)) {
+				continue;
+			}
+			result.add(point);
+		}
+		return result;
+	}
+
+	public Object getPointsAttrs(long id) {
+		MonitoringPoint p = commonDao.findUniqueBy(MonitoringPoint.class, "id",
+				id);
+		long typeId = p.getType().getId();
+		List<MonitoringTypeAttribute> attrs = commonDao.findByProperty(
+				MonitoringTypeAttribute.class, "type.id", typeId);
+		return attrs;
+	}
+
+	public Object getAllOperations() {
+		return commonDao.loadAll(ThresholdOperation.class);
 	}
 
 }
