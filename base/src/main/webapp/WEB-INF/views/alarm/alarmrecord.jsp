@@ -67,34 +67,33 @@
 		},
 		reload : function() {
 			$('#monPointGrid').datagrid('reload');
+		},toolbar:[ {
+			text : '增加',
+			iconCls : 'icon-add',
+			disabled : !hasRole('ROLE_USER_EDIT'),
+			handler : function() {
+				$('#monpointdialog').dialog({
+					title : '添加监测点',
+					width : 600,
+					height : 360,
+					closed : false,
+					//resizable:true,
+					cache : false,
+					href : 'config/monpoint/addOrUpdate?id=-1',
+					modal : true
+				});
+			}
+		}, '-', {
+			text : '刷新',
+			iconCls : 'icon-reload',
+			handler : function() {
+				alarm.alarmrecord.reload();
+			}
 		}
+
+		]
 
 	});
-	alarm.alarmrecord.toolbar = [ {
-		text : '增加',
-		iconCls : 'icon-add',
-		disabled : !hasRole('ROLE_USER_EDIT'),
-		handler : function() {
-			$('#monpointdialog').dialog({
-				title : '添加监测点',
-				width : 600,
-				height : 360,
-				closed : false,
-				//resizable:true,
-				cache : false,
-				href : 'config/monpoint/addOrUpdate?id=-1',
-				modal : true
-			});
-		}
-	}, '-', {
-		text : '刷新',
-		iconCls : 'icon-reload',
-		handler : function() {
-			alarm.alarmrecord.reload();
-		}
-	}
-
-	];
 </script>
 <div class="easyui-layout" data-options="fit:true">
 	<div data-options="region:'center'" style="padding: 10px 0 10px 10px">

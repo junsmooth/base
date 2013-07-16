@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.bgrimm.dao.bgrimm.AlarmDao;
 import org.bgrimm.dao.bgrimm.T4DDBDao;
 import org.bgrimm.dao.core.impl.CommonDao;
@@ -19,6 +20,7 @@ import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.bgrimm.common.Threshold;
 import org.bgrimm.domain.bgrimm.common.ThresholdOperation;
 import org.bgrimm.domain.system.PagedQuery;
+import org.bgrimm.domain.system.TIcon;
 import org.bgrimm.utils.Constants;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
@@ -52,7 +54,7 @@ public class AlarmService {
 
 	@Autowired
 	private CommonDao commonDao;
-	
+
 	public Object getAllThreshold() {
 		return alarmDao.loadNotDeletedThresholds();
 	}
@@ -78,12 +80,12 @@ public class AlarmService {
 		List<Threshold> thresholds = alarmDao.loadNotDeletedThresholds();
 		// 2.
 		for (MonitoringPoint mp : points) {
-			if(mp.getType().getCode().equals(Constants.JCD_SP)){
+			if (mp.getType().getCode().equals(Constants.JCD_SP)) {
 				return;
 			}
 			Object pointData = getLatestPointData(mp);
-			//TODO why null point
-			if(pointData==null){
+			// TODO why null point
+			if (pointData == null) {
 				continue;
 			}
 			// for Every Attribute
@@ -293,14 +295,46 @@ public class AlarmService {
 	}
 
 	public Object getPagedAlarmRecords(TableParam param) {
-		PagedQuery pq = new PagedQuery(AlarmRecord.class, param.getPage(), param.getRows());
-		List<Order> orders=new ArrayList<Order>();
+		PagedQuery pq = new PagedQuery(AlarmRecord.class, param.getPage(),
+				param.getRows());
+		List<Order> orders = new ArrayList<Order>();
 		orders.add(Order.desc("collectTime"));
 		return alarmDao.getPagedList(pq, orders);
 	}
 
 	public Object getShowAlarmRecordList() {
-		List<AlarmRecord> alarmList=commonDao.findByCriterions(AlarmRecord.class, Restrictions.eq("closed", false));
+		List<AlarmRecord> alarmList = commonDao.findByCriterions(
+				AlarmRecord.class, Restrictions.eq("closed", false));
 		return alarmList;
+	}
+
+	public Object isValidName(String iconName, String id) {
+
+		if (StringUtils.isNumeric(id)) {
+			AlarmColor color = commonDao.findUniqueByProperty(AlarmColor.class,
+					"id", Long.parseLong(id));
+			if (color.getName().equals(iconName)) {
+				return true;
+			}
+		}
+		AlarmColor color = commonDao.findUniqueByProperty(AlarmColor.class,
+				"name", iconName);
+		if (color == null) {
+			return true;
+		}
+		return false;
+
+	}
+
+	public void saveOrUpdate(AlarmColor color) {
+		commonDao.saveOrUpdate(color);
+	}
+
+	public AlarmColor getAlarmColor(long id) {
+		return commonDao.findUniqueBy(AlarmColor.class, "id", id);
+	}
+
+	public void remove(long id) {
+		commonDao.deleteEntityById(AlarmColor.class, id);
 	}
 }
