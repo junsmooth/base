@@ -5,7 +5,7 @@ $(function() {
 	registryLogout();
 	delayRun();
 	//
-	addTab('三维地图','/topo/threedimension');
+	addTab('三维地图','topo/threedimension');
 })
 function registryLogout() {
 	$('#loginOut').click(function() {
