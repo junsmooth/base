@@ -119,18 +119,28 @@ z-index:-1
 	function setData(data){
 		
 		var bmwyArr=data.BMWY;
+		var alarmRecord=data.ALARM;
 		for(var i=0;i<bmwyArr.length;i++){
 			var d = bmwyArr[i];
 			var name = d.type.name;
-			var dn = to2bits(d.latestValue[0].dn);
-			var de = to2bits(d.latestValue[0].de);
-			var dh = to2bits(d.latestValue[0].dh);
+			var dn;
+			var de;
+			var dh;
+			if(d.latestValue==null){
+				de="当前测点无数据!";
+			}else{
+					
+				 dn = to2bits(d.latestValue[0].dn);
+				 de = to2bits(d.latestValue[0].de);
+				 dh = to2bits(d.latestValue[0].dh);
+			}
+			
 			var index = d.position;
-			var baseId =d.latestValue[0].mpName+"_"+d.drawPosition.id+"_"+d.position;
+			var baseId =d.type.code+"_"+d.drawPosition.id+"_"+d.position;
 			 $("#" + baseId).tooltip({  
 				    position: 'right',  
-				    content:  "<b>"+name+"</b>"+"<br><br>"+'横向水平位移:' +d.latestValue[0].de+"mm<br>纵向水平位移:" + d.latestValue[0].dn + "mm<br>"
-					+ '竖向位移:' + d.latestValue[0].dh + "mm",  
+				    content:  "<b>"+name+"</b>"+"<br><br>"+'横向水平位移:' +de+"mm<br>纵向水平位移:" + dn + "mm<br>"
+					+ '竖向位移:' + dh + "mm",  
 					onShow: function(){  
 				        $(this).tooltip('tip').css({  
 				            backgroundColor: '#FCFFFF',  
@@ -144,9 +154,14 @@ z-index:-1
 		for(var i=0;i<jrxArr.length;i++){
 			var d = jrxArr[i];
 			var name = d.type.name;
-			var val = to2bits(d.latestValue[0].value);
+			var val;
+			if(d.latestValue==null){
+				val="当前测点无数据!";
+			}else{
+				val = d.latestValue[0].value.toFixed(2);
+			}
 			var index = d.position;
-			var baseId =d.latestValue[0].mpName+"_"+d.drawPosition.id+"_"+d.position;
+			var baseId =d.type.code+"_"+d.drawPosition.id+"_"+d.position;
 			 $("#" + baseId).tooltip({  
 				    position: 'right',  
 				    content:  "<b>"+name+"</b>"+"<br><br>"+val + "mm<br>",
@@ -163,9 +178,14 @@ z-index:-1
 		for(var i=0;i<gtgcArr.length;i++){
 			var d = gtgcArr[i];
 			var name = d.type.name;
-			var val = to2bits(d.latestValue[0].value);
+			var val;
+			if(d.latestValue==null){
+				val="当前测点无数据!";
+			}else{
+				val = d.latestValue[0].value.toFixed(2);
+			}
 			var index = d.position;
-			var baseId =d.latestValue[0].mpName+"_"+d.drawPosition.id+"_"+d.position;
+			var baseId =d.type.code+"_"+d.drawPosition.id+"_"+d.position;
 			 $("#" + baseId).tooltip({  
 				    position: 'right',  
 				    content:  "<b>"+name+"</b>"+"<br><br>"+val + "mm<br>",
@@ -182,9 +202,14 @@ z-index:-1
 		for(var i=0;i<gtcdArr.length;i++){
 			var d = gtcdArr[i];
 			var name = d.type.name;
-			var val = to2bits(d.latestValue[0].value);
+			var val;
+			if(d.latestValue==null){
+				val="当前测点无数据!";
+			}else{
+				val = d.latestValue[0].value.toFixed(2);
+			}
 			var index = d.position;
-			var baseId =d.latestValue[0].mpName+"_"+d.drawPosition.id+"_"+d.position;
+			var baseId =d.type.code+"_"+d.drawPosition.id+"_"+d.position;
 			 $("#" + baseId).tooltip({  
 				    position: 'right',  
 				    content:  "<b>"+name+"</b>"+"<br><br>"+val + "mm<br>",
@@ -201,9 +226,14 @@ z-index:-1
 		for(var i=0;i<kswArr.length;i++){
 			var d = kswArr[i];
 			var name = d.type.name;
-			var val = to2bits(d.latestValue[0].value);
+			var val;
+			if(d.latestValue==null){
+				val="当前测点无数据!";
+			}else{
+				val = d.latestValue[0].value.toFixed(2);
+			}
 			var index = d.position;
-			var baseId =d.latestValue[0].mpName+"_"+d.drawPosition.id+"_"+d.position;
+			var baseId =d.type.code+"_"+d.drawPosition.id+"_"+d.position;
 			 $("#" + baseId).tooltip({  
 				    position: 'right',  
 				    content:  "<b>"+name+"</b>"+"<br><br>"+val + "mm<br>",
@@ -220,9 +250,14 @@ z-index:-1
 		for(var i=0;i<jylArr.length;i++){
 			var d = jylArr[i];
 			var name = d.type.name;
-			var val = to2bits(d.latestValue[0].value);
+			var val;
+			if(d.latestValue==null){
+				val="当前测点无数据!";
+			}else{
+				val = d.latestValue[0].value.toFixed(2);
+			}
 			var index = d.position;
-			var baseId =d.latestValue[0].mpName+"_"+d.drawPosition.id+"_"+d.position;
+			var baseId =d.type.code+"_"+d.drawPosition.id+"_"+d.position;
 			 $("#" + baseId).tooltip({  
 				    position: 'right',  
 				    content:  "<b>"+name+"</b>"+"<br><br>"+val + "mm<br>",
@@ -239,9 +274,14 @@ z-index:-1
 		for(var i=0;i<aqcgArr.length;i++){
 			var d = aqcgArr[i];
 			var name = d.type.name;
-			var val = to2bits(d.latestValue[0].value);
+			var val;
+			if(d.latestValue==null){
+				val="当前测点无数据!";
+			}else{
+				val = d.latestValue[0].value.toFixed(2);
+			}
 			var index = d.position;
-			var baseId =d.latestValue[0].mpName+"_"+d.drawPosition.id+"_"+d.position;
+			var baseId =d.type.code+"_"+d.drawPosition.id+"_"+d.position;
 			 $("#" + baseId).tooltip({  
 				    position: 'right',  
 				    content:  "<b>"+name+"</b>"+"<br><br>"+val + "mm<br>",
@@ -257,9 +297,14 @@ z-index:-1
 		for(var i=0;i<bdgcArr.length;i++){
 			var d = bdgcArr[i];
 			var name = d.type.name;
-			var val = to2bits(d.latestValue[0].value);
+			var val;
+			if(d.latestValue==null){
+				val="当前测点无数据!";
+			}else{
+				val = d.latestValue[0].value.toFixed(2);
+			}
 			var index = d.position;
-			var baseId =d.latestValue[0].mpName+"_"+d.drawPosition.id+"_"+d.position;
+			var baseId =d.type.code+"_"+d.drawPosition.id+"_"+d.position;
 			 $("#" + baseId).tooltip({  
 				    position: 'right',  
 				    content:  "<b>"+name+"</b>"+"<br><br>"+val + "mm<br>",
@@ -276,9 +321,14 @@ z-index:-1
 		for(var i=0;i<sllArr.length;i++){
 			var d = sllArr[i];
 			var name = d.type.name;
-			var val = to2bits(d.latestValue[0].value);
+			var val;
+			if(d.latestValue==null){
+				val="当前测点无数据!";
+			}else{
+				val = d.latestValue[0].value.toFixed(2);
+			}
 			var index = d.position;
-			var baseId =d.latestValue[0].mpName+"_"+d.drawPosition.id+"_"+d.position;
+			var baseId =d.type.code+"_"+d.drawPosition.id+"_"+d.position;
 			 $("#" + baseId).tooltip({  
 				    position: 'right',  
 				    content:  "<b>"+name+"</b>"+"<br><br>"+val + "mm<br>",
@@ -295,9 +345,14 @@ z-index:-1
 		for(var i=0;i<nbwyArr.length;i++){
 			var d = nbwyArr[i];
 			var name = d.type.name;
-			var val = to2bits(d.latestValue[0].value);
+			var val;
+			if(d.latestValue==null){
+				val="当前测点无数据!";
+			}else{
+				val = d.latestValue[0].value;
+			}
 			var index = d.position;
-			var baseId =d.latestValue[0].mpName+"_"+d.drawPosition.id+"_"+d.position;
+			var baseId =d.type.code+"_"+d.drawPosition.id+"_"+d.position;
 			 $("#" + baseId).tooltip({  
 				    position: 'right',  
 				    content:  "<b>"+name+"</b>"+"<br><br>"+val + "mm<br>",
@@ -309,13 +364,27 @@ z-index:-1
 				    } 
 				});
 		}
+		
+		for(var j=0;j<alarmRecord.length;j++){
+			
+			var d = alarmRecord[j];
+			var name = d.threshold.attr.type.name;
+		
+			var	val = d.warningContent;
+			
+			//var index = d.position;
+		 	var baseId =d.threshold.point.type.code+"_"+d.threshold.point.drawPosition.id+"_"+d.threshold.point.position;
+		
+			 $("#" + baseId).css("background-color",d.threshold.alarmType.color.code);
+		}
 	}
 	function to2bits(flt) {
-		if (parseFloat(flt) == flt) {
-			return Math.round(flt * 100) / 100;
+		 if (parseFloat(flt) == flt) {
+			return Math.round(flt * 1000.0*10.0)/10.0;
 		} else {
 			return 0;
-		}
+		} 
+		
 	}
 	
  	function showMpPic(sData){
@@ -339,7 +408,7 @@ z-index:-1
 		var resultPosY=newPosY-posY;
  	
 		for(var i=0;i<sData.mpList.length;i++){
-			var newDiv=$('<div class="easyui-draggable"  style="background-color: white; width: 20px; height: 20px;  background-repeat: no-repeat;"></div>').appendTo('#p');
+			var newDiv=$('<div class="easyui-draggable"  style="background-color: green; width: 20px; height: 20px;  background-repeat: no-repeat;"></div>').appendTo('#p');
 			//var path=sData[i].type.icon.iconPath+'/'+sData[i].type.icon.iconName+sData[i].type.icon.iconExtension;
 			var path=sData.mpList[i].type.icon.iconPath;
 			var imgId=sData.mpList[i].type.code+"_"+sData.mpList[i].drawPosition.id+"_"+sData.mpList[i].position;

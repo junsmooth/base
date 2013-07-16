@@ -21,6 +21,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.util.Streams;
 import org.bgrimm.dao.bgrimm.T4DDBDao;
 import org.bgrimm.dao.core.impl.CommonDao;
+import org.bgrimm.domain.bgrimm.common.AlarmRecord;
 import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.bgrimm.common.MonitoringType;
 import org.bgrimm.domain.bgrimm.common.TDrawingPosition;
@@ -291,6 +292,9 @@ public class TopoService {
 		//NBWY List
 		List nbwyDataList=getNBWYDataList();
 		
+		//alarmRecord List
+		List alarmRecordDataList=getAlarmRecordDataList();
+		
 		m.put(Constants.JCD_BMWY,bmwyDataList);
 		m.put(Constants.JCD_JRX, jrxDataList);
 		m.put(Constants.JCD_GTGC,gtgcDataList);
@@ -301,9 +305,14 @@ public class TopoService {
 		m.put(Constants.JCD_BDGC, bdgcDataList);
 		m.put(Constants.JCD_SLL, sllDataList);
 		m.put(Constants.JCD_NBWY, nbwyDataList);
-		
+		m.put("ALARM", alarmRecordDataList);
 		return m;
 	}
+
+	private List getAlarmRecordDataList() {
+		return commonDao.loadAll(AlarmRecord.class);
+	}
+
 
 	private List getBMWYDataList(){
 		//BMWY List
