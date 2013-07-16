@@ -1,7 +1,6 @@
 package org.bgrimm.domain.bgrimm.common;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -28,7 +27,7 @@ public class MonitoringPoint extends IdEntity {
 		return url;
 	}
 	@Transient
-	private Map<String,String> latestValue=new HashMap();
+	private List latestValue;
 
 	public void setUrl(String url) {
 		this.url = url;
@@ -70,14 +69,13 @@ public class MonitoringPoint extends IdEntity {
 		this.monitoringName = monitoringName;
 	}
 
-	public Map<String, String> getLatestValue() {
+	public List getLatestValue() {
 		return latestValue;
 	}
 
-	public void setLatestValue(Map<String, String> latestValue) {
+	public void setLatestValue(List latestValue) {
 		this.latestValue = latestValue;
 	}
 
-	
 	
 }
