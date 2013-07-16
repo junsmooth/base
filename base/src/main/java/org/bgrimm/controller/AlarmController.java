@@ -214,6 +214,18 @@ public class AlarmController {
 		return service.getAllThreshold();
 	}
 
+	@RequestMapping(value = "threshold/{id}", method = RequestMethod.DELETE)
+	public @ResponseBody
+	Object delete(@PathVariable long id) {
+		try {
+			service.disableThreshold(id);
+			return JsonMsg.simpleSuccessJson();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return JsonMsg.createJsonMsg(false, "操作失败", e.getMessage());
+		}
+	}
+	
 	@RequestMapping("alarmrecord/data")
 	public @ResponseBody
 	Object alarmRecordList(TableParam param) {

@@ -20,20 +20,20 @@
 		remove : function(value) {
 			$.messager.confirm('提示', '确定要删除吗?', function(r) {
 				if (r) {
-					$.post('user/remove', {
-						id : value
-					}, function(data) {
-						if (data.success) {
-							alarm.threshold.reload();
-							$.dialog.tips(data.msg);
-						} else {
-							$.dialog.tips(data.msg + ":" + data.obj, 600,
-									'error.gif');
-						}
+					$.ajax({
+						url : 'alarm/threshold/' + value,
+						success : function(data) {
+							if (data.success) {
+								$.dialog.tips(data.msg);
+								alarm.alarmcolor.reload();
+							} else {
+								$.dialog.tips(data.msg + ":" + data.obj, 3,
+										'error.gif');
+							}
+						},
+						type : 'DELETE'
 					});
-				} else {
-					return;
-				}
+				} 
 			});
 		},
 		edit : function(value) {

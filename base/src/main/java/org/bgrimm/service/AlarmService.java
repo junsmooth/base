@@ -384,4 +384,12 @@ public class AlarmService {
 		return commonDao.loadAll(ThresholdOperation.class);
 	}
 
+	public void disableThreshold(long id) {
+		Threshold t = commonDao.findUniqueBy(Threshold.class, "id", id);
+		if (t != null) {
+			t.setRemoved(true);
+			commonDao.saveOrUpdate(t);
+		}
+	}
+
 }
