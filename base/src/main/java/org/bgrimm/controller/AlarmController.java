@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.bgrimm.domain.bgrimm.TableParam;
 import org.bgrimm.domain.bgrimm.common.AlarmColor;
 import org.bgrimm.domain.bgrimm.common.AlarmType;
+import org.bgrimm.domain.bgrimm.common.Threshold;
 import org.bgrimm.domain.system.TIcon;
 import org.bgrimm.service.AlarmService;
 import org.bgrimm.utils.JsonMsg;
@@ -51,6 +52,28 @@ public class AlarmController {
 		}
 		try {
 			service.saveOrUpdate(color);
+			return JsonMsg.simpleSuccessJson();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return JsonMsg.createJsonMsg(false, "操作失败", e.getMessage());
+		}
+
+	}
+
+	@RequestMapping(value = "threshold", method = RequestMethod.POST)
+	public @ResponseBody
+	Object saveThreshold(@Valid Threshold threshold, BindingResult result) {
+		if (result.hasErrors()) {
+			List<ObjectError> errors = result.getAllErrors();
+			String err = "";
+			for (ObjectError e : errors) {
+				err += e.getObjectName() + ":" + e.getDefaultMessage() + "\n";
+			}
+
+			return JsonMsg.createJsonMsg(false, "操作失败", err);
+		}
+		try {
+			service.saveOrUpdate(threshold);
 			return JsonMsg.simpleSuccessJson();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -105,6 +128,39 @@ public class AlarmController {
 		}
 	}
 
+	@RequestMapping(value = "threshold/monpoints")
+	public @ResponseBody
+	Object monpoints() {
+		try {
+			return service.getAllMonPoints();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return JsonMsg.createJsonMsg(false, "操作失败", e.getMessage());
+		}
+	}
+
+	@RequestMapping(value = "threshold/ops")
+	public @ResponseBody
+	Object operations() {
+		try {
+			return service.getAllOperations();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return JsonMsg.createJsonMsg(false, "操作失败", e.getMessage());
+		}
+	}
+
+	@RequestMapping(value = "threshold/monpoints/{id}/attr")
+	public @ResponseBody
+	Object pointsAttrs(@PathVariable long id) {
+		try {
+			return service.getPointsAttrs(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return JsonMsg.createJsonMsg(false, "操作失败", e.getMessage());
+		}
+	}
+
 	@RequestMapping(value = "alarmcolor/{id}/edit", method = RequestMethod.GET)
 	public String editColor(@PathVariable long id, Model model) {
 		Object color = service.getUniqueObjectById(AlarmColor.class, id);
@@ -119,6 +175,13 @@ public class AlarmController {
 		return "alarm/newType";
 	}
 
+	@RequestMapping(value = "threshold/{id}/edit", method = RequestMethod.GET)
+	public String editThreshold(@PathVariable long id, Model model) {
+		Object threshold = service.getUniqueObjectById(Threshold.class, id);
+		model.addAttribute("threshold", threshold);
+		return "alarm/newThreshold";
+	}
+
 	@RequestMapping(value = "alarmcolor/new", method = RequestMethod.GET)
 	public String newColor() {
 		return "alarm/newColor";
@@ -127,6 +190,11 @@ public class AlarmController {
 	@RequestMapping(value = "alarmtype/new", method = RequestMethod.GET)
 	public String newType() {
 		return "alarm/newType";
+	}
+
+	@RequestMapping(value = "threshold/new", method = RequestMethod.GET)
+	public String newThreshold() {
+		return "alarm/newThreshold";
 	}
 
 	@RequestMapping("alarmtype")
@@ -139,6 +207,7 @@ public class AlarmController {
 		return "alarm/alarmrecord";
 	}
 
+	// TODO pagination
 	@RequestMapping("threshold/data")
 	public @ResponseBody
 	Object thresholdList() {

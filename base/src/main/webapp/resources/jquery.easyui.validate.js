@@ -47,6 +47,12 @@ $.extend($.fn.validatebox.defaults.rules, {
 		},
 		message : '请输入数字'
 	},
+	float:{
+			validator : function(value, param) {
+				return /^(-?\d+)(\.\d+)?$/.test(value);
+			},
+			message : '请输入数字'
+	},
 	idcard : {
 		validator : function(value, param) {
 			return idCard(value);
