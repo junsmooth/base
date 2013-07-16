@@ -326,15 +326,34 @@ public class AlarmService {
 
 	}
 
-	public void saveOrUpdate(AlarmColor color) {
+	public void saveOrUpdate(Object color) {
 		commonDao.saveOrUpdate(color);
 	}
 
-	public AlarmColor getAlarmColor(long id) {
-		return commonDao.findUniqueBy(AlarmColor.class, "id", id);
+	public void remove(Class cls, long id) {
+		commonDao.deleteEntityById(cls, id);
 	}
 
-	public void remove(long id) {
-		commonDao.deleteEntityById(AlarmColor.class, id);
+	public Object isValidTypeName(String typeName, String id) {
+
+		if (StringUtils.isNumeric(id)) {
+			AlarmType color = commonDao.findUniqueByProperty(AlarmType.class,
+					"id", Long.parseLong(id));
+			if (color.getName().equals(typeName)) {
+				return true;
+			}
+		}
+		AlarmType color = commonDao.findUniqueByProperty(AlarmType.class,
+				"name", typeName);
+		if (color == null) {
+			return true;
+		}
+		return false;
+
 	}
+
+	public AlarmType getUniqueObjectById(Class cls, long id) {
+		return commonDao.findUniqueBy(AlarmType.class, "id", id);
+	}
+
 }

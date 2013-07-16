@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.bgrimm.domain.bgrimm.TableParam;
 import org.bgrimm.domain.bgrimm.common.AlarmColor;
+import org.bgrimm.domain.bgrimm.common.AlarmType;
 import org.bgrimm.domain.system.TIcon;
 import org.bgrimm.service.AlarmService;
 import org.bgrimm.utils.JsonMsg;
@@ -57,11 +58,46 @@ public class AlarmController {
 		}
 
 	}
+
+	@RequestMapping(value = "alarmtype", method = RequestMethod.POST)
+	public @ResponseBody
+	Object saveType(@Valid AlarmType type, BindingResult result) {
+		if (result.hasErrors()) {
+			List<ObjectError> errors = result.getAllErrors();
+			String err = "";
+			for (ObjectError e : errors) {
+				err += e.getObjectName() + ":" + e.getDefaultMessage() + "\n";
+			}
+
+			return JsonMsg.createJsonMsg(false, "操作失败", err);
+		}
+		try {
+			service.saveOrUpdate(type);
+			return JsonMsg.simpleSuccessJson();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return JsonMsg.createJsonMsg(false, "操作失败", e.getMessage());
+		}
+
+	}
+
 	@RequestMapping(value = "alarmcolor/{id}", method = RequestMethod.DELETE)
 	public @ResponseBody
-	Object delete(@PathVariable long id) {
+	Object deleteColor(@PathVariable long id) {
 		try {
-			service.remove(id);
+			service.remove(AlarmColor.class, id);
+			return JsonMsg.simpleSuccessJson();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return JsonMsg.createJsonMsg(false, "操作失败", e.getMessage());
+		}
+	}
+
+	@RequestMapping(value = "alarmtype/{id}", method = RequestMethod.DELETE)
+	public @ResponseBody
+	Object deleteType(@PathVariable long id) {
+		try {
+			service.remove(AlarmType.class, id);
 			return JsonMsg.simpleSuccessJson();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -70,15 +106,27 @@ public class AlarmController {
 	}
 
 	@RequestMapping(value = "alarmcolor/{id}/edit", method = RequestMethod.GET)
-	public String editIcon(@PathVariable long id, Model model) {
-		AlarmColor color = service.getAlarmColor(id);
+	public String editColor(@PathVariable long id, Model model) {
+		Object color = service.getUniqueObjectById(AlarmColor.class, id);
 		model.addAttribute("color", color);
 		return "alarm/newColor";
+	}
+
+	@RequestMapping(value = "alarmtype/{id}/edit", method = RequestMethod.GET)
+	public String editType(@PathVariable long id, Model model) {
+		Object type = service.getUniqueObjectById(AlarmType.class, id);
+		model.addAttribute("type", type);
+		return "alarm/newType";
 	}
 
 	@RequestMapping(value = "alarmcolor/new", method = RequestMethod.GET)
 	public String newColor() {
 		return "alarm/newColor";
+	}
+
+	@RequestMapping(value = "alarmtype/new", method = RequestMethod.GET)
+	public String newType() {
+		return "alarm/newType";
 	}
 
 	@RequestMapping("alarmtype")
@@ -120,6 +168,13 @@ public class AlarmController {
 	Object validateColorName(@RequestParam("colorName") String iconName,
 			@RequestParam String id) {
 		return service.isValidName(iconName, id);
+	}
+
+	@RequestMapping("alarmtype/validateTypeName")
+	public @ResponseBody
+	Object validateTypeName(@RequestParam("typeName") String typeName,
+			@RequestParam String id) {
+		return service.isValidTypeName(typeName, id);
 	}
 
 	@RequestMapping("showAlarmrecord/data")
