@@ -112,13 +112,210 @@ z-index:-1
 		$.ajax({
 			type:"POST",
 			url:"topo/mainData",
-			//success:setData
+			success:setData
 			
 		});
 	}
 	function setData(data){
 		
+		var bmwyArr=data.BMWY;
+		for(var i=0;i<bmwyArr.length;i++){
+			var d = bmwyArr[i];
+			var name = d.type.name;
+			var dn = to2bits(d.latestValue[0].dn);
+			var de = to2bits(d.latestValue[0].de);
+			var dh = to2bits(d.latestValue[0].dh);
+			var index = d.position;
+			var baseId =d.latestValue[0].mpName+"_"+d.drawPosition.id+"_"+d.position;
+			 $("#" + baseId).tooltip({  
+				    position: 'right',  
+				    content:  "<b>"+name+"</b>"+"<br><br>"+'横向水平位移:' +d.latestValue[0].de+"mm<br>纵向水平位移:" + d.latestValue[0].dn + "mm<br>"
+					+ '竖向位移:' + d.latestValue[0].dh + "mm",  
+					onShow: function(){  
+				        $(this).tooltip('tip').css({  
+				            backgroundColor: '#FCFFFF',  
+				            borderColor: '#000000'  
+				        });  
+				    } 
+				});
+		}
 		
+		var jrxArr=data.JRX;
+		for(var i=0;i<jrxArr.length;i++){
+			var d = jrxArr[i];
+			var name = d.type.name;
+			var val = to2bits(d.latestValue[0].value);
+			var index = d.position;
+			var baseId =d.latestValue[0].mpName+"_"+d.drawPosition.id+"_"+d.position;
+			 $("#" + baseId).tooltip({  
+				    position: 'right',  
+				    content:  "<b>"+name+"</b>"+"<br><br>"+val + "mm<br>",
+					onShow: function(){  
+				        $(this).tooltip('tip').css({  
+				            backgroundColor: '#FCFFFF',  
+				            borderColor: '#000000'  
+				        });  
+				    } 
+				});
+		}
+		
+		var gtgcArr=data.GTGC;
+		for(var i=0;i<gtgcArr.length;i++){
+			var d = gtgcArr[i];
+			var name = d.type.name;
+			var val = to2bits(d.latestValue[0].value);
+			var index = d.position;
+			var baseId =d.latestValue[0].mpName+"_"+d.drawPosition.id+"_"+d.position;
+			 $("#" + baseId).tooltip({  
+				    position: 'right',  
+				    content:  "<b>"+name+"</b>"+"<br><br>"+val + "mm<br>",
+					onShow: function(){  
+				        $(this).tooltip('tip').css({  
+				            backgroundColor: '#FCFFFF',  
+				            borderColor: '#000000'  
+				        });  
+				    } 
+				});
+		}
+		
+		var gtcdArr=data.GTCD;
+		for(var i=0;i<gtcdArr.length;i++){
+			var d = gtcdArr[i];
+			var name = d.type.name;
+			var val = to2bits(d.latestValue[0].value);
+			var index = d.position;
+			var baseId =d.latestValue[0].mpName+"_"+d.drawPosition.id+"_"+d.position;
+			 $("#" + baseId).tooltip({  
+				    position: 'right',  
+				    content:  "<b>"+name+"</b>"+"<br><br>"+val + "mm<br>",
+					onShow: function(){  
+				        $(this).tooltip('tip').css({  
+				            backgroundColor: '#FCFFFF',  
+				            borderColor: '#000000'  
+				        });  
+				    } 
+				});
+		}
+		
+		var kswArr=data.KSW;
+		for(var i=0;i<kswArr.length;i++){
+			var d = kswArr[i];
+			var name = d.type.name;
+			var val = to2bits(d.latestValue[0].value);
+			var index = d.position;
+			var baseId =d.latestValue[0].mpName+"_"+d.drawPosition.id+"_"+d.position;
+			 $("#" + baseId).tooltip({  
+				    position: 'right',  
+				    content:  "<b>"+name+"</b>"+"<br><br>"+val + "mm<br>",
+					onShow: function(){  
+				        $(this).tooltip('tip').css({  
+				            backgroundColor: '#FCFFFF',  
+				            borderColor: '#000000'  
+				        });  
+				    } 
+				});
+		}
+		
+		var jylArr=data.JYL;
+		for(var i=0;i<jylArr.length;i++){
+			var d = jylArr[i];
+			var name = d.type.name;
+			var val = to2bits(d.latestValue[0].value);
+			var index = d.position;
+			var baseId =d.latestValue[0].mpName+"_"+d.drawPosition.id+"_"+d.position;
+			 $("#" + baseId).tooltip({  
+				    position: 'right',  
+				    content:  "<b>"+name+"</b>"+"<br><br>"+val + "mm<br>",
+					onShow: function(){  
+				        $(this).tooltip('tip').css({  
+				            backgroundColor: '#FCFFFF',  
+				            borderColor: '#000000'  
+				        });  
+				    } 
+				});
+		}
+		
+		var aqcgArr=data.AQCG;
+		for(var i=0;i<aqcgArr.length;i++){
+			var d = aqcgArr[i];
+			var name = d.type.name;
+			var val = to2bits(d.latestValue[0].value);
+			var index = d.position;
+			var baseId =d.latestValue[0].mpName+"_"+d.drawPosition.id+"_"+d.position;
+			 $("#" + baseId).tooltip({  
+				    position: 'right',  
+				    content:  "<b>"+name+"</b>"+"<br><br>"+val + "mm<br>",
+					onShow: function(){  
+				        $(this).tooltip('tip').css({  
+				            backgroundColor: '#FCFFFF',  
+				            borderColor: '#000000'  
+				        });  
+				    } 
+				});
+		}
+		var bdgcArr=data.BDGC;
+		for(var i=0;i<bdgcArr.length;i++){
+			var d = bdgcArr[i];
+			var name = d.type.name;
+			var val = to2bits(d.latestValue[0].value);
+			var index = d.position;
+			var baseId =d.latestValue[0].mpName+"_"+d.drawPosition.id+"_"+d.position;
+			 $("#" + baseId).tooltip({  
+				    position: 'right',  
+				    content:  "<b>"+name+"</b>"+"<br><br>"+val + "mm<br>",
+					onShow: function(){  
+				        $(this).tooltip('tip').css({  
+				            backgroundColor: '#FCFFFF',  
+				            borderColor: '#000000'  
+				        });  
+				    } 
+				});
+		}
+		
+		var sllArr=data.SLL;
+		for(var i=0;i<sllArr.length;i++){
+			var d = sllArr[i];
+			var name = d.type.name;
+			var val = to2bits(d.latestValue[0].value);
+			var index = d.position;
+			var baseId =d.latestValue[0].mpName+"_"+d.drawPosition.id+"_"+d.position;
+			 $("#" + baseId).tooltip({  
+				    position: 'right',  
+				    content:  "<b>"+name+"</b>"+"<br><br>"+val + "mm<br>",
+					onShow: function(){  
+				        $(this).tooltip('tip').css({  
+				            backgroundColor: '#FCFFFF',  
+				            borderColor: '#000000'  
+				        });  
+				    } 
+				});
+		}
+		
+		var nbwyArr=data.NBWY;
+		for(var i=0;i<nbwyArr.length;i++){
+			var d = nbwyArr[i];
+			var name = d.type.name;
+			var val = to2bits(d.latestValue[0].value);
+			var index = d.position;
+			var baseId =d.latestValue[0].mpName+"_"+d.drawPosition.id+"_"+d.position;
+			 $("#" + baseId).tooltip({  
+				    position: 'right',  
+				    content:  "<b>"+name+"</b>"+"<br><br>"+val + "mm<br>",
+					onShow: function(){  
+				        $(this).tooltip('tip').css({  
+				            backgroundColor: '#FCFFFF',  
+				            borderColor: '#000000'  
+				        });  
+				    } 
+				});
+		}
+	}
+	function to2bits(flt) {
+		if (parseFloat(flt) == flt) {
+			return Math.round(flt * 100) / 100;
+		} else {
+			return 0;
+		}
 	}
 	
  	function showMpPic(sData){

@@ -5,6 +5,8 @@ public class AttrValue {
 	private String attName;
 	private String attValue;
 	// Monitoring Time of this value
+	
+	
 	private String time;
 
 	public String getTime() {

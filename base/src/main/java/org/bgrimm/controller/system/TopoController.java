@@ -95,20 +95,9 @@ public class TopoController {
 	public @ResponseBody
 	 Object mainData(){
 		
-		try {
-			Object obj= topoService.getMainData();
-			return obj;
-		} catch (Throwable e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return new ArrayList();
-		}
+	return  topoService.getMainData();
+		
 	}
-//	@RequestMapping("mainData")
-//	@ResponseBody
-//	public Object mainData(){
-//		
-//		return null;
-//	}
+
 
 }
