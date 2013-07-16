@@ -23,7 +23,7 @@
 					<td>监测类型:</td>
 					<td><input id="new_monattr_type" class="easyui-combobox"
 						type="text"
-						name="type.id" 
+						name="type.id" value="${monattr.type.id}"
 						data-options="required:true,valueField:'id',textField:'name',url:'config/montype/data',formatter:config.monattr.add.formatMonType">
 					</td>
 				</tr>

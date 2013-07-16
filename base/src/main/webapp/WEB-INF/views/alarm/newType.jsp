@@ -25,7 +25,7 @@
 				<tr>
 					<td>颜色:</td>
 					<td><input id="new_type_color" class="easyui-combobox"
-						type="text" name="color.id" 
+						type="text" name="color.id" value="${type.color.id}"
 						data-options="required:true,valueField:'id',textField:'name',url:'alarm/alarmcolor/data'">
 					</td>
 				</tr>

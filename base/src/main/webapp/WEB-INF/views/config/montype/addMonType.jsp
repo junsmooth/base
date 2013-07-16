@@ -25,7 +25,7 @@
 				
 					<tr>
 					<td>图标:</td>
-					<td><input id="cc" class="easyui-combobox" name="icon.id"  
+					<td><input id="cc" class="easyui-combobox" name="icon.id"  value="${montype.icon.id}"
     data-options="required:true,valueField:'id',textField:'iconName',url:'icon/monitoricon',formatter:config.montype.add.formatIcon" />   </td>
 				</tr>
 			</table>
