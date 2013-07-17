@@ -23,11 +23,12 @@ public class MonitoringPoint extends IdEntity {
 	private MonitoringType type;
 	private int position;
 	private String url;
+	
+	@Transient
+	private Object mpValue;
 	public String getUrl() {
 		return url;
 	}
-	@Transient
-	private List latestValue;
 
 	public void setUrl(String url) {
 		this.url = url;
@@ -69,12 +70,12 @@ public class MonitoringPoint extends IdEntity {
 		this.monitoringName = monitoringName;
 	}
 
-	public List getLatestValue() {
-		return latestValue;
+	public Object getMpValue() {
+		return mpValue;
 	}
 
-	public void setLatestValue(List latestValue) {
-		this.latestValue = latestValue;
+	public void setMpValue(Object mpValue) {
+		this.mpValue = mpValue;
 	}
 
 	

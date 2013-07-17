@@ -26,19 +26,10 @@ import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.bgrimm.common.MonitoringType;
 import org.bgrimm.domain.bgrimm.common.TDrawingPosition;
 import org.bgrimm.domain.bgrimm.common.TTopo;
-import org.bgrimm.domain.bgrimm.monitor.extended.AQCG;
-import org.bgrimm.domain.bgrimm.monitor.extended.BDGC;
-import org.bgrimm.domain.bgrimm.monitor.provided.GTCD;
-import org.bgrimm.domain.bgrimm.monitor.provided.GTGC;
-import org.bgrimm.domain.bgrimm.monitor.provided.JRX;
-import org.bgrimm.domain.bgrimm.monitor.provided.JYL;
-import org.bgrimm.domain.bgrimm.monitor.provided.KSW;
-import org.bgrimm.domain.bgrimm.monitor.provided.NBWY;
-import org.bgrimm.domain.bgrimm.monitor.provided.SLL;
 import org.bgrimm.domain.t4ddb.BMWY;
 import org.bgrimm.utils.Constants;
 import org.hibernate.Criteria;
-import org.hibernate.criterion.Criterion;
+import org.hibernate.HibernateException;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -139,12 +130,12 @@ public class TopoService {
 			count++;
 			if(map.size()-count>=0){
 				TDrawingPosition tdp=null;
-				Object o1=me.getKey();
 				Map  mp=(Map)me.getValue();
 				Set<Map.Entry> s=mp.entrySet();
 				String st="";
 				String mopo="";
 				long dpId=0;
+				MonitoringPoint monitoringPoint=new MonitoringPoint();
 				for(Map.Entry m:s){
 					if("x".equals(m.getKey())){
 						tdp.setX((Integer)m.getValue());
@@ -153,30 +144,15 @@ public class TopoService {
 					}
 					if("sId".equals(m.getKey())){
 						String str=(String)m.getValue();
-						String [] string=str.split("_");
-						int len=string.length;
-						if(len!=0&&len==3){
-							dpId=Long.parseLong(string[1]);
-							tdp=commonDao.findUniqueBy(TDrawingPosition.class, "id", dpId);
-							mopo=str.split("_")[2];
-						}else{
-							if(tdp==null){
-								tdp=new TDrawingPosition();
-							}
-							mopo=str.split("_")[1];
+						monitoringPoint=commonDao.findUniqueBy(MonitoringPoint.class, "id", Long.parseLong(str));
+						tdp=monitoringPoint.getDrawPosition();
+						if(tdp==null){
+							tdp=new TDrawingPosition();
 						}
-						 st=string[0];
 					}
 				}
-				MonitoringType t = commonDao.findUniqueBy(MonitoringType.class, "code",st);
-				List<Criterion> l=new ArrayList();
-				l.add(Restrictions.eq("type.id",t.getId()));
-				l.add(Restrictions.eq("position", Integer.parseInt(mopo)));
-				List<MonitoringPoint> li=commonDao.findByCriterions(MonitoringPoint.class, l);
 				commonDao.saveOrUpdate(tdp);
-				if(li.size()>0){
-					li.get(0).setDrawPosition(tdp);
-				}
+				monitoringPoint.setDrawPosition(tdp);
 			}else{
 					Map  mp=(Map)me.getValue();
 					Set<Map.Entry> s=mp.entrySet();
@@ -200,7 +176,6 @@ public class TopoService {
 							tTopo.setSizeH(fl);
 						}
 						if("lef".equals(m.getKey())){
-//							float lefF=new BigDecimal((BigInteger)m.getValue()).floatValue();
 							float lefF=((Number)m.getValue()).floatValue();
 							tTopo.setPosX(lefF);
 						}
@@ -259,466 +234,75 @@ public class TopoService {
 	}
 
 
-	public Map getMainData() {
-		Map m=new HashMap();
-		
-		//BMWY list
-		List bmwyDataList=getBMWYDataList();
-		
-		//JRX List
-		List jrxDataList=getJRXDataList();
-		
-		//GTGC List
-		List gtgcDataList=getGTGCDataList();
-		
-		//GTCD List
-		List gtcdDataList=getGTCDDataList();
-		
-		//KSW List
-		List kswDataList=getKSWDataList();
-		
-		//JYL List
-		List jylDataList=getJYLDataList();
-		
-		//AQCG List
-		List aqcgDataList=getAQCGDataList();
-		
-		//BDGC List
-		List bdgcDataList=getBDGCDataList();
-		
-		//SLL List
-		List sllDataList=getSLLDataList();
-		
-		//NBWY List
-		List nbwyDataList=getNBWYDataList();
-		
-		//alarmRecord List
+	public List getMainData() {
 		List alarmRecordDataList=getAlarmRecordDataList();
-		
-		m.put(Constants.JCD_BMWY,bmwyDataList);
-		m.put(Constants.JCD_JRX, jrxDataList);
-		m.put(Constants.JCD_GTGC,gtgcDataList);
-		m.put(Constants.JCD_GTCD, gtcdDataList);
-		m.put(Constants.JCD_KSW, kswDataList);
-		m.put(Constants.JCD_JYL, jylDataList);
-		m.put(Constants.JCD_AQCG, aqcgDataList);
-		m.put(Constants.JCD_BDGC, bdgcDataList);
-		m.put(Constants.JCD_SLL, sllDataList);
-		m.put(Constants.JCD_NBWY, nbwyDataList);
-		m.put("ALARM", alarmRecordDataList);
-		return m;
+		List allDataList= getAllDataList();
+		allDataList.add(alarmRecordDataList);
+		 return allDataList;
 	}
+
+	private List getAllDataList() {
+		List<MonitoringPoint> mpDataList=commonDao.findByCriterions(MonitoringPoint.class, Restrictions.isNotNull("drawPosition.id"));
+		MonitoringType mt=commonDao.findUniqueBy(MonitoringType.class, "code", Constants.JCD_BMWY);
+		for(MonitoringPoint mp:mpDataList){
+			String code=Constants.JCD_BMWY;
+			if(code.equals(mp.getType().getCode())){
+				setBMWYData(mp);
+			}else{
+				setData(mp);
+			}
+		}
+		return mpDataList;
+	}
+
+
+	private void setData(MonitoringPoint mp) {
+
+		try {
+			String clsName=mp.getType().getDomainClsName();
+			Criteria criteria=commonDao.getSession().createCriteria(Class.forName(clsName));
+			criteria.setMaxResults(1);
+			criteria.add(Restrictions.eq("monitoringPosition", mp.getPosition()));
+			criteria.addOrder(Order.desc("dateTime"));
+			List list=criteria.list();
+			if(list.size()>0){
+				mp.setMpValue(list.get(0));
+			}
+			
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		
+	}
+
+
+	private void setBMWYData(final MonitoringPoint mp) {
+
+		List<BMWY> bmwyList=template.execute(new TransactionCallback() {
+			public Object doInTransaction(TransactionStatus status) {
+
+				Criteria criteria=t4ddbDao.getSession().createCriteria(BMWY.class);
+				criteria.setMaxResults(1);
+				criteria.add(Restrictions.eq("monitoringPosition", mp.getPosition()));
+				criteria.addOrder(Order.desc("dateTime"));
+				List list= criteria.list();
+				if(list.size()>0){
+					mp.setMpValue(list.get(0));
+				}
+				return null;
+			}
+		});
+			
+	}
+
 
 	private List getAlarmRecordDataList() {
 		return commonDao.loadAll(AlarmRecord.class);
 	}
 
-
-	private List getBMWYDataList(){
-		//BMWY List
-		 MonitoringType monitoringType=commonDao.findUniqueBy(MonitoringType.class, "code", Constants.JCD_BMWY);
-		final List<MonitoringPoint> dataList=commonDao.findByCriterions(MonitoringPoint.class, Restrictions.isNotNull("drawPosition.id"),
-																	Restrictions.eq("type.id", monitoringType.getId()));
-		final Integer [] posArr=new Integer [dataList.size()+1];
-		if(dataList.size()>0){
-			int i=0;
-			for(MonitoringPoint mp: dataList){
-				int pos=mp.getPosition();
-				posArr[i++]=pos;
-			}
-		}else{
-			posArr[0]=null;
-		}
-		List<BMWY> bmwyList=template.execute(new TransactionCallback() {
-			public Object doInTransaction(TransactionStatus status) {
-
-				Criteria criteria=t4ddbDao.getSession().createCriteria(BMWY.class);
-				criteria.setMaxResults(dataList.size());
-				criteria.add(Restrictions.in("monitoringPosition", posArr));
-				criteria.addOrder(Order.desc("dateTime"));
-				return criteria.list();
-			}
-		});
-		if(bmwyList.size()>0){
-			for(MonitoringPoint mp: dataList){
-				for(BMWY bmwy: bmwyList){
-					if(mp.getPosition()==bmwy.getMonitoringPosition()){
-						List ll=new ArrayList();
-						Map map=new HashMap();
-						map.put("de", bmwy.getdE());
-						map.put("dh", bmwy.getdH());
-						map.put("dn", bmwy.getdN());
-						map.put("mpName", Constants.JCD_BMWY);
-						ll.add(map);
-						mp.setLatestValue(ll);
-					}
-				}
-			}
-		}
-		return dataList;
-	}
-	
-	
-	private List getJRXDataList(){
-		//JRX List
-		 MonitoringType monitoringType=commonDao.findUniqueBy(MonitoringType.class, "code", Constants.JCD_JRX);
-		List<MonitoringPoint> dataList=commonDao.findByCriterions(MonitoringPoint.class, Restrictions.isNotNull("drawPosition.id"),
-																	Restrictions.eq("type.id", monitoringType.getId()));
-		 Integer [] posArr=new Integer [dataList.size()];
-		if(dataList.size()>0){
-			int i=0;
-			for(MonitoringPoint mp: dataList){
-				int pos=mp.getPosition();
-				posArr[i++]=pos;
-			}
-		}else{
-			posArr=new Integer[]{null};
-		}
-		
-		Criteria jrxCriteria=commonDao.getSession().createCriteria(JRX.class);
-		jrxCriteria.setMaxResults(posArr.length);
-		jrxCriteria.add(Restrictions.in("monitoringPosition", posArr));
-		jrxCriteria.addOrder(Order.desc("dateTime"));
-		List<JRX> jrxList=jrxCriteria.list();
-		if(jrxList.size()>0){
-			for(MonitoringPoint mp: dataList){
-				for(JRX jrx: jrxList){
-					if(mp.getPosition()==jrx.getMonitoringPosition()){
-						List ll=new ArrayList();
-						Map map=new HashMap();
-						map.put("value", jrx.getValue());
-						map.put("mpName", Constants.JCD_JRX);
-						ll.add(map);
-						mp.setLatestValue(ll);
-					}
-				}
-			}
-		}
-		return dataList;
-	}
-	
-	private List getGTGCDataList(){
-		List<MonitoringPoint> dataList=getDataList(Constants.JCD_GTGC);
-		Integer [] posArr=new Integer [dataList.size()];
-		if(dataList.size()>0){
-			int i=0;
-			for(MonitoringPoint mp: dataList){
-				int pos=mp.getPosition();
-				posArr[i++]=pos;
-			}
-		}else{
-			posArr=new Integer[]{null};
-		}
-		Criteria gtgcCriteria=commonDao.getSession().createCriteria(GTGC.class);
-		gtgcCriteria.setMaxResults(posArr.length);
-		gtgcCriteria.add(Restrictions.in("monitoringPosition", posArr));
-		gtgcCriteria.addOrder(Order.desc("dateTime"));
-		List<GTGC> gtgcList=gtgcCriteria.list();
-		if(gtgcList.size()>0){
-			for(MonitoringPoint mp: dataList){
-				for(GTGC gtgc: gtgcList){
-					if(mp.getPosition()==gtgc.getMonitoringPosition()){
-						List ll=new ArrayList();
-						Map map=new HashMap();
-						map.put("value", gtgc.getValue());
-						map.put("mpName", Constants.JCD_GTGC);
-						ll.add(map);
-						mp.setLatestValue(ll);
-					}
-				}
-			}
-		}
-		return dataList;
-	}
-
-
-	private List<MonitoringPoint> getDataList(String str) {
-		 MonitoringType monitoringType=commonDao.findUniqueBy(MonitoringType.class, "code",str);
-			
-		  return commonDao.findByCriterions(MonitoringPoint.class, Restrictions.isNotNull("drawPosition.id"),
-																		Restrictions.eq("type.id", monitoringType.getId()));
-	}
-	
-	private List getGTCDDataList(){
-		List<MonitoringPoint> dataList=getDataList(Constants.JCD_GTCD);
-		Integer [] posArr=new Integer [dataList.size()];
-		if(dataList.size()>0){
-			int i=0;
-			for(MonitoringPoint mp: dataList){
-				int pos=mp.getPosition();
-				posArr[i++]=pos;
-			}
-		}else{
-			posArr=new Integer[]{null};
-		}
-		
-		Criteria gtcdCriteria=commonDao.getSession().createCriteria(GTCD.class);
-		gtcdCriteria.setMaxResults(posArr.length);
-		gtcdCriteria.add(Restrictions.in("monitoringPosition", posArr));
-		gtcdCriteria.addOrder(Order.desc("dateTime"));
-		List<GTCD> gtcdList=gtcdCriteria.list();
-		if(gtcdList.size()>0){
-			for(MonitoringPoint mp: dataList){
-				for(GTCD gtcd: gtcdList){
-					if(mp.getPosition()==gtcd.getMonitoringPosition()){
-						List ll=new ArrayList();
-						Map map=new HashMap();
-						map.put("value", gtcd.getValue());
-						map.put("mpName", Constants.JCD_GTCD);
-						ll.add(map);
-						mp.setLatestValue(ll);
-					}
-				}
-			}
-		}
-		return dataList;
-	}
-	
-	
-	private List getKSWDataList(){
-		List<MonitoringPoint> dataList=getDataList(Constants.JCD_KSW);
-		Integer [] posArr=new Integer [dataList.size()];
-		if(dataList.size()>0){
-			int i=0;
-			for(MonitoringPoint mp: dataList){
-				int pos=mp.getPosition();
-				posArr[i++]=pos;
-			}
-		}else{
-			posArr=new Integer[]{null};
-		}
-		
-		Criteria kswCriteria=commonDao.getSession().createCriteria(KSW.class);
-		kswCriteria.setMaxResults(posArr.length);
-		kswCriteria.add(Restrictions.in("monitoringPosition", posArr));
-		kswCriteria.addOrder(Order.desc("dateTime"));
-		List<KSW> kswList=kswCriteria.list();
-		if(kswList.size()>0){
-			for(MonitoringPoint mp: dataList){
-				for(KSW ksw: kswList){
-					if(mp.getPosition()==ksw.getMonitoringPosition()){
-						List ll=new ArrayList();
-						Map map=new HashMap();
-						map.put("value", ksw.getValue());
-						map.put("mpName", Constants.JCD_KSW);
-						ll.add(map);
-						mp.setLatestValue(ll);
-					}
-				}
-			}
-		}
-		return dataList;
-	}
-	
-	private List getJYLDataList(){
-		List<MonitoringPoint> dataList=getDataList(Constants.JCD_JYL);
-		Integer [] posArr=new Integer [dataList.size()];
-		if(dataList.size()>0){
-			int i=0;
-			for(MonitoringPoint mp: dataList){
-				int pos=mp.getPosition();
-				posArr[i++]=pos;
-			}
-		}else{
-			posArr=new Integer[]{null};
-		}
-		
-		Criteria jylCriteria=commonDao.getSession().createCriteria(JYL.class);
-		jylCriteria.setMaxResults(posArr.length);
-		jylCriteria.add(Restrictions.in("monitoringPosition", posArr));
-		jylCriteria.addOrder(Order.desc("dateTime"));
-		List<JYL> jylList=jylCriteria.list();
-		if(jylList.size()>0){
-			for(MonitoringPoint mp: dataList){
-				for(JYL jyl: jylList){
-					if(mp.getPosition()==jyl.getMonitoringPosition()){
-						List ll=new ArrayList();
-						Map map=new HashMap();
-						map.put("value", jyl.getValue());
-						map.put("mpName", Constants.JCD_JYL);
-						ll.add(map);
-						mp.setLatestValue(ll);
-					}
-				}
-			}
-		}
-		return dataList;
-	}
-	
-	private List getAQCGDataList(){
-		List<MonitoringPoint> dataList=getDataList(Constants.JCD_AQCG);
-		Integer [] posArr=new Integer [dataList.size()];
-		if(dataList.size()>0){
-			int i=0;
-			for(MonitoringPoint mp: dataList){
-				int pos=mp.getPosition();
-				posArr[i++]=pos;
-			}
-		}else{
-			posArr=new Integer[]{null};
-		}
-		
-		Criteria aqcgCriteria=commonDao.getSession().createCriteria(AQCG.class);
-		aqcgCriteria.setMaxResults(posArr.length);
-		aqcgCriteria.add(Restrictions.in("monitoringPosition", posArr));
-		aqcgCriteria.addOrder(Order.desc("dateTime"));
-		List<AQCG> aqcgList=aqcgCriteria.list();
-		if(aqcgList.size()>0){
-			for(MonitoringPoint mp: dataList){
-				for(AQCG aqcg: aqcgList){
-					if(mp.getPosition()==aqcg.getMonitoringPosition()){
-						List ll=new ArrayList();
-						Map map=new HashMap();
-						map.put("value", aqcg.getValue());
-						map.put("mpName", Constants.JCD_AQCG);
-						ll.add(map);
-						mp.setLatestValue(ll);
-					}
-				}
-			}
-		}
-		return dataList;
-	}
-	
-	
-
-	
-	private List getBDGCDataList(){
-		List<MonitoringPoint> dataList=getDataList(Constants.JCD_BDGC);
-		Integer [] posArr=new Integer [dataList.size()];
-		if(dataList.size()>0){
-			int i=0;
-			for(MonitoringPoint mp: dataList){
-				int pos=mp.getPosition();
-				posArr[i++]=pos;
-			}
-		}else{
-			posArr=new Integer[]{null};
-		}
-		
-		Criteria bdgcCriteria=commonDao.getSession().createCriteria(BDGC.class);
-		bdgcCriteria.setMaxResults(posArr.length);
-		bdgcCriteria.add(Restrictions.in("monitoringPosition", posArr));
-		bdgcCriteria.addOrder(Order.desc("dateTime"));
-		List<BDGC> bdgcList=bdgcCriteria.list();
-		if(bdgcList.size()>0){
-			for(MonitoringPoint mp: dataList){
-				for(BDGC bdgc: bdgcList){
-					if(mp.getPosition()==bdgc.getMonitoringPosition()){
-						List ll=new ArrayList();
-						Map map=new HashMap();
-						map.put("value", bdgc.getValue());
-						map.put("mpName", Constants.JCD_BDGC);
-						ll.add(map);
-						mp.setLatestValue(ll);
-					}
-				}
-			}
-		}
-		return dataList;
-	}
-	
-	
-	private List getSLLDataList(){
-		List<MonitoringPoint> dataList=getDataList(Constants.JCD_SLL);
-		Integer [] posArr=new Integer [dataList.size()];
-		if(dataList.size()>0){
-			int i=0;
-			for(MonitoringPoint mp: dataList){
-				int pos=mp.getPosition();
-				posArr[i++]=pos;
-			}
-		}else{
-			posArr=new Integer[]{null};
-		}
-		
-		Criteria sllCriteria=commonDao.getSession().createCriteria(SLL.class);
-		sllCriteria.setMaxResults(posArr.length);
-		sllCriteria.add(Restrictions.in("monitoringPosition", posArr));
-		sllCriteria.addOrder(Order.desc("dateTime"));
-		List<SLL> sllList=sllCriteria.list();
-		if(sllList.size()>0){
-			for(MonitoringPoint mp: dataList){
-				for(SLL sll: sllList){
-					if(mp.getPosition()==sll.getMonitoringPosition()){
-						List ll=new ArrayList();
-						Map map=new HashMap();
-						map.put("value", sll.getValue());
-						map.put("mpName", Constants.JCD_BDGC);
-						ll.add(map);
-						mp.setLatestValue(ll);
-					}
-				}
-			}
-		}
-		return dataList;
-	}
-	
-	
-	private List getNBWYDataList(){
-		List<MonitoringPoint> dataList=getDataList(Constants.JCD_NBWY);
-		Integer [] posArr=new Integer [dataList.size()];
-		if(dataList.size()>0){
-			int i=0;
-			for(MonitoringPoint mp: dataList){
-				int pos=mp.getPosition();
-				posArr[i++]=pos;
-			}
-		}else{
-			posArr=new Integer[]{null};
-		}
-		
-		Criteria nbwyCriteria=commonDao.getSession().createCriteria(NBWY.class);
-		nbwyCriteria.setMaxResults(posArr.length);
-		nbwyCriteria.add(Restrictions.in("monitoringPosition", posArr));
-		nbwyCriteria.addOrder(Order.desc("dateTime"));
-		List<NBWY> nbwyList=nbwyCriteria.list();
-		if(nbwyList.size()>0){
-			for(MonitoringPoint mp: dataList){
-				for(NBWY nbwy: nbwyList){
-					if(mp.getPosition()==nbwy.getMonitoringPosition()){
-						List ll=new ArrayList();
-						Map map=new HashMap();
-						map.put("value", nbwy.getValue());
-						map.put("mpName", Constants.JCD_NBWY);
-						ll.add(map);
-						mp.setLatestValue(ll);
-					}
-				}
-			}
-		}
-		return dataList;
-	}
-//	private List getList(List<MonitoringPoint> dataList,Class entity,String str){
-//		Integer [] posArr=new Integer [dataList.size()];
-//		if(dataList.size()>0){
-//			int i=0;
-//			for(MonitoringPoint mp: dataList){
-//				int pos=mp.getPosition();
-//				posArr[i++]=pos;
-//			}
-//		}
-//		
-//		Criteria jrxCriteria=commonDao.getSession().createCriteria(entity);
-//		jrxCriteria.setMaxResults(posArr.length);
-//		jrxCriteria.add(Restrictions.in("monitoringPosition", posArr));
-//		jrxCriteria.addOrder(Order.desc("dateTime"));
-//		List<JRX> jrxList=jrxCriteria.list();
-//		if(jrxList.size()>0){
-//			for(MonitoringPoint mp: dataList){
-//				for(JRX jrx: jrxList){
-//					if(mp.getPosition()==jrx.getMonitoringPosition()){
-//						List ll=new ArrayList();
-//						Map map=new HashMap();
-//						map.put("value", jrx.getValue());
-//						map.put("idName", Constants.JCD_JRX);
-//						ll.add(map);
-//						mp.setLatestValue(ll);
-//					}
-//				}
-//			}
-//		}
-//		return null;
-//	}
-	
 }

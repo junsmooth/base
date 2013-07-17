@@ -47,6 +47,7 @@
 	
 </script>
 
+
 <!--   <script src="resources/highcharts.js"></script> -->
 <script src="resources/highstock.js"></script>
 <script src="resources/modules/exporting.js"></script>

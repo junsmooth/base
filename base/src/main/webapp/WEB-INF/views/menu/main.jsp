@@ -32,7 +32,7 @@ z-index:-1
 			for(var i=0;i<divList.length;i++){
 				var offsetLef=divList[i].offsetLeft;
 				var offsetTp=divList[i].offsetTop;
-				var sId=divList[i].id;
+				var sId=(divList[i].id).split("_")[1];
 				jsonData[i]={"sId":sId,"x":offsetLef,"y":offsetTp};
 			}
 			
@@ -68,28 +68,22 @@ z-index:-1
 		var path=data[0].icon.iconPath;
 	    var imgId;
 	    if(data[2].drawPosition!=""&&data[2].drawPosition!=null){
-	    	imgId=data[0].code+"_"+data[2].drawPosition.id+"_"+data[1];
-	    /* 	parentdiv.attr('id',imgId);   
-	    	parentdiv.css("background-image",'url('+path+')'); 
-	    	parentdiv.css("position","absolute");
-	    	parentdiv.css("left",data[2].drawPosition.x+"px");
-	    	parentdiv.css("top",data[2].drawPosition.y+"px"); 
-	    	alert("imgId--"+imgId+"--"); */
+	    	imgId="point_"+data[2].id;
 	    	$('#'+imgId).draggable({  
 	    		
 			});  
 	    }else{
-	        var parentdiv=$('<div class="easyui-draggable" ondblclick="menu.main.confirm(this)" style="background-color: white; width: 20px; height: 20px;  background-repeat: no-repeat;"></div>').appendTo('#p');
-	    	imgId=data[0].code+"_"+data[1];
-		   	parentdiv.attr('id',imgId);   
-		  	parentdiv.css("background-image",'url('+path+')'); 
-			parentdiv.css("position","absolute");
-			parentdiv.css("left",518+"px");
-			parentdiv.css("top",262+"px"); 
-			$('#'+imgId).draggable({  
-			});  
+	    	
+		        var parentdiv=$('<div class="easyui-draggable"  style="background-color: green; width: 20px; height: 20px;background-position:center; background-repeat: no-repeat;"></div>').appendTo('#p');
+		    	imgId="point_"+data[2].id;
+			   	parentdiv.attr('id',imgId);   
+			  	parentdiv.css("background-image",'url('+path+')'); 
+				parentdiv.css("position","absolute");
+				parentdiv.css("left",518+"px");
+				parentdiv.css("top",262+"px"); 
+				$('#'+imgId).draggable({  
+				});  
 	    }
-	    //alert("imgId: "+imgId);
 	
 	  	menu.main.closeDialog();
 	  	
@@ -116,268 +110,91 @@ z-index:-1
 			
 		});
 	}
+	
 	function setData(data){
 		
-		var bmwyArr=data.BMWY;
-		var alarmRecord=data.ALARM;
-		for(var i=0;i<bmwyArr.length;i++){
-			var d = bmwyArr[i];
-			var name = d.type.name;
-			var dn;
-			var de;
-			var dh;
-			if(d.latestValue==null){
-				de="当前测点无数据!";
-			}else{
-					
-				 dn = to2bits(d.latestValue[0].dn);
-				 de = to2bits(d.latestValue[0].de);
-				 dh = to2bits(d.latestValue[0].dh);
-			}
+		for(var i=0;i<data.length-1;i++){
 			
-			var index = d.position;
-			var baseId =d.type.code+"_"+d.drawPosition.id+"_"+d.position;
-			 $("#" + baseId).tooltip({  
-				    position: 'right',  
-				    content:  "<b>"+name+"</b>"+"<br><br>"+'横向水平位移:' +de+"mm<br>纵向水平位移:" + dn + "mm<br>"
-					+ '竖向位移:' + dh + "mm",  
-					onShow: function(){  
-				        $(this).tooltip('tip').css({  
-				            backgroundColor: '#FCFFFF',  
-				            borderColor: '#000000'  
-				        });  
-				    } 
-				});
-		}
-		
-		var jrxArr=data.JRX;
-		for(var i=0;i<jrxArr.length;i++){
-			var d = jrxArr[i];
+			var d = data[i];
 			var name = d.type.name;
-			var val;
-			if(d.latestValue==null){
-				val="当前测点无数据!";
-			}else{
-				val = d.latestValue[0].value.toFixed(2);
-			}
-			var index = d.position;
-			var baseId =d.type.code+"_"+d.drawPosition.id+"_"+d.position;
-			 $("#" + baseId).tooltip({  
-				    position: 'right',  
-				    content:  "<b>"+name+"</b>"+"<br><br>"+val + "mm<br>",
-					onShow: function(){  
-				        $(this).tooltip('tip').css({  
-				            backgroundColor: '#FCFFFF',  
-				            borderColor: '#000000'  
-				        });  
-				    } 
-				});
+			var val,de,dh,dn;
+			var baseId ="point_"+data[i].id;
+				if(d.type.code=="BMWY"){
+					if(d.mpValue==null){
+						de="当前测点没有数值!";
+					}else{
+						de=to2bits(d.mpValue.dE);
+						dh=to2bits(d.mpValue.dH);
+						dn=to2bits(d.mpValue.dN);
+					}
+					showBMWYData(baseId,name,de,dn,dh);
+				}else{
+					if(d.mpValue==null){
+						val="当前测点没有数值!";
+					}else{
+						val=d.mpValue.value.toFixed(2);
+					}
+					showOtherData(baseId,name,val);
+				}
 		}
-		
-		var gtgcArr=data.GTGC;
-		for(var i=0;i<gtgcArr.length;i++){
-			var d = gtgcArr[i];
-			var name = d.type.name;
-			var val;
-			if(d.latestValue==null){
-				val="当前测点无数据!";
-			}else{
-				val = d.latestValue[0].value.toFixed(2);
-			}
-			var index = d.position;
-			var baseId =d.type.code+"_"+d.drawPosition.id+"_"+d.position;
-			 $("#" + baseId).tooltip({  
-				    position: 'right',  
-				    content:  "<b>"+name+"</b>"+"<br><br>"+val + "mm<br>",
-					onShow: function(){  
-				        $(this).tooltip('tip').css({  
-				            backgroundColor: '#FCFFFF',  
-				            borderColor: '#000000'  
-				        });  
-				    } 
-				});
-		}
-		
-		var gtcdArr=data.GTCD;
-		for(var i=0;i<gtcdArr.length;i++){
-			var d = gtcdArr[i];
-			var name = d.type.name;
-			var val;
-			if(d.latestValue==null){
-				val="当前测点无数据!";
-			}else{
-				val = d.latestValue[0].value.toFixed(2);
-			}
-			var index = d.position;
-			var baseId =d.type.code+"_"+d.drawPosition.id+"_"+d.position;
-			 $("#" + baseId).tooltip({  
-				    position: 'right',  
-				    content:  "<b>"+name+"</b>"+"<br><br>"+val + "mm<br>",
-					onShow: function(){  
-				        $(this).tooltip('tip').css({  
-				            backgroundColor: '#FCFFFF',  
-				            borderColor: '#000000'  
-				        });  
-				    } 
-				});
-		}
-		
-		var kswArr=data.KSW;
-		for(var i=0;i<kswArr.length;i++){
-			var d = kswArr[i];
-			var name = d.type.name;
-			var val;
-			if(d.latestValue==null){
-				val="当前测点无数据!";
-			}else{
-				val = d.latestValue[0].value.toFixed(2);
-			}
-			var index = d.position;
-			var baseId =d.type.code+"_"+d.drawPosition.id+"_"+d.position;
-			 $("#" + baseId).tooltip({  
-				    position: 'right',  
-				    content:  "<b>"+name+"</b>"+"<br><br>"+val + "mm<br>",
-					onShow: function(){  
-				        $(this).tooltip('tip').css({  
-				            backgroundColor: '#FCFFFF',  
-				            borderColor: '#000000'  
-				        });  
-				    } 
-				});
-		}
-		
-		var jylArr=data.JYL;
-		for(var i=0;i<jylArr.length;i++){
-			var d = jylArr[i];
-			var name = d.type.name;
-			var val;
-			if(d.latestValue==null){
-				val="当前测点无数据!";
-			}else{
-				val = d.latestValue[0].value.toFixed(2);
-			}
-			var index = d.position;
-			var baseId =d.type.code+"_"+d.drawPosition.id+"_"+d.position;
-			 $("#" + baseId).tooltip({  
-				    position: 'right',  
-				    content:  "<b>"+name+"</b>"+"<br><br>"+val + "mm<br>",
-					onShow: function(){  
-				        $(this).tooltip('tip').css({  
-				            backgroundColor: '#FCFFFF',  
-				            borderColor: '#000000'  
-				        });  
-				    } 
-				});
-		}
-		
-		var aqcgArr=data.AQCG;
-		for(var i=0;i<aqcgArr.length;i++){
-			var d = aqcgArr[i];
-			var name = d.type.name;
-			var val;
-			if(d.latestValue==null){
-				val="当前测点无数据!";
-			}else{
-				val = d.latestValue[0].value.toFixed(2);
-			}
-			var index = d.position;
-			var baseId =d.type.code+"_"+d.drawPosition.id+"_"+d.position;
-			 $("#" + baseId).tooltip({  
-				    position: 'right',  
-				    content:  "<b>"+name+"</b>"+"<br><br>"+val + "mm<br>",
-					onShow: function(){  
-				        $(this).tooltip('tip').css({  
-				            backgroundColor: '#FCFFFF',  
-				            borderColor: '#000000'  
-				        });  
-				    } 
-				});
-		}
-		var bdgcArr=data.BDGC;
-		for(var i=0;i<bdgcArr.length;i++){
-			var d = bdgcArr[i];
-			var name = d.type.name;
-			var val;
-			if(d.latestValue==null){
-				val="当前测点无数据!";
-			}else{
-				val = d.latestValue[0].value.toFixed(2);
-			}
-			var index = d.position;
-			var baseId =d.type.code+"_"+d.drawPosition.id+"_"+d.position;
-			 $("#" + baseId).tooltip({  
-				    position: 'right',  
-				    content:  "<b>"+name+"</b>"+"<br><br>"+val + "mm<br>",
-					onShow: function(){  
-				        $(this).tooltip('tip').css({  
-				            backgroundColor: '#FCFFFF',  
-				            borderColor: '#000000'  
-				        });  
-				    } 
-				});
-		}
-		
-		var sllArr=data.SLL;
-		for(var i=0;i<sllArr.length;i++){
-			var d = sllArr[i];
-			var name = d.type.name;
-			var val;
-			if(d.latestValue==null){
-				val="当前测点无数据!";
-			}else{
-				val = d.latestValue[0].value.toFixed(2);
-			}
-			var index = d.position;
-			var baseId =d.type.code+"_"+d.drawPosition.id+"_"+d.position;
-			 $("#" + baseId).tooltip({  
-				    position: 'right',  
-				    content:  "<b>"+name+"</b>"+"<br><br>"+val + "mm<br>",
-					onShow: function(){  
-				        $(this).tooltip('tip').css({  
-				            backgroundColor: '#FCFFFF',  
-				            borderColor: '#000000'  
-				        });  
-				    } 
-				});
-		}
-		
-		var nbwyArr=data.NBWY;
-		for(var i=0;i<nbwyArr.length;i++){
-			var d = nbwyArr[i];
-			var name = d.type.name;
-			var val;
-			if(d.latestValue==null){
-				val="当前测点无数据!";
-			}else{
-				val = d.latestValue[0].value;
-			}
-			var index = d.position;
-			var baseId =d.type.code+"_"+d.drawPosition.id+"_"+d.position;
-			 $("#" + baseId).tooltip({  
-				    position: 'right',  
-				    content:  "<b>"+name+"</b>"+"<br><br>"+val + "mm<br>",
-					onShow: function(){  
-				        $(this).tooltip('tip').css({  
-				            backgroundColor: '#FCFFFF',  
-				            borderColor: '#000000'  
-				        });  
-				    } 
-				});
-		}
-		
-		for(var j=0;j<alarmRecord.length;j++){
+		var alarmRecord=data[data.length-1];
+		 for(var j=0;j<alarmRecord.length;j++){
 			
-			var d = alarmRecord[j];
-			var name = d.threshold.attr.type.name;
+			var alarm = alarmRecord[j];
+			var name = alarm.threshold.attr.type.name;
 		
-			var	val = d.warningContent;
+			var	val = alarm.warningContent;
 			
 			//var index = d.position;
-		 	var baseId =d.threshold.point.type.code+"_"+d.threshold.point.drawPosition.id+"_"+d.threshold.point.position;
+		 	var baseId ="point_"+alarm.threshold.point.id;
 		
-			 $("#" + baseId).css("background-color",d.threshold.alarmType.color.code);
-		}
+			 $("#" + baseId).css("background-color",alarm.threshold.alarmType.color.code);
+			 
+			/*   if(alarm.threshold.attr.type.code=="BMWY"){
+				 
+			 }
+			 else{
+				 $("#" + baseId).tooltip({  
+					    position: 'right',  
+					    content:  "<b>"+name+"</b>"+"<br><br>"+"<font color='"+alarm.threshold.alarmType.color.code+"'>"+val+"</font>" + "mm<br>",
+						onShow: function(){  
+					        $(this).tooltip('tip').css({  
+					            backgroundColor: '#FCFFFF',  
+					            borderColor: '#000000'  
+					        });  
+					    } 
+					}); 
+			 } */
+		} 
 	}
+	
+	function showBMWYData(baseId,name,de,dn,dh){
+		 $("#" + baseId).tooltip({  
+			    position: 'right',  
+			    content:  "<b>"+name+"</b>"+"<br><br>"+'横向水平位移:' +de+"mm<br>纵向水平位移:" + dn + "mm<br>"
+				+ '竖向位移:' + dh + "mm",  
+				onShow: function(){  
+			        $(this).tooltip('tip').css({  
+			            backgroundColor: '#FCFFFF',  
+			            borderColor: '#000000'  
+			        });  
+			    } 
+			});
+	}
+	
+	function showOtherData(baseId,name,val){
+		 $("#" + baseId).tooltip({  
+			    position: 'right',  
+			    content:  "<b>"+name+"</b>"+"<br><br>"+val + "mm<br>",
+				onShow: function(){  
+			        $(this).tooltip('tip').css({  
+			            backgroundColor: '#FCFFFF',  
+			            borderColor: '#000000'  
+			        });  
+			    } 
+			});
+	}
+	
 	function to2bits(flt) {
 		 if (parseFloat(flt) == flt) {
 			return Math.round(flt * 1000.0*10.0)/10.0;
@@ -401,26 +218,30 @@ z-index:-1
 		var hRate=nowH/oldH;
 		var nowPositon=mainPic.position();
 		
-		var newPosX=mainPic.position().left*wRate;
-		var newPosY=mainPic.position().top*hRate;
+		var newPosX=posX*wRate;
+		var newPosY=posY*hRate;
 		
 		var resultPosX=newPosX-posX;
 		var resultPosY=newPosY-posY;
  	
+		
 		for(var i=0;i<sData.mpList.length;i++){
-			var newDiv=$('<div class="easyui-draggable"  style="background-color: green; width: 20px; height: 20px;  background-repeat: no-repeat;"></div>').appendTo('#p');
+			var newDiv=$('<div class="easyui-draggable"  style="background-color: green; width: 20px; height: 20px;background-position:center;background-repeat: no-repeat;"></div>').appendTo('#p');
 			//var path=sData[i].type.icon.iconPath+'/'+sData[i].type.icon.iconName+sData[i].type.icon.iconExtension;
 			var path=sData.mpList[i].type.icon.iconPath;
-			var imgId=sData.mpList[i].type.code+"_"+sData.mpList[i].drawPosition.id+"_"+sData.mpList[i].position;
+			//var imgId=sData.mpList[i].type.code+"_"+sData.mpList[i].drawPosition.id+"_"+sData.mpList[i].position;
+			var imgId="point_"+sData.mpList[i].id;
 			newDiv.attr('id',imgId);   
 			newDiv.css("background-image",'url('+path+')'); 
 			newDiv.css("position","absolute");
-			var x1=sData.mpList[i].drawPosition.x*wRate;
-			var y1=sData.mpList[i].drawPosition.y*hRate;
+			var x1=(sData.mpList[i].drawPosition.x+10)*wRate;
+			var y1=(sData.mpList[i].drawPosition.y+10)*hRate;
 				x1=x1+resultPosX;
-				y1=y1-resultPosY;
-			newDiv.css("left",x1+"px");
-			newDiv.css("top",y1+"px"); 
+				y1=y1-resultPosY; 
+/* 				x1=(sData.mpList[i].drawPosition.x+10-posX)*wRate+newPosX;
+				y1=(sData.mpList[i].drawPosition.y+10-posY)*hRate+newPosY; */
+			newDiv.css("left",x1-10+"px");
+			newDiv.css("top",y1-10+"px"); 
 		}
 	} 
 	
@@ -445,7 +266,6 @@ z-index:-1
 	</div>
 
 </div> 
-
 
 
 <div id="p" class="easyui-panel" data-options="fit:true"
