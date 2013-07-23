@@ -1,7 +1,5 @@
 package org.bgrimm.controller.system;
 
-import java.util.ArrayList;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -97,6 +95,13 @@ public class TopoController {
 		
 	return  topoService.getMainData();
 		
+	}
+	
+	@RequestMapping(value="deletePic",method=RequestMethod.POST)
+	public @ResponseBody
+	Object deletePic(@RequestParam("imgId")Long imgId){
+		topoService.deletePic(imgId);
+		return "SUCCESS";
 	}
 
 

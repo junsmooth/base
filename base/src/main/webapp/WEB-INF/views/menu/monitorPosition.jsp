@@ -33,8 +33,8 @@
 			//alert(".....");
 			var sValue=$("#jclx").datetimebox('getValue');
 			var sMP=$("#jcdlx").datetimebox('getValue');
-		//	alert("sMP: "+sMP);
-		//	alert("setValue:"+sValue);
+			//alert("sMP: "+sMP);
+			//alert("setValue:"+sValue);
 			if(sValue!=null){
 				menu.main.addPoint(sValue,sMP);
 			}

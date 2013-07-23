@@ -19,6 +19,7 @@ import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.util.Streams;
+import org.apache.commons.lang3.StringUtils;
 import org.bgrimm.dao.bgrimm.T4DDBDao;
 import org.bgrimm.dao.core.impl.CommonDao;
 import org.bgrimm.domain.bgrimm.common.AlarmRecord;
@@ -211,7 +212,7 @@ public class TopoService {
 		MonitoringType t = commonDao.findUniqueBy(MonitoringType.class, "code",
 				code);
 		final List<MonitoringPoint> point = commonDao.findByCriterions(
-				MonitoringPoint.class, Restrictions.eq("type.id", t.getId()));
+				MonitoringPoint.class, Restrictions.eq("type.id", t.getId()),Restrictions.isNull("drawPosition.id"));
 	
 		return point;
 	}
@@ -222,7 +223,7 @@ public class TopoService {
 		List l=new ArrayList();
 		l.add(Restrictions.eq("type.id", v));
 		l.add(Restrictions.eq("position", m));
-		List list=commonDao.findByCriterions(MonitoringPoint.class, l);
+		List list=commonDao.findByCriterions(MonitoringPoint.class, Restrictions.eq("type.id", v),Restrictions.eq("position", m));
 		if(li.size()>0){
 			li.add(m);
 			if(list.size()>0){
@@ -260,15 +261,16 @@ public class TopoService {
 
 		try {
 			String clsName=mp.getType().getDomainClsName();
-			Criteria criteria=commonDao.getSession().createCriteria(Class.forName(clsName));
-			criteria.setMaxResults(1);
-			criteria.add(Restrictions.eq("monitoringPosition", mp.getPosition()));
-			criteria.addOrder(Order.desc("dateTime"));
-			List list=criteria.list();
-			if(list.size()>0){
-				mp.setMpValue(list.get(0));
+			if(StringUtils.isNotEmpty(clsName)){
+				Criteria criteria=commonDao.getSession().createCriteria(Class.forName(clsName));
+				criteria.setMaxResults(1);
+				criteria.add(Restrictions.eq("monitoringPosition", mp.getPosition()));
+				criteria.addOrder(Order.desc("dateTime"));
+				List list=criteria.list();
+				if(list.size()>0){
+					mp.setMpValue(list.get(0));
+				}
 			}
-			
 		} catch (SecurityException e) {
 			e.printStackTrace();
 		} catch (HibernateException e) {
@@ -303,6 +305,16 @@ public class TopoService {
 
 	private List getAlarmRecordDataList() {
 		return commonDao.loadAll(AlarmRecord.class);
+	}
+
+
+	public void deletePic(Long imgId) {
+
+		MonitoringPoint mPoint=commonDao.findUniqueBy(MonitoringPoint.class, "id", imgId);
+		long id=mPoint.getDrawPosition().getId();
+		mPoint.setDrawPosition(null);
+		commonDao.save(mPoint);
+		commonDao.deleteEntityById(TDrawingPosition.class, id);
 	}
 
 }

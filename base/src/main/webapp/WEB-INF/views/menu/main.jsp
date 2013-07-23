@@ -52,13 +52,16 @@ z-index:-1
                 url:"topo/storeMP",
                 success:reloadPage
 			});
+		},
+		mpUrl:function(value){
+			alert("url");
 		}
 		
 	});
 	
 	function reloadPage(){
 		 $.dialog.tips("保存成功!");
-		 window.location.reload();
+	 		refreshCurrentPage();
 	}
 	function msgShow(title, msgString, msgType) {
 		$.messager.alert(title, msgString, msgType);
@@ -67,6 +70,16 @@ z-index:-1
 	function setMpPath(data){
 		var path=data[0].icon.iconPath;
 	    var imgId;
+	    var childDivList=$("#p").children("div");
+	    for(var j=0;j<childDivList.length;j++){
+				var strId=childDivList[j].id;
+				var id=strId.split("_")[1];
+				if(id==data[2].id){
+					//alert("当前测点页面已存在!");
+					$.messager.alert('','当前测点页面已存在!');  
+					return;
+				}
+	    }
 	    if(data[2].drawPosition!=""&&data[2].drawPosition!=null){
 	    	imgId="point_"+data[2].id;
 	    	$('#'+imgId).draggable({  
@@ -74,7 +87,7 @@ z-index:-1
 			});  
 	    }else{
 	    	
-		        var parentdiv=$('<div class="easyui-draggable"  style="background-color: green; width: 20px; height: 20px;background-position:center; background-repeat: no-repeat;"></div>').appendTo('#p');
+		        var parentdiv=$('<div class="easyui-draggable" contextmenu="clickRightButton(this)" style="background-color: black; width: 20px; height: 20px;background-position:center; background-repeat: no-repeat;"></div>').appendTo('#p');
 		    	imgId="point_"+data[2].id;
 			   	parentdiv.attr('id',imgId);   
 			  	parentdiv.css("background-image",'url('+path+')'); 
@@ -83,6 +96,29 @@ z-index:-1
 				parentdiv.css("top",262+"px"); 
 				$('#'+imgId).draggable({  
 				});  
+				document.getElementById(imgId).oncontextmenu=function(event) {  
+					    if (document.all) window.event.returnValue = false;// for IE  
+					    else event.preventDefault();  
+					    $.messager.confirm('','你确定要删除当前图片?',function(r){  
+						    if (r){  
+						    	$("#"+imgId).remove();
+						    }  
+						});
+					}; 
+					
+					$("#"+imgId).mouseover(function(){
+						
+						 $("#" + imgId).tooltip({  
+							    position: 'right',  
+							    content:data[2].monitoringName,
+								onShow: function(){  
+							        $(this).tooltip('tip').css({  
+							            backgroundColor: '#FCFFFF',  
+							            borderColor: '#000000'  
+							        });  
+							    } 
+							});
+						});
 	    }
 	
 	  	menu.main.closeDialog();
@@ -116,7 +152,7 @@ z-index:-1
 		for(var i=0;i<data.length-1;i++){
 			
 			var d = data[i];
-			var name = d.type.name;
+			var name = d.monitoringName;
 			var val,de,dh,dn;
 			var baseId ="point_"+data[i].id;
 				if(d.type.code=="BMWY"){
@@ -128,6 +164,11 @@ z-index:-1
 						dn=to2bits(d.mpValue.dN);
 					}
 					showBMWYData(baseId,name,de,dn,dh);
+				}else if(d.url!=null&&d.url!=""){
+						var link=document.getElementById(baseId);
+						var ul=d.url;
+						link.setAttribute("onclick","spMonitor('"+ul+"')");
+					
 				}else{
 					if(d.mpValue==null){
 						val="当前测点没有数值!";
@@ -145,27 +186,17 @@ z-index:-1
 		
 			var	val = alarm.warningContent;
 			
-			//var index = d.position;
 		 	var baseId ="point_"+alarm.threshold.point.id;
 		
 			 $("#" + baseId).css("background-color",alarm.threshold.alarmType.color.code);
 			 
-			/*   if(alarm.threshold.attr.type.code=="BMWY"){
-				 
-			 }
-			 else{
-				 $("#" + baseId).tooltip({  
-					    position: 'right',  
-					    content:  "<b>"+name+"</b>"+"<br><br>"+"<font color='"+alarm.threshold.alarmType.color.code+"'>"+val+"</font>" + "mm<br>",
-						onShow: function(){  
-					        $(this).tooltip('tip').css({  
-					            backgroundColor: '#FCFFFF',  
-					            borderColor: '#000000'  
-					        });  
-					    } 
-					}); 
-			 } */
 		} 
+	}
+	
+	function spMonitor(ul){
+		
+		//addTab('视频',ul,'');
+		window.open(ul);
 	}
 	
 	function showBMWYData(baseId,name,de,dn,dh){
@@ -227,9 +258,7 @@ z-index:-1
 		
 		for(var i=0;i<sData.mpList.length;i++){
 			var newDiv=$('<div class="easyui-draggable"  style="background-color: green; width: 20px; height: 20px;background-position:center;background-repeat: no-repeat;"></div>').appendTo('#p');
-			//var path=sData[i].type.icon.iconPath+'/'+sData[i].type.icon.iconName+sData[i].type.icon.iconExtension;
 			var path=sData.mpList[i].type.icon.iconPath;
-			//var imgId=sData.mpList[i].type.code+"_"+sData.mpList[i].drawPosition.id+"_"+sData.mpList[i].position;
 			var imgId="point_"+sData.mpList[i].id;
 			newDiv.attr('id',imgId);   
 			newDiv.css("background-image",'url('+path+')'); 
@@ -238,18 +267,62 @@ z-index:-1
 			var y1=(sData.mpList[i].drawPosition.y+10)*hRate;
 				x1=x1+resultPosX;
 				y1=y1-resultPosY; 
-/* 				x1=(sData.mpList[i].drawPosition.x+10-posX)*wRate+newPosX;
-				y1=(sData.mpList[i].drawPosition.y+10-posY)*hRate+newPosY; */
 			newDiv.css("left",x1-10+"px");
 			newDiv.css("top",y1-10+"px"); 
 		}
 	} 
 	
  	function editDiv(){
+ 		document.getElementById("editId").style.display="";
  		var divList=$("#p").children('div');
  		for(var i=0;i<divList.length;i++){
  			$('#'+divList[i].id).draggable({});
+ 			$('#'+divList[i].id).css("background-color","black");
+ 			document.getElementById(divList[i].id).oncontextmenu=function(event) {
+ 				var divId=this.id;
+			    if (document.all) window.event.returnValue = false;// for IE  
+			    else event.preventDefault();  
+			    $.messager.confirm('','你确定要删除当前图片?',function(r){  
+				    if (r){  
+				    	$("#"+divId).remove();
+				    	$.ajax({
+				    		type:"post",
+				    		data:{imgId:divId.split("_")[1]},
+				    		url:"topo/deletePic"
+				    		
+				    	}); 
+				    }  
+				});
+			}; 
+			
+			//delete sp onclick event 
+			    var oncl=$('#'+divList[i].id).attr("onclick");
+			  //  alert(oncl!=undefined);
+				if(oncl!=undefined){
+					$('#'+divList[i].id).removeAttr("onclick");
+				}			
+
  		}
+ 	}
+ 	
+ 	function cancelEdit(){
+ 		document.getElementById("editId").style.display="none";
+ 		refreshCurrentPage();
+ 	  
+ 	}
+ 	
+ 	
+ 	function refreshCurrentPage(){
+ 		 var tab = $('#tabs').tabs('getSelected');
+
+  	    $("#tabs").tabs('getTab',{
+  	        tab: tab,
+  	        options: {
+
+  	            href: 'topo/main'
+  	        }
+  	    });
+  	    tab.panel('refresh');
  	}
 </script>
 <div style="padding: 5px;  ">
@@ -257,6 +330,7 @@ z-index:-1
 		data-options="menu:'#mm1',iconCls:'icon-edit'">工具</a>  
 	<a href="javascript:void(0)" class="easyui-linkbutton" plain="true" onclick="menu.main.saveData()" >保存</a>  
 	<a href="javascript:void(0)" class="easyui-linkbutton" plain="true" onclick="editDiv()">编辑</a>  
+	<a id="editId" href="javascript:void(0)" class="easyui-linkbutton" plain="true" onclick="cancelEdit()" style="display:none;">取消</a>  
 </div>
 <div id="mm1" style="width: 150px;">
 	<div class="menu-sep"></div>
@@ -277,6 +351,25 @@ z-index:-1
 <div id="mpId"></div>
 
 <div id="picId"></div>
+
+<!-- <div id="imgMenu" class="easyui-menu" style="width:120px;">    
+  <div onclick="delImg(this)">New</div>    
+  <div>    
+      <span>Open</span>    
+      <div style="width:150px;">    
+          <div><b>Word</b></div>    
+          <div>Excel</div>    
+          <div>PowerPoint</div>    
+      </div>    
+  </div>    
+  <div iconCls="icon-save">Save</div>    
+  <div class="menu-sep"></div>    
+  <div>Exit</div>    
+</div>  -->  
+<div id="tt"></div>
+<div id="promptDiv" class="promptStyle">
+        This is prompt div.
+    </div>
 <script>
 
 	function addPic(){
