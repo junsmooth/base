@@ -116,6 +116,7 @@ public class JRXService {
 	public List getJrxChartData(TableParam param) {
 		Criteria criteria=commonDao.getSession().createCriteria(JRX.class);
 		List li= getJRXChartData(criteria, param);
+		setDecimalDigits(li);
 		if(li.size()>Constants.MAXIMUM_ALLOWED_VALUE){
 			Criteria tCriteria=commonDao.getSession().createCriteria(TJRX.class);
 			List tList=getJRXChartData(tCriteria,param);

@@ -66,7 +66,7 @@
 						data-options="field:'point',width:80,align:'left',formatter:gtcd.list.formatGTCDPoint">
 						测点</th>
 					<th data-options="field:'value',formatter:gtcd.list.formatGTCDValue,width:120,align:'left'">
-						深度</th>
+						深度(m)</th>
 
 				</tr>
 			</thead>

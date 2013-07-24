@@ -67,7 +67,7 @@
 						data-options="field:'point',width:80,align:'left',formatter:ksw.list.formatKSWPoint">
 						测点</th>
 					<th data-options="field:'value',formatter:ksw.list.formatKSWValue,width:120,align:'left'">
-						深度</th>
+						深度(m)</th>
 
 				</tr>
 			</thead>

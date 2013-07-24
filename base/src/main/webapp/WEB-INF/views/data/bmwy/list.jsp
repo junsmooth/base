@@ -88,6 +88,15 @@
 				max : max1,
 				str : str1
 			});
+		},
+		formatDNValue:function(value){
+			return value.toFixed(2);
+		},
+		formatDHValue:function(value){
+			return value.toFixed(2);
+		},
+		formatDEValue:function(value){
+			return value.toFixed(2);
 		}
 
 	});
@@ -108,9 +117,9 @@
 					<th
 						data-options="field:'point',width:80,align:'left',formatter:bmwydata.list.formatPoint">
 						测点</th>
-					<th data-options="field:'dN',width:120,align:'left'">横向位移</th>
-					<th data-options="field:'dE',width:120,align:'left'">纵向位移</th>
-					<th data-options="field:'dH',width:120,align:'left'">竖向位移</th>
+					<th data-options="field:'dN',formatter:bmwydata.list.formatDNValue,width:120,align:'left'">横向位移(mm)</th>
+					<th data-options="field:'dE',formatter:bmwydata.list.formatDEValue,width:120,align:'left'">纵向位移(mm)</th>
+					<th data-options="field:'dH',formatter:bmwydata.list.formatDHValue,width:120,align:'left'">竖向位移(mm)</th>
 				</tr>
 			</thead>
 		</table>
