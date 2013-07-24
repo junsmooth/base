@@ -39,14 +39,11 @@
 
 				</tr>
 				<tr>
-					<td>图标名称:</td>
-					<td><select name="icon.id">
-							<c:forEach items="${iconlist}" var="icon">
-								<option value="${icon.id}">${icon.iconName}</option>
-							</c:forEach>
-					</select></td>
-
+					<td>图标:</td>
+					<td><input id="add_menu_icon" class="easyui-combobox" name="icon.id"  value="${menu.icon.id}"
+    data-options="required:true,valueField:'id',textField:'iconName',url:'icon/menuicon',formatter:menu.add.formatIcon" />   </td>
 				</tr>
+				
 
 			</table>
 
@@ -74,6 +71,14 @@ $("#menumodulename").keypress(function(event) {
 });
 
 Namespace.register("menu.add",{
+	formatIcon:function(row){
+		var iconName=row.iconName;
+		var iconPath=row.iconPath;
+		var wholeName=iconName+row.iconExtension;
+		var nameStr="<span><I><B>"+iconName+"</B></I></span>";
+		var picStr="<span><img width=16px height=16px src='"+iconPath+"'>"+"</img></span>";
+		return nameStr+":"+picStr;
+	},
 	saveMenu:function(){
 		$('#menuForm').form('submit', {  
 		    url:"menu/save", 
@@ -87,7 +92,7 @@ Namespace.register("menu.add",{
 		    	if(data.success){
 		    		menu.list.closeDialog();
 		    		menu.list.reload();
-		    		freshLeftMenu();
+		    		//freshLeftMenu();
 		    		 $.dialog.tips(data.msg);
 		    	}else{
 		    		
