@@ -159,9 +159,9 @@ z-index:-1
 					if(d.mpValue==null){
 						de="当前测点没有数值!";
 					}else{
-						de=to2bits(d.mpValue.dE);
-						dh=to2bits(d.mpValue.dH);
-						dn=to2bits(d.mpValue.dN);
+						de=d.mpValue.dE;
+						dh=d.mpValue.dH;
+						dn=d.mpValue.dN;
 					}
 					showBMWYData(baseId,name,de,dn,dh);
 				}else if(d.url!=null&&d.url!=""){

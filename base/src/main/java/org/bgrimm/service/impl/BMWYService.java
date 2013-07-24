@@ -1,6 +1,6 @@
 package org.bgrimm.service.impl;
 
-import java.lang.reflect.Field;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -92,7 +92,18 @@ public class BMWYService {
 				}
 			}
 		}
+		//DataUtils.setDecimalDigits(result.getRows(), Constants.JCD_BMWY);
+		setDecimalDigits(result.getRows());
 		return result;
+	}
+
+	private void setDecimalDigits(List<BMWY> rows) {
+
+		for(BMWY bmwy: rows){
+			bmwy.setdE(new BigDecimal(bmwy.getdE()*1000).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
+			bmwy.setdH(new BigDecimal(bmwy.getdH()*1000).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
+			bmwy.setdN(new BigDecimal(bmwy.getdN()*1000).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
+		}
 	}
 
 	/**
@@ -153,7 +164,8 @@ public class BMWYService {
 			
 		});
 
-		return DataUtils.objectList2JSonList(bmwyDataList, new Object[]{"dateTime",montypeattr.getAttr()});
+		 setDecimalDigits(bmwyDataList);
+		 return DataUtils.objectList2JSonList(bmwyDataList, new Object[]{"dateTime",montypeattr.getAttr()});
 	
 	}
 

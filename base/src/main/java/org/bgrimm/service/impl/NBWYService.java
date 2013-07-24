@@ -1,5 +1,6 @@
 package org.bgrimm.service.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -9,6 +10,7 @@ import org.bgrimm.dao.core.impl.CommonDao;
 import org.bgrimm.domain.bgrimm.TableParam;
 import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.bgrimm.common.MonitoringType;
+import org.bgrimm.domain.bgrimm.monitor.datamigration.TNBWY;
 import org.bgrimm.domain.bgrimm.monitor.provided.NBWY;
 import org.bgrimm.domain.system.PageList;
 import org.bgrimm.domain.system.PagedQuery;
@@ -19,8 +21,6 @@ import org.bgrimm.utils.PagerUtil;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.ProjectionList;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,9 +40,11 @@ public class NBWYService{
 		
 		MonitoringType t = commonDao.findUniqueBy(MonitoringType.class, "code",
 				Constants.JCD_NBWY);
-		final List<MonitoringPoint> nbwyPoint = commonDao.findByCriterions(
-				MonitoringPoint.class, Restrictions.eq("type.id", t.getId()));
-		return nbwyPoint;
+		Order order=Order.asc("position");
+		Criteria criteria=commonDao.getSession().createCriteria(MonitoringPoint.class);
+		criteria.add(Restrictions.eq("type.id", t.getId()));
+		criteria.addOrder(order);
+		return criteria.list();
 
 	}
 
@@ -96,13 +98,25 @@ public class NBWYService{
 	 * @return
 	 */
 	@Transactional(isolation=Isolation.DEFAULT,readOnly=false)
-	public Object getNBWYChartData(TableParam param) {
-		List<Order> list=new ArrayList();
-		MonitoringType t=commonDao.findUniqueBy(MonitoringType.class, "code", Constants.JCD_NBWY);
-		List<MonitoringPoint> nbwyPointList=commonDao.findByCriterions(MonitoringPoint.class, Restrictions.eq("type.id", t.getId()));
+	public Object getNBWYChartList(TableParam param) {
 		Criteria criteria=commonDao.getSession().createCriteria(NBWY.class);
-		ProjectionList pList=Projections.projectionList();
-		Integer[] arr = PagerUtil.strToArray(param.getStr());
+		List li= getNBWYChartData(criteria, param);
+		setDecimalDigits(li);
+		if(li.size()>Constants.MAXIMUM_ALLOWED_VALUE){
+			Criteria tCriteria=commonDao.getSession().createCriteria(TNBWY.class);
+			List tList=getNBWYChartData(tCriteria,param);
+			setDecimalDigits(tList);
+			return DataUtils.objectList2JSonList(tList, new Object[]{"dateTime","value"});
+			
+		}else{
+			return DataUtils.objectList2JSonList(li, new Object[]{"dateTime","value"});
+		}
+	}
+
+	//根据条件从表中获取内部位移时间和值
+	private List getNBWYChartData(Criteria criteria,TableParam param) {
+
+		Integer arr =Integer.parseInt(param.getStr());
 		if (StringUtils.isNotEmpty(param.getMin())) {
 			Date startDate = DateUtils.strToDate(param.getMin());
 			criteria.add(Restrictions.ge("dateTime", startDate));
@@ -112,42 +126,18 @@ public class NBWYService{
 			criteria.add(Restrictions.le("dateTime", endDate));
 		}
 		if (StringUtils.isNotEmpty(param.getStr())) {
-			criteria.add(Restrictions.in("monitoringPosition", arr));
-		} else {
-			// 设置测点
-			List<Integer> positions = new ArrayList();
-			for (MonitoringPoint p : nbwyPointList) {
-				positions.add(p.getPosition());
-			}
-			criteria.add(Restrictions.in("monitoringPosition", positions.toArray()));
-		}
+			criteria.add(Restrictions.eq("monitoringPosition", arr));
+		} 
 
 		criteria.addOrder(Order.asc("dateTime"));
-		List li= criteria.list();
-		//List showList= DataUtils.convert2JSonList(li);
-		
-		if(li.size()>100000){
-			List nameList=new ArrayList();
-			nameList.add("value");
-			return DataUtils.packingData(nameList, li);
-		}else{
-			//packingDataServiceImpl.packingDataOfHour();
-			return toPageJSonList(li);
-		}
-//		return li;
+		return criteria.list();
 	}
+	
+	private void setDecimalDigits(List<NBWY> result) {
 
-	private List toPageJSonList(List li) {
-
-		List listData=new ArrayList();
-		for(Object obj:li){
-			NBWY nbwy=(NBWY)obj;
-			List list=new ArrayList();
-			list.add(nbwy.getDateTime());
-			list.add(nbwy.getValue());
-			listData.add(list);
+		for(NBWY nbwy: result){
+			nbwy.setValue((BigDecimal)nbwy.getValue().setScale(2,BigDecimal.ROUND_HALF_UP));
 		}
-		return listData;
 	}
 
 	

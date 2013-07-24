@@ -14,6 +14,7 @@ import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.bgrimm.common.MonitoringType;
 import org.bgrimm.domain.bgrimm.monitor.datamigration.TJYL;
 import org.bgrimm.domain.bgrimm.monitor.provided.JYL;
+import org.bgrimm.domain.bgrimm.monitor.provided.KSW;
 import org.bgrimm.domain.system.PageList;
 import org.bgrimm.domain.system.PagedQuery;
 import org.bgrimm.utils.Constants;
@@ -43,9 +44,11 @@ public class JYLService{
 		
 		MonitoringType t = commonDao.findUniqueBy(MonitoringType.class, "code",
 				Constants.JCD_JYL);
-		final List<MonitoringPoint> jylPoint = commonDao.findByCriterions(
-				MonitoringPoint.class, Restrictions.eq("type.id", t.getId()));
-		return jylPoint;
+		Order order=Order.asc("position");
+		Criteria criteria=commonDao.getSession().createCriteria(MonitoringPoint.class);
+		criteria.add(Restrictions.eq("type.id", t.getId()));
+		criteria.addOrder(order);
+		return criteria.list();
 
 	}
 	
@@ -105,10 +108,12 @@ public class JYLService{
 //		List result=new ArrayList();
 		Criteria criteria=commonDao.getSession().createCriteria(JYL.class);
 		List li= getJYLChartData(criteria, param);
+		setDecimalDigits(li);
 //		List everydayJYLData=getEverydayJYLData(li);
 		if(li.size()>Constants.MAXIMUM_ALLOWED_VALUE){
 			Criteria tCriteria=commonDao.getSession().createCriteria(TJYL.class);
 			List tList=getJYLChartData(tCriteria,param);
+			setDecimalDigits(tList);
 			 return DataUtils.objectList2JSonList(tList, new Object[]{"dateTime","value"});
 //			 result.add(listData1);
 //			 result.add(everydayJYLData);
@@ -203,5 +208,11 @@ public class JYLService{
 		return criteria.list();
 	}
 
+	private void setDecimalDigits(List<JYL> result) {
+
+		for(JYL jyl: result){
+			jyl.setValue((BigDecimal)jyl.getValue().setScale(2,BigDecimal.ROUND_HALF_UP));
+		}
+	}
 
 }

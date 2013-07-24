@@ -1,5 +1,8 @@
 package org.bgrimm.controller;
+import java.util.List;
+
 import org.bgrimm.domain.bgrimm.TableParam;
+import org.bgrimm.domain.system.PageList;
 import org.bgrimm.service.impl.JRXService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,7 +39,9 @@ public class JRXController {
 	@ResponseBody
 	public Object JRXMonitorPosition(TableParam param){
 		
-		return jrxService.getJRXMonitorPosition(param);
+		PageList pl=jrxService.getJRXMonitorPosition(param);
+		JRXService.setDecimalDigits(pl.getRows());
+		return pl;
 	}
 	
 	

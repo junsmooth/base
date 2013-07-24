@@ -1,5 +1,6 @@
 package org.bgrimm.service.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,6 +12,7 @@ import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.bgrimm.common.MonitoringType;
 import org.bgrimm.domain.bgrimm.monitor.datamigration.TGTCD;
 import org.bgrimm.domain.bgrimm.monitor.provided.GTCD;
+import org.bgrimm.domain.bgrimm.monitor.provided.GTGC;
 import org.bgrimm.domain.system.PageList;
 import org.bgrimm.domain.system.PagedQuery;
 import org.bgrimm.utils.Constants;
@@ -45,9 +47,11 @@ public class GTCDService {
 		
 		MonitoringType t = commonDao.findUniqueBy(MonitoringType.class, "code",
 				Constants.JCD_GTCD);
-		final List<MonitoringPoint> gtcdPoint = commonDao.findByCriterions(
-				MonitoringPoint.class, Restrictions.eq("type.id", t.getId()));
-		return gtcdPoint;
+		Order order=Order.asc("position");
+		Criteria criteria=commonDao.getSession().createCriteria(MonitoringPoint.class);
+		criteria.add(Restrictions.eq("type.id", t.getId()));
+		criteria.addOrder(order);
+		return criteria.list();
 
 	}
 
@@ -91,6 +95,7 @@ public class GTCDService {
 				}
 			}
 		}
+		setDecimalDigits(pl.getRows());
 		return pl;
 	}
 
@@ -107,9 +112,11 @@ public class GTCDService {
 		List<Order> list=new ArrayList();
 		Criteria criteria=commonDao.getSession().createCriteria(GTCD.class);
 		List li= getJRXChartData(criteria, param);
+		setDecimalDigits(li);
 		if(li.size()>Constants.MAXIMUM_ALLOWED_VALUE){
 			Criteria tCriteria=commonDao.getSession().createCriteria(TGTCD.class);
 			List tList=getJRXChartData(tCriteria,param);
+			setDecimalDigits(tList);
 			return DataUtils.objectList2JSonList(tList, new Object[]{"dateTime","value"});
 			
 		}else{
@@ -138,4 +145,10 @@ public class GTCDService {
 	}
 	
 
+	private void setDecimalDigits(List<GTCD> result) {
+
+		for(GTCD gtcd: result){
+			gtcd.setValue((BigDecimal)gtcd.getValue().setScale(2,BigDecimal.ROUND_HALF_UP));
+		}
+	}
 }

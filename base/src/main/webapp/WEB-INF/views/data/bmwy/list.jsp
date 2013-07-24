@@ -102,7 +102,7 @@
 
 				<tr>
 					<th 
-						data-options="field:'logtime',formatter:bmwydata.list.formatDataPageTime,width:80,align:'left'">
+						data-options="field:'dateTime',formatter:bmwydata.list.formatDataPageTime,width:80,align:'left'">
 
 						时间</th>
 					<th

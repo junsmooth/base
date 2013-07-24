@@ -15,8 +15,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 
 @Entity(name="saturation_line_monitoring")
-public class JRX extends IdEntity implements java.io.Serializable {
-	private static final long serialVersionUID = 2048463947914157677L;
+public class JRX extends IdEntity {
 	@NotEmpty
 	@Temporal(TemporalType.TIMESTAMP)
 	
@@ -64,12 +63,5 @@ public class JRX extends IdEntity implements java.io.Serializable {
 		this.point = point;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-	
 
-
-
-	
 }

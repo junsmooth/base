@@ -1,5 +1,6 @@
 package org.bgrimm.service.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,6 +12,7 @@ import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.bgrimm.common.MonitoringType;
 import org.bgrimm.domain.bgrimm.monitor.datamigration.TAQCG;
 import org.bgrimm.domain.bgrimm.monitor.extended.AQCG;
+import org.bgrimm.domain.bgrimm.monitor.provided.JYL;
 import org.bgrimm.domain.system.PageList;
 import org.bgrimm.domain.system.PagedQuery;
 import org.bgrimm.utils.Constants;
@@ -39,10 +41,11 @@ public class AQCGService{
 		
 		MonitoringType t = commonDao.findUniqueBy(MonitoringType.class, "code",
 				Constants.JCD_AQCG);
-		final List<MonitoringPoint> aqcgPoint = commonDao.findByCriterions(
-				MonitoringPoint.class, Restrictions.eq("type.id", t.getId()));
-		return aqcgPoint;
-
+		Order order=Order.asc("position");
+		Criteria criteria=commonDao.getSession().createCriteria(MonitoringPoint.class);
+		criteria.add(Restrictions.eq("type.id", t.getId()));
+		criteria.addOrder(order);
+		return criteria.list();
 	}
 	/**
 	 * 获取测点数据
@@ -84,6 +87,7 @@ public class AQCGService{
 				}
 			}
 		}
+		setDecimalDigits(pl.getRows());
 		return pl;
 	}
 
@@ -98,9 +102,11 @@ public class AQCGService{
 	public Object getAQCGChartList(TableParam param) {
 		Criteria criteria=commonDao.getSession().createCriteria(AQCG.class);
 		List li= getJRXChartData(criteria, param);
+		setDecimalDigits(li);
 		if(li.size()>Constants.MAXIMUM_ALLOWED_VALUE){
 			Criteria tCriteria=commonDao.getSession().createCriteria(TAQCG.class);
 			List tList=getJRXChartData(tCriteria,param);
+			setDecimalDigits(tList);
 			return DataUtils.objectList2JSonList(tList, new Object[]{"dateTime","value"});
 			
 		}else{
@@ -128,7 +134,12 @@ public class AQCGService{
 		return criteria.list();
 	}
 	
+	private void setDecimalDigits(List<AQCG> result) {
 
+		for(AQCG aqcg: result){
+			aqcg.setValue((BigDecimal)aqcg.getValue().setScale(2,BigDecimal.ROUND_HALF_UP));
+		}
+	}
 
 
 }

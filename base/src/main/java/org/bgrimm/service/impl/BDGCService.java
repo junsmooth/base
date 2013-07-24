@@ -1,5 +1,6 @@
 package org.bgrimm.service.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,6 +11,7 @@ import org.bgrimm.domain.bgrimm.TableParam;
 import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.bgrimm.common.MonitoringType;
 import org.bgrimm.domain.bgrimm.monitor.datamigration.TBDGC;
+import org.bgrimm.domain.bgrimm.monitor.extended.AQCG;
 import org.bgrimm.domain.bgrimm.monitor.extended.BDGC;
 import org.bgrimm.domain.system.PageList;
 import org.bgrimm.domain.system.PagedQuery;
@@ -86,6 +88,7 @@ public class BDGCService {
 				}
 			}
 		}
+		setDecimalDigits(pl.getRows());
 		return pl;
 	}
 
@@ -100,9 +103,11 @@ public class BDGCService {
 		List<Order> list=new ArrayList();
 		Criteria criteria=commonDao.getSession().createCriteria(BDGC.class);
 		List li= getJRXChartData(criteria, param);
+		setDecimalDigits(li);
 		if(li.size()>Constants.MAXIMUM_ALLOWED_VALUE){
 			Criteria tCriteria=commonDao.getSession().createCriteria(TBDGC.class);
 			List tList=getJRXChartData(tCriteria,param);
+			setDecimalDigits(tList);
 			return DataUtils.objectList2JSonList(tList, new Object[]{"dateTime","value"});
 			
 		}else{
@@ -128,6 +133,13 @@ public class BDGCService {
 
 		criteria.addOrder(Order.asc("dateTime"));
 		return criteria.list();
+	}
+	
+	private void setDecimalDigits(List<BDGC> result) {
+
+		for(BDGC bdgc: result){
+			bdgc.setValue((BigDecimal)bdgc.getValue().setScale(2,BigDecimal.ROUND_HALF_UP));
+		}
 	}
 	
 }

@@ -1,5 +1,6 @@
 package org.bgrimm.service.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -9,7 +10,8 @@ import org.bgrimm.dao.core.impl.CommonDao;
 import org.bgrimm.domain.bgrimm.TableParam;
 import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.bgrimm.common.MonitoringType;
-import org.bgrimm.domain.bgrimm.monitor.provided.GTGC;
+import org.bgrimm.domain.bgrimm.monitor.datamigration.TKSW;
+import org.bgrimm.domain.bgrimm.monitor.provided.KSW;
 import org.bgrimm.domain.system.PageList;
 import org.bgrimm.domain.system.PagedQuery;
 import org.bgrimm.utils.Constants;
@@ -19,8 +21,6 @@ import org.bgrimm.utils.PagerUtil;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.ProjectionList;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -41,9 +41,11 @@ public class KSWService{
 		
 		MonitoringType t = commonDao.findUniqueBy(MonitoringType.class, "code",
 				Constants.JCD_KSW);
-		final List<MonitoringPoint> kswPoint = commonDao.findByCriterions(
-				MonitoringPoint.class, Restrictions.eq("type.id", t.getId()));
-		return kswPoint;
+		Order order=Order.asc("position");
+		Criteria criteria=commonDao.getSession().createCriteria(MonitoringPoint.class);
+		criteria.add(Restrictions.eq("type.id", t.getId()));
+		criteria.addOrder(order);
+		return criteria.list();
 
 	}
 	
@@ -55,7 +57,7 @@ public class KSWService{
 		List<Order> list=new ArrayList();
 		MonitoringType t=commonDao.findUniqueBy(MonitoringType.class, "code", Constants.JCD_KSW);
 		List<MonitoringPoint> kswPointList=commonDao.findByCriterions(MonitoringPoint.class, Restrictions.eq("type.id", t.getId()));
-		PagedQuery pq = new PagedQuery(GTGC.class, param.getPage(), param.getRows());
+		PagedQuery pq = new PagedQuery(KSW.class, param.getPage(), param.getRows());
 		DetachedCriteria criteria = pq.getDetachedCriteria();
 		Integer[] arr = PagerUtil.strToArray(param.getStr());
 		if (StringUtils.isNotEmpty(param.getMin())) {
@@ -79,15 +81,16 @@ public class KSWService{
 		}
 		Order or=Order.desc("dateTime");
 		list.add(or);
-		PageList<GTGC> pl= commonDao.getPagedList(pq,list);
+		PageList<KSW> pl= commonDao.getPagedList(pq,list);
 		//将DryBeachLength与MonitoringPoint关联起来，主要是为了在页面根据测点获取对应名称
-		for (GTGC ksw : pl.getRows()) {
+		for (KSW ksw : pl.getRows()) {
 			for (MonitoringPoint point : kswPointList) {
 				if (ksw.getMonitoringPosition()== point.getPosition()) {
 					ksw.setPoint(point);
 				}
 			}
 		}
+		setDecimalDigits(pl.getRows());
 		return pl;
 	}
 
@@ -100,11 +103,24 @@ public class KSWService{
 	@Transactional(isolation=Isolation.DEFAULT,readOnly=false)
 	public Object getKSWChartList(TableParam param) {
 		List<Order> list=new ArrayList();
-		MonitoringType t=commonDao.findUniqueBy(MonitoringType.class, "code", Constants.JCD_KSW);
-		List<MonitoringPoint> kswPointList=commonDao.findByCriterions(MonitoringPoint.class, Restrictions.eq("type.id", t.getId()));
-		Criteria criteria=commonDao.getSession().createCriteria(GTGC.class);
-		ProjectionList pList=Projections.projectionList();
-		Integer[] arr = PagerUtil.strToArray(param.getStr());
+		Criteria criteria=commonDao.getSession().createCriteria(KSW.class);
+		List li= getKSWChartData(criteria, param);
+		setDecimalDigits(li);
+		if(li.size()>Constants.MAXIMUM_ALLOWED_VALUE){
+			Criteria tCriteria=commonDao.getSession().createCriteria(TKSW.class);
+			List tList=getKSWChartData(tCriteria,param);
+			setDecimalDigits(tList);
+			return DataUtils.objectList2JSonList(tList, new Object[]{"dateTime","value"});
+			
+		}else{
+			return DataUtils.objectList2JSonList(li, new Object[]{"dateTime","value"});
+		}
+	}
+
+	//根据条件从表中获取干滩高程时间和值
+	private List getKSWChartData(Criteria criteria,TableParam param) {
+
+		Integer arr =Integer.parseInt(param.getStr());
 		if (StringUtils.isNotEmpty(param.getMin())) {
 			Date startDate = DateUtils.strToDate(param.getMin());
 			criteria.add(Restrictions.ge("dateTime", startDate));
@@ -114,42 +130,18 @@ public class KSWService{
 			criteria.add(Restrictions.le("dateTime", endDate));
 		}
 		if (StringUtils.isNotEmpty(param.getStr())) {
-			criteria.add(Restrictions.in("monitoringPosition", arr));
-		} else {
-			// 设置测点
-			List<Integer> positions = new ArrayList();
-			for (MonitoringPoint p : kswPointList) {
-				positions.add(p.getPosition());
-			}
-			criteria.add(Restrictions.in("monitoringPosition", positions.toArray()));
-		}
+			criteria.add(Restrictions.eq("monitoringPosition", arr));
+		} 
 
 		criteria.addOrder(Order.asc("dateTime"));
-		List li= criteria.list();
-		
-		
-		if(li.size()>100000){
-			List nameList=new ArrayList();
-			nameList.add("value");
-			return DataUtils.packingData(nameList, li);
-		}else{
-		//	packingDataServiceImpl.packingDataOfHour();
-			return toPageJSonList(li);
-		}
-//		return li;
+		return criteria.list();
 	}
+	
 
-	private List toPageJSonList(List li) {
+	private void setDecimalDigits(List<KSW> result) {
 
-		List listData=new ArrayList();
-		for(Object obj:li){
-			GTGC gtgc=(GTGC)obj;
-			List list=new ArrayList();
-			list.add(gtgc.getDateTime());
-			list.add(gtgc.getValue());
-			listData.add(list);
+		for(KSW gtgc: result){
+			gtgc.setValue((BigDecimal)gtgc.getValue().setScale(2,BigDecimal.ROUND_HALF_UP));
 		}
-		return listData;
 	}
-
 }

@@ -44,6 +44,6 @@ public class SLLController {
 	@ResponseBody
 	public Object sllChart(TableParam param){
 		
-		return sslService.getSLLChartData(param);
+		return sslService.getSLLChartList(param);
 	}
 }

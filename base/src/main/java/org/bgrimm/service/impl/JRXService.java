@@ -1,5 +1,6 @@
 package org.bgrimm.service.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,8 +21,6 @@ import org.bgrimm.utils.PagerUtil;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.ProjectionList;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -59,7 +58,7 @@ public class JRXService {
 	/**
 	 * 获取测点数据
 	 */
-	public Object getJRXMonitorPosition(TableParam param) {
+	public PageList getJRXMonitorPosition(TableParam param) {
 
 		List<Order> list=new ArrayList();
 		MonitoringType t=commonDao.findUniqueBy(MonitoringType.class, "code", Constants.JCD_JRX);
@@ -96,7 +95,17 @@ public class JRXService {
 				}
 			}
 		}
+		//setDecimalDigits(pl.getRows());
+		//DataUtils.setDecimalDigits(pl.getRows(), null);
 		return pl;
+	}
+
+	public static void setDecimalDigits(List<JRX> rows) {
+		for(JRX jrx : rows){
+			BigDecimal bd=jrx.getValue();
+			jrx.setValue(bd.setScale(2, BigDecimal.ROUND_HALF_UP));
+		}
+		
 	}
 
 	/**
@@ -104,13 +113,13 @@ public class JRXService {
 	 * @param param
 	 * @return
 	 */
-	@Transactional(isolation=Isolation.DEFAULT,readOnly=false)
-	public Object getJrxChartData(TableParam param) {
+	public List getJrxChartData(TableParam param) {
 		Criteria criteria=commonDao.getSession().createCriteria(JRX.class);
 		List li= getJRXChartData(criteria, param);
 		if(li.size()>Constants.MAXIMUM_ALLOWED_VALUE){
 			Criteria tCriteria=commonDao.getSession().createCriteria(TJRX.class);
 			List tList=getJRXChartData(tCriteria,param);
+			setDecimalDigits(tList);
 			return DataUtils.objectList2JSonList(tList, new Object[]{"dateTime","value"});
 			
 		}else{

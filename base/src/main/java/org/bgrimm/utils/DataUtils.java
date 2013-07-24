@@ -1,12 +1,11 @@
 package org.bgrimm.utils;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import org.bgrimm.domain.bgrimm.TimeValue;
 
 
 public  class DataUtils {
@@ -87,5 +86,45 @@ public  class DataUtils {
 		return null;
 	}
 	
+	
+	public static void setDecimalDigits(List dataList,String type){
+		//System.out.println(dataList);
+		try {
+			for(Object obj:dataList){
+				if(type!=null){
+					Field de=obj.getClass().getDeclaredField("dE");
+					de.setAccessible(true);
+					Field dh=obj.getClass().getDeclaredField("dH");
+					dh.setAccessible(true);
+					Field dn=obj.getClass().getDeclaredField("dN");
+					dn.setAccessible(true);
+					Method deM=obj.getClass().getMethod("setdE",de.getType());
+					Method dhM=obj.getClass().getMethod("setdH",dh.getType());
+					Method dnM=obj.getClass().getMethod("setdN",dn.getType());
+					double deValue=new BigDecimal((Double)de.get(obj)*1000).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
+					double dhValue=new BigDecimal((Double)dh.get(obj)*1000).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
+					double dnValue=new BigDecimal((Double)dn.get(obj)*1000).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
+					deM.invoke(obj, deValue);
+					dhM.invoke(obj, dhValue);
+					dnM.invoke(obj, dnValue);
+				}else{
+					Field value=obj.getClass().getDeclaredField("value");
+					value.setAccessible(true);
+					Method method=obj.getClass().getMethod("setValue", value.getType());
+					BigDecimal bd=(BigDecimal)value.get(obj);
+					method.invoke(obj, bd.setScale(2,BigDecimal.ROUND_HALF_UP));
+					//System.out.println(obj);
+				}
+				
+			}
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (NoSuchFieldException e) {
+			e.printStackTrace();
+		}catch(Exception e){
+			
+		}
+		
+	}
 	
 }

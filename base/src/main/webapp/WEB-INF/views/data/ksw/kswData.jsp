@@ -41,6 +41,9 @@
 				str : str1
 			});
 
+		},
+		formatKSWValue:function(value){
+			return value.toFixed(2);
 		}
 
 	});
@@ -63,7 +66,7 @@
 					<th
 						data-options="field:'point',width:80,align:'left',formatter:ksw.list.formatKSWPoint">
 						测点</th>
-					<th data-options="field:'value',width:120,align:'left'">
+					<th data-options="field:'value',formatter:ksw.list.formatKSWValue,width:120,align:'left'">
 						深度</th>
 
 				</tr>
@@ -87,7 +90,7 @@
                     panelHeight:'auto',
                     editable:false  
             "
-			readonly="readonly"> <a href="#" class="easyui-linkbutton"
+			> <a href="#" class="easyui-linkbutton"
 			iconCls="icon-search" onclick="formatter:ksw.list.mySubmit()">查询</a>
 	</div>
 </div>

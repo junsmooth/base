@@ -15,6 +15,9 @@
 		myDate : function(value) {
 			//var d = formatDateTime(value);
 			return formatDateTime(value);
+		},
+		formatGTCDValue: function(value){
+			return value.toFixed(2);
 		}
 
 	});
@@ -62,7 +65,7 @@
 					<th
 						data-options="field:'point',width:80,align:'left',formatter:gtcd.list.formatGTCDPoint">
 						测点</th>
-					<th data-options="field:'value',width:120,align:'left'">
+					<th data-options="field:'value',formatter:gtcd.list.formatGTCDValue,width:120,align:'left'">
 						深度</th>
 
 				</tr>
@@ -86,7 +89,7 @@
                     panelHeight:'auto',
                     editable:false  
             "
-			readonly="readonly"> <a href="#" class="easyui-linkbutton"
+			> <a href="#" class="easyui-linkbutton"
 			iconCls="icon-search" onclick="submit()">查询</a>
 	</div>
 </div>

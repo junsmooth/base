@@ -1,5 +1,6 @@
 package org.bgrimm.service.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -46,9 +47,11 @@ public class GTGCService {
 
 		MonitoringType t = commonDao.findUniqueBy(MonitoringType.class, "code",
 				Constants.JCD_GTGC);
-		final List<MonitoringPoint> gtgcPoint = commonDao.findByCriterions(
-				MonitoringPoint.class, Restrictions.eq("type.id", t.getId()));
-		return gtgcPoint;
+		Order or=Order.asc("position");
+		Criteria criteria=commonDao.getSession().createCriteria(MonitoringPoint.class);
+		criteria.add(Restrictions.eq("type.id", t.getId()));
+		criteria.addOrder(or);
+		return criteria.list();
 	}
 
 	
@@ -92,6 +95,7 @@ public class GTGCService {
 				}
 			}
 		}
+		setDecimalDigits(pl.getRows());
 		return pl;
 	}	
 	
@@ -107,10 +111,12 @@ public class GTGCService {
 	public Object getGCGCChartList(TableParam param) {
 		List<Order> list=new ArrayList();
 		Criteria criteria=commonDao.getSession().createCriteria(GTGC.class);
-		List li= getJRXChartData(criteria, param);
+		List li= getGTGCChartData(criteria, param);
+		setDecimalDigits(li);
 		if(li.size()>Constants.MAXIMUM_ALLOWED_VALUE){
 			Criteria tCriteria=commonDao.getSession().createCriteria(TGTGC.class);
-			List tList=getJRXChartData(tCriteria,param);
+			List tList=getGTGCChartData(tCriteria,param);
+			setDecimalDigits(tList);
 			return DataUtils.objectList2JSonList(tList, new Object[]{"dateTime","value"});
 			
 		}else{
@@ -119,7 +125,7 @@ public class GTGCService {
 	}
 
 	//根据条件从表中获取干滩高程时间和值
-	private List getJRXChartData(Criteria criteria,TableParam param) {
+	private List getGTGCChartData(Criteria criteria,TableParam param) {
 
 		Integer arr =Integer.parseInt(param.getStr());
 		if (StringUtils.isNotEmpty(param.getMin())) {
@@ -139,6 +145,11 @@ public class GTGCService {
 	}
 	
 
+	private void setDecimalDigits(List<GTGC> result) {
 
+		for(GTGC gtgc: result){
+			gtgc.setValue((BigDecimal)gtgc.getValue().setScale(2,BigDecimal.ROUND_HALF_UP));
+		}
+	}
 
 }

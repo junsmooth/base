@@ -44,6 +44,6 @@ public class NBWYController {
 	@ResponseBody
 	public Object nbwyChart(TableParam param){
 		
-		return nbwyService.getNBWYChartData(param);
+		return nbwyService.getNBWYChartList(param);
 	}
 }
