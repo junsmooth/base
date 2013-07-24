@@ -18,7 +18,7 @@
 				<tr>
 					<td>图标类型:</td>
 					<td><input id="icon_new_type" class="easyui-combobox"
-						name="type.id"
+						name="type.id" value="${icon.type.id}"
 						data-options="required:true,valueField:'id',textField:'cnname',url:'icon/types',formatter:icon.new.formatIconType,onLoadSuccess:icon.new.iconTypesLoaded" />
 					</td>
 				</tr>
