@@ -87,7 +87,7 @@ z-index:-1
 			});  
 	    }else{
 	    	
-		        var parentdiv=$('<div class="easyui-draggable" contextmenu="clickRightButton(this)" style="background-color: black; width: 20px; height: 20px;background-position:center; background-repeat: no-repeat;"></div>').appendTo('#p');
+		        var parentdiv=$('<div class="easyui-draggable" contextmenu="clickRightButton(this)" style="background-color: black; width: 16px; height: 16px;background-position:center; background-repeat: no-repeat;"></div>').appendTo('#p');
 		    	imgId="point_"+data[2].id;
 			   	parentdiv.attr('id',imgId);   
 			  	parentdiv.css("background-image",'url('+path+')'); 
@@ -159,9 +159,9 @@ z-index:-1
 					if(d.mpValue==null){
 						de="当前测点没有数值!";
 					}else{
-						de=d.mpValue.dE;
-						dh=d.mpValue.dH;
-						dn=d.mpValue.dN;
+						de=(d.mpValue.dE*1000).toFixed(2);
+						dh=(d.mpValue.dH*1000).toFixed(2);
+						dn=(d.mpValue.dN*1000).toFixed(2);
 					}
 					showBMWYData(baseId,name,de,dn,dh);
 				}else if(d.url!=null&&d.url!=""){
@@ -257,7 +257,7 @@ z-index:-1
  	
 		
 		for(var i=0;i<sData.mpList.length;i++){
-			var newDiv=$('<div class="easyui-draggable"  style="background-color: green; width: 20px; height: 20px;background-position:center;background-repeat: no-repeat;"></div>').appendTo('#p');
+			var newDiv=$('<div class="easyui-draggable"  style="background-color: green; width: 16px; height: 16px;background-position:center;background-repeat: no-repeat;"></div>').appendTo('#p');
 			var path=sData.mpList[i].type.icon.iconPath;
 			var imgId="point_"+sData.mpList[i].id;
 			newDiv.attr('id',imgId);   

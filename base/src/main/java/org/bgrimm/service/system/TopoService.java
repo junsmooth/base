@@ -5,6 +5,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -29,6 +30,7 @@ import org.bgrimm.domain.bgrimm.common.TDrawingPosition;
 import org.bgrimm.domain.bgrimm.common.TTopo;
 import org.bgrimm.domain.t4ddb.BMWY;
 import org.bgrimm.utils.Constants;
+import org.bgrimm.utils.DataUtils;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.criterion.Order;
@@ -211,10 +213,15 @@ public class TopoService {
 	public List getIconList(String code) {
 		MonitoringType t = commonDao.findUniqueBy(MonitoringType.class, "code",
 				code);
-		final List<MonitoringPoint> point = commonDao.findByCriterions(
-				MonitoringPoint.class, Restrictions.eq("type.id", t.getId()),Restrictions.isNull("drawPosition.id"));
+		Order order=Order.asc("position");
+		Criteria criteria=commonDao.getSession().createCriteria(MonitoringPoint.class);
+		criteria.add(Restrictions.eq("type.id", t.getId()));
+		criteria.add(Restrictions.isNull("drawPosition.id"));
+		criteria.addOrder(order);
+//		 List<MonitoringPoint> point = commonDao.findByCriterions(
+//				MonitoringPoint.class, Restrictions.eq("type.id", t.getId()),Restrictions.isNull("drawPosition.id"));
 	
-		return point;
+		return criteria.list();
 	}
 
 	public List getMPPath(long v,int m) {
@@ -268,6 +275,7 @@ public class TopoService {
 				criteria.addOrder(Order.desc("dateTime"));
 				List list=criteria.list();
 				if(list.size()>0){
+					//DataUtils.setDecimalDigits(list,null);
 					mp.setMpValue(list.get(0));
 				}
 			}
@@ -294,6 +302,7 @@ public class TopoService {
 				criteria.addOrder(Order.desc("dateTime"));
 				List list= criteria.list();
 				if(list.size()>0){
+					//DataUtils.setDecimalDigits(list,Constants.JCD_BMWY);
 					mp.setMpValue(list.get(0));
 				}
 				return null;
@@ -316,5 +325,7 @@ public class TopoService {
 		commonDao.save(mPoint);
 		commonDao.deleteEntityById(TDrawingPosition.class, id);
 	}
+	
+
 
 }

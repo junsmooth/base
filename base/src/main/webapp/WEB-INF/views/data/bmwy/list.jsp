@@ -141,7 +141,7 @@
                     panelHeight:'auto',
                     editable:false  
             "
-			readonly="readonly"> <a href="#" class="easyui-linkbutton"
+			> <a href="#" class="easyui-linkbutton"
 			iconCls="icon-search" onclick="bmwydata.list.submit()">查询</a>
 	</div>
 </div>
