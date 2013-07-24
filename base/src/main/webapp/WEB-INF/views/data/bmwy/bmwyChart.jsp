@@ -102,136 +102,135 @@
 			$.dialog.tips("您所查日期内无监测数据，请重新选择查询日期");
 			return;
 		}
-		$('#bmwy_chart').highcharts('StockChart', {
+		$('#bmwy_chart').highcharts(
+				'StockChart',
+				{
 
-			chart : {
-				renderTo : 'container',
-				zoomType : 'x'
-			},
-			plotOptions: {
-		    	line: {
-		    		gapSize: 10
-		    	}
-		    },
-			credits:{
-				enabled:false
-			},
-			/* navigator : {
-				enabled : false
-			}, */
-			title : {
-				text : '表面位移监测过程曲线'
-			},
-			rangeSelector:{
-				buttonTheme: { // styles for the buttons
-		    		fill: 'none',
-		    		stroke: 'none',
-		    		'stroke-width': 0,
-		    		r: 8,
-		    		style: {
-		    			color: '#039',
-		    			fontWeight: 'bold'
-		    		},
-		    		states: {
-		    			hover: {
-		    			},
-		    			select: {
-		    				fill: '#039',
-		    				style: {
-		    					color: 'white'
-		    				}
-		    			}
-		    		}
-		    	},
-		    	inputStyle: {
-		    		color: '#039',
-		    		fontWeight: 'bold'
-		    	},
-		    	labelStyle: {
-		    		color: 'silver',
-		    		fontWeight: 'bold'
-		    	},
-				inputDateFormat:'%Y-%m-%d',
-				selected : 1,
-				buttons: [{
-					type: 'day',
-					count: 1,
-					text: '1天'
-				}, {
-					type: 'day',
-					count: 7,
-					text: '7天'
-				}, {
-					type: 'month',
-					count: 1,
-					text: '1月'
-				}, {
-					type: 'month',
-					count: 3,
-					text: '3月'
-				}, {
-					type: 'year',
-					count: 1,
-					text: '1年'
-				}, {
-					type: 'all',
-					text: '全部'
-				}]
-			},
-			yAxis : {
-				title : {
-					text : '表面位移(mm)'
-				},
-				plotLines : [/*  {
-					value : 0,
-					color : 'green',
-					dashStyle : 'shortdash',
-					width : 2,
-					label : {
-						text : '零界线'
-					}
-				} */ ]
-			},
-			tooltip:{
-				dateTimeLabelFormats: {
-					second: '%Y-%m-%d<br/>%H:%M:%S',
-					minute: '%Y-%m-%d<br/>%H:%M',
-					hour: '%Y-%m-%d<br/>%H:%M',
-					day: '%Y<br/>%m-%d',
-					week: '%Y<br/>%m-%d',
-					month: '%Y-%m',
-					year: '%Y'
-				},
-				formatter:function(v){
-					var s = '<b>'+ Highcharts.dateFormat('%Y-%m-%d<br/>%H:%M:%S', this.x) +'</b>';
-					return s+v;
-				}
-			},
-			xAxis: {
-	        	type: 'datetime',
-	        	dateTimeLabelFormats: {
-					second: '%Y-%m-%d<br/>%H:%M:%S',
-					minute: '%Y-%m-%d<br/>%H:%M',
-					hour: '%Y-%m-%d<br/>%H:%M',
-					day: '%Y<br/>%m-%d',
-					week: '%Y<br/>%m-%d',
-					month: '%Y-%m',
-					year: '%Y'
-				}
-	    	},
+					chart : {
+						renderTo : 'container',
+						zoomType : 'x'
+					},
+					plotOptions : {
+						line : {
+							gapSize : 10
+						}
+					},
+					credits : {
+						enabled : false
+					},
+					/* navigator : {
+						enabled : false
+					}, */
+					title : {
+						text : '表面位移监测过程曲线'
+					},
+					rangeSelector : {
+						buttonTheme : { // styles for the buttons
+							fill : 'none',
+							stroke : 'none',
+							'stroke-width' : 0,
+							r : 8,
+							style : {
+								color : '#039',
+								fontWeight : 'bold'
+							},
+							states : {
+								hover : {},
+								select : {
+									fill : '#039',
+									style : {
+										color : 'white'
+									}
+								}
+							}
+						},
+						inputStyle : {
+							color : '#039',
+							fontWeight : 'bold'
+						},
+						labelStyle : {
+							color : 'silver',
+							fontWeight : 'bold'
+						},
+						inputDateFormat : '%Y-%m-%d',
+						selected : 5,
+						buttons : [ {
+							type : 'day',
+							count : 1,
+							text : '1天'
+						}, {
+							type : 'day',
+							count : 7,
+							text : '7天'
+						}, {
+							type : 'month',
+							count : 1,
+							text : '1月'
+						}, {
+							type : 'month',
+							count : 3,
+							text : '3月'
+						}, {
+							type : 'year',
+							count : 1,
+							text : '1年'
+						}, {
+							type : 'all',
+							text : '全部'
+						} ]
+					},
+					yAxis : {
+						title : {
+							text : '表面位移(mm)'
+						},
+						plotLines : [/*  {
+											value : 0,
+											color : 'green',
+											dashStyle : 'shortdash',
+											width : 2,
+											label : {
+												text : '零界线'
+											}
+										} */]
+					},
+					tooltip : {
+						valueSuffix:'mm',
+						valueDecimals: 2,
+						xDateFormat:'%Y-%m-%d %H:%M:%S'
+					},
+					 navigator: {
+						 xAxis : {
+								type : 'datetime',
+								dateTimeLabelFormats : {
+									second : '%Y-%m-%d<br/>%H:%M:%S',
+									minute : '%Y-%m-%d<br/>%H:%M',
+									hour : '%Y-%m-%d<br/>%H:%M',
+									day : '%Y-%m-%d',
+									week : '%Y-%m-%d',
+									month : '%Y-%m',
+									year : '%Y'
+								}
+							}
+					    },
+					xAxis : {
+						type : 'datetime',
+						dateTimeLabelFormats : {
+							second : '%Y-%m-%d<br/>%H:%M:%S',
+							minute : '%Y-%m-%d<br/>%H:%M',
+							hour : '%Y-%m-%d<br/>%H:%M',
+							day : '%Y<br/>%m-%d',
+							week : '%Y<br/>%m-%d',
+							month : '%Y-%m',
+							year : '%Y'
+						}
+					},
 
-
-			series : [ {
-				name : '表面位移',
-				data : result,
-				/* tooltip: {
-					valueDecimals: 2
-				} */
-				tooltip : {
-					yDecimals : 2
-				}
-			} ]
-		});
+					series : [ {
+						name : '表面位移',
+						data : result
+						
+					} ]
+				});
 	}
 </script>
 <div class="easyui-layout" data-options="fit:true">
