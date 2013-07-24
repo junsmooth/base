@@ -195,7 +195,7 @@ function showDetailAlarmRecord(){
 }
 
 function delayRun(){
-	setInterval("AlarmData()", 20000); 
+	setInterval("AlarmData()", 200000); 
 }
 
 
