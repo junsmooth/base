@@ -87,7 +87,7 @@ z-index:-1
 			});  
 	    }else{
 	    	
-		        var parentdiv=$('<div class="easyui-draggable" contextmenu="clickRightButton(this)" style="background-color: black; width: 16px; height: 16px;background-position:center; background-repeat: no-repeat;"></div>').appendTo('#p');
+		        var parentdiv=$('<div class="easyui-draggable" contextmenu="clickRightButton(this)" style="background-color: black; width: 20px; height: 20px;background-position:center; background-repeat: no-repeat;"></div>').appendTo('#p');
 		    	imgId="point_"+data[2].id;
 			   	parentdiv.attr('id',imgId);   
 			  	parentdiv.css("background-image",'url('+path+')'); 
@@ -257,12 +257,13 @@ z-index:-1
  	
 		
 		for(var i=0;i<sData.mpList.length;i++){
-			var newDiv=$('<div class="easyui-draggable"  style="background-color: green; width: 16px; height: 16px;background-position:center;background-repeat: no-repeat;"></div>').appendTo('#p');
+			var newDiv=$('<div class="easyui-draggable"  style="background-color: green;background-size: 16px; width: 16px; height: 16px;background-position:center;background-repeat: no-repeat;"></div>').appendTo('#p');
 			var path=sData.mpList[i].type.icon.iconPath;
 			var imgId="point_"+sData.mpList[i].id;
 			newDiv.attr('id',imgId);   
 			newDiv.css("background-image",'url('+path+')'); 
 			newDiv.css("position","absolute");
+			
 			var x1=(sData.mpList[i].drawPosition.x+10)*wRate;
 			var y1=(sData.mpList[i].drawPosition.y+10)*hRate;
 				x1=x1+resultPosX;
