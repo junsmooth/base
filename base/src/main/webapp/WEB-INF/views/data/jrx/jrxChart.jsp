@@ -49,23 +49,25 @@
 					min1=$('#jrxChart_min').val();	
 				    max1 = $('#jrxChart_max').val();
 				    var timeValue= checkTime(min1,max1);
-				   if(timeValue>0){
-						 $.dialog.tips("查询时间超过一年,请重新输入！",1,'error.gif');
-						return;
-					} 
-					
-		 	$.ajax({
+				   
+	/* if(timeValue>0){
+				 $.dialog.tips("查询时间超过一年,请重新输入！",1,'error.gif');
+				return;
+			}  */
+
+			$.ajax({
 				type : 'POST',
 				url : "jrx/chart/jrxChart",
-				data:{min : min1,
+				data : {
+					min : min1,
 					max : max1,
 					str : mp
-					},
-				success:jrxHighCharts
-			}); 
+				},
+				success : jrxHighCharts
+			});
 		}
 	});
-	
+
 	function Mystr2time(str) {
 		var reg = /^(\d+)-(\d{1,2})-(\d{1,2}) (\d{1,2}):(\d{1,2}):(\d{1,2})$/;
 		var r = str.match(reg);
@@ -74,47 +76,38 @@
 		r[2] = r[2] - 1;
 		return new Date(r[1], r[2], r[3], r[4], r[5], r[6]);
 	}
-	
-	function  checkTime(min1,max1){
-		var regEx = new RegExp("\\-","gi");
-	    min1=min1.replace(regEx,"/");
-		max1=max1.replace(regEx,"/");
-		var value =new Date(max1).getTime()-new Date(min1).getTime()-365*24*60*60*1000;
+
+	function checkTime(min1, max1) {
+		var regEx = new RegExp("\\-", "gi");
+		min1 = min1.replace(regEx, "/");
+		max1 = max1.replace(regEx, "/");
+		var value = new Date(max1).getTime() - new Date(min1).getTime() - 365
+				* 24 * 60 * 60 * 1000;
 		return value;
 	};
 	function jrxHighCharts(result) {
-		
-			if(result.length==0){
-				// alert("您所查日期内无监测数据，请重新选择查询日期");
-				 $.dialog.tips("您所查日期内无监测数据，请重新选择查询日期",1,'error.gif');
-				 return;
-			}
-			$('#jrx_chart').highcharts('StockChart', {
-						
-				chart : {renderTo : 'container'},
-						rangeSelector : {
-							selected : 1
-						},
-			
-						title : {
-							text : '浸润线监测过程曲线'
-						},
-						yAxis : {
-							title : {text : '浸润线(mm)'},
-							plotLines : [{value : 0 ,color : 'green',dashStyle : 'shortdash',width : 2,label : {text : '零界线'}}]
-						},
-						series : [{
-							name : '浸润线',
-							data : result,
-							tooltip: {
-								valueDecimals: 2
-							} 
-							/* tooltip:{yDecimals : 2}   */
-						}]
-					});
-    }
-	
-	
+
+		if (result.length == 0) {
+			$.dialog.tips("您所查日期内无监测数据，请重新选择查询日期");
+			return;
+		}
+		$('#jrx_chart').highcharts('StockChart', {
+
+
+			title : {
+				text : '浸润线监测过程曲线'
+			},
+			yAxis : {
+				title : {
+					text : '浸润线(mm)'
+				}
+			},
+			series : [ {
+				name : '浸润线',
+				data : result
+			} ]
+		});
+	}
 </script>
 <div class="easyui-layout" data-options="fit:true">
 	<div data-options="region:'center'" style="padding: 10px 0 10px 10px">

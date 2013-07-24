@@ -47,43 +47,46 @@
 					min1=$('#jylChart_min').val();	
 				    max1 = $('#jylChart_max').val();
 				    var timeValue= checkTime(min1,max1);
-				    if(timeValue>0){
-						 $.dialog.tips("查询时间超过一年,请重新输入！",1,'error.gif');
-						return;
-					} 
-			if(flag==true){
-				jylHistogramRequest(min1,max1,str1);
-			}else{
-				
-				jylChartRequest(min1,max1,str1);
+				  
+	/*   if(timeValue>0){
+				 $.dialog.tips("查询时间超过一年,请重新输入！",1,'error.gif');
+				return;
+			}  */
+			if (flag == true) {
+				jylHistogramRequest(min1, max1, str1);
+			} else {
+
+				jylChartRequest(min1, max1, str1);
 			}
-		 	
+
 		}
-		
+
 	});
-	
-	function jylChartRequest(min1,max1,str1){
+
+	function jylChartRequest(min1, max1, str1) {
 		$.ajax({
 			type : 'POST',
 			url : "jyl/chart/jylChart",
-			data:{min : min1,
+			data : {
+				min : min1,
 				max : max1,
 				str : str1
-				},
-			success:jylHighCharts
-		}); 
+			},
+			success : jylHighCharts
+		});
 	}
-	
-	function jylHistogramRequest(min1,max1,str1){
+
+	function jylHistogramRequest(min1, max1, str1) {
 		$.ajax({
 			type : 'POST',
 			url : "jyl/chart/jylHistogram",
-			data:{min : min1,
+			data : {
+				min : min1,
 				max : max1,
 				str : str1
-				},
-			success:jylHistogram
-		}); 
+			},
+			success : jylHistogram
+		});
 	}
 	function Mystr2time(str) {
 		var reg = /^(\d+)-(\d{1,2})-(\d{1,2}) (\d{1,2}):(\d{1,2}):(\d{1,2})$/;
@@ -93,86 +96,76 @@
 		r[2] = r[2] - 1;
 		return new Date(r[1], r[2], r[3], r[4], r[5], r[6]);
 	}
-	
-	function  checkTime(min1,max1){
-		var regEx = new RegExp("\\-","gi");
-	    min1=min1.replace(regEx,"/");
-		max1=max1.replace(regEx,"/");
-		var value =new Date(max1).getTime()-new Date(min1).getTime()-365*24*60*60*1000;
+
+	function checkTime(min1, max1) {
+		var regEx = new RegExp("\\-", "gi");
+		min1 = min1.replace(regEx, "/");
+		max1 = max1.replace(regEx, "/");
+		var value = new Date(max1).getTime() - new Date(min1).getTime() - 365
+				* 24 * 60 * 60 * 1000;
 		return value;
 	};
 	function jylHighCharts(result) {
-		
-			if(result.length==0){
-				 $.dialog.tips("您所查日期内无监测数据，请重新选择查询日期",1,'error.gif');
-				 return;
-			}
-	          //Highcharts.setOptions({global:{useUTC : false}});
-			$('#ksw_chart').highcharts('StockChart', {
-				
-				chart : {renderTo : 'container'},
-						rangeSelector : {
-							selected : 1
-						},
-			
-						title : {
-							text : '降雨量监测过程曲线'
-						}, global: {
-	                        useUTC: false
-	                    },
-						yAxis : {
-							title : {text : '降雨量(mm)'},
-							plotLines : [{value : 0 ,color : 'green',dashStyle : 'shortdash',width : 2,label : {text : '零界线'}}]
-						},
-						series : [{
-							name : '降雨量',
-							data : result,
-							/* tooltip: {
-								valueDecimals: 2
-							} */
-							tooltip:{yDecimals : 2} 
-						}]
-					});
-    }
-	function jylHistogram(result) {
-		if(result.length==0){
-			 $.dialog.tips("您所查日期内无监测数据，请重新选择查询日期",1,'error.gif');
-			 return;
+
+		if (result.length == 0) {
+			$.dialog.tips("您所查日期内无监测数据，请重新选择查询日期");
+			return;
 		}
-	//	 Highcharts.setOptions({global:{useUTC : false}});
-		$('#ksw_chart').highcharts('StockChart', {
-			 chart: {
-			        alignTicks: false
-			    },
+		//Highcharts.setOptions({global:{useUTC : false}});
+		$('#jyl_chart_new').highcharts('StockChart', {
 
-			    rangeSelector: {
-			        selected: 1
-			    },
+			
+			title : {
+				text : '降雨量监测过程曲线'
+			},
+			global : {
+				useUTC : false
+			},
+			yAxis : {
+				title : {
+					text : '降雨量(mm)'
+				}
+			},
+			series : [ {
+				name : '降雨量',
+				data : result
+				
+			} ]
+		});
+	}
+	function jylHistogram(result) {
+		if (result.length == 0) {
+			$.dialog.tips("您所查日期内无监测数据，请重新选择查询日期");
+			return;
+		}
+		//	 Highcharts.setOptions({global:{useUTC : false}});
+		$('#jyl_chart_new').highcharts('StockChart', {
+			chart : {
+				alignTicks : false
+			},
 
-			    title: {
-			        text: '日降雨量统计图'
-			    },
-			    global: {
-                    useUTC: false
-                },
-			    series: [{
-			        type: 'column',
-			        name: '日降雨量',
-			        data: result,
-			        dataGrouping: {
-						units: [[
-							'week', // unit name
-							[1] // allowed multiples
-						], [
-							'month',
-							[1, 2, 3, 4, 6]
-						]]
-			        }
-			    }]
-			});
-}
-	
+			rangeSelector : {
+				selected : 1
+			},
 
+			title : {
+				text : '日降雨量统计图'
+			},
+			global : {
+				useUTC : false
+			},
+			series : [ {
+				type : 'column',
+				name : '日降雨量',
+				data : result,
+				dataGrouping : {
+					units : [ [ 'week', // unit name
+					[ 1 ] // allowed multiples
+					], [ 'month', [ 1, 2, 3, 4, 6 ] ] ]
+				}
+			} ]
+		});
+	}
 </script>
 <div class="easyui-layout" data-options="fit:true">
 	<div data-options="region:'center'" style="padding: 10px 0 10px 10px">
@@ -211,5 +204,5 @@
 			<a href="#" class="easyui-linkbutton"
 			 plain="true" iconCls="icon-search" onclick="jylChart.list.getChartData(true)">日降雨量统计</a>
 	</div>
-		<div id="ksw_chart"></div>
+		<div id="jyl_chart_new"></div>
 </div>

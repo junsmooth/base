@@ -5,8 +5,110 @@ $(function() {
 	registryLogout();
 	delayRun();
 	//
-	addTab('三维地图','topo/threedimension');
+	addTab('三维地图', 'topo/threedimension');
+	setChartOptions();
+
 })
+function setChartOptions() {
+	Highcharts.setOptions({
+		chart : {
+			zoomType : 'x'
+		},
+		plotOptions : {
+//			line : {
+//				gapSize : 10
+//			}
+		},
+		credits : {
+			enabled : false
+		},
+		rangeSelector : {
+			buttonTheme : { // styles for the buttons
+				fill : 'none',
+				stroke : 'none',
+				'stroke-width' : 0,
+				r : 8,
+				style : {
+					color : '#039',
+					fontWeight : 'bold'
+				},
+				states : {
+					hover : {},
+					select : {
+						fill : '#039',
+						style : {
+							color : 'white'
+						}
+					}
+				}
+			},
+			inputStyle : {
+				color : '#039',
+				fontWeight : 'bold'
+			},
+			labelStyle : {
+				color : 'silver',
+				fontWeight : 'bold'
+			},
+			inputDateFormat : '%Y-%m-%d',
+			selected : 5,
+			buttons : [ {
+				type : 'day',
+				count : 1,
+				text : '1天'
+			}, {
+				type : 'day',
+				count : 7,
+				text : '7天'
+			}, {
+				type : 'month',
+				count : 1,
+				text : '1月'
+			}, {
+				type : 'month',
+				count : 3,
+				text : '3月'
+			}, {
+				type : 'year',
+				count : 1,
+				text : '1年'
+			}, {
+				type : 'all',
+				text : '全部'
+			} ]
+		},
+		navigator : {
+			xAxis : {
+				type : 'datetime',
+				dateTimeLabelFormats : {
+					second : '%Y-%m-%d<br/>%H:%M:%S',
+					minute : '%Y-%m-%d<br/>%H:%M',
+					hour : '%Y-%m-%d<br/>%H:%M',
+					day : '%Y-%m-%d',
+					week : '%Y-%m-%d',
+					month : '%Y-%m',
+					year : '%Y'
+				}
+			}
+		},
+		xAxis : {
+			type : 'datetime',
+			dateTimeLabelFormats : {
+				second : '%Y-%m-%d<br/>%H:%M:%S',
+				minute : '%Y-%m-%d<br/>%H:%M',
+				hour : '%Y-%m-%d<br/>%H:%M',
+				day : '%Y<br/>%m-%d',
+				week : '%Y<br/>%m-%d',
+				month : '%Y-%m',
+				year : '%Y'
+			}
+		},
+		tooltip : {
+			xDateFormat : '%Y-%m-%d %H:%M:%S'
+		},
+	});
+}
+
 function registryLogout() {
 	$('#loginOut').click(function() {
 		$.messager.confirm('系统提示', '您确定要退出本次登录吗?', function(r) {
@@ -33,20 +135,16 @@ function InitLeftMenu() {
 	}, function() {
 		$(this).parent().removeClass("hover");
 	});
-	
-	
-	
-	
-	
+
 }
 
-function addTab(subtitle, url,icon) {
+function addTab(subtitle, url, icon) {
 	if (!$('#tabs').tabs('exists', subtitle)) {
 		$('#tabs').tabs('add', {
 			title : subtitle,
-			//content : createFrame(url),
-			href:url,
-			icon:"icon " +icon,
+			// content : createFrame(url),
+			href : url,
+			icon : "icon " + icon,
 			closable : true
 
 		});
@@ -172,33 +270,33 @@ function clockon() {
 	var timer = setTimeout("clockon()", 200);
 }
 
-function triggerAlarm(data){
+function triggerAlarm(data) {
 	$.messager.show({
-        title:'报警信息',
-        msg:"<a href='#' onclick='showDetailAlarmRecord()'>"+"共有"+data.length+"条报警记录。"+"</a>",
-        showType:'show',
-        timeout:3000
-       
-    });
-}
-function AlarmData(){
-	$.ajax({
-			type:'get',
-			url:'alarm/showAlarmrecord/data',
-			success:triggerAlarm
+		title : '报警信息',
+		msg : "<a href='#' onclick='showDetailAlarmRecord()'>" + "共有"
+				+ data.length + "条报警记录。" + "</a>",
+		showType : 'show',
+		timeout : 3000
+
 	});
-	
+}
+function AlarmData() {
+	$.ajax({
+		type : 'get',
+		url : 'alarm/showAlarmrecord/data',
+		success : triggerAlarm
+	});
+
 }
 
-function showDetailAlarmRecord(){
-	addTab('报警记录','alarm/alarmrecord','');
+function showDetailAlarmRecord() {
+	addTab('报警记录', 'alarm/alarmrecord', '');
 }
 
-function delayRun(){
-	setInterval("AlarmData()", 200000); 
+function delayRun() {
+	setInterval("AlarmData()", 200000);
 }
 
-
-	/*function homePage(){
-		addTab('首页','homepage/information','');
-	}*/
+/*
+ * function homePage(){ addTab('首页','homepage/information',''); }
+ */

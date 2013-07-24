@@ -10,55 +10,58 @@
 		myDate : function(value) {
 			return formatDateTime(value);
 		},
-		initToolBarValue:function(value){
-			var date=new Date(); 
-			var oldDate=new Date(date.getTime()-7*24*60*60*1000);
-			$("#sllChart_max").attr("value",formatDateTime(date));  
-			$("#sllChart_min").attr("value",formatDateTime(oldDate));
-			if(value==''){
+		initToolBarValue : function(value) {
+			var date = new Date();
+			var oldDate = new Date(date.getTime() - 7 * 24 * 60 * 60 * 1000);
+			$("#sllChart_max").attr("value", formatDateTime(date));
+			$("#sllChart_min").attr("value", formatDateTime(oldDate));
+			if (value == '') {
 				return;
 			}
-			if(value.length>0){
-				$("#sllChart_monitorPosition").combobox("setValue",value[0].position);
+			if (value.length > 0) {
+				$("#sllChart_monitorPosition").combobox("setValue",
+						value[0].position);
 			}
 			sllChart.list.getChartData();
 		},
-		change_min:function(){
-			var minv=$("#sllChart_min").datetimebox('getValue');
-			$("#sllChart_min").attr("value",minv);
+		change_min : function() {
+			var minv = $("#sllChart_min").datetimebox('getValue');
+			$("#sllChart_min").attr("value", minv);
 		},
-		change_max:function(){
-			var maxv=$("#sllChart_max").datetimebox('getValue');
-			$("#sllChart_max").attr("value",maxv);
+		change_max : function() {
+			var maxv = $("#sllChart_max").datetimebox('getValue');
+			$("#sllChart_max").attr("value", maxv);
 		},
-		getChartData:function(){
+		getChartData : function() {
 			var validFormDate = $("#sllChart_tb").form('validate');
 			if (!validFormDate) {
 				return;
 			}
-					var mp, min1, max1;
-				
-					mp = $('#sllChart_monitorPosition').combobox('getValue');
-					min1=$('#sllChart_min').val();	
-				    max1 = $('#sllChart_max').val();
-				    var timeValue= checkTime(min1,max1);
-				    if(timeValue>0){
+			var mp, min1, max1;
+
+			mp = $('#sllChart_monitorPosition').combobox('getValue');
+			min1 = $('#sllChart_min').val();
+			max1 = $('#sllChart_max').val();
+			var timeValue = checkTime(min1, max1);
+
+			/*  if(timeValue>0){
 						 $.dialog.tips("查询时间超过一年,请重新输入！",1,'error.gif');
 						return;
-					} 
-					
-		 	$.ajax({
+					}  */
+
+			$.ajax({
 				type : 'POST',
 				url : "sll/chart/sllChart",
-				data:{min : min1,
+				data : {
+					min : min1,
 					max : max1,
 					str : mp
-					},
-				success:sllHighCharts
-			}); 
+				},
+				success : sllHighCharts
+			});
 		}
 	});
-	
+
 	function Mystr2time(str) {
 		var reg = /^(\d+)-(\d{1,2})-(\d{1,2}) (\d{1,2}):(\d{1,2}):(\d{1,2})$/;
 		var r = str.match(reg);
@@ -67,46 +70,37 @@
 		r[2] = r[2] - 1;
 		return new Date(r[1], r[2], r[3], r[4], r[5], r[6]);
 	}
-	
-	function  checkTime(min1,max1){
-		var regEx = new RegExp("\\-","gi");
-	    min1=min1.replace(regEx,"/");
-		max1=max1.replace(regEx,"/");
-		var value =new Date(max1).getTime()-new Date(min1).getTime()-365*24*60*60*1000;
+
+	function checkTime(min1, max1) {
+		var regEx = new RegExp("\\-", "gi");
+		min1 = min1.replace(regEx, "/");
+		max1 = max1.replace(regEx, "/");
+		var value = new Date(max1).getTime() - new Date(min1).getTime() - 365
+				* 24 * 60 * 60 * 1000;
 		return value;
 	};
 	function sllHighCharts(result) {
-		
-			if(result.length==0){
-				 $.dialog.tips("您所查日期内无监测数据，请重新选择查询日期",1,'error.gif');
-				 return;
-			}
-			$('#sll_chart').highcharts('StockChart', {
-						
-				chart : {renderTo : 'container'},
-						rangeSelector : {
-							selected : 1
-						},
-			
-						title : {
-							text : '渗流量监测过程曲线'
-						},
-						yAxis : {
-							title : {text : '渗流量(mm)'},
-							plotLines : [{value : 0 ,color : 'green',dashStyle : 'shortdash',width : 2,label : {text : '零界线'}}]
-						},
-						series : [{
-							name : '渗流量',
-							data : result,
-							/* tooltip: {
-								valueDecimals: 2
-							} */
-							tooltip:{yDecimals : 2} 
-						}]
-					});
-    }
-	
-	
+
+		if (result.length == 0) {
+			$.dialog.tips("您所查日期内无监测数据，请重新选择查询日期");
+			return;
+		}
+		$('#sll_chart').highcharts('StockChart', {
+
+			title : {
+				text : '渗流量监测过程曲线'
+			},
+			yAxis : {
+				title : {
+					text : '渗流量(L/s)'
+				}
+			},
+			series : [ {
+				name : '渗流量',
+				data : result
+			} ]
+		});
+	}
 </script>
 <div class="easyui-layout" data-options="fit:true">
 	<div data-options="region:'center'" style="padding: 10px 0 10px 10px">
@@ -114,7 +108,7 @@
 
 		<table id="sllId" class="easyui-datagrid"
 			data-options="fit:true,toolbar:'#sllChart_tb'">
-			
+
 		</table>
 	</div>
 </div>
@@ -142,5 +136,5 @@
 			readonly="readonly"> <a href="#" class="easyui-linkbutton"
 			iconCls="icon-search" onclick="sllChart.list.getChartData()">查询</a>
 	</div>
-		<div id="sll_chart"></div>
+	<div id="sll_chart"></div>
 </div>
