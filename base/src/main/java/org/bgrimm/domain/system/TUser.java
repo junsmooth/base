@@ -10,8 +10,10 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
+import org.bgrimm.domain.bgrimm.common.AlarmType;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,6 +30,18 @@ public class TUser extends IdEntity implements UserDetails,
 	private String telephone;
 	private String address;
 	private String cardno;
+	@ManyToOne
+	@JoinColumn(name="alarmtype_id")
+	private AlarmType alarmType;
+	
+	public AlarmType getAlarmType() {
+		return alarmType;
+	}
+
+	public void setAlarmType(AlarmType alarmType) {
+		this.alarmType = alarmType;
+	}
+
 	@Column
 	@org.hibernate.annotations.Type(type="yes_no")
 	private boolean enabled=true;
