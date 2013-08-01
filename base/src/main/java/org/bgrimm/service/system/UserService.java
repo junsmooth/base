@@ -31,6 +31,7 @@ public class UserService {
 			dest.setCardno(user.getCardno());
 			dest.setTelephone(user.getTelephone());
 			dest.setEmail(user.getEmail());
+			dest.setAlarmType(user.getAlarmType());
 			user = dest;
 		}
 		userDao.saveOrUpdate(user);
