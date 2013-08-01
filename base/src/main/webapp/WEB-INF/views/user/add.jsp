@@ -46,6 +46,13 @@ Namespace.register('user.add',{
 	clearRoles:function(){
 		$("#user_add_roles").attr("value","");
 		$("#user_add_roleids").attr("value","");
+	},
+	formatAlarm:function(row){
+		//return value;
+		var name=row.name;
+		var color=row['color']['code'];
+		var html="<div style='background-color:"+color+"'>"+name+"</div>";
+		return html;
 	}
 });
 
@@ -116,6 +123,11 @@ Namespace.register('user.add',{
 					
 					<td><a href="#" class="easyui-linkbutton l-btn l-btn-plain" data-options="plain:true"  onclick="user.add.clearRoles();" id="">
 					<span class="l-btn-text icon-redo l-btn-icon-left">清空</span></a></td>
+				</tr>
+				<tr>
+					<td>报警级别:</td>
+					<td><input id="user_add_alarmType" class="easyui-combobox" name="alarmType.id"  value="${user.alarmType.id}"
+    data-options="required:true,valueField:'id',textField:'name',url:'alarm/alarmtype/data',formatter:user.add.formatAlarm" />   </td>
 				</tr>
 			</table>
 
