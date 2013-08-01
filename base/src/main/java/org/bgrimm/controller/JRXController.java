@@ -4,6 +4,7 @@ import java.util.List;
 import org.bgrimm.domain.bgrimm.TableParam;
 import org.bgrimm.domain.system.PageList;
 import org.bgrimm.service.impl.JRXService;
+import org.bgrimm.utils.DataUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,7 +50,9 @@ public class JRXController {
 	@ResponseBody
 	public Object JRXChart(TableParam param){
 		
-		return jrxService.getJrxChartData(param);
+		 List jrxChartList=jrxService.getJrxChartData(param);
+		 JRXService.setDecimalDigits(jrxChartList);
+		 return DataUtils.objectList2JSonList(jrxChartList, new Object[]{"dateTime","value"});
 	}
 	
 }

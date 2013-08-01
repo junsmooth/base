@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 
@@ -116,15 +117,13 @@ public class JRXService {
 	public List getJrxChartData(TableParam param) {
 		Criteria criteria=commonDao.getSession().createCriteria(JRX.class);
 		List li= getJRXChartData(criteria, param);
-		setDecimalDigits(li);
 		if(li.size()>Constants.MAXIMUM_ALLOWED_VALUE){
 			Criteria tCriteria=commonDao.getSession().createCriteria(TJRX.class);
 			List tList=getJRXChartData(tCriteria,param);
-			setDecimalDigits(tList);
-			return DataUtils.objectList2JSonList(tList, new Object[]{"dateTime","value"});
+			return tList;
 			
 		}else{
-			return DataUtils.objectList2JSonList(li, new Object[]{"dateTime","value"});
+			return li;
 		}
 	}
 

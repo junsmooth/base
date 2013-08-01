@@ -103,8 +103,10 @@ function setChartOptions() {
 				year : '%Y'
 			}
 		},
+		
 		tooltip : {
-			xDateFormat : '%Y-%m-%d %H:%M:%S'
+			xDateFormat : '%Y-%m-%d %H:%M:%S',
+			valueDecimals : 2
 		},
 	});
 }
