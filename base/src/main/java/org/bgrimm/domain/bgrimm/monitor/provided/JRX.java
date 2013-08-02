@@ -16,8 +16,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity(name="saturation_line_monitoring")
 public class JRX extends IdEntity {
-	@NotEmpty
-	@Temporal(TemporalType.TIMESTAMP)
+//	@NotEmpty
+//	@Temporal(TemporalType.TIMESTAMP)
 	
 	@Column(name="date_Time")
 	private Date dateTime;
