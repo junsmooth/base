@@ -59,7 +59,8 @@
 
 
 SET IDENTITY_INSERT [t_menu] ON
-INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url] ) VALUES ( 1 , 'ROOT' , 'ROOT' , 'ROOT' , '/' )
+
+ INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url] ) VALUES ( 1 , 'ROOT' , 'ROOT' , 'ROOT' , '/' )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 2 , '系统管理' , 'SYSTEM' , '' , 2 , 1 )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 3 , '用户管理' , 'USER' , 'user' , 3 , 2 )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 4 , '菜单管理' , 'MENU' , 'menu' , 2 , 2 )
@@ -100,6 +101,8 @@ INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url] ) VALUE
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 39 , '监测图' , 'JIANCETU' , 'topo/main' , 6 , 2 )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 40 , '卫星云图' , 'SATPIC' , 'topo/satellite' , 13 , 2 )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 41 , '三维地图' , 'THREEDIMENSION' , 'topo/threedimension' , 36 , 2 )
+
+
 
  SET IDENTITY_INSERT [t_menu] OFF
 
@@ -208,7 +211,7 @@ INSERT [t_thresholdop] ( [id] , [displayName] , [opName] ) VALUES ( 1 , '大于' ,
 
  
  SET IDENTITY_INSERT [t_montypeattr] ON
- INSERT [t_montypeattr] ( [id] , [attr] , [name] , [montypeid] ) VALUES ( 1 , 'dN' , '平行坝轴线变化' , 1 )
+  INSERT [t_montypeattr] ( [id] , [attr] , [name] , [montypeid] ) VALUES ( 1 , 'dN' , '平行坝轴线变化' , 1 )
  INSERT [t_montypeattr] ( [id] , [attr] , [name] , [montypeid] ) VALUES ( 2 , 'value' , '库水位' , 11 )
  INSERT [t_montypeattr] ( [id] , [attr] , [name] , [montypeid] ) VALUES ( 3 , 'value' , '浸润线' , 3 )
  INSERT [t_montypeattr] ( [id] , [attr] , [name] , [montypeid] ) VALUES ( 4 , 'dE' , '垂直坝轴线变化' , 1 )
@@ -218,6 +221,8 @@ INSERT [t_thresholdop] ( [id] , [displayName] , [opName] ) VALUES ( 1 , '大于' ,
  INSERT [t_montypeattr] ( [id] , [attr] , [name] , [montypeid] ) VALUES ( 8 , 'value' , '渗流量' , 7 )
  INSERT [t_montypeattr] ( [id] , [attr] , [name] , [montypeid] ) VALUES ( 9 , 'value' , '安全超高' , 9 )
  INSERT [t_montypeattr] ( [id] , [attr] , [name] , [montypeid] ) VALUES ( 10 , 'value' , '坝顶高程' , 10 )
+ INSERT [t_montypeattr] ( [id] , [attr] , [name] , [montypeid] ) VALUES ( 11 , 'value' , '一小时降雨量' , 2 )
+ INSERT [t_montypeattr] ( [id] , [attr] , [name] , [montypeid] ) VALUES ( 12 , 'value' , '内部位移' , 6 )
 
  SET IDENTITY_INSERT [t_montypeattr] OFF
  
