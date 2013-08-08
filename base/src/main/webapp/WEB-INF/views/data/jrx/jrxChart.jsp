@@ -99,7 +99,7 @@
 			},
 			yAxis : {
 				title : {
-					text : '浸润线(mm)'
+					text : '浸润线(m)'
 				}
 			},
 			series : [ {

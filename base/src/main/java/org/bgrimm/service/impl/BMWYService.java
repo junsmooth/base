@@ -164,7 +164,7 @@ public class BMWYService {
 			
 		});
 
-		 setDecimalDigits(bmwyDataList);
+//		 setDecimalDigits(bmwyDataList);
 		 return DataUtils.objectList2JSonList(bmwyDataList, new Object[]{"dateTime",montypeattr.getAttr()});
 	
 	}

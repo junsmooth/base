@@ -95,7 +95,7 @@ public class GTCDService {
 				}
 			}
 		}
-		setDecimalDigits(pl.getRows());
+		//setDecimalDigits(pl.getRows());
 		return pl;
 	}
 
@@ -112,11 +112,11 @@ public class GTCDService {
 		List<Order> list=new ArrayList();
 		Criteria criteria=commonDao.getSession().createCriteria(GTCD.class);
 		List li= getJRXChartData(criteria, param);
-		setDecimalDigits(li);
+		//setDecimalDigits(li);
 		if(li.size()>Constants.MAXIMUM_ALLOWED_VALUE){
 			Criteria tCriteria=commonDao.getSession().createCriteria(TGTCD.class);
 			List tList=getJRXChartData(tCriteria,param);
-			setDecimalDigits(tList);
+			//setDecimalDigits(tList);
 			return DataUtils.objectList2JSonList(tList, new Object[]{"dateTime","value"});
 			
 		}else{
@@ -145,10 +145,10 @@ public class GTCDService {
 	}
 	
 
-	private void setDecimalDigits(List<GTCD> result) {
-
-		for(GTCD gtcd: result){
-			gtcd.setValue((BigDecimal)gtcd.getValue().setScale(2,BigDecimal.ROUND_HALF_UP));
-		}
-	}
+//	private void setDecimalDigits(List<GTCD> result) {
+//
+//		for(GTCD gtcd: result){
+//			gtcd.setValue((BigDecimal)gtcd.getValue().setScale(2,BigDecimal.ROUND_HALF_UP));
+//		}
+//	}
 }

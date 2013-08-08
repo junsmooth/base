@@ -101,11 +101,11 @@ public class NBWYService{
 	public Object getNBWYChartList(TableParam param) {
 		Criteria criteria=commonDao.getSession().createCriteria(NBWY.class);
 		List li= getNBWYChartData(criteria, param);
-		setDecimalDigits(li);
+//		setDecimalDigits(li);
 		if(li.size()>Constants.MAXIMUM_ALLOWED_VALUE){
 			Criteria tCriteria=commonDao.getSession().createCriteria(TNBWY.class);
 			List tList=getNBWYChartData(tCriteria,param);
-			setDecimalDigits(tList);
+//			setDecimalDigits(tList);
 			return DataUtils.objectList2JSonList(tList, new Object[]{"dateTime","value"});
 			
 		}else{
@@ -133,12 +133,12 @@ public class NBWYService{
 		return criteria.list();
 	}
 	
-	private void setDecimalDigits(List<NBWY> result) {
-
-		for(NBWY nbwy: result){
-			nbwy.setValue((BigDecimal)nbwy.getValue().setScale(2,BigDecimal.ROUND_HALF_UP));
-		}
-	}
+//	private void setDecimalDigits(List<NBWY> result) {
+//
+//		for(NBWY nbwy: result){
+//			nbwy.setValue((BigDecimal)nbwy.getValue().setScale(2,BigDecimal.ROUND_HALF_UP));
+//		}
+//	}
 
 	
 }

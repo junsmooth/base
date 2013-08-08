@@ -103,11 +103,11 @@ public class SLLService{
 		List<Order> list=new ArrayList();
 		Criteria criteria=commonDao.getSession().createCriteria(SLL.class);
 		List li= getSLLChartData(criteria, param);
-		setDecimalDigits(li);
+//		setDecimalDigits(li);
 		if(li.size()>Constants.MAXIMUM_ALLOWED_VALUE){
 			Criteria tCriteria=commonDao.getSession().createCriteria(TSLL.class);
 			List tList=getSLLChartData(tCriteria,param);
-			setDecimalDigits(tList);
+//			setDecimalDigits(tList);
 			return DataUtils.objectList2JSonList(tList, new Object[]{"dateTime","value"});
 			
 		}else{
@@ -135,11 +135,11 @@ public class SLLService{
 		return criteria.list();
 	}
 	
-	private void setDecimalDigits(List<SLL> result) {
-
-		for(SLL sll: result){
-			sll.setValue((BigDecimal)sll.getValue().setScale(2,BigDecimal.ROUND_HALF_UP));
-		}
-	}
+//	private void setDecimalDigits(List<SLL> result) {
+//
+//		for(SLL sll: result){
+//			sll.setValue((BigDecimal)sll.getValue().setScale(2,BigDecimal.ROUND_HALF_UP));
+//		}
+//	}
 
 }

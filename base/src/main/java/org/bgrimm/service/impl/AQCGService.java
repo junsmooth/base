@@ -87,7 +87,7 @@ public class AQCGService{
 				}
 			}
 		}
-		setDecimalDigits(pl.getRows());
+//		setDecimalDigits(pl.getRows());
 		return pl;
 	}
 
@@ -102,11 +102,11 @@ public class AQCGService{
 	public Object getAQCGChartList(TableParam param) {
 		Criteria criteria=commonDao.getSession().createCriteria(AQCG.class);
 		List li= getJRXChartData(criteria, param);
-		setDecimalDigits(li);
+//		setDecimalDigits(li);
 		if(li.size()>Constants.MAXIMUM_ALLOWED_VALUE){
 			Criteria tCriteria=commonDao.getSession().createCriteria(TAQCG.class);
 			List tList=getJRXChartData(tCriteria,param);
-			setDecimalDigits(tList);
+//			setDecimalDigits(tList);
 			return DataUtils.objectList2JSonList(tList, new Object[]{"dateTime","value"});
 			
 		}else{
@@ -134,12 +134,12 @@ public class AQCGService{
 		return criteria.list();
 	}
 	
-	private void setDecimalDigits(List<AQCG> result) {
-
-		for(AQCG aqcg: result){
-			aqcg.setValue((BigDecimal)aqcg.getValue().setScale(2,BigDecimal.ROUND_HALF_UP));
-		}
-	}
+//	private void setDecimalDigits(List<AQCG> result) {
+//
+//		for(AQCG aqcg: result){
+//			aqcg.setValue((BigDecimal)aqcg.getValue().setScale(2,BigDecimal.ROUND_HALF_UP));
+//		}
+//	}
 
 
 }
