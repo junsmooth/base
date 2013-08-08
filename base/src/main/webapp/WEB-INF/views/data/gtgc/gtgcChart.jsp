@@ -84,14 +84,14 @@
 			$.dialog.tips("您所查日期内无监测数据，请重新选择查询日期");
 			return;
 		}
-		$('#jrx_chart').highcharts('StockChart', {
+		$('#gtgc_chart').highcharts('StockChart', {
 
 			title : {
 				text : '干滩高程监测过程曲线'
 			},
 			yAxis : {
 				title : {
-					text : '干滩高程(mm)'
+					text : '干滩高程(m)'
 				}
 			},
 			series : [ {
@@ -135,5 +135,5 @@
 		<a href="#" class="easyui-linkbutton" iconCls="icon-search"
 			onclick="gtgcChart.list.getChartData()">查询</a>
 	</div>
-	<div id="jrx_chart"></div>
+	<div id="gtgc_chart"></div>
 </div>

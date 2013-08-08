@@ -42,10 +42,10 @@
 					min1=$('#aqcgChart_min').val();	
 				    max1 = $('#aqcgChart_max').val();
 				    var timeValue= checkTime(min1,max1);
-				   if(timeValue>0){
+				  /*  if(timeValue>0){
 						 $.dialog.tips("查询时间超过一年,请重新输入！",1,'error.gif');
 						return;
-					} 
+					}  */
 					
 		 	$.ajax({
 				type : 'POST',
@@ -78,10 +78,11 @@
 	function aqcgHighCharts(result) {
 		
 			
-			if(result.length==0){
-				 $.dialog.tips("您所查日期内无监测数据，请重新选择查询日期",1,'error.gif');
-				 return;
-			}
+
+		if (result.length == 0) {
+			$.dialog.tips("您所查日期内无监测数据，请重新选择查询日期");
+			return;
+		}
 			$('#aqcg_chart').highcharts('StockChart', {
 						
 				chart : {renderTo : 'container'},
