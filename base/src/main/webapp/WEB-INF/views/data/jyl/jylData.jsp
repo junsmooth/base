@@ -74,7 +74,7 @@
 						data-options="field:'point',width:80,align:'left',formatter:jyl.list.formatJYLPoint">
 						测点</th>
 					<th data-options="field:'value',formatter:jyl.list.formatJYLValue,width:120,align:'left'">
-						深度(m)</th>
+						降雨量(mm)</th>
 
 				</tr>
 			</thead>

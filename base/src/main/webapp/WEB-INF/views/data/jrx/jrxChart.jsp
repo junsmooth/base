@@ -98,6 +98,7 @@
 				text : '浸润线监测过程曲线'
 			},
 			yAxis : {
+				reversed: true,
 				title : {
 					text : '浸润线(m)'
 				}
@@ -113,7 +114,7 @@
 	<div data-options="region:'center'" style="padding: 10px 0 10px 10px">
 
 
-		<table id="jrxgrid" class="easyui-datagrid"
+		<table id="jrxChartTable" class="easyui-datagrid"
 			data-options="fit:true,toolbar:'#jrxChart_tb'">
 			
 		</table>
