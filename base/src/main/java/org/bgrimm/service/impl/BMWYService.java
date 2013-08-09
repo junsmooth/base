@@ -52,9 +52,9 @@ public class BMWYService {
 		final List<MonitoringPoint> bmwyPointList = commonDao.findByCriterions(
 				MonitoringPoint.class, Restrictions.eq("type.id", t.getId()));
 
-		PageList<BMWY> result = template.execute(new TransactionCallback() {
+		PageList<BMWY> result = template.execute(new TransactionCallback<PageList<BMWY>>() {
 
-			public PageList doInTransaction(TransactionStatus status) {
+			public PageList<BMWY> doInTransaction(TransactionStatus status) {
 				PagedQuery pq = new PagedQuery(BMWY.class, param.getPage(),
 						param.getRows());
 				DetachedCriteria criteria = pq.getDetachedCriteria();
@@ -142,9 +142,9 @@ public class BMWYService {
 		final Montypeattr montypeattr=commonDao.findUniqueBy(Montypeattr.class, "id",Long.parseLong(param.getDirId()));
 		Criteria criteria=commonDao.getSession().createCriteria(BMWY.class);
 		
-		List bmwyDataList=template.execute(new TransactionCallback() {
+		List<BMWY> bmwyDataList=template.execute(new TransactionCallback<List<BMWY>>() {
 			
-			public List doInTransaction(TransactionStatus status) {
+			public List<BMWY> doInTransaction(TransactionStatus status) {
 				Integer arr =Integer.parseInt(param.getStr());
 				Criteria criteria=dao.getSession().createCriteria(BMWY.class);
 				if (StringUtils.isNotEmpty(param.getMin())) {

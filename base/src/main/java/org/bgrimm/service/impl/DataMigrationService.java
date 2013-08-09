@@ -113,7 +113,7 @@ public class DataMigrationService {
 
 	private DateTime firstTimeOfThisBMWYPoint(final String clsName,
 			final MonitoringPoint mp) {
-		Date obj = template.execute(new TransactionCallback() {
+		Date obj = template.execute(new TransactionCallback<Date>() {
 			public Date doInTransaction(TransactionStatus status) {
 				Criteria criteria;
 				try {
@@ -166,8 +166,8 @@ public class DataMigrationService {
 		// final DateTime end = endDate.minusHours(8);
 		final DateTime begin = startDate;
 		final DateTime end = endDate;
-		List<BMWY> obj = template.execute(new TransactionCallback() {
-			public Object doInTransaction(TransactionStatus status) {
+		List<BMWY> obj = template.execute(new TransactionCallback<List<BMWY>>() {
+			public List<BMWY> doInTransaction(TransactionStatus status) {
 				Criteria criteria = dao.getSession().createCriteria(BMWY.class);
 				criteria.add(Restrictions.ge("dateTime", begin.toDate()));
 				criteria.add(Restrictions.lt("dateTime", end.toDate()));
