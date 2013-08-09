@@ -291,8 +291,8 @@ public class TopoService {
 
 	private void setBMWYData(final MonitoringPoint mp) {
 
-		List<BMWY> bmwyList=template.execute(new TransactionCallback() {
-			public Object doInTransaction(TransactionStatus status) {
+		List<BMWY> bmwyList=template.execute(new TransactionCallback<List<BMWY>>() {
+			public List<BMWY> doInTransaction(TransactionStatus status) {
 
 				Criteria criteria=t4ddbDao.getSession().createCriteria(BMWY.class);
 				criteria.setMaxResults(1);

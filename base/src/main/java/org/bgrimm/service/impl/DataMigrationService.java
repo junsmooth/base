@@ -296,7 +296,7 @@ public class DataMigrationService {
 	private DateTime lastTimeOfThisBMWYPoint(final String clsName,
 			final MonitoringPoint mp) {
 
-		Date obj = template.execute(new TransactionCallback() {
+		Date obj = template.execute(new TransactionCallback<Date>() {
 			public Date doInTransaction(TransactionStatus status) {
 				Criteria criteria;
 				try {
