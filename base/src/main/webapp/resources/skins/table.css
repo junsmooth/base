@@ -1,0 +1,112 @@
+body {
+	margin-left: 10px;
+	margin-top: 10px;
+	margin-right: 10px;
+	margin-bottom: 0px;
+	font-family: Verdana;
+}
+.STYLE1 {font-size: 15px;}
+/*新增、修改、详细信息页面字体加粗*/
+.STYLE3 {font-size: 14px; font-weight: bold; }
+.STYLE4 {
+	color: #03515d;
+	font-size: 14px;
+}
+/*控制表格与外框架的间距*/
+.table{
+    margin-left: 20px;
+	margin-top: 20px;
+	margin-right: 20px;
+	width: 96%;
+	background: #b5d6e6;
+	font-size: 15px;
+}
+.table2{
+    margin-left: 1px;
+	margin-top: 1px;
+	margin-right: 1px;
+	margin-bottom: 1px;
+	background: #b5d6e6;
+}
+.table3{
+    margin-left: 1px;
+	margin-top: 1px;
+	margin-right: 1px;
+	margin-bottom: 0px;
+	width: 100%;
+	background: #b5d6e6;
+}
+.pageTable{
+    margin-left: 20px;
+	margin-right: 20px;
+	margin-bottom: 0px;
+	border-width:0px 1px 1px 1px;
+	border-style: solid;
+	border-color: #b5d6e6;
+	padding-left:10px;
+	width: 96%;
+}
+.pageTable2{
+    margin-left: 1px;
+	margin-right: 1px;
+	margin-bottom: 0px;
+}
+/*过程线分析列表样式*/
+.pageTable3{
+    margin-left: 1px;
+	margin-right: 1px;
+	margin-bottom: 0px;
+	border-width:0px 1px 1px 1px;
+	border-style: solid;
+	border-color: #b5d6e6;
+	width: 100%;
+}
+/*设置表格首行样式*/
+.bg_tr{
+	/*background:url("../images/bg.gif");设置表格第一行背景图片*/
+	height: 22px;
+	text-align: center;
+	font-size: 14px;
+	font-weight: bold;
+}
+/*查询表格样式*/
+.bg_tr1{
+	background:url("../images/bg3.gif");/*设置表格第一行背景图片*/
+	height: 27px;
+	border-style: solid;
+	border-color: #b5d6e6;
+}
+.bg_tr3{
+	background:url("../images/bg3.gif");/*设置表格第一行背景图片*/
+	height: 24px;
+	font-size: 14px;
+	border-style: solid;
+	border-color: #b5d6e6;
+}
+.bg_tr2{
+	/*background:url("../images/bg.gif");设置表格第一行背景图片*/
+	height: 18px;
+	text-align: center;
+	font-size: 12px; 
+	font-weight: bold;
+}
+/*设置表格除首行样式*/
+.bg_td{
+	background:#ffffff;
+	height: 22px;
+	text-align: center;
+}
+.bg_td2{
+	background:#ffffff;
+	height: 22px;
+	text-align: left;
+	font-size: 12px;
+}
+
+thead.fixedHeader tr {
+position: relative;
+top: expression_r(document.getElementByIdx("tableContainer").scrollTop)
+}
+
+
+

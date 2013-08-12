@@ -90,13 +90,13 @@
 			});
 		},
 		formatDNValue:function(value){
-			return value.toFixed(2);
+			return 1000*value.toFixed(2);
 		},
 		formatDHValue:function(value){
-			return value.toFixed(2);
+			return 1000*value.toFixed(2);
 		},
 		formatDEValue:function(value){
-			return value.toFixed(2);
+			return 1000*value.toFixed(2);
 		}
 
 	});

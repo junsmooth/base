@@ -20,6 +20,7 @@ import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.bgrimm.common.MonitoringTypeAttribute;
 import org.bgrimm.domain.bgrimm.common.Threshold;
 import org.bgrimm.domain.bgrimm.common.ThresholdOperation;
+import org.bgrimm.domain.bgrimm.monitor.provided.JYL;
 import org.bgrimm.domain.system.PagedQuery;
 import org.bgrimm.utils.Constants;
 import org.hibernate.Criteria;
@@ -31,6 +32,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.internal.CriteriaImpl;
 import org.hibernate.sql.JoinType;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -198,11 +200,52 @@ public class AlarmService {
 		if (mp.getType().getCode().equals(Constants.JCD_BMWY)) {
 			// BMWY use template
 			latestPointData = latestBMWYPointData(clsName, mp);
+		} else if (mp.getType().getCode().equals(Constants.JCD_JYL)) {
+			latestPointData = latestHoursJYLData(mp);
 		} else {
 			latestPointData = latestDataOfCommonPoint(clsName, mp);
 		}
 
 		return latestPointData;
+	}
+
+	private Object latestHoursJYLData(MonitoringPoint mp) {
+
+		Criteria criteria;
+		try {
+			criteria = alarmDao.getSession().createCriteria(JYL.class);
+			CriteriaImpl impl = (CriteriaImpl) criteria;
+			Projection projection = impl.getProjection();
+			ProjectionList pList = Projections.projectionList();
+
+			pList.add(Projections.max("dateTime"));
+			criteria.add(Restrictions.eq("monitoringPosition", mp.getPosition()));
+			criteria.setProjection(pList);
+			criteria.setFetchSize(1);
+			Object obj = criteria.uniqueResult();
+			DateTime dt = new DateTime(obj);
+			// 当前时间->0分0秒 最近一小时
+			DateTime start = dt.minuteOfHour().setCopy(0).secondOfMinute()
+					.setCopy(0).millisOfSecond().setCopy(0);
+			criteria.setProjection(projection);
+			criteria.add(Restrictions.gt("dateTime", start.toDate()));
+			criteria.add(Restrictions.lt("dateTime", dt.toDate()));
+			criteria.add(Restrictions.eq("monitoringPosition", mp.getPosition()));
+			List<JYL> list = criteria.list();
+			JYL sum = new JYL();
+			for (JYL jyl : list) {
+				sum.getValue().add(jyl.getValue());
+			}
+			sum.setDateTime(dt.toDate());
+			sum.setMonitoringPosition(mp.getPosition());
+			sum.setPoint(mp);
+			return sum;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+
 	}
 
 	// 按照监测属性分类监测点的阈值

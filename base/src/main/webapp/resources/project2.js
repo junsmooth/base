@@ -1,0 +1,111 @@
+ function bianji(){
+                    $('#time').attr('readOnly',false);
+                    $('#using').attr('readOnly',false);
+                    $('#type').attr('readOnly',false);
+                    $('#dams').attr('readOnly',false);
+                    $('#tlevel').attr('readOnly',false);
+                    $('#area').attr('readOnly',false);             
+                    $('#standard').attr('readOnly',false);
+                    $('#early').attr('readOnly',false);
+                    $('#dambottom').attr('readOnly',false);
+                    $('#alignment1').attr('readOnly',false);
+                    $('#alignment2').attr('readOnly',false);
+                    $('#height').attr('readOnly',false);                   
+                    $('#total').attr('readOnly',false);
+                    $('#effective').attr('readOnly',false);
+                    $('#alignment3').attr('readOnly',false);
+                    $('#damhigh').attr('readOnly',false);
+                    $('#length').attr('readOnly',false);                
+                    $('#slope').attr('readOnly',false);
+                    $('#damwidth').attr('readOnly',false);
+                    $('#daminslope').attr('readOnly',false);
+                    $('#damoutslope1').attr('readOnly',false);
+                    $('#damoutslope2').attr('readOnly',false);
+                    $('#avgslope').attr('readOnly',false);
+                    
+                    $('#time').attr('style','border-width:1;border-style:solid;border-color:#b5d6e6;');
+                    $('#using').attr('style','border-width:1;border-style:solid;border-color:#b5d6e6;');
+                    $('#type').attr('style','border-width:1;border-style:solid;border-color:#b5d6e6;');
+                    $('#dams').attr('style','border-width:1;border-style:solid;border-color:#b5d6e6;');
+                    $('#tlevel').attr('style','border-width:1;border-style:solid;border-color:#b5d6e6;');
+                    $('#area').attr('style','border-width:1;border-style:solid;border-color:#b5d6e6;');                   
+                    $('#standard').attr('style','border-width:1;border-style:solid;border-color:#b5d6e6;');
+                    $('#early').attr('style','border-width:1;border-style:solid;border-color:#b5d6e6;');
+                    $('#dambottom').attr('style','border-width:1;border-style:solid;border-color:#b5d6e6;');
+                    $('#alignment1').attr('style','border-width:1;border-style:solid;border-color:#b5d6e6;');
+                    $('#alignment2').attr('style','border-width:1;border-style:solid;border-color:#b5d6e6;');
+                    $('#height').attr('style','border-width:1;border-style:solid;border-color:#b5d6e6;');                    
+                    $('#total').attr('style','border-width:1;border-style:solid;border-color:#b5d6e6;');
+                    $('#effective').attr('style','border-width:1;border-style:solid;border-color:#b5d6e6;');
+                    $('#alignment3').attr('style','border-width:1;border-style:solid;border-color:#b5d6e6;');
+                    $('#damhigh').attr('style','border-width:1;border-style:solid;border-color:#b5d6e6;');
+                    $('#length').attr('style','border-width:1;border-style:solid;border-color:#b5d6e6;');                  
+                    $('#slope').attr('style','border-width:1;border-style:solid;border-color:#b5d6e6;');
+                    $('#damwidth').attr('style','border-width:1;border-style:solid;border-color:#b5d6e6;');
+                    $('#daminslope').attr('style','border-width:1;border-style:solid;border-color:#b5d6e6;');
+                    $('#damoutslope1').attr('style','border-width:1;border-style:solid;border-color:#b5d6e6;');
+                    $('#damoutslope2').attr('style','border-width:1;border-style:solid;border-color:#b5d6e6;');
+                    $('#avgslope').attr('style','border-width:1;border-style:solid;border-color:#b5d6e6;');
+                    
+                    $('#save').attr('style','display: ');
+                    $('#edit').attr('style','display:none');
+                    $('#cancel').attr('style','display: ');
+            }
+            function baocun(){
+                   document.forms[0].action = "wkkgk/saveOrUpdateData";
+                   document.forms[0].submit();
+            }
+            function quxiao(){
+                    document.forms[0].reset();
+                    $('#time').attr('readOnly','readonly');
+                    $('#using').attr('readOnly','readonly');
+                    $('#type').attr('readOnly','readonly');
+                    $('#dams').attr('readOnly','readonly');
+                    $('#tlevel').attr('readOnly','readonly');
+                    $('#area').attr('readOnly','readonly');             
+                    $('#standard').attr('readOnly','readonly');
+                    $('#early').attr('readOnly','readonly');
+                    $('#dambottom').attr('readOnly','readonly');
+                    $('#alignment1').attr('readOnly','readonly');
+                    $('#alignment2').attr('readOnly','readonly');
+                    $('#height').attr('readOnly','readonly');                   
+                    $('#total').attr('readOnly','readonly');
+                    $('#effective').attr('readOnly','readonly');
+                    $('#alignment3').attr('readOnly','readonly');
+                    $('#damhigh').attr('readOnly','readonly');
+                    $('#length').attr('readOnly','readonly');                
+                    $('#slope').attr('readOnly','readonly');
+                    $('#damwidth').attr('readOnly','readonly');
+                    $('#daminslope').attr('readOnly','readonly');
+                    $('#damoutslope1').attr('readOnly','readonly');
+                    $('#damoutslope2').attr('readOnly','readonly');
+                    $('#avgslope').attr('readOnly','readonly');
+                    
+                    $('#time').attr('style','border-width: 0');
+                    $('#using').attr('style','border-width: 0');
+                    $('#type').attr('style','border-width: 0');
+                    $('#dams').attr('style','border-width: 0');
+                    $('#tlevel').attr('style','border-width: 0');
+                    $('#area').attr('style','border-width: 0');                   
+                    $('#standard').attr('style','border-width: 0');
+                    $('#early').attr('style','border-width: 0');
+                    $('#dambottom').attr('style','border-width: 0');
+                    $('#alignment1').attr('style','border-width: 0');
+                    $('#alignment2').attr('style','border-width: 0');
+                    $('#height').attr('style','border-width: 0');                    
+                    $('#total').attr('style','border-width: 0');
+                    $('#effective').attr('style','border-width: 0');
+                    $('#alignment3').attr('style','border-width: 0');
+                    $('#damhigh').attr('style','border-width: 0');
+                    $('#length').attr('style','border-width: 0');                  
+                    $('#slope').attr('style','border-width: 0');
+                    $('#damwidth').attr('style','border-width: 0');
+                    $('#daminslope').attr('style','border-width: 0');
+                    $('#damoutslope1').attr('style','border-width: 0');
+                    $('#damoutslope2').attr('style','border-width: 0'); 
+                    $('#avgslope').attr('style','border-width: 0'); 
+                    
+                    $('#save').attr('style','display:none');
+                    $('#edit').attr('style','display: ');
+                    $('#cancel').attr('style','display:none');
+            }

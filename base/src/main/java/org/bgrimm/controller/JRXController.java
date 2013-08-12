@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("jrx")
 public class JRXController {
 
-	//@Resource(name="JRXServiceImpl")
 	@Autowired
 	private JRXService jrxService;
 	
@@ -40,7 +39,6 @@ public class JRXController {
 	public Object JRXMonitorPosition(TableParam param){
 		
 		PageList pl=jrxService.getJRXMonitorPosition(param);
-		JRXService.setDecimalDigits(pl.getRows());
 		return pl;
 	}
 	

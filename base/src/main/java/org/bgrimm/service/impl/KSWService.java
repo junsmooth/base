@@ -90,7 +90,7 @@ public class KSWService{
 				}
 			}
 		}
-		setDecimalDigits(pl.getRows());
+//		setDecimalDigits(pl.getRows());
 		return pl;
 	}
 
@@ -105,11 +105,11 @@ public class KSWService{
 		List<Order> list=new ArrayList();
 		Criteria criteria=commonDao.getSession().createCriteria(KSW.class);
 		List li= getKSWChartData(criteria, param);
-		setDecimalDigits(li);
+//		setDecimalDigits(li);
 		if(li.size()>Constants.MAXIMUM_ALLOWED_VALUE){
 			Criteria tCriteria=commonDao.getSession().createCriteria(TKSW.class);
 			List tList=getKSWChartData(tCriteria,param);
-			setDecimalDigits(tList);
+//			setDecimalDigits(tList);
 			return DataUtils.objectList2JSonList(tList, new Object[]{"dateTime","value"});
 			
 		}else{
@@ -138,10 +138,10 @@ public class KSWService{
 	}
 	
 
-	private void setDecimalDigits(List<KSW> result) {
-
-		for(KSW gtgc: result){
-			gtgc.setValue((BigDecimal)gtgc.getValue().setScale(2,BigDecimal.ROUND_HALF_UP));
-		}
-	}
+//	private void setDecimalDigits(List<KSW> result) {
+//
+//		for(KSW gtgc: result){
+//			gtgc.setValue((BigDecimal)gtgc.getValue().setScale(2,BigDecimal.ROUND_HALF_UP));
+//		}
+//	}
 }

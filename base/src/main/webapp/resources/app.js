@@ -19,6 +19,9 @@ function setChartOptions() {
 //				gapSize : 10
 //			}
 		},
+		global: {
+			useUTC: false
+		},
 		credits : {
 			enabled : false
 		},

@@ -18,6 +18,9 @@
 
 <link rel="stylesheet" type="text/css"
 	href="resources/themes/portal.css">
+<link href="resources/skins/label.css" rel="stylesheet" type="text/css">
+<link href="resources/skins/table.css" rel="stylesheet" type="text/css">
+		
 <script type="text/javascript" src="resources/jquery-1.8.0.min.js">
 	
 </script>
@@ -44,6 +47,9 @@
 	
 </script>
 <script type="text/javascript" src="resources/validation.js">
+	
+</script>
+<script type="text/javascript" src="resources/project2.js">
 	
 </script>
 

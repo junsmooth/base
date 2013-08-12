@@ -102,28 +102,20 @@ public class JYLService{
 	 * @param param
 	 * @return
 	 */
-	@Transactional(isolation=Isolation.DEFAULT,readOnly=false)
+	@Transactional(readOnly=false)
 	public Object getJYLChartList(TableParam param) {
 		List<Order> list=new ArrayList();
-//		List result=new ArrayList();
 		Criteria criteria=commonDao.getSession().createCriteria(JYL.class);
 		List li= getJYLChartData(criteria, param);
-		setDecimalDigits(li);
+//		setDecimalDigits(li);
 //		List everydayJYLData=getEverydayJYLData(li);
 		if(li.size()>Constants.MAXIMUM_ALLOWED_VALUE){
 			Criteria tCriteria=commonDao.getSession().createCriteria(TJYL.class);
 			List tList=getJYLChartData(tCriteria,param);
-			setDecimalDigits(tList);
-			 return DataUtils.objectList2JSonList(tList, new Object[]{"dateTime","value"});
-//			 result.add(listData1);
-//			 result.add(everydayJYLData);
-//			 return result;
-		}else{
-			return DataUtils.objectList2JSonList(li, new Object[]{"dateTime","value"});
-//			result.add(listData2);
-//			result.add(everydayJYLData);
-//			return result;
+//			setDecimalDigits(tList);
+			li=tList;
 		}
+		return DataUtils.objectList2JSonList(li, new Object[]{"dateTime","value"});
 	}
 
 	/**
@@ -208,11 +200,11 @@ public class JYLService{
 		return criteria.list();
 	}
 
-	private void setDecimalDigits(List<JYL> result) {
-
-		for(JYL jyl: result){
-			jyl.setValue((BigDecimal)jyl.getValue().setScale(2,BigDecimal.ROUND_HALF_UP));
-		}
-	}
+//	private void setDecimalDigits(List<JYL> result) {
+//
+//		for(JYL jyl: result){
+//			jyl.setValue((BigDecimal)jyl.getValue().setScale(2,BigDecimal.ROUND_HALF_UP));
+//		}
+//	}
 
 }

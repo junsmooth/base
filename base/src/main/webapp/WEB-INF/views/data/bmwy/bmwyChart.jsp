@@ -115,13 +115,14 @@
 					text : '表面位移(mm)'
 				},
 				plotLines : []
-			},
+			}
+			/* ,
 			tooltip : {
 				valueSuffix : 'mm',
 				valueDecimals : 2
 
-			},
-
+			} */
+,
 			series : [ {
 				name : '表面位移',
 				data : result

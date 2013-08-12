@@ -251,10 +251,8 @@ public class TopoService {
 
 	private List getAllDataList() {
 		List<MonitoringPoint> mpDataList=commonDao.findByCriterions(MonitoringPoint.class, Restrictions.isNotNull("drawPosition.id"));
-		MonitoringType mt=commonDao.findUniqueBy(MonitoringType.class, "code", Constants.JCD_BMWY);
 		for(MonitoringPoint mp:mpDataList){
-			String code=Constants.JCD_BMWY;
-			if(code.equals(mp.getType().getCode())){
+			if(Constants.JCD_BMWY.equals(mp.getType().getCode())){
 				setBMWYData(mp);
 			}else{
 				setData(mp);
@@ -293,8 +291,8 @@ public class TopoService {
 
 	private void setBMWYData(final MonitoringPoint mp) {
 
-		List<BMWY> bmwyList=template.execute(new TransactionCallback() {
-			public Object doInTransaction(TransactionStatus status) {
+		List<BMWY> bmwyList=template.execute(new TransactionCallback<List<BMWY>>() {
+			public List<BMWY> doInTransaction(TransactionStatus status) {
 
 				Criteria criteria=t4ddbDao.getSession().createCriteria(BMWY.class);
 				criteria.setMaxResults(1);

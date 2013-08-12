@@ -1,0 +1,81 @@
+BODY {
+	FONT-SIZE: 14px;
+	FONT-FAMILY: "ËÎÌו";
+}
+#con {
+	FONT-SIZE: 12px;
+	WIDTH: 70%;
+	margin-left: 20px;
+	margin-top: 20px;
+	margin-right: 20px;
+	margin-bottom: 0px;	
+}
+#tags {
+	PADDING-RIGHT: 0px;
+	PADDING-LEFT: 0px;
+	PADDING-BOTTOM: 0px;
+	MARGIN: 0px 0px 0px 0px;
+	PADDING-TOP: 0px;
+	HEIGHT: 25px;
+}
+
+#tags LI {
+	BACKGROUND: url(../images/tabbg1.gif);
+	width:100px;
+	FLOAT: left;
+	MARGIN-RIGHT: 5px;
+	MARGIN-LEFT: 5px;
+	LIST-STYLE-TYPE: none;
+	HEIGHT: 25px;
+}
+
+#tags LI A {
+	PADDING-RIGHT:10px;
+	PADDING-LEFT: 20 px;
+	FLOAT: left;
+	width:100px;
+	PADDING-BOTTOM: 0px;
+	COLOR: #999;
+	LINE-HEIGHT: 25px;
+	PADDING-TOP: 0px;
+	HEIGHT: 25px;
+	TEXT-DECORATION: none;
+}
+#tags LI.selectTag {
+	BACKGROUND-POSITION: left top;
+	BACKGROUND:url(../images/tabbg2.gif) no-repeat right bottom;
+	MARGIN-BOTTOM: -2px;
+	POSITION: relative;
+	HEIGHT: 25px;
+}
+#tags LI.selectTag A {
+	BACKGROUND-POSITION: right top;
+	BACKGROUND:url(../images/tabbg2.gif) no-repeat right bottom;
+	COLOR: #000;
+	LINE-HEIGHT: 25px;
+	HEIGHT: 25px;
+}
+#tagContent {
+	BORDER-RIGHT: #aecbd4 1px solid;
+	PADDING-RIGHT: 1px;
+	BORDER-TOP: #aecbd4 1px solid;
+	PADDING-LEFT: 1px;
+	PADDING-BOTTOM: 1px;
+	BORDER-LEFT: #aecbd4 1px solid;
+	PADDING-TOP: 1px;
+	BORDER-BOTTOM: #aecbd4 1px solid;
+	BACKGROUND-COLOR: #fff;
+}
+.tagContent {
+	PADDING-RIGHT: 10px;
+	DISPLAY: none;
+	PADDING-LEFT: 10px;
+	PADDING-BOTTOM: 10px;
+	WIDTH: 576px;
+	COLOR: #474747;
+	PADDING-TOP: 10px;
+	HEIGHT: 250px;
+}
+#tagContent DIV.selectTag {
+	DISPLAY: block;
+}
