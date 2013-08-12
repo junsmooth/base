@@ -44,6 +44,12 @@
     data-options="required:true,valueField:'id',textField:'iconName',url:'icon/menuicon',formatter:menu.add.formatIcon" />   </td>
 				</tr>
 				
+				<tr>
+					<td>菜单顺序:</td>
+					<td><input id="menuOrder" name="menuOrder" class="easyui-validatebox"
+						type="text" value="${menu.menuOrder}" data-options=""></td>
+
+				</tr>
 
 			</table>
 

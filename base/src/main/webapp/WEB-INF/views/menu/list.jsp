@@ -48,34 +48,32 @@ Namespace.register("menu.list",{
 	},
 	closeDialog:function(){
 		$('#menudialog').dialog('close');
-	}
+	},
+	toolbar:[{
+	    text:'增加',
+	    iconCls:'icon-add',
+	    disabled:!hasRole('ROLE_MENU_EDIT'),
+	    handler:function(){
+	      $('#menudialog').dialog({
+	        title: '增加菜单',
+	        width: 600,
+	        height: 300,
+	        closed: false,
+	        resizable:true,
+	        cache: false,
+	        href: 'menu/addOrUpdate',
+	        modal: true
+	        });
+	      }
+	    },'-',{
+	    text:'刷新',
+	    iconCls:'icon-reload',
+	    handler:function(){
+		  menu.list.reload();
+	  }
+	  }]
 	
 });
-menu.list.toolbar = [{
-    text:'增加',
-    iconCls:'icon-add',
-    disabled:!hasRole('ROLE_MENU_EDIT'),
-    handler:function(){
-      $('#menudialog').dialog({
-        title: '增加菜单',
-        width: 600,
-        height: 300,
-        closed: false,
-        resizable:true,
-        cache: false,
-        href: 'menu/addOrUpdate',
-        modal: true
-        });
-      }
-    },'-',{
-    text:'刷新',
-    iconCls:'icon-reload',
-  handler:function(){
-	  menu.list.reload();
-  }
-  }];
-
-
 </script>
 <table id="menutable" class="easyui-treegrid"
 	data-options="rownumbers:true,singleSelect:true, idField: 'id', treeField: 'menuName',url:'menu/list/data',toolbar:menu.list.toolbar">

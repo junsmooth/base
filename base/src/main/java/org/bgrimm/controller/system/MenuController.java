@@ -1,6 +1,7 @@
 package org.bgrimm.controller.system;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -136,6 +137,7 @@ public class MenuController {
 			menu.setParentMenu(null);
 			if (tempMenus != null) {
 				List<Map> children = new ArrayList();
+				Collections.sort(tempMenus);
 				for (TMenu subMenu : tempMenus) {
 					Map m1 = new HashMap();
 					// set subMenu&ParentMenu to null, in case of recursive

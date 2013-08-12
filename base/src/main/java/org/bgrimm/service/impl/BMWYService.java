@@ -79,7 +79,8 @@ public class BMWYService {
 				}
 
 				List<Order> list=new ArrayList();
-				Order or=Order.desc("dateTime");	
+				Order or=Order.desc("dateTime");
+				list.add(or);
 				return dao.getPagedList(pq,list);
 			}
 		});
