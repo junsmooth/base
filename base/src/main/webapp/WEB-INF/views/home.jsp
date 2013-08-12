@@ -74,7 +74,7 @@
 		</a>
 		</span> <span style="padding-left: 10px; font-size: 16px;"> <img
 			src="resources/images/blocks.gif" width="20" height="20"
-			align="absmiddle" /> 管理信息系统
+			align="absmiddle" /> 尾矿库在线监测系统
 		</span>
 	</div>
 	<div id="leftDiv" href="menu/left"
