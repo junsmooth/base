@@ -244,7 +244,7 @@
   </form>
   
   </div>
-  	<div align="right" style="margin-top: 10px;margin-right: 70px;">
+  	<div align="right" style="margin-top: 10px;margin-right: 35px;">
 		<a id="proSId" href="javascript:void(0)" class="easyui-linkbutton"  onclick="xmgk_save()" style="display:none;">保存</a>  
 		<a id="proEId" href="javascript:void(0)" class="easyui-linkbutton"  onclick="xmgk_edit()">编辑</a>  
 		<a id="proCId" href="javascript:void(0)" class="easyui-linkbutton"  onclick="xmgk_cancel()" style="display:none;">取消</a>  

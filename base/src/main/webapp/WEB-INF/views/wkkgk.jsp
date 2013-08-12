@@ -38,18 +38,6 @@
     	}
     
     
-     	function refreshPage(){
-    		 var tab = $('#tabs').tabs('getSelected');
-
-     	    $("#tabs").tabs('getTab',{
-     	        tab: tab,
-     	        options: {
-
-     	            href: 'wkkgk/iniData'
-     	        }
-     	    });
-     	    tab.panel('refresh');
-    	}
     	
     	function save(){
     		
@@ -67,7 +55,6 @@
     		   $("#sid").hide();
        		$("#cid").hide();
        		$("#eid").show();
-    		 //  refreshPage();
     	}
     	
     	function cancel(){
@@ -157,9 +144,7 @@
                     <td><input class="wkkgk_s1" name="damoutslope2" value="${wkkgk.damoutslope2}" readOnly="readonly" type="text"></input></td>
                        <td>沉积滩平均坡度:</td>
                     <td><input class="wkkgk_s1" name="avgslope" value="${wkkgk.avgslope}" readOnly="readonly" type="text"></input></td>
-                       <td></td>
-                    <td></td>
-                    
+                       <td colspan="2"></td>
                 </tr>
             </table>
             <input name="id" value="${wkkgk.id }" type="hidden"/>
