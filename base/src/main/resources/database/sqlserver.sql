@@ -46,6 +46,7 @@
  INSERT [t_icon] ( [id] , [iconcls] , [iconname] , [iconpath] , [type_id] ) VALUES ( 35 , 'custom1375326985921' , 'portal' , 'resources/custom/images/1375326984968.png' , 1 )
  INSERT [t_icon] ( [id] , [iconcls] , [iconname] , [iconpath] , [type_id] ) VALUES ( 36 , 'custom1375327170343' , 'line' , 'resources/custom/images/1375327169984.png' , 1 )
  INSERT [t_icon] ( [id] , [iconcls] , [iconname] , [iconpath] , [type_id] ) VALUES ( 37 , 'custom1375327285218' , 'data' , 'resources/custom/images/1375327284312.png' , 1 )
+INSERT [t_icon] ( [id] , [iconcls] , [iconname] , [iconpath] , [type_id] ) VALUES ( 38 , 'custom1376292242421' , '视频 ' , 'resources/custom/images/1376292232421.png' , 2 )
 
 
  SET IDENTITY_INSERT [t_icon] OFF
@@ -168,7 +169,7 @@ SET IDENTITY_INSERT [t_authority] ON
  
  SET IDENTITY_INSERT [t_montype] ON
 
- INSERT [t_montype] ( [id] , [code] , [domainClsName] , [enabled] , [name] , [iconid] ) VALUES ( 1 , 'BMWY' , 'org.bgrimm.domain.t4ddb.BMWY' , 'N' , '表面位移' , 23 )
+  INSERT [t_montype] ( [id] , [code] , [domainClsName] , [enabled] , [name] , [iconid] ) VALUES ( 1 , 'BMWY' , 'org.bgrimm.domain.t4ddb.BMWY' , 'N' , '表面位移' , 23 )
  INSERT [t_montype] ( [id] , [code] , [domainClsName] , [enabled] , [name] , [iconid] ) VALUES ( 2 , 'JYL' , 'org.bgrimm.domain.bgrimm.monitor.provided.JYL' , 'N' , '降雨量' , 15 )
  INSERT [t_montype] ( [id] , [code] , [domainClsName] , [enabled] , [name] , [iconid] ) VALUES ( 3 , 'JRX' , 'org.bgrimm.domain.bgrimm.monitor.provided.JRX' , 'N' , '浸润线' , 34 )
  INSERT [t_montype] ( [id] , [code] , [domainClsName] , [enabled] , [name] , [iconid] ) VALUES ( 4 , 'GTGC' , 'org.bgrimm.domain.bgrimm.monitor.provided.GTGC' , 'N' , '干滩高程' , 21 )
@@ -178,7 +179,7 @@ SET IDENTITY_INSERT [t_authority] ON
  INSERT [t_montype] ( [id] , [code] , [domainClsName] , [enabled] , [name] , [iconid] ) VALUES ( 9 , 'AQCG' , 'org.bgrimm.domain.bgrimm.monitor.extended.AQCG' , 'N' , '安全超高' , 25 )
  INSERT [t_montype] ( [id] , [code] , [domainClsName] , [enabled] , [name] , [iconid] ) VALUES ( 10 , 'BDGC' , 'org.bgrimm.domain.bgrimm.monitor.extended.BDGC' , 'N' , '坝顶高程' , 27 )
  INSERT [t_montype] ( [id] , [code] , [domainClsName] , [enabled] , [name] , [iconid] ) VALUES ( 11 , 'KSW' , 'org.bgrimm.domain.bgrimm.monitor.provided.KSW' , 'N' , '库水位' , 17 )
-
+ INSERT [t_montype] ( [id] , [code] , [domainClsName] , [enabled] , [name] , [iconid] ) VALUES ( 12 , 'SP' , '' , 'N' , '视频' , 38 )
  SET IDENTITY_INSERT [t_montype] OFF
  
  SET IDENTITY_INSERT [t_monpoint] ON
