@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.jsp.JspException;
@@ -84,7 +85,9 @@ public class MenuTag extends TagSupport {
 				if (submenusize > 0) {
 					menuString.append("<ul>");
 				}
-				for (TMenu sMenu : pMenu.getSubMenus()) {
+				List<TMenu> subMenus=pMenu.getSubMenus();
+				Collections.sort(subMenus);
+				for (TMenu sMenu : subMenus) {
 					if(!hasAuth(sMenu,auths)){
 						continue;
 					}

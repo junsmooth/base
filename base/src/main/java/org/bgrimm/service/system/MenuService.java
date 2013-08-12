@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.bgrimm.dao.core.impl.CommonDao;
 import org.bgrimm.domain.system.TIcon;
 import org.bgrimm.domain.system.TMenu;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -36,8 +37,9 @@ public class MenuService {
 		commonDao.deleteEntityById(TMenu.class, id);
 	}
 	public List<TMenu> getParentMenus() {
-		return commonDao.findByCriterions(TMenu.class,
-				Restrictions.eq("parentMenu.id", 1L));
+		
+		return commonDao.findByPropertyAndOrder(TMenu.class,
+				"parentMenu.id", 1L,Order.asc("menuOrder"));
 	}
 	public TMenu getRootMenu() {
 		return commonDao.findUniqueByProperty(TMenu.class, "id", 1L);

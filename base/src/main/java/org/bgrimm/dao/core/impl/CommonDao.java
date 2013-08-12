@@ -126,8 +126,36 @@ public class CommonDao implements ICommonDao {
 
 	public <T> List<T> findByPropertyisOrder(Class<T> entityClass,
 			String propertyName, Object value, boolean isAsc) {
-		// TODO Auto-generated method stub
-		return null;
+
+		Criteria criteria = getSession().createCriteria(entityClass);
+		criteria.add(Restrictions.eq(propertyName, value));
+		Order or = null;
+		if (isAsc) {
+			or = Order.asc(propertyName);
+		} else {
+			or = Order.desc(propertyName);
+		}
+		criteria.addOrder(or);
+		return (List<T>) criteria.list();
+	}
+
+	public <T> List<T> findByPropertyAndOrders(Class<T> entityClass,
+			String propertyName, Object value, List<Order> orderList) {
+
+		Criteria criteria = getSession().createCriteria(entityClass);
+		criteria.add(Restrictions.eq(propertyName, value));
+		for (Order order : orderList) {
+			criteria.addOrder(order);
+		}
+		return (List<T>) criteria.list();
+	}
+
+	public <T> List<T> findByPropertyAndOrder(Class<T> entityClass,
+			String propertyName, Object value, Order order) {
+		Criteria criteria = getSession().createCriteria(entityClass);
+		criteria.add(Restrictions.eq(propertyName, value));
+		criteria.addOrder(order);
+		return (List<T>) criteria.list();
 	}
 
 	public Map<Object, Object> getHashMapbyQuery(String query) {

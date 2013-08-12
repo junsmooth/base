@@ -13,14 +13,16 @@ import javax.persistence.OneToMany;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity(name = "t_menu")
-public class TMenu extends IdEntity implements java.io.Serializable {
+public class TMenu extends IdEntity implements java.io.Serializable,
+		Comparable<TMenu> {
 	private static final long serialVersionUID = 7745791364255292541L;
-	@Column(name="menuname",nullable = false, length = 50)
+	@Column(name = "menuname", nullable = false, length = 50)
 	@NotEmpty
 	private String menuName;
-	
-	@Column(name="modulename",nullable=false,length=50)
+
+	@Column(name = "modulename", nullable = false, length = 50)
 	private String moduleName;
+
 	public String getModuleName() {
 		return moduleName;
 	}
@@ -38,7 +40,7 @@ public class TMenu extends IdEntity implements java.io.Serializable {
 	@ManyToOne
 	@JoinColumn(name = "parentid")
 	private TMenu parentMenu;
-	@Column(name="menuorder",length=50)
+	@Column(name = "menuorder", length = 50)
 	private String menuOrder;
 
 	public String getMenuOrder() {
@@ -91,13 +93,18 @@ public class TMenu extends IdEntity implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return super.toString()+"TMenu [menuName=" + menuName + ", url=" + url + ", subMenus="
-				+ subMenus + ", icon=" + icon + ", parentMenu=" + (parentMenu!=null?parentMenu.getId():"")
+		return super.toString() + "TMenu [menuName=" + menuName + ", url="
+				+ url + ", subMenus=" + subMenus + ", icon=" + icon
+				+ ", parentMenu="
+				+ (parentMenu != null ? parentMenu.getId() : "")
 				+ ", menuOrder=" + menuOrder + "]";
 	}
 
-
-
-	
+	public int compareTo(TMenu o) {
+		if(menuOrder==null||o.getMenuOrder()==null){
+			return 0;
+		}
+		return menuOrder.compareTo(o.getMenuOrder());
+	}
 
 }
