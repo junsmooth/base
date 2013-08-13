@@ -346,6 +346,7 @@ public class AlarmService {
 		PagedQuery pq = new PagedQuery(AlarmRecord.class, param.getPage(),
 				param.getRows());
 		DetachedCriteria criteria = pq.getDetachedCriteria();
+		criteria.add(Restrictions.eq("closed", false));
 		if (StringUtils.isNotEmpty(param.getMin())) {
 			Date startDate = DateUtils.strToDate(param.getMin());
 			criteria.add(Restrictions.ge("collectTime", startDate));
@@ -444,6 +445,16 @@ public class AlarmService {
 		if (t != null) {
 			t.setRemoved(true);
 			commonDao.saveOrUpdate(t);
+		}
+	}
+
+	public void setAlarmStatus(long id) {
+
+		AlarmRecord alarmRecord=commonDao.getEntity(AlarmRecord.class, id);
+		if(alarmRecord!=null){
+			
+			alarmRecord.setClosed(true);
+			commonDao.save(alarmRecord);
 		}
 	}
 
