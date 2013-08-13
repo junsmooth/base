@@ -13,14 +13,17 @@ import org.bgrimm.dao.core.impl.CommonDao;
 import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.bgrimm.common.MonitoringTypeAttribute;
 import org.bgrimm.domain.bgrimm.monitor.datamigration.TBMWY;
-import org.bgrimm.domain.t4ddb.BMWY;
+import org.bgrimm.domain.bgrimm.monitor.extended.BMWY;
+import org.bgrimm.domain.t4ddb.RawBMWY;
 import org.bgrimm.utils.Constants;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.joda.time.DateTime;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
@@ -39,7 +42,7 @@ public class DataMigrationService {
 	@Autowired
 	private T4DDBDao dao;
 
-	 public List<MonitoringPoint> loadMonitoringPoints() {
+	public List<MonitoringPoint> loadMonitoringPoints() {
 		List<MonitoringPoint> points = commonDao.loadAll(MonitoringPoint.class);
 		return points;
 	}
@@ -49,19 +52,6 @@ public class DataMigrationService {
 		// 返回本小时0分0秒的时间
 		return new DateTime(dt.getYear(), dt.getMonthOfYear(),
 				dt.getDayOfMonth(), dt.getHourOfDay(), 0, 0, 0);
-	}
-
-	private DateTime endTimeOfThisPoint(MonitoringPoint mp) {
-		String clsName = mp.getType().getDomainClsName();
-		DateTime date = null;
-
-		if (mp.getType().getCode().equals(Constants.JCD_BMWY)) {
-
-			date = lastTimeOfThisBMWYPoint(clsName, mp);
-		} else {
-			date = lastTimeOfThisCommonPoint(clsName, mp);
-		}
-		return new DateTime(date);
 	}
 
 	public DateTime startTimeOfThisMigration(MonitoringPoint mp) {
@@ -77,15 +67,72 @@ public class DataMigrationService {
 		// .toDateTime();
 	}
 
+	public DateTime startTimeOfBMWYMigration(MonitoringPoint mp) {
+		Date migratedDate = migratedTimeOfRawBMWY(mp);
+		if (migratedDate != null) {
+			return new DateTime(migratedDate);
+		}
+		return firstTimeOfThisBMWY(mp);
+
+	}
+
+	private DateTime firstTimeOfThisBMWY(final MonitoringPoint mp) {
+
+		Date obj = template.execute(new TransactionCallback<Date>() {
+			public Date doInTransaction(TransactionStatus status) {
+				Criteria criteria;
+				criteria = dao.getSession().createCriteria(RawBMWY.class);
+				ProjectionList pList = Projections.projectionList();
+				pList.add(Projections.min("dateTime"));
+				criteria.add(Restrictions.eq("monitoringPosition",
+						mp.getPosition()));
+				criteria.setProjection(pList);
+				criteria.setFetchSize(1);
+				Object obj = criteria.uniqueResult();
+				return (Date) obj;
+			}
+		});
+		return new DateTime(obj);
+	}
+
+	private Date migratedTimeOfRawBMWY(MonitoringPoint mp) {
+
+		Criteria criteria = commonDao.getSession().createCriteria(BMWY.class);
+
+		ProjectionList pList = Projections.projectionList();
+		pList.add(Projections.max("dateTime"));
+		criteria.add(Restrictions.eq("monitoringPosition", mp.getPosition()));
+		criteria.setProjection(pList);
+		criteria.setFetchSize(1);
+		return (Date) criteria.uniqueResult();
+
+	}
+
+	private DateTime endTimeOfThisPoint(MonitoringPoint mp) {
+		String clsName = mp.getType().getDomainClsName();
+		DateTime date = null;
+
+		// if (mp.getType().getCode().equals(Constants.JCD_BMWY)) {
+		//
+		// date = lastTimeOfThisBMWYPoint(clsName, mp);
+		// } else {
+		// date = lastTimeOfThisCommonPoint(clsName, mp);
+		// }
+
+		date = lastTimeOfThisCommonPoint(clsName, mp);
+		return new DateTime(date);
+	}
+
 	private DateTime firstTimeOfThisPoint(MonitoringPoint mp) {
 		String clsName = mp.getType().getDomainClsName();
 		DateTime date = null;
-		if (mp.getType().getCode().equals(Constants.JCD_BMWY)) {
-			// BMWY use template
-			date = firstTimeOfThisBMWYPoint(clsName, mp);
-		} else {
-			date = firstTimeOfThisCommonPoint(clsName, mp);
-		}
+		// if (mp.getType().getCode().equals(Constants.JCD_BMWY)) {
+		// // BMWY use template
+		// date = firstTimeOfThisBMWYPoint(clsName, mp);
+		// } else {
+		// date = firstTimeOfThisCommonPoint(clsName, mp);
+		// }
+		date = firstTimeOfThisCommonPoint(clsName, mp);
 		return date;
 	}
 
@@ -159,31 +206,35 @@ public class DataMigrationService {
 
 	}
 
-	private List<BMWY> retriveBMWYData(final DateTime startDate,
+	private List<RawBMWY> retriveBMWYData(final DateTime startDate,
 			final DateTime endDate, final MonitoringPoint mp) {
 		// BMWY data, hour minus 8
 		// final DateTime begin = startDate.minusHours(8);
 		// final DateTime end = endDate.minusHours(8);
 		final DateTime begin = startDate;
 		final DateTime end = endDate;
-		List<BMWY> obj = template.execute(new TransactionCallback<List<BMWY>>() {
-			public List<BMWY> doInTransaction(TransactionStatus status) {
-				Criteria criteria = dao.getSession().createCriteria(BMWY.class);
-				criteria.add(Restrictions.ge("dateTime", begin.toDate()));
-				criteria.add(Restrictions.lt("dateTime", end.toDate()));
-				criteria.add(Restrictions.eq("monitoringPosition",
-						mp.getPosition()));
-				return criteria.list();
-			}
-		});
+		List<RawBMWY> obj = template
+				.execute(new TransactionCallback<List<RawBMWY>>() {
+					public List<RawBMWY> doInTransaction(
+							TransactionStatus status) {
+						Criteria criteria = dao.getSession().createCriteria(
+								RawBMWY.class);
+						criteria.add(Restrictions.ge("dateTime", begin.toDate()));
+						criteria.add(Restrictions.lt("dateTime", end.toDate()));
+						criteria.add(Restrictions.eq("monitoringPosition",
+								mp.getPosition()));
+						criteria.addOrder(Order.asc("dateTime"));
+						return criteria.list();
+					}
+				});
 		return obj;
 	}
 
 	private void migrationBMWYData(DateTime startDate, DateTime endDate,
 			MonitoringPoint mp) {
-		List<BMWY> bmwyDatas = retriveBMWYData(startDate, endDate, mp);
+		List<RawBMWY> bmwyDatas = retriveBMWYData(startDate, endDate, mp);
 		Map<Date, TBMWY> map = new TreeMap<Date, TBMWY>();
-		for (BMWY bmwy : bmwyDatas) {
+		for (RawBMWY bmwy : bmwyDatas) {
 			DateTime mid12 = new DateTime(bmwy.getDateTime()).minuteOfHour()
 					.setCopy(30).secondOfMinute().setCopy(0).millisOfSecond()
 					.setCopy(0);
@@ -263,17 +314,38 @@ public class DataMigrationService {
 					Field fa = oldObj.getClass()
 							.getDeclaredField(att.getAttr());
 					fa.setAccessible(true);
-					BigDecimal oldValue = (BigDecimal) fa.get(oldObj);
+					Object obj = fa.get(oldObj);
+					BigDecimal oldValue = null;
+					if (!(obj instanceof BigDecimal)) {
+						double oldDouble = (Double) fa.get(oldObj);
+						oldValue = new BigDecimal(oldDouble + "");
+					} else {
+						oldValue = (BigDecimal) fa.get(oldObj);
+					}
 					Field fb = newObj.getClass()
 							.getDeclaredField(att.getAttr());
 					fb.setAccessible(true);
-					BigDecimal newValue = (BigDecimal) fb.get(newObj);
+
+					BigDecimal newValue = null;
+
+					if (!(obj instanceof BigDecimal)) {
+						double newDouble = (Double) fb.get(newObj);
+						newValue = new BigDecimal(newDouble + "");
+					} else {
+						newValue = (BigDecimal) fb.get(newObj);
+					}
 					// 降雨量采取累加的策略
 					if (mp.getType().getCode().equals(Constants.JCD_JYL)) {
 						System.out.println("----rainfall");
 						fb.set(newObj,
 								newValue != null ? newValue.add(oldValue)
 										: oldValue);
+					} else if (mp.getType().getCode()
+							.equals(Constants.JCD_BMWY)) {
+						fb.set(newObj, newValue != null ? newValue
+								.add(oldValue).divide(new BigDecimal(2))
+								.doubleValue() : oldValue.doubleValue());
+
 					} else {
 						// 其他监测点取平均值
 						fb.set(newObj, newValue != null ? newValue
@@ -343,13 +415,82 @@ public class DataMigrationService {
 
 	}
 
-	public void migrationData(DateTime startDate, DateTime endDate, MonitoringPoint mp) {
+	public void migrationData(DateTime startDate, DateTime endDate,
+			MonitoringPoint mp) {
 
-		if (mp.getType().getCode().equals(Constants.JCD_BMWY)) {
-			migrationBMWYData(startDate, endDate, mp);
-		} else {
-			migragionCommonData(startDate, endDate, mp);
-		}
+		// if (mp.getType().getCode().equals(Constants.JCD_BMWY)) {
+		// migrationBMWYData(startDate, endDate, mp);
+		// } else {
+		// migragionCommonData(startDate, endDate, mp);
+		// }
+		migragionCommonData(startDate, endDate, mp);
+	}
+
+	public DateTime endTimeOfBMWYMigration(final MonitoringPoint mp) {
+
+		Date obj = template.execute(new TransactionCallback<Date>() {
+			public Date doInTransaction(TransactionStatus status) {
+				Criteria criteria;
+				criteria = dao.getSession().createCriteria(RawBMWY.class);
+				ProjectionList pList = Projections.projectionList();
+				pList.add(Projections.max("dateTime"));
+				criteria.add(Restrictions.eq("monitoringPosition",
+						mp.getPosition()));
+				criteria.setProjection(pList);
+				criteria.setFetchSize(1);
+				Object obj = criteria.uniqueResult();
+				return (Date) obj;
+			}
+		});
+		return new DateTime(obj);
 
 	}
+
+	public void migrateBMWYData(DateTime startDateTime, DateTime endDate,
+			MonitoringPoint mp) {
+		List<RawBMWY> rawDatas = retriveBMWYData(startDateTime, endDate, mp);
+		RawBMWY lastBMWY = null;
+		for (RawBMWY rawBMWY : rawDatas) {
+			if (lastBMWY == null) {
+				lastBMWY = getLastBMWYData(mp, rawBMWY.getDateTime());
+			}
+			BMWY bmwy = new BMWY();
+			BeanUtils.copyProperties(rawBMWY, bmwy);
+			if (lastBMWY != null) {
+				bmwy.setdDE(rawBMWY.getdE() - lastBMWY.getdE());
+				bmwy.setdDH(rawBMWY.getdH() - lastBMWY.getdH());
+				bmwy.setdDN(rawBMWY.getdN() - lastBMWY.getdN());
+			}
+			commonDao.saveOrUpdate(bmwy);
+		}
+	}
+
+	// 获取上次采集值
+	private RawBMWY getLastBMWYData(final MonitoringPoint mp,
+			final Date dateTime) {
+
+		RawBMWY obj = template.execute(new TransactionCallback<RawBMWY>() {
+			public RawBMWY doInTransaction(TransactionStatus status) {
+				Criteria criteria;
+				criteria = dao.getSession().createCriteria(RawBMWY.class);
+				// ProjectionList pList = Projections.projectionList();
+				// pList.add(Projections.max("dateTime"));
+				criteria.add(Restrictions.eq("monitoringPosition",
+						mp.getPosition()));
+				criteria.add(Restrictions.lt("dateTime", dateTime));
+				criteria.addOrder(Order.desc("dateTime"));
+				// criteria.setProjection(pList);
+				List obj = criteria.list();
+				if (obj.size() > 0) {
+					return (RawBMWY) obj.get(0);
+				} else {
+					return null;
+				}
+				// Object obj = criteria.uniqueResult();
+			}
+		});
+		return obj;
+
+	}
+
 }

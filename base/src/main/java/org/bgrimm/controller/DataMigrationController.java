@@ -25,10 +25,9 @@ public class DataMigrationController {
 	@Autowired
 	DataMigrationService service;
 
-	@Scheduled(fixedRate = 60 * 60 * 1000 * 24)
+	// schedule for an hour interval
+	@Scheduled(fixedRate = 60 * 60 * 1000)
 	public void dataMigration() {
-		// Current Time->00:00:00
-		// DateTime end = new DateTime().toDateMidnight().toDateTime();
 		List<MonitoringPoint> points = service.loadMonitoringPoints();
 		for (MonitoringPoint mp : points) {
 			if (mp.getType().getCode().equals(Constants.JCD_SP)) {
@@ -52,4 +51,29 @@ public class DataMigrationController {
 		}
 	}
 
+	// half an hour
+	@Scheduled(fixedRate = 30 * 60 * 1000)
+	public void bmwyDataMigration() {
+		List<MonitoringPoint> points = service.loadMonitoringPoints();
+		for (MonitoringPoint mp : points) {
+			if (!mp.getType().getCode().equals(Constants.JCD_BMWY)) {
+				continue;
+			}
+			DateTime startDateTime = service.startTimeOfBMWYMigration(mp);
+			if (startDateTime == null) {
+				continue;// No old data, nothing need to do
+			}
+			DateTime endDateTime = service.endTimeOfBMWYMigration(mp);
+			// For Performance consideration,Migrate data by oneday period
+			for (; startDateTime.getMillis() < endDateTime.getMillis();) {
+				DateTime endDate = startDateTime.plusDays(1).toDateMidnight()
+						.toDateTime();
+				if (endDate.getMillis() > endDateTime.getMillis()) {
+					endDate = endDateTime;
+				}
+				service.migrateBMWYData(startDateTime, endDate, mp);
+				startDateTime = endDate;// 0:0:0
+			}
+		}
+	}
 }

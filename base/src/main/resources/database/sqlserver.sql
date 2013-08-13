@@ -169,7 +169,7 @@ SET IDENTITY_INSERT [t_authority] ON
  
  SET IDENTITY_INSERT [t_montype] ON
 
-  INSERT [t_montype] ( [id] , [code] , [domainClsName] , [enabled] , [name] , [iconid] ) VALUES ( 1 , 'BMWY' , 'org.bgrimm.domain.t4ddb.BMWY' , 'N' , '表面位移' , 23 )
+  INSERT [t_montype] ( [id] , [code] , [domainClsName] , [enabled] , [name] , [iconid] ) VALUES ( 1 , 'BMWY' , 'org.bgrimm.domain.bgrimm.monitor.extended.BMWY' , 'N' , '表面位移' , 23 )
  INSERT [t_montype] ( [id] , [code] , [domainClsName] , [enabled] , [name] , [iconid] ) VALUES ( 2 , 'JYL' , 'org.bgrimm.domain.bgrimm.monitor.provided.JYL' , 'N' , '降雨量' , 15 )
  INSERT [t_montype] ( [id] , [code] , [domainClsName] , [enabled] , [name] , [iconid] ) VALUES ( 3 , 'JRX' , 'org.bgrimm.domain.bgrimm.monitor.provided.JRX' , 'N' , '浸润线' , 34 )
  INSERT [t_montype] ( [id] , [code] , [domainClsName] , [enabled] , [name] , [iconid] ) VALUES ( 4 , 'GTGC' , 'org.bgrimm.domain.bgrimm.monitor.provided.GTGC' , 'N' , '干滩高程' , 21 )

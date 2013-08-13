@@ -16,7 +16,7 @@ import org.bgrimm.domain.bgrimm.common.MonitoringType;
 import org.bgrimm.domain.bgrimm.monitor.provided.Montypeattr;
 import org.bgrimm.domain.system.PageList;
 import org.bgrimm.domain.system.PagedQuery;
-import org.bgrimm.domain.t4ddb.BMWY;
+import org.bgrimm.domain.t4ddb.RawBMWY;
 import org.bgrimm.utils.Constants;
 import org.bgrimm.utils.DataUtils;
 import org.bgrimm.utils.DateUtils;
@@ -52,10 +52,10 @@ public class BMWYService {
 		final List<MonitoringPoint> bmwyPointList = commonDao.findByCriterions(
 				MonitoringPoint.class, Restrictions.eq("type.id", t.getId()));
 
-		PageList<BMWY> result = template.execute(new TransactionCallback<PageList<BMWY>>() {
+		PageList<RawBMWY> result = template.execute(new TransactionCallback<PageList<RawBMWY>>() {
 
-			public PageList<BMWY> doInTransaction(TransactionStatus status) {
-				PagedQuery pq = new PagedQuery(BMWY.class, param.getPage(),
+			public PageList<RawBMWY> doInTransaction(TransactionStatus status) {
+				PagedQuery pq = new PagedQuery(RawBMWY.class, param.getPage(),
 						param.getRows());
 				DetachedCriteria criteria = pq.getDetachedCriteria();
 				Integer[] arr = PagerUtil.strToArray(param.getStr());
@@ -85,7 +85,7 @@ public class BMWYService {
 			}
 		});
 		// Parse Result, Add Point Info to data
-		for (BMWY bmwy : result.getRows()) {
+		for (RawBMWY bmwy : result.getRows()) {
 			for (MonitoringPoint point : bmwyPointList) {
 				int position = point.getPosition();
 				if (bmwy.getMonitoringPosition() == position) {
@@ -98,12 +98,12 @@ public class BMWYService {
 		return result;
 	}
 
-	private void setDecimalDigits(List<BMWY> rows) {
+	private void setDecimalDigits(List<RawBMWY> rows) {
 
-		for(BMWY bmwy: rows){
-			bmwy.setdE(new BigDecimal(bmwy.getdE()*1000).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
-			bmwy.setdH(new BigDecimal(bmwy.getdH()*1000).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
-			bmwy.setdN(new BigDecimal(bmwy.getdN()*1000).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
+		for(RawBMWY bmwy: rows){
+//			bmwy.setdE(new BigDecimal(bmwy.getdE()*1000).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
+//			bmwy.setdH(new BigDecimal(bmwy.getdH()*1000).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
+//			bmwy.setdN(new BigDecimal(bmwy.getdN()*1000).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
 		}
 	}
 
@@ -141,13 +141,13 @@ public class BMWYService {
 	public Object getBMWYChartList(final TableParam param) {
 
 		final Montypeattr montypeattr=commonDao.findUniqueBy(Montypeattr.class, "id",Long.parseLong(param.getDirId()));
-		Criteria criteria=commonDao.getSession().createCriteria(BMWY.class);
+		Criteria criteria=commonDao.getSession().createCriteria(RawBMWY.class);
 		
-		List<BMWY> bmwyDataList=template.execute(new TransactionCallback<List<BMWY>>() {
+		List<RawBMWY> bmwyDataList=template.execute(new TransactionCallback<List<RawBMWY>>() {
 			
-			public List<BMWY> doInTransaction(TransactionStatus status) {
+			public List<RawBMWY> doInTransaction(TransactionStatus status) {
 				Integer arr =Integer.parseInt(param.getStr());
-				Criteria criteria=dao.getSession().createCriteria(BMWY.class);
+				Criteria criteria=dao.getSession().createCriteria(RawBMWY.class);
 				if (StringUtils.isNotEmpty(param.getMin())) {
 					Date startDate = DateUtils.strToDate(param.getMin());
 					criteria.add(Restrictions.ge("dateTime", startDate));
