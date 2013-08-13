@@ -91,7 +91,15 @@
 			}
 		}
 
-		]
+		],
+		submit:function(){
+			var min=$('#alarmrecords_tb_min').datebox('getValue');
+			var max=$("#alarmrecords_tb_max").datebox('getValue');
+			$('#monPointGrid').datagrid('load', {
+				min : min,
+				max : max,
+			});
+		}
 
 	});
 </script>
@@ -132,7 +140,7 @@
 		到: <input id='alarmrecords_tb_max' class="easyui-datetimebox"
 			data-options="formatter:alarm.alarmrecord.myDate,validType:'checkDate[\'yyyy-MM-dd HH:mm:ss\']'"></input>
 		<a href="#" class="easyui-linkbutton" iconCls="icon-search"
-			onclick="bmwydata.list.submit()">查询</a>
+			onclick="alarm.alarmrecord.submit()">查询</a>
 	</div>
 </div>
 <div id="monpointdialog"></div>

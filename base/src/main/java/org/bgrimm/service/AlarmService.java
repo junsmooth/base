@@ -23,8 +23,11 @@ import org.bgrimm.domain.bgrimm.common.ThresholdOperation;
 import org.bgrimm.domain.bgrimm.monitor.provided.JYL;
 import org.bgrimm.domain.system.PagedQuery;
 import org.bgrimm.utils.Constants;
+import org.bgrimm.utils.DateUtils;
+import org.bgrimm.utils.PagerUtil;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.ProjectionList;
@@ -342,6 +345,16 @@ public class AlarmService {
 	public Object getPagedAlarmRecords(TableParam param) {
 		PagedQuery pq = new PagedQuery(AlarmRecord.class, param.getPage(),
 				param.getRows());
+		DetachedCriteria criteria = pq.getDetachedCriteria();
+		criteria.add(Restrictions.eq("closed", false));
+		if (StringUtils.isNotEmpty(param.getMin())) {
+			Date startDate = DateUtils.strToDate(param.getMin());
+			criteria.add(Restrictions.ge("collectTime", startDate));
+		}
+		if (StringUtils.isNotEmpty(param.getMax())) {
+			Date endDate = DateUtils.strToDate(param.getMax());
+			criteria.add(Restrictions.le("collectTime", endDate));
+		}
 		List<Order> orders = new ArrayList<Order>();
 		orders.add(Order.desc("collectTime"));
 		return alarmDao.getPagedList(pq, orders);
@@ -432,6 +445,16 @@ public class AlarmService {
 		if (t != null) {
 			t.setRemoved(true);
 			commonDao.saveOrUpdate(t);
+		}
+	}
+
+	public void setAlarmStatus(long id) {
+
+		AlarmRecord alarmRecord=commonDao.getEntity(AlarmRecord.class, id);
+		if(alarmRecord!=null){
+			
+			alarmRecord.setClosed(true);
+			commonDao.save(alarmRecord);
 		}
 	}
 

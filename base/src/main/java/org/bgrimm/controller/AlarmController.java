@@ -8,7 +8,6 @@ import org.bgrimm.domain.bgrimm.TableParam;
 import org.bgrimm.domain.bgrimm.common.AlarmColor;
 import org.bgrimm.domain.bgrimm.common.AlarmType;
 import org.bgrimm.domain.bgrimm.common.Threshold;
-import org.bgrimm.domain.system.TIcon;
 import org.bgrimm.service.AlarmService;
 import org.bgrimm.utils.JsonMsg;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -232,6 +231,13 @@ public class AlarmController {
 		return service.getPagedAlarmRecords(param);
 	}
 
+	@RequestMapping("alarmrecord/close")
+	public @ResponseBody
+	Object  setAlarmStatus(@RequestParam long id) {
+
+		service.setAlarmStatus(id);
+		return JsonMsg.simpleSuccessJson();
+	}
 	@RequestMapping("alarmtype/data")
 	public @ResponseBody
 	Object alarmTypeList() {
