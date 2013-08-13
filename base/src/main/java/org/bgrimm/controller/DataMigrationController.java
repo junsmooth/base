@@ -59,10 +59,12 @@ public class DataMigrationController {
 			if (!mp.getType().getCode().equals(Constants.JCD_BMWY)) {
 				continue;
 			}
+			//未处理时间
 			DateTime startDateTime = service.startTimeOfBMWYMigration(mp);
 			if (startDateTime == null) {
 				continue;// No old data, nothing need to do
 			}
+			//未处理时间
 			DateTime endDateTime = service.endTimeOfBMWYMigration(mp);
 			// For Performance consideration,Migrate data by oneday period
 			for (; startDateTime.getMillis() < endDateTime.getMillis();) {

@@ -66,11 +66,11 @@ public class DataMigrationService {
 		// return new DateTime(migratedDate).plusDays(1).toDateMidnight()
 		// .toDateTime();
 	}
-
+//返回假时间(8小时之前的时间)
 	public DateTime startTimeOfBMWYMigration(MonitoringPoint mp) {
 		Date migratedDate = migratedTimeOfRawBMWY(mp);
 		if (migratedDate != null) {
-			return new DateTime(migratedDate);
+			return new DateTime(migratedDate).minusHours(8);
 		}
 		return firstTimeOfThisBMWY(mp);
 
@@ -456,6 +456,8 @@ public class DataMigrationService {
 			}
 			BMWY bmwy = new BMWY();
 			BeanUtils.copyProperties(rawBMWY, bmwy);
+			//真实时间需要加8小时
+			bmwy.setDateTime(new DateTime(bmwy.getDateTime()).plusHours(8).toDate());
 			if (lastBMWY != null) {
 				bmwy.setdDE(rawBMWY.getdE() - lastBMWY.getdE());
 				bmwy.setdDH(rawBMWY.getdH() - lastBMWY.getdH());
