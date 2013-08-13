@@ -18,9 +18,12 @@ public class TGTGC extends IdEntity{
 	
 	@Column( name="date_Time" )
 	private Date dateTime;
+	
 	@Column(name="monitoring_position")
 	private Integer monitoringPosition; 
-	private BigDecimal drybeach_elevation;
+	
+	@Column(name="drybeach_elevation")
+	private BigDecimal value;
 	
 	@Transient
 	private MonitoringPoint point;
@@ -43,12 +46,13 @@ public class TGTGC extends IdEntity{
 		this.monitoringPosition = monitoringPosition;
 	}
 
-	public BigDecimal getDrybeach_elevation() {
-		return drybeach_elevation;
+
+	public BigDecimal getValue() {
+		return value;
 	}
 
-	public void setDrybeach_elevation(BigDecimal drybeach_elevation) {
-		this.drybeach_elevation = drybeach_elevation;
+	public void setValue(BigDecimal value) {
+		this.value = value;
 	}
 
 	public MonitoringPoint getPoint() {
