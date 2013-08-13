@@ -28,7 +28,7 @@ import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.bgrimm.common.MonitoringType;
 import org.bgrimm.domain.bgrimm.common.TDrawingPosition;
 import org.bgrimm.domain.bgrimm.common.TTopo;
-import org.bgrimm.domain.t4ddb.BMWY;
+import org.bgrimm.domain.t4ddb.RawBMWY;
 import org.bgrimm.utils.Constants;
 import org.bgrimm.utils.DataUtils;
 import org.hibernate.Criteria;
@@ -291,10 +291,10 @@ public class TopoService {
 
 	private void setBMWYData(final MonitoringPoint mp) {
 
-		List<BMWY> bmwyList=template.execute(new TransactionCallback<List<BMWY>>() {
-			public List<BMWY> doInTransaction(TransactionStatus status) {
+		List<RawBMWY> bmwyList=template.execute(new TransactionCallback<List<RawBMWY>>() {
+			public List<RawBMWY> doInTransaction(TransactionStatus status) {
 
-				Criteria criteria=t4ddbDao.getSession().createCriteria(BMWY.class);
+				Criteria criteria=t4ddbDao.getSession().createCriteria(RawBMWY.class);
 				criteria.setMaxResults(1);
 				criteria.add(Restrictions.eq("monitoringPosition", mp.getPosition()));
 				criteria.addOrder(Order.desc("dateTime"));
