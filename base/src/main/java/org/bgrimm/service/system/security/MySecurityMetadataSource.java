@@ -102,7 +102,9 @@ public class MySecurityMetadataSource implements
 				return resourceMap.get(m.getModuleName());
 			}
 		}
-		return deniedAttributes();
+//		return deniedAttributes();
+		//默认放行未配置资源
+		return defaultAttributes();
 	}
 
 	public Collection<ConfigAttribute> getAllConfigAttributes() {

@@ -27,45 +27,38 @@ public class MyAccessDecisionManager implements AccessDecisionManager {
 		if (logger.isInfoEnabled()) {
 			logger.info("decide(Authentication, Object, Collection<ConfigAttribute>) - decide: - object=" + object); //$NON-NLS-1$
 		}
-
+		// Resource Don't need Authenticate
 		if (configAttributes == null) {
 			return;
 		}
 		// 所请求的资源拥有的权限(一个资源对多个权限)
-
-		Iterator<ConfigAttribute> iterator = configAttributes.iterator();
-		while (iterator.hasNext()) {
-			ConfigAttribute configAttribute = iterator.next();
-			// 访问所请求资源所需要的权限
+		for (ConfigAttribute configAttribute : configAttributes) {
 			String needPermission = configAttribute.getAttribute();
-
 			if (logger.isInfoEnabled()) {
 				logger.info("decide(Authentication, Object, Collection<ConfigAttribute>) - String needPermission=" + needPermission); //$NON-NLS-1$
 			}
-
 			// 用户所拥有的权限authentication
 			for (GrantedAuthority ga : authentication.getAuthorities()) {
-				String ownedauthority = ga.getAuthority();
-
+				String userAuth = ga.getAuthority();
 				if (logger.isInfoEnabled()) {
-					logger.info("decide(Authentication, Object, Collection<ConfigAttribute>) - String ownedauthority=" + ownedauthority); //$NON-NLS-1$
+					logger.info("decide(Authentication, Object, Collection<ConfigAttribute>) - String ownedauthority=" + userAuth); //$NON-NLS-1$
 				}
-				String authority = ga.getAuthority();
-				if (Constants.AUTH_SYSTEM.equals(authority)) {
+				if (Constants.AUTH_SYSTEM.equals(userAuth)) {
 					if (logger.isInfoEnabled()) {
 						logger.info("decide(Authentication, Object, Collection<ConfigAttribute>) - USER HAS ROLE_SYSTEM AUTHORITY."); //$NON-NLS-1$
 					}
 					return;
 				}
-				if (needPermission.equals(ga.getAuthority())) {
+				if (needPermission.equals(userAuth)) {
 					return;
 				}
 			}
+
 		}
 		if (logger.isDebugEnabled()) {
 			logger.debug("decide(Authentication, Object, Collection<ConfigAttribute>) - end"); //$NON-NLS-1$
 		}
-		// 没有权限
+		// User Don't has needed authority that the resource ordered.
 		throw new AccessDeniedException("Acces Denied.");
 
 	}

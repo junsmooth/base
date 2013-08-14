@@ -60,7 +60,4 @@ Namespace.register('role.add',{
 	
 	
 });
-
-
-
 </script>

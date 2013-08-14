@@ -25,7 +25,10 @@
 
 <script type="text/javascript">
 Namespace.register("role.list",{
-	formatOperation:function(value){
+	formatOperation:function(value,row,index){
+		if(row['id']==1){
+			return;
+		}
 		 if(value){
 		        var setAuth='['+'<a href="#" onclick="role.list.setAuth('+value+')">设置权限</a>' +']';
     			var del='['+ '<a href="#" onclick="role.list.remove('+value+' )">删除</a>'+']';

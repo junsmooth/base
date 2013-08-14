@@ -18,7 +18,7 @@
 				<tr>
 					<td>模块名称:</td>
 					<td><input id="menu_modulename" class="easyui-validatebox"
-						type="text" name="moduleName" value="${menu.moduleName}"
+						type="text" name="moduleName" <c:if test="${!empty menu.id}">readOnly="true"</c:if> value="${menu.moduleName}"
 						data-options="required:true,validType:'rmtValid[\'menu/validateModuleName\',\'menu_modulename\',\'${menu.id}\']'"> </td>
 				</tr>
 				<tr>
