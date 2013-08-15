@@ -1,5 +1,6 @@
 package org.bgrimm.service.impl;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -7,6 +8,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.commons.lang3.StringUtils;
 import org.bgrimm.dao.core.impl.CommonDao;
 import org.bgrimm.domain.bgrimm.TableParam;
@@ -82,7 +84,7 @@ public class BMWYService {
 			}
 		}
 		//DataUtils.setDecimalDigits(result.getRows(), Constants.JCD_BMWY);
-		setDecimalDigits(result.getRows());
+		//setDecimalDigits(result.getRows());
 		return result;
 	}
 
@@ -101,9 +103,9 @@ public class BMWYService {
 	private void setDecimalDigits(List<BMWY> rows) {
 
 		for(BMWY bmwy: rows){
-//			bmwy.setdE(new BigDecimal(bmwy.getdE()*1000).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
-//			bmwy.setdH(new BigDecimal(bmwy.getdH()*1000).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
-//			bmwy.setdN(new BigDecimal(bmwy.getdN()*1000).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
+			bmwy.setdE(new BigDecimal(bmwy.getdE()*1000).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
+			bmwy.setdH(new BigDecimal(bmwy.getdH()*1000).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
+			bmwy.setdN(new BigDecimal(bmwy.getdN()*1000).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
 		}
 	}
 
@@ -157,7 +159,7 @@ public class BMWYService {
 				
 				List<BMWY> bmwyDataList= criteria.list();
 
-		 return DataUtils.objectList2JSonList(bmwyDataList, new Object[]{"dateTime",montypeattr.getAttr()});
+		 return DataUtils.objectList2JSonList(bmwyDataList, new Object[]{"dateTime",montypeattr.getAttr(),Constants.JCD_BMWY});
 	
 	}
 
