@@ -74,9 +74,10 @@ public  class DataUtils {
 						value.setAccessible(true);
 						Date date=(Date)datetime.get(o);
 						BigDecimal val=null;
-						if(object[2]!=null&&Constants.JCD_BMWY.equals(object[2])){
-							val=new BigDecimal(value.get(o).toString()).multiply(new BigDecimal(1000));
-							System.out.println(val);
+						if(object.length>2){
+							if(Constants.JCD_BMWY.equals(object[2])){
+								val=new BigDecimal(value.get(o).toString()).multiply(new BigDecimal(1000));
+							}
 						}else{
 							val=new BigDecimal(value.get(o).toString());
 						}
