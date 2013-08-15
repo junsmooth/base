@@ -10,7 +10,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
-import org.bgrimm.domain.bgrimm.monitor.provided.Montypeattr;
 
 @Entity
 @IdClass(BMWYPK.class)

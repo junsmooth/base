@@ -14,8 +14,8 @@ import org.bgrimm.dao.core.impl.CommonDao;
 import org.bgrimm.domain.bgrimm.TableParam;
 import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.bgrimm.common.MonitoringType;
+import org.bgrimm.domain.bgrimm.common.MonitoringTypeAttribute;
 import org.bgrimm.domain.bgrimm.monitor.extended.BMWY;
-import org.bgrimm.domain.bgrimm.monitor.provided.Montypeattr;
 import org.bgrimm.domain.system.PageList;
 import org.bgrimm.domain.system.PagedQuery;
 import org.bgrimm.utils.Constants;
@@ -117,7 +117,7 @@ public class BMWYService {
 	public Object getAllPoints() {
 		MonitoringType t = commonDao.findUniqueBy(MonitoringType.class, "code",
 				Constants.JCD_BMWY);
-		List<Montypeattr> montypeattr=commonDao.findByCriterions(Montypeattr.class,Restrictions.eq("type.id",t.getId()));
+		List<MonitoringTypeAttribute> montypeattr=commonDao.findByCriterions(MonitoringTypeAttribute.class,Restrictions.eq("type.id",t.getId()));
 		Map mp=new HashMap();
 		if(montypeattr.size()>0){
 			mp.put("dId",montypeattr.get(0).getId());
@@ -133,8 +133,8 @@ public class BMWYService {
 
 		MonitoringType t = commonDao.findUniqueBy(MonitoringType.class, "code",
 				Constants.JCD_BMWY);
-		final List<Montypeattr> bmwyDirectionList = commonDao.findByCriterions(
-				Montypeattr.class, Restrictions.eq("type.id", t.getId()));
+		final List<MonitoringTypeAttribute> bmwyDirectionList = commonDao.findByCriterions(
+				MonitoringTypeAttribute.class, Restrictions.eq("type.id", t.getId()));
 		return bmwyDirectionList;
 	}
 	
@@ -142,7 +142,7 @@ public class BMWYService {
 	
 	public Object getBMWYChartList(TableParam param) {
 
-				Montypeattr montypeattr=commonDao.findUniqueBy(Montypeattr.class, "id",Long.parseLong(param.getDirId()));
+		MonitoringTypeAttribute montypeattr=commonDao.findUniqueBy(MonitoringTypeAttribute.class, "id",Long.parseLong(param.getDirId()));
 				Criteria criteria=commonDao.getSession().createCriteria(BMWY.class);
 				Integer arr =Integer.parseInt(param.getStr());
 				if (StringUtils.isNotEmpty(param.getMin())) {

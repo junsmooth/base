@@ -73,7 +73,6 @@
 					str : mp,
 					dirId : dirId
 				},
-				 async:false,  
 				success : bmwyHighCharts
 			});
 		}
@@ -168,7 +167,7 @@
 			data-options="  
                     url:'bmwy/data/directions', 
                     valueField:'id',   
-                    textField:'directionName',  
+                    textField:'name',  
                     panelHeight:'auto',
                     editable:false,
                     multiple:false,
