@@ -63,6 +63,7 @@
 					max : max1,
 					str : mp
 				},
+				async:false,  
 				success : jrxHighCharts
 			});
 		}

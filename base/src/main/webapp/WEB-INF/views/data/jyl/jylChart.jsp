@@ -72,6 +72,7 @@
 				max : max1,
 				str : str1
 			},
+			async:false,  
 			success : jylHighCharts
 		});
 	}

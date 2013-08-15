@@ -73,6 +73,7 @@
 					str : mp,
 					dirId : dirId
 				},
+				 async:false,  
 				success : bmwyHighCharts
 			});
 		}
