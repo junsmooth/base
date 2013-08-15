@@ -17,7 +17,7 @@
 					<li class=user_top_r></li>
 				</ul>
 			</dd>
-			<form name='f' action='<c:url value="/j_spring_security_check" </>' method='POST'>
+			<form name='f' action='<c:url value="/j_spring_security_check" />' method='POST'>
 			<dd id="user_main">
 				<ul>
 					<li class="user_main_l"></li>
