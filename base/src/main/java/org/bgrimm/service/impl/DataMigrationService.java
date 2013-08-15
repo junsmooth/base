@@ -219,8 +219,8 @@ public class DataMigrationService {
 							TransactionStatus status) {
 						Criteria criteria = dao.getSession().createCriteria(
 								RawBMWY.class);
-						criteria.add(Restrictions.ge("dateTime", begin.toDate()));
-						criteria.add(Restrictions.lt("dateTime", end.toDate()));
+						criteria.add(Restrictions.gt("dateTime", begin.toDate()));
+						criteria.add(Restrictions.le("dateTime", end.toDate()));
 						criteria.add(Restrictions.eq("monitoringPosition",
 								mp.getPosition()));
 						criteria.addOrder(Order.asc("dateTime"));
@@ -270,8 +270,8 @@ public class DataMigrationService {
 		try {
 			criteria = commonDao.getSession().createCriteria(
 					Class.forName(mp.getType().getDomainClsName()));
-			criteria.add(Restrictions.ge("dateTime", startDate.toDate()));
-			criteria.add(Restrictions.lt("dateTime", endDate.toDate()));
+			criteria.add(Restrictions.gt("dateTime", startDate.toDate()));
+			criteria.add(Restrictions.le("dateTime", endDate.toDate()));
 			criteria.add(Restrictions.eq("monitoringPosition", mp.getPosition()));
 			return criteria.list();
 		} catch (ClassNotFoundException e) {
