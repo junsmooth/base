@@ -92,7 +92,8 @@ public class DataMigrationService {
 				return (Date) obj;
 			}
 		});
-		return new DateTime(obj);
+		//-10毫秒，之后的查询是 (start,end]区间，所以开始时间做减少。-1精度数据库无法分辨
+		return new DateTime(obj).minusMillis(10);
 	}
 
 	private Date migratedTimeOfRawBMWY(MonitoringPoint mp) {
@@ -133,7 +134,7 @@ public class DataMigrationService {
 		// date = firstTimeOfThisCommonPoint(clsName, mp);
 		// }
 		date = firstTimeOfThisCommonPoint(clsName, mp);
-		return date;
+		return date.minusMillis(10);
 	}
 
 	private DateTime firstTimeOfThisCommonPoint(String clsName,
@@ -219,8 +220,8 @@ public class DataMigrationService {
 							TransactionStatus status) {
 						Criteria criteria = dao.getSession().createCriteria(
 								RawBMWY.class);
-						criteria.add(Restrictions.ge("dateTime", begin.toDate()));
-						criteria.add(Restrictions.lt("dateTime", end.toDate()));
+						criteria.add(Restrictions.gt("dateTime", begin.toDate()));
+						criteria.add(Restrictions.le("dateTime", end.toDate()));
 						criteria.add(Restrictions.eq("monitoringPosition",
 								mp.getPosition()));
 						criteria.addOrder(Order.asc("dateTime"));
@@ -270,8 +271,8 @@ public class DataMigrationService {
 		try {
 			criteria = commonDao.getSession().createCriteria(
 					Class.forName(mp.getType().getDomainClsName()));
-			criteria.add(Restrictions.ge("dateTime", startDate.toDate()));
-			criteria.add(Restrictions.lt("dateTime", endDate.toDate()));
+			criteria.add(Restrictions.gt("dateTime", startDate.toDate()));
+			criteria.add(Restrictions.le("dateTime", endDate.toDate()));
 			criteria.add(Restrictions.eq("monitoringPosition", mp.getPosition()));
 			return criteria.list();
 		} catch (ClassNotFoundException e) {
