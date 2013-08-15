@@ -92,7 +92,8 @@ public class DataMigrationService {
 				return (Date) obj;
 			}
 		});
-		return new DateTime(obj);
+		//-10毫秒，之后的查询是 (start,end]区间，所以开始时间做减少。-1精度数据库无法分辨
+		return new DateTime(obj).minusMillis(10);
 	}
 
 	private Date migratedTimeOfRawBMWY(MonitoringPoint mp) {
@@ -133,7 +134,7 @@ public class DataMigrationService {
 		// date = firstTimeOfThisCommonPoint(clsName, mp);
 		// }
 		date = firstTimeOfThisCommonPoint(clsName, mp);
-		return date;
+		return date.minusMillis(10);
 	}
 
 	private DateTime firstTimeOfThisCommonPoint(String clsName,
