@@ -465,6 +465,7 @@ public class DataMigrationService {
 				bmwy.setdDN(rawBMWY.getdN() - lastBMWY.getdN());
 			}
 			commonDao.saveOrUpdate(bmwy);
+			lastBMWY=rawBMWY;
 		}
 	}
 
