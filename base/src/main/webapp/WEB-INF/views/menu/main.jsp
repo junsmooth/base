@@ -147,9 +147,9 @@ z-index:-1
 		});
 	}
 	
-	function setData(data){
-		
-		for(var i=0;i<data.length-1;i++){
+	function setData(value){
+		var data=value.dataList;
+		for(var i=0;i<data.length;i++){
 			
 			var d = data[i];
 			var name = d.monitoringName;
@@ -162,8 +162,16 @@ z-index:-1
 						de=(d.mpValue.dE*1000).toFixed(2);
 						dh=(d.mpValue.dH*1000).toFixed(2);
 						dn=(d.mpValue.dN*1000).toFixed(2);
+						dde=(d.mpValue.dDE*1000).toFixed(2);
+						ddh=(d.mpValue.dDH*1000).toFixed(2);
+						ddn=(d.mpValue.dDN*1000).toFixed(2);
+						var arr=[dn,de,dh,ddn,dde,ddh];
+						var mpName=new Array(6);
+						for(var j=0;j<mpName.length;j++){
+							mpName[j]=d.mpValue.obj[j].name;
+						}
 					}
-					showBMWYData(baseId,name,de,dn,dh);
+					showBMWYData(baseId,name,arr,mpName);
 				}else if(d.url!=null&&d.url!=""){
 						var link=document.getElementById(baseId);
 						var ul=d.url;
@@ -178,7 +186,7 @@ z-index:-1
 					showOtherData(baseId,name,val);
 				}
 		}
-		var alarmRecord=data[data.length-1];
+		var alarmRecord=value.alarmRecordData;
 		 for(var j=0;j<alarmRecord.length;j++){
 			
 			var alarm = alarmRecord[j];
@@ -198,17 +206,15 @@ z-index:-1
 		//addTab('视频',ul,'');
 		window.open(ul);
 	}
-	
-	function showBMWYData(baseId,name,de,dn,dh){
+	//arr:依次为dn,de,dh,ddn,dde,ddh的值。mpName:依次为dn,de,dh,ddn,dde,ddh的名称。
+	function showBMWYData(baseId,name,arr,mpName){
 		 $("#" + baseId).tooltip({  
 			    position: 'right',  
-			    content:  "<b>"+name+"</b>"+"<br><br>"+'横向水平位移:' +de+"mm<br>纵向水平位移:" + dn + "mm<br>"
-				+ '竖向位移:' + dh + "mm",  
+			    content:  "<h5>"+name+"</h5>"+"<p>"+mpName[0]+':' +arr[0]+"mm<br>"+mpName[1]+":" + arr[1] + "mm<br>"
+				+ mpName[2]+':' + arr[2] + "mm"+"<br>"+mpName[3]+':' +arr[3]+"mm<br>"+mpName[4]+":" + arr[4] + "mm<br>"
+				+ mpName[5]+':' + arr[5] + "mm</p>",  
 				onShow: function(){  
-			        $(this).tooltip('tip').css({  
-			            backgroundColor: '#FCFFFF',  
-			            borderColor: '#000000'  
-			        });  
+					   $(this).tooltip('tip').className='easyui-tooltip';  
 			    } 
 			});
 	}
@@ -216,12 +222,9 @@ z-index:-1
 	function showOtherData(baseId,name,val){
 		 $("#" + baseId).tooltip({  
 			    position: 'right',  
-			    content:  "<b>"+name+"</b>"+"<br><br>"+val + "mm<br>",
+			    content:  "<h5>"+name+"<h5>"+"<p>"+val + "mm</p>",
 				onShow: function(){  
-			        $(this).tooltip('tip').css({  
-			            backgroundColor: '#FCFFFF',  
-			            borderColor: '#000000'  
-			        });  
+					$(this).tooltip('tip').className='easyui-tooltip';    
 			    } 
 			});
 	}

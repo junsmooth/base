@@ -29,6 +29,18 @@ public class BMWY extends IdEntity {
 	private double dDE;
 	@Column(precision = 24, scale = 0)
 	private double dDH;
+	
+	
+	@Transient
+	Object obj;
+	public Object getObj() {
+		return obj;
+	}
+
+	public void setObj(Object obj) {
+		this.obj = obj;
+	}
+
 	public double getdDN() {
 		return dDN;
 	}

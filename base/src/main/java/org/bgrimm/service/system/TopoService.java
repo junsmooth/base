@@ -5,7 +5,6 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -26,21 +25,19 @@ import org.bgrimm.dao.core.impl.CommonDao;
 import org.bgrimm.domain.bgrimm.common.AlarmRecord;
 import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.bgrimm.common.MonitoringType;
+import org.bgrimm.domain.bgrimm.common.MonitoringTypeAttribute;
 import org.bgrimm.domain.bgrimm.common.TDrawingPosition;
 import org.bgrimm.domain.bgrimm.common.TTopo;
-import org.bgrimm.domain.t4ddb.RawBMWY;
+import org.bgrimm.domain.bgrimm.monitor.extended.BMWY;
 import org.bgrimm.utils.Constants;
-import org.bgrimm.utils.DataUtils;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 
 @Service("topoService")
@@ -242,11 +239,13 @@ public class TopoService {
 	}
 
 
-	public List getMainData() {
+	public Map getMainData() {
 		List alarmRecordDataList=getAlarmRecordDataList();
 		List allDataList= getAllDataList();
-		allDataList.add(alarmRecordDataList);
-		 return allDataList;
+		Map map=new HashMap();
+		map.put("dataList", allDataList);
+		map.put("alarmRecordData", alarmRecordDataList);
+		return map;
 	}
 
 	private List getAllDataList() {
@@ -289,23 +288,22 @@ public class TopoService {
 	}
 
 
-	private void setBMWYData(final MonitoringPoint mp) {
+	private void setBMWYData( MonitoringPoint mp) {
 
-		List<RawBMWY> bmwyList=template.execute(new TransactionCallback<List<RawBMWY>>() {
-			public List<RawBMWY> doInTransaction(TransactionStatus status) {
 
-				Criteria criteria=t4ddbDao.getSession().createCriteria(RawBMWY.class);
+				Criteria criteria=commonDao.getSession().createCriteria(BMWY.class);
 				criteria.setMaxResults(1);
 				criteria.add(Restrictions.eq("monitoringPosition", mp.getPosition()));
 				criteria.addOrder(Order.desc("dateTime"));
 				List list= criteria.list();
+				List mtList=commonDao.findByCriterions(MonitoringTypeAttribute.class, Restrictions.eq("type.id", mp.getType().getId()));
+				MonitoringTypeAttribute mt=null;
+					BMWY by=(BMWY)(list.get(0));
+					by.setObj(mtList);
 				if(list.size()>0){
 					//DataUtils.setDecimalDigits(list,Constants.JCD_BMWY);
 					mp.setMpValue(list.get(0));
 				}
-				return null;
-			}
-		});
 			
 	}
 
