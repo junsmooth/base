@@ -6,10 +6,12 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.bgrimm.dao.core.impl.CommonDao;
+import org.bgrimm.domain.bgrimm.TableParam;
 import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.bgrimm.common.MonitoringType;
 import org.bgrimm.domain.bgrimm.common.MonitoringTypeAttribute;
 import org.bgrimm.domain.bgrimm.common.Threshold;
+import org.bgrimm.domain.bgrimm.monitor.extended.AQCG;
 import org.bgrimm.domain.system.PageList;
 import org.bgrimm.domain.system.PagedQuery;
 import org.bgrimm.domain.system.TIcon;
@@ -96,8 +98,11 @@ public class ConfigService {
 		commonDao.saveOrUpdate(mon);
 	}
 
-	public Object getAllMonAttr() {
-		return commonDao.loadAll(MonitoringTypeAttribute.class);
+	public Object getAllMonAttr(TableParam param) {
+		PagedQuery pq = new PagedQuery(MonitoringTypeAttribute.class, param.getPage(), param.getRows());
+		PageList<MonitoringTypeAttribute> pl= commonDao.getPagedList(pq,new ArrayList());
+	//	return commonDao.loadAll(MonitoringTypeAttribute.class);
+		return pl;
 	}
 
 	public void saveOrUpdate(MonitoringTypeAttribute monattr) {
@@ -108,6 +113,13 @@ public class ConfigService {
 	public MonitoringTypeAttribute getUniqueMonAttr(long id) {
 		return commonDao.findUniqueByProperty(MonitoringTypeAttribute.class,
 				"id", id);
+	}
+
+	public void removeMonAttrTypeById(long id) {
+
+		MonitoringTypeAttribute mta=commonDao.getEntity(MonitoringTypeAttribute.class, id);
+		mta.setType(null);
+		commonDao.delete(mta);
 	}
 
 }
