@@ -24,7 +24,7 @@
 					<td><input id="new_monattr_type" class="easyui-combobox"
 						type="text"
 						name="type.id" value="${monattr.type.id}"
-						data-options="required:true,valueField:'id',textField:'name',url:'config/montype/data',formatter:config.monattr.add.formatMonType">
+						data-options="required:true,valueField:'id',textField:'name',url:'config/montype/data',formatter:config.monattr.add.formatMonType,editable:false">
 					</td>
 				</tr>
 			</table>

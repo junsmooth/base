@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.commons.lang3.StringUtils;
+import org.bgrimm.domain.bgrimm.TableParam;
 import org.bgrimm.domain.bgrimm.common.MonitoringPoint;
 import org.bgrimm.domain.bgrimm.common.MonitoringType;
 import org.bgrimm.domain.bgrimm.common.MonitoringTypeAttribute;
@@ -87,8 +88,8 @@ public class ConfigController {
 
 	@RequestMapping("monattr/data")
 	public @ResponseBody
-	Object monAttrList() {
-		return service.getAllMonAttr();
+	Object monAttrList(TableParam param) {
+		return service.getAllMonAttr(param);
 	}
 
 	@RequestMapping("monpoint/validateMonPointName")
@@ -151,6 +152,17 @@ public class ConfigController {
 	JsonMsg removeMonType(@RequestParam long id) {
 		try {
 			service.removeMonTypeById(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return JsonMsg.createJsonMsg(false, "操作失败", e.getMessage());
+		}
+		return JsonMsg.simpleSuccessJson();
+	}
+	@RequestMapping("monAttrType/remove")
+	public @ResponseBody
+	JsonMsg removeMonAttrType(@RequestParam long id) {
+		try {
+			service.removeMonAttrTypeById(id);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return JsonMsg.createJsonMsg(false, "操作失败", e.getMessage());

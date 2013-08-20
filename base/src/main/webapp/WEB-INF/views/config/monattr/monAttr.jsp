@@ -20,7 +20,7 @@
 		remove : function(value) {
 			$.messager.confirm('提示', '确定要删除吗?', function(r) {
 				if (r) {
-					$.post('user/remove', {
+					$.post('config/monAttrType/remove', {
 						id : value
 					}, function(data) {
 						if (data.success) {
