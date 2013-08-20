@@ -10,7 +10,7 @@
 						+ value + ')">编辑</a>' + ']';
 				var del = '[' + '<a href="#" onclick="config.monattr.remove('
 						+ value + ' )">删除</a>' + ']';
-				if (hasRole('ROLE_USER_EDIT')) {
+				if (hasRole('${ROLE_AUTH_EDIT}')) {
 					return edit + del;
 				}
 
@@ -57,7 +57,7 @@
 		toolbar : [ {
 			text : '增加',
 			iconCls : 'icon-add',
-			disabled : !hasRole('ROLE_USER_EDIT'),
+			disabled : !hasRole('${ROLE_AUTH_EDIT}'),
 			handler : function() {
 				$('#monitoring_attribute_dialog').dialog({
 					title : '添加监测属性',

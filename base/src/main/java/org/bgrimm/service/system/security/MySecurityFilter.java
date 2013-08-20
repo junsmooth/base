@@ -1,8 +1,7 @@
 package org.bgrimm.service.system.security;
 
-import org.apache.log4j.Logger;
-
 import java.io.IOException;
+import java.util.Collection;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -11,9 +10,12 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.AccessDecisionManager;
+import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityMetadataSource;
 import org.springframework.security.access.intercept.AbstractSecurityInterceptor;
 import org.springframework.security.access.intercept.InterceptorStatusToken;
@@ -21,6 +23,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.stereotype.Service;
+
+import com.google.code.kaptcha.util.Configurable;
 
 @Service("myFilter")
 public class MySecurityFilter extends AbstractSecurityInterceptor implements
@@ -48,10 +52,25 @@ public class MySecurityFilter extends AbstractSecurityInterceptor implements
 		if (logger.isDebugEnabled()) {
 			logger.debug("doFilter(ServletRequest, ServletResponse, FilterChain) - start"); //$NON-NLS-1$
 		}
-
+		//
+	
+		
+		
 		FilterInvocation fi = new FilterInvocation(request, response, chain);
+		Collection<ConfigAttribute> attrs=securityMetadataSource.getAttributes(fi);
+		String ROLE_MODULE_EDIT="";
+		for(ConfigAttribute att:attrs){
+			String attStr=att.getAttribute();
+			if(attStr.contains("VIEW")){
+				String ROLE_MODULE=StringUtils.substringBefore(attStr, "VIEW");
+				ROLE_MODULE_EDIT=ROLE_MODULE+"EDIT";
+			}
+		}
+		if(!"".equals(ROLE_MODULE_EDIT)){
+			request.setAttribute("ROLE_AUTH_EDIT", ROLE_MODULE_EDIT);
+		}
+		
 		invoke(fi);
-
 		if (logger.isDebugEnabled()) {
 			logger.debug("doFilter(ServletRequest, ServletResponse, FilterChain) - end"); //$NON-NLS-1$
 		}

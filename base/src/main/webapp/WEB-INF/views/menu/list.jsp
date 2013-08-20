@@ -6,7 +6,10 @@ Namespace.register("menu.list",{
 		 if(value){
 		        var edit='['+'<a href="#" onclick="menu.list.edit('+value+')">编辑</a>' +']';
 		        var del='['+ '<a href="#" onclick="menu.list.remove('+value+' )">删除</a>'+']';
-		        return edit+del;
+		       	if(hasRole('${ROLE_AUTH_EDIT}')){
+		       		return edit+del;
+		       	}
+		        
 		        }
 	},
 	formatIcon:function(value){
@@ -52,8 +55,9 @@ Namespace.register("menu.list",{
 	toolbar:[{
 	    text:'增加',
 	    iconCls:'icon-add',
-	    disabled:!hasRole('ROLE_MENU_EDIT'),
+	    disabled:!hasRole('${ROLE_AUTH_EDIT}'),
 	    handler:function(){
+	    	
 	      $('#menudialog').dialog({
 	        title: '增加菜单',
 	        width: 600,

@@ -82,6 +82,7 @@ public class MySecurityMetadataSource implements
 
 		String requestUrl = ((FilterInvocation) object).getRequestUrl();
 		requestUrl=StringUtils.substringBefore(requestUrl, "?");
+		requestUrl=StringUtils.substringAfter(requestUrl, "/");
 		if(whitlist.contains(requestUrl)){
 			return defaultAttributes();
 		}
@@ -98,7 +99,8 @@ public class MySecurityMetadataSource implements
 			if ("".equals(url) || "/".equals(url)) {
 				continue;
 			}
-			if (requestUrl.contains(url)) {
+//			if (requestUrl.contains(url)) {
+			if(requestUrl.equals(url)){
 				return resourceMap.get(m.getModuleName());
 			}
 		}

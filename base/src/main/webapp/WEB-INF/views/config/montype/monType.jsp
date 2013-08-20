@@ -15,7 +15,7 @@
 								var del = '['
 										+ '<a href="#" onclick="config.monType.remove('
 										+ value + ' )">删除</a>' + ']';
-								if (hasRole('ROLE_USER_EDIT')) {
+								if (hasRole('${ROLE_AUTH_EDIT}')) {
 									return edit + del;
 								}
 
@@ -71,7 +71,7 @@
 						toolbar: [ {
 							text : '增加',
 							iconCls : 'icon-add',
-							disabled : !hasRole('ROLE_MONTYPE_EDIT'),
+							disabled : !hasRole("${ROLE_AUTH_EDIT}"),
 							handler : function() {
 								$('#monTypeDialog').dialog({
 									title : '添加类型',
