@@ -24,8 +24,6 @@ import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.stereotype.Service;
 
-import com.google.code.kaptcha.util.Configurable;
-
 @Service("myFilter")
 public class MySecurityFilter extends AbstractSecurityInterceptor implements
 		Filter {
