@@ -13,6 +13,7 @@
 								var del = '['
 										+ '<a href="#" onclick="icon.list.remove('
 										+ value + ' )">删除</a>' + ']';
+								if(hasRole("${ROLE_AUTH_EDIT}"))
 								return edit + del;
 							}
 						},
@@ -68,7 +69,7 @@
 								{
 									text : '增加',
 									iconCls : 'icon-add',
-									disabled : !hasRole('ROLE_ICON_EDIT'),
+									disabled : !hasRole('ROLE_AUTH_EDIT'),
 									handler : function() {
 										$('#iconDialog').dialog({
 											title : '增加菜单',

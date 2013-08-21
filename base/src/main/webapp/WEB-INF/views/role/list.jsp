@@ -33,7 +33,8 @@ Namespace.register("role.list",{
 		        var setAuth='['+'<a href="#" onclick="role.list.setAuth('+value+')">设置权限</a>' +']';
     			var del='['+ '<a href="#" onclick="role.list.remove('+value+' )">删除</a>'+']';
    				 var edit='['+'<a href="#" onclick="role.list.edit('+value+')">编辑</a>' +']';
-   				return edit+setAuth+del;
+   				if(hasRole("${ROLE_AUTH_EDIT}"))
+   				 return edit+setAuth+del;
 		        }
 	},
 	setAuth:function(id){
@@ -85,7 +86,7 @@ Namespace.register("role.list",{
 role.list.toolbar = [{
     text:'增加',
     iconCls:'icon-add',
-    disabled:!hasRole('ROLE_ROLE_EDIT'),
+    disabled:!hasRole('${ROLE_AUTH_EDIT}'),
     handler:function(){
            $('#roleDialog').dialog({
         title: '增加角色',

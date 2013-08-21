@@ -10,7 +10,7 @@
 						+ value + ')">编辑</a>' + ']';
 				var del = '[' + '<a href="#" onclick="alarm.alarmcolor.remove('
 						+ value + ' )">删除</a>' + ']';
-				if (hasRole('ROLE_USER_EDIT')) {
+				if (hasRole('ROLE_AUTH_EDIT')) {
 					return edit + del;
 				}
 
@@ -63,7 +63,7 @@
 		toolbar : [ {
 			text : '增加',
 			iconCls : 'icon-add',
-			disabled : !hasRole('ROLE_USER_EDIT'),
+			disabled : !hasRole('ROLE_AUTH_EDIT'),
 			handler : function() {
 				$('#new_alarm_color_dialog').dialog({
 					title : '增加报警颜色',
