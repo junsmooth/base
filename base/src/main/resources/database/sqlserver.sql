@@ -53,8 +53,8 @@ INSERT [t_icon] ( [id] , [iconcls] , [iconname] , [iconpath] , [type_id] ) VALUE
  
  SET IDENTITY_INSERT [t_user] ON
 
- INSERT [t_user] ( [id] , [address] , [cardno] , [email] , [enabled] , [password] , [realname] , [telephone] , [username] ) VALUES ( 1 , 'sdfasdf' , '223' , 'dafd@sdf' , 'Y' , 'admin' , 'admin' , '212323' , 'admin' )
- INSERT [t_user] ( [id] , [address] , [email] , [enabled] , [password] , [realname] , [telephone] , [username] ) VALUES ( 3 , 'user' , '' , 'Y' , 'user' , 'user' , '13260053081' , 'user' )
+ INSERT [t_user] ( [id] , [address] , [cardno] , [email] , [enabled] , [password] , [realname] , [telephone] , [username] ) VALUES ( 1 , 'sdfasdf' , '223' , 'dafd@sdf' , 'Y' , 'c815cb993165894fea35eb5d80b6e6cb' , 'admin' , '212323' , 'admin' )
+ INSERT [t_user] ( [id] , [address] , [email] , [enabled] , [password] , [realname] , [telephone] , [username] ) VALUES ( 3 , 'user' , '' , 'Y' , '5654a2867771091d4f5a2870a208f8bb' , 'user' , '13260053081' , 'user' )
 
  SET IDENTITY_INSERT [t_user] OFF
 
