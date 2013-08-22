@@ -9,7 +9,7 @@
 		 if(value){
 		        var edit='['+'<a href="#" onclick="user.list.edit('+value+')">编辑</a>' +']';
 		        var del='['+ '<a href="#" onclick="user.list.remove('+value+' )">删除</a>'+']';
-		      	if(hasRole('ROLE_AUTH_EDIT')){
+		      	if(hasRole('${ROLE_AUTH_EDIT}')){
 		      		 return edit+del;
 		      	}
 		       	
@@ -55,7 +55,7 @@
 user.list.toolbar = [{
     text:'增加',
     iconCls:'icon-add',
-    disabled:!hasRole('ROLE_AUTH_EDIT'),
+    disabled:!hasRole('${ROLE_AUTH_EDIT}'),
     handler:function(){
       $('#userdialog').dialog({
         title: '添加用户',

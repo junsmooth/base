@@ -4,4 +4,5 @@
 <script type="text/javascript" src="resources/app.js">
 </script>
  <t:menu parentMenus="${parentMenus}"></t:menu>
+ <div id="editPassDialog"></div>
 

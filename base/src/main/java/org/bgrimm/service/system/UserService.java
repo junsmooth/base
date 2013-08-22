@@ -8,7 +8,11 @@ import org.bgrimm.domain.system.PageList;
 import org.bgrimm.domain.system.PagedQuery;
 import org.bgrimm.domain.system.TRole;
 import org.bgrimm.domain.system.TUser;
+import org.bgrimm.utils.JSONUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,8 +20,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class UserService {
 	@Autowired
-	public UserDao userDao;
+	private UserDao userDao;
 
+	
+	private Md5PasswordEncoder encoder=new Md5PasswordEncoder();
 	public UserService() {
 	}
 
@@ -33,6 +39,9 @@ public class UserService {
 			dest.setEmail(user.getEmail());
 			dest.setAlarmType(user.getAlarmType());
 			user = dest;
+		}else{
+			String rawPassword=user.getPassword();
+			user.setPassword(encoder.encodePassword(rawPassword, "bgrimm"));
 		}
 		userDao.saveOrUpdate(user);
 	}
@@ -62,11 +71,36 @@ public class UserService {
 	}
 
 	public boolean isValidUserName(String username) {
-		
-		TUser user=userDao.findUniqueByProperty(TUser.class, "username", username);
-		if(user==null){
+
+		TUser user = userDao.findUniqueByProperty(TUser.class, "username",
+				username);
+		if (user == null) {
 			return true;
 		}
 		return false;
+	}
+
+	public void updatePassword(String password) {
+		TUser user=getCurrentUser();
+		user.setPassword(encoder.encodePassword(password, "bgrimm"));
+		userDao.saveOrUpdate(user);
+	}
+
+	private TUser getCurrentUser() {
+		Object principal = SecurityContextHolder.getContext()
+				.getAuthentication();
+		String userName="";
+		if (principal != null
+				&& principal instanceof UsernamePasswordAuthenticationToken) {
+			UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) principal;
+			userName = token.getName();
+		}
+		return userDao.findUniqueByProperty(TUser.class, "username", userName);
+	}
+
+	public boolean validOldPassword(String oldPass) {
+		TUser user=getCurrentUser();
+		String encodedOldPass=encoder.encodePassword(oldPass,"bgrimm");
+		return user.getPassword().equals(encodedOldPass);
 	}
 }

@@ -11,28 +11,30 @@
 	<http pattern="/**/*.jpg" security="none"></http>
 	<http pattern="/**/*.ico" security="none"></http>
 	<!-- exclude login page -->
-	 <http pattern="/login" security="none" />
+	<http pattern="/login" security="none" />
 	<!-- <http auto-config='true' /> -->
 	<http auto-config='true' use-expressions="true">
-	
+
 		<logout />
-		<session-management ></session-management>
+		<session-management></session-management>
 		<remember-me />
-		<form-login  login-page="/login" authentication-failure-url="/login?login_error=t" always-use-default-target="true" default-target-url="/" ></form-login>
+		<form-login login-page="/login" authentication-failure-url="/login?login_error=t"
+			always-use-default-target="true" default-target-url="/"></form-login>
 		<custom-filter ref="myFilter" before="FILTER_SECURITY_INTERCEPTOR" />
 	</http>
 
 
-	<!-- <user-service id="userService">
-		<user name="admin" password="admin" authorities="ROLE_USER,ROLE_ADMIN" />
-		<user name="twoqubed" password="longhorns" authorities="ROLE_USER" />
-
-	</user-service> -->
+	<!-- <user-service id="userService"> <user name="admin" password="admin" 
+		authorities="ROLE_USER,ROLE_ADMIN" /> <user name="twoqubed" password="longhorns" 
+		authorities="ROLE_USER" /> </user-service> -->
 	<authentication-manager alias="myAuthenticationManager">
-	<authentication-provider user-service-ref="myUserDetailServiceImpl" />
-	<!-- <authentication-provider user-service-ref="userService"></authentication-provider> -->		<!-- <authentication-provider user-service-ref='myUserDetailsService'> 
-			<password-encoder hash="md5"> <salt-source system-wide="bgrimm" /> </password-encoder> 
-			</authentication-provider> -->
+		<authentication-provider user-service-ref="myUserDetailServiceImpl">
+			<password-encoder hash="md5">
+				<salt-source system-wide="bgrimm" />
+			</password-encoder>
+		</authentication-provider>
+		<!-- <authentication-provider user-service-ref="userService"></authentication-provider> -->		<!-- <authentication-provider user-service-ref='myUserDetailsService'> <password-encoder 
+			hash="md5"> <salt-source system-wide="bgrimm" /> </password-encoder> </authentication-provider> -->
 	</authentication-manager>
 	<!-- <beans:bean id="myUserDetailsService" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl"> 
 		<beans:property name="dataSource" ref="bgrimmDS" /> <beans:property name="usersByUsernameQuery"> 

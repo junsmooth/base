@@ -3,6 +3,7 @@ $(function() {
 	tabClose();
 	tabCloseEven();
 	registryLogout();
+	registryEditPass();
 	delayRun();
 	//
 	addTab('三维地图', 'topo/threedimension');
@@ -125,6 +126,24 @@ function registryLogout() {
 
 	})
 }
+function registryEditPass(){
+	$('#editpass').click(function(){
+		 $('#editPassDialog').dialog({
+		        title: '修改密码',
+		        width: 600,
+		        height: 360,
+		        closed: false,
+		        //resizable:true,
+		        cache: false,
+		        href: 'user/editPass',
+		        modal: true
+		        });
+		
+	});
+	   
+	
+}
+
 // Download by http://www.codefans.net
 // 初始化左侧
 function InitLeftMenu() {

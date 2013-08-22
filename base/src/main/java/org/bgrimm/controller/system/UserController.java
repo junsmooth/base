@@ -64,7 +64,33 @@ public class UserController {
 	public String rolelist() {
 		return "user/roleList";
 	}
-
+	@RequestMapping(value="editPass",method=RequestMethod.GET)
+	public String editPassView() {
+		return "user/editPass";
+	}
+	
+	@RequestMapping(value="editPass",method=RequestMethod.POST)
+	public @ResponseBody
+	JsonMsg saveEditPass(HttpServletRequest req) {
+		String oldPass=req.getParameter("oldpassword");
+		String password=req.getParameter("password");
+		String repassword=req.getParameter("repassword");
+		if("".equals(oldPass)||!password.equals(repassword)){
+			return JsonMsg.createJsonMsg(false, "操作失败", "密码错误!");
+		}
+		if(!userService.validOldPassword(oldPass)){
+			return JsonMsg.createJsonMsg(false, "操作失败", "原始密码错误!");
+		}
+		
+		try {
+			userService.updatePassword(password);
+			return JsonMsg.simpleSuccessJson();
+		} catch (Exception e) {
+			return JsonMsg.createJsonMsg(false, "操作失败", e.getMessage());
+		}
+		
+		
+	}
 	@RequestMapping("list/data")
 	public @ResponseBody
 	Object userList(@RequestParam int page, @RequestParam int rows) {
