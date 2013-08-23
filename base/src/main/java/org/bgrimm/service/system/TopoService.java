@@ -249,7 +249,12 @@ public class TopoService {
 	}
 
 	public List getAllDataList() {
-		List<MonitoringPoint> mpDataList=commonDao.findByCriterions(MonitoringPoint.class, Restrictions.isNotNull("drawPosition.id"));
+		//List<MonitoringPoint> mpDataList=commonDao.findByCriterions(MonitoringPoint.class, Restrictions.isNotNull("drawPosition.id"));
+		Criteria cri=commonDao.getSession().createCriteria(MonitoringPoint.class);
+		cri.add(Restrictions.isNotNull("drawPosition.id"));
+		cri.addOrder(Order.asc("type.id"));
+		cri.addOrder(Order.asc("position"));
+		List<MonitoringPoint> mpDataList=cri.list();
 		for(MonitoringPoint mp:mpDataList){
 			if(Constants.JCD_BMWY.equals(mp.getType().getCode())){
 				setBMWYData(mp);
