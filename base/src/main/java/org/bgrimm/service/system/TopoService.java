@@ -248,7 +248,7 @@ public class TopoService {
 		return map;
 	}
 
-	private List getAllDataList() {
+	public List getAllDataList() {
 		List<MonitoringPoint> mpDataList=commonDao.findByCriterions(MonitoringPoint.class, Restrictions.isNotNull("drawPosition.id"));
 		for(MonitoringPoint mp:mpDataList){
 			if(Constants.JCD_BMWY.equals(mp.getType().getCode())){

@@ -21,6 +21,9 @@
 <link href="resources/skins/label.css" rel="stylesheet" type="text/css">
 <link href="resources/skins/table.css" rel="stylesheet" type="text/css">
 		
+<!-- <link href="resources/custom/css/style.css" rel="stylesheet" type="text/css"> -->
+<!-- <link href="resources/custom/css/jquery.gridster.min.css" rel="stylesheet" type="text/css"> -->
+		
 <script type="text/javascript" src="resources/jquery-1.8.0.min.js">
 	
 </script>
@@ -52,6 +55,9 @@
 <script type="text/javascript" src="resources/project2.js">
 	
 </script>
+<!-- <script type="text/javascript" src="resources/jquery.gridster.js">
+	
+</script> -->
 
 
 <!--   <script src="resources/highcharts.js"></script> -->
@@ -60,7 +66,7 @@
 <script type="text/javascript" src="resources/jquery.portal.js"></script>
 <script src="resources/jquery.uploadify.min.js" type="text/javascript"></script>
  <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=B22e4be0e2dca29545ef3b52b411e36a"></script>
- 
+ <script src="resources/masonry.pkgd.min.js"></script>
 
 </head>
 <body class="easyui-layout">
