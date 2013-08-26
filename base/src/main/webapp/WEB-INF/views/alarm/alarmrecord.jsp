@@ -119,7 +119,9 @@
 					<th
 						data-options="field:'threshold',width:120,align:'left',styler:alarm.alarmrecord.cellStyler,formatter:alarm.alarmrecord.formatAlarmType">
 						报警级别</th>
-					<th data-options="field:'times',width:40,align:'left'">累计次数</th>
+						<!--  
+					<th data-options="field:'times',width:40,align:'left'">累计次数</th>-->
+					
 					<th data-options="field:'warningValue',width:80,align:'left'">报警值</th>
 					
 					<th data-options="field:'warningContent',width:180,align:'left'">
