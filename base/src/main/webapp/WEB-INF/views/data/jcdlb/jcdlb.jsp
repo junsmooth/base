@@ -148,7 +148,7 @@
     		tr.appendTo(table);
     		var postionValue=$("<td>"+mpName+"</td>");
     		postionValue.appendTo(tr);
-    		var dataValue=$("<td>"+value+"</td>");
+    		var dataValue=$("<td>"+value.toFixed(2)+"</td>");
     		dataValue.appendTo(tr);
     	}
     	
