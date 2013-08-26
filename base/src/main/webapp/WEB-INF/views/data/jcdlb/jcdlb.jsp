@@ -18,13 +18,17 @@
 }
 </style>
     <script type="text/javascript">
+    	var t;
     	$(function (){
     		iniData();
-    		//setTimeout(refreshJCDLBPage, 20000);
+    		if(t==undefined){
+	    		t=setTimeout(refreshJCDLBPage, 20000);
+    		}
     	});
     
+    	
     	function refreshJCDLBPage() {
-    		
+    		//alert("refreshJCDLBPage");
     		$.ajax({
     			type:"get",
     			url:"jcdlb/data",
