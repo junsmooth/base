@@ -60,7 +60,6 @@ INSERT [t_icon] ( [id] , [iconcls] , [iconname] , [iconpath] , [type_id] ) VALUE
 
 
 SET IDENTITY_INSERT [t_menu] ON
-
  INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url] ) VALUES ( 1 , 'ROOT' , 'ROOT' , 'ROOT' , '/' )
  INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 2 , '系统管理' , 'E' , 'SYSTEM' , '' , 2 , 1 )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 3 , '用户管理' , 'USER' , 'user' , 3 , 2 )
@@ -69,8 +68,8 @@ SET IDENTITY_INSERT [t_menu] ON
  INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 6 , '参数配置' , 'B' , 'CONFIG' , 'config' , 2 , 1 )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 7 , '监测类型' , 'MONTYPE' , 'config/montype' , 7 , 6 )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 8 , '监测点' , 'MONPOINT' , 'config/monpoint' , 8 , 6 )
- INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 9 , '实时分析' , 'C' , 'CHART' , '' , 2 , 1 )
- INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 10 , '表面位移过程线' , 'BMWYCHART' , 'bmwy/chart' , 22 , 9 )
+ INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 9 , '历史曲线' , 'C' , 'CHART' , '' , 2 , 1 )
+ INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 10 , '表面位移过程线' , 'B' , 'BMWYCHART' , 'bmwy/chart' , 22 , 9 )
  INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 11 , '历史数据' , 'D' , 'DATA' , '' , 2 , 1 )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 12 , '表面位移数据' , 'BMWYDATA' , 'bmwy/data' , 22 , 11 )
  INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 13 , '系统日志' , 'F' , 'LOG' , '' , 2 , 1 )
@@ -84,13 +83,13 @@ SET IDENTITY_INSERT [t_menu] ON
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 21 , '坝顶高程数据' , 'BDGCDATA' , 'bdgc/data' , 26 , 11 )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 22 , '渗流量数据' , 'SLLDATA' , 'sll/data' , 28 , 11 )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 23 , '内部位移数据' , 'NBWYDATA' , 'nbwy/data' , 30 , 11 )
- INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 24 , '浸润线过程线' , 'JRXCHART' , 'jrx/chart' , 33 , 9 )
+ INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 24 , '浸润线过程线' , 'C' , 'JRXCHART' , 'jrx/chart' , 33 , 9 )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 25 , '监测属性' , 'MONATTR' , 'config/monattr' , 9 , 6 )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 26 , '报警阈值' , 'THRESHOLD' , 'alarm/threshold' , 10 , 6 )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 27 , '报警级别' , 'ALARMTYPE' , 'alarm/alarmtype' , 11 , 6 )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 28 , '报警颜色' , 'ALARMCOLOR' , 'alarm/alarmcolor' , 12 , 6 )
- INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 29 , '干滩高程过程线' , 'GTGCCHART' , 'gtgc/chart' , 20 , 9 )
- INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 30 , '干滩长度过程线' , 'GTCDCHART' , 'gtcd/chart' , 18 , 9 )
+ INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 29 , '干滩高程过程线' , 'D' , 'GTGCCHART' , 'gtgc/chart' , 20 , 9 )
+ INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 30 , '干滩长度过程线' , 'E' , 'GTCDCHART' , 'gtcd/chart' , 18 , 9 )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 31 , '库水位过程线' , 'KSWCHART' , 'ksw/chart' , 16 , 9 )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 32 , '降雨量过程线' , 'JYLCHART' , 'jyl/chart' , 14 , 9 )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 33 , '安全超高过程线' , 'AQCGCHART' , 'aqcg/chart' , 24 , 9 )
@@ -105,7 +104,10 @@ SET IDENTITY_INSERT [t_menu] ON
  INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 42 , '项目信息' , 'A' , 'PROINFO' , '' , 2 , 1 )
  INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 43 , '项目概况' , '' , 'PROJECT' , 'xmgk/iniData' , 7 , 42 )
  INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 44 , '尾矿库概况' , '' , 'TAILINGSINFO' , 'wkkgk/iniData' , 8 , 42 )
+ INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 45 , '监测点列表' , 'A' , 'JCDL' , 'jcdlb/init' , 8 , 9 )
+ INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 46 , '实时监测' , 'B1' , 'REALTIME' , '' , 2 , 1 )
 
+ 
 
  SET IDENTITY_INSERT [t_menu] OFF
 
