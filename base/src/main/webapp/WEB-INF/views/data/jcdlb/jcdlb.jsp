@@ -20,7 +20,7 @@
     <script type="text/javascript">
     	$(function (){
     		iniData();
-    		setTimeout(refreshJCDLBPage, 20000);
+    		//setTimeout(refreshJCDLBPage, 20000);
     	});
     
     	function refreshJCDLBPage() {
@@ -33,37 +33,41 @@
     	}
     	function setValue(result){
     		
+    		assign(result);
+    		setTimeout(refreshJCDLBPage, 20000);
+    	}
+    	
+    	function assign(result){
+    		
     		for(var i=0;i<result.length;i++){
-    					var name=result[i].type.code;
-    					var tid=$("#"+name);
-    					var childArr=$("#"+name+" tr");
-    					//alert(childArr.length);
-    				 	 for(var j=1;j<childArr.length;j++){
-    						
-    						$(childArr[j]).remove();
-    					}  
-	    				//tid.children().remove();
-    		} 
-    	 	
-    		for(var k=0;k<result.length;k++){
-    			var name=result[k].type.code;
-    			var tid=$("#"+name);
-    			var mpName=result[k].monitoringName;
-    			var name=result[k].type.code;
-    			if(name=='BMWY'){
-    				addBMWYRow(tid,result[k].mpValue,mpName);
-    			}else{
-    					var v=result[k].mpValue;
+				var name=result[i].type.code;
+				var tid=$("#"+name);
+				var childArr=$("#"+name+" tr");
+				//alert(childArr.length);
+			 	 for(var j=1;j<childArr.length;j++){
+					
+					$(childArr[j]).remove();
+				}  
+				//tid.children().remove();
+			} 
+			for(var k=0;k<result.length;k++){
+				var name=result[k].type.code;
+				var tid=$("#"+name);
+				var mpName=result[k].monitoringName;
+				var name=result[k].type.code;
+				if(name=='BMWY'){
+					addBMWYRow(tid,result[k].mpValue,mpName);
+				}else{
+						var v=result[k].mpValue;
 						var value=null;
 						if(v!==null){
 							value=result[k].mpValue.value;
 						}
 						addRow(tid,value,mpName);
-    			}
-    		} 
-    		
-    		setTimeout(refreshJCDLBPage, 20000);
+				}
+			}
     	}
+    	
     	function iniData(){
     		$.ajax({
     			type:"get",
@@ -93,8 +97,13 @@
   		  }
     	
     	function setData(data){
-    	 	var mpArr=new Array();
-    	 	for(var m=0;m<data.length;m++){
+    		setHeader(data);//创建表格并添加表头
+    		assign(data);//为表格添加数据
+      		formatDiv();
+    	}
+    	
+		function setHeader(data){
+			for(var m=0;m<data.length;m++){
     	 		if(document.getElementById("d"+data[m].type.code)==null){
 	    	 		var dv=$("<div></div>");
 	    	 		dv.addClass("item");
@@ -107,6 +116,7 @@
     			var code=data[i].type.code;
     			var position=data[i].position;
 		 		var table=$("#"+code);
+		 		var unit=data[i].type.unit;
    				if(document.getElementById(code)==null){
 	    			if(code=="BMWY"){
 	    				var header=new Array();
@@ -115,34 +125,14 @@
 	    					
 	    					header[k+1]=(data[i].mpValue.obj)[k].name;
 	    				}
-    					createTable(code,header);
+    					createTable(code,header,unit);
     				}else {
         					var header=[data[i].type.name,'监测值'];
-        					createTable(data[i].type.code,header);
+        					createTable(data[i].type.code,header,unit);
    					}
    				}
     		} 
-    		
-    		for(var j=0;j<data.length;j++){
-    			//alert(data.length);
-    			var code=data[j].type.code;
-    			var mpName=data[j].monitoringName;
-    			 var table=$("#"+code);
-   					if(code=="BMWY"){
-   	    					addBMWYRow(table,data[j].mpValue,mpName);
-   					}else{
-   							var v=data[j].mpValue;
-   							var value=null;
-   							if(v!==null){
-   								value=data[j].mpValue.value;
-   							}
-   							addRow(table,value,mpName);
-   					}
-    		}
-      		formatDiv();
-    	}
-    	
-
+		}
     	function addRow(table,value,mpName){
     		var tr=$("<tr></tr>");
     		tr.appendTo(table);
@@ -163,12 +153,18 @@
     			$("<td>"+(bmwyData.dDE*1000).toFixed(2)+"</td>").appendTo(tr);
     			$("<td>"+(bmwyData.dDH*1000).toFixed(2)+"</td>").appendTo(tr);
     	}
-    	function createTable(name,header){
+    	function createTable(name,header,unit){
     		var table=$("<table border='1' cellspacing='0px'></table>");
     		var tr=$("<tr height='10'></tr>");
     		tr.appendTo(table);
     		for(var i=0;i<header.length;i++){
-    			var td=$("<td width='116'>"+header[i]+"</td>");
+    			var title;
+    			if(i>0){
+    				title=header[i]+"("+unit+")";
+    			}else{
+    				title=header[i];
+    			}
+    			var td=$("<td width='146'>"+title+"</td>");
     			td.appendTo(tr);
     		}
     		table.attr("id",name);
