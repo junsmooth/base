@@ -20,7 +20,13 @@ public class MonitoringType extends IdEntity {
 	private String code;
 	private String tableName;
 	private String domainClsName;
-	
+	private String unit;
+	public String getUnit() {
+		return unit;
+	}
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "iconid")
 	private TIcon icon;
