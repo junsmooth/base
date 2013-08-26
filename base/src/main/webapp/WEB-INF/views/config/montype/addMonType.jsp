@@ -13,6 +13,11 @@
 						name="name" value="${montype.name}" data-options="required:true"> </td>
 				</tr>
 				<tr>
+					<td>单位:</td>
+					<td><input class="easyui-validatebox" type="text" name="unit" value="${montype.unit}"></td>
+				</tr>
+				
+				<tr>
 					<td>编码:</td>
 					<td><input class="easyui-validatebox" type="text"
 						name="code" value="${montype.code}" data-options="required:true"> </td>

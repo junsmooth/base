@@ -76,7 +76,7 @@
 								$('#monTypeDialog').dialog({
 									title : '添加类型',
 									width : 600,
-									height : 220,
+									height : 336,
 									closed : false,
 									//resizable:true,
 									cache : false,
