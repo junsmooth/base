@@ -95,7 +95,7 @@
 				}
 			},
 			series : [ {
-				name : '浸润线',
+				name : '干滩高程',
 				data : result,
 				
 			} ]
