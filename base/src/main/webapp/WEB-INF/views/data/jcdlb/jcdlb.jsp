@@ -116,6 +116,7 @@
     			var code=data[i].type.code;
     			var position=data[i].position;
 		 		var table=$("#"+code);
+		 		var unit=data[i].type.unit;
    				if(document.getElementById(code)==null){
 	    			if(code=="BMWY"){
 	    				var header=new Array();
@@ -124,10 +125,10 @@
 	    					
 	    					header[k+1]=(data[i].mpValue.obj)[k].name;
 	    				}
-    					createTable(code,header);
+    					createTable(code,header,unit);
     				}else {
         					var header=[data[i].type.name,'监测值'];
-        					createTable(data[i].type.code,header);
+        					createTable(data[i].type.code,header,unit);
    					}
    				}
     		} 
@@ -152,12 +153,18 @@
     			$("<td>"+(bmwyData.dDE*1000).toFixed(2)+"</td>").appendTo(tr);
     			$("<td>"+(bmwyData.dDH*1000).toFixed(2)+"</td>").appendTo(tr);
     	}
-    	function createTable(name,header){
+    	function createTable(name,header,unit){
     		var table=$("<table border='1' cellspacing='0px'></table>");
     		var tr=$("<tr height='10'></tr>");
     		tr.appendTo(table);
     		for(var i=0;i<header.length;i++){
-    			var td=$("<td width='116'>"+header[i]+"</td>");
+    			var title;
+    			if(i>0){
+    				title=header[i]+"("+unit+")";
+    			}else{
+    				title=header[i];
+    			}
+    			var td=$("<td width='146'>"+title+"</td>");
     			td.appendTo(tr);
     		}
     		table.attr("id",name);
