@@ -111,9 +111,9 @@
 					<th
 						data-options="field:'point',width:80,align:'left',formatter:bmwydata.list.formatPoint">
 						测点</th>
-					<th data-options="field:'dN',formatter:bmwydata.list.formatBMWYValue,width:120,align:'left'">平行坝轴线变化(mm)</th>
-					<th data-options="field:'dE',formatter:bmwydata.list.formatBMWYValue,width:120,align:'left'">垂直坝轴线变化(mm)</th>
-					<th data-options="field:'dH',formatter:bmwydata.list.formatBMWYValue,width:120,align:'left'">铅垂方向变化(mm)</th>
+					<th data-options="field:'dN',formatter:bmwydata.list.formatBMWYValue,width:120,align:'left'">累积平行坝轴线变化(mm)</th>
+					<th data-options="field:'dE',formatter:bmwydata.list.formatBMWYValue,width:120,align:'left'">累积垂直坝轴线变化(mm)</th>
+					<th data-options="field:'dH',formatter:bmwydata.list.formatBMWYValue,width:120,align:'left'">累积铅垂方向变化(mm)</th>
 					<th data-options="field:'dDN',formatter:bmwydata.list.formatBMWYValue,width:120,align:'left'">本次平行坝轴线变化(mm)</th>
 					<th data-options="field:'dDE',formatter:bmwydata.list.formatBMWYValue,width:120,align:'left'">本次垂直坝轴线变化(mm)</th>
 					<th data-options="field:'dDH',formatter:bmwydata.list.formatBMWYValue,width:120,align:'left'">本次铅垂方向变化(mm)</th>
