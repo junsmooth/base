@@ -184,18 +184,16 @@ INSERT [t_thresholdop] ( [id] , [displayName] , [opName] ) VALUES ( 1 , '大于' ,
 
  
  SET IDENTITY_INSERT [t_montypeattr] ON
- INSERT [t_montypeattr] ( [id] , [attr] , [name] , [montypeid] ) VALUES ( 1 , 'dN' , '平行坝轴线变化' , 1 )
+ INSERT [t_montypeattr] ( [id] , [attr] , [name] , [montypeid] ) VALUES ( 1 , 'dN' , '累积平行坝轴线变化' , 1 )
  INSERT [t_montypeattr] ( [id] , [attr] , [name] , [montypeid] ) VALUES ( 2 , 'value' , '库水位' , 11 )
  INSERT [t_montypeattr] ( [id] , [attr] , [name] , [montypeid] ) VALUES ( 3 , 'value' , '浸润线' , 3 )
- INSERT [t_montypeattr] ( [id] , [attr] , [name] , [montypeid] ) VALUES ( 4 , 'dE' , '垂直坝轴线变化' , 1 )
- INSERT [t_montypeattr] ( [id] , [attr] , [name] , [montypeid] ) VALUES ( 5 , 'dH' , '铅垂方向变化' , 1 )
+ INSERT [t_montypeattr] ( [id] , [attr] , [name] , [montypeid] ) VALUES ( 4 , 'dE' , '累积垂直坝轴线变化' , 1 )
+ INSERT [t_montypeattr] ( [id] , [attr] , [name] , [montypeid] ) VALUES ( 5 , 'dH' , '累积铅垂方向变化' , 1 )
  INSERT [t_montypeattr] ( [id] , [attr] , [name] , [montypeid] ) VALUES ( 6 , 'value' , '干滩高程' , 4 )
  INSERT [t_montypeattr] ( [id] , [attr] , [name] , [montypeid] ) VALUES ( 7 , 'value' , '干滩长度' , 5 )
  INSERT [t_montypeattr] ( [id] , [attr] , [name] , [montypeid] ) VALUES ( 8 , 'value' , '渗流量' , 7 )
  INSERT [t_montypeattr] ( [id] , [attr] , [name] , [montypeid] ) VALUES ( 9 , 'value' , '安全超高' , 9 )
- INSERT [t_montypeattr] ( [id] , [attr] , [name] , [montypeid] ) VALUES ( 10 , 'value' , '坝顶高程' , 10 )
  INSERT [t_montypeattr] ( [id] , [attr] , [name] , [montypeid] ) VALUES ( 11 , 'value' , '一小时降雨量' , 2 )
- INSERT [t_montypeattr] ( [id] , [attr] , [name] , [montypeid] ) VALUES ( 12 , 'value' , '内部位移' , 6 )
  INSERT [t_montypeattr] ( [id] , [attr] , [name] , [montypeid] ) VALUES ( 13 , 'dDN' , '本次平行坝轴线变化' , 1 )
  INSERT [t_montypeattr] ( [id] , [attr] , [name] , [montypeid] ) VALUES ( 14 , 'dDE' , '本次垂直坝轴线变化' , 1 )
  INSERT [t_montypeattr] ( [id] , [attr] , [name] , [montypeid] ) VALUES ( 15 , 'dDH' , '本次铅垂方向变化' , 1 )
