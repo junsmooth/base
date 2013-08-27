@@ -329,12 +329,13 @@ z-index:-1
   	    tab.panel('refresh');
  	}
 </script>
+
 <div style="padding: 5px;  ">
 	<a href="#" class="easyui-menubutton"
-		data-options="menu:'#mm1',iconCls:'icon-edit'">工具</a>  
-	<a href="javascript:void(0)" class="easyui-linkbutton" plain="true" onclick="menu.main.saveData()" >保存</a>  
-	<a href="javascript:void(0)" class="easyui-linkbutton" plain="true" onclick="editDiv()">编辑</a>  
-	<a id="editId" href="javascript:void(0)" class="easyui-linkbutton" plain="true" onclick="cancelEdit()" style="display:none;">取消</a>  
+		data-options="menu:'#mm1',iconCls:'icon-add', disabled:!hasRole('${ROLE_AUTH_EDIT}')">添加</a>  
+	<a href="javascript:void(0)" class="easyui-linkbutton" plain="true" data-options="iconCls:'icon-save',disabled:!hasRole('${ROLE_AUTH_EDIT}')" onclick="menu.main.saveData()" >保存</a>  
+	<a href="javascript:void(0)" class="easyui-linkbutton" plain="true" data-options="iconCls:'icon-edit',disabled:!hasRole('${ROLE_AUTH_EDIT}')" onclick="editDiv()">编辑</a>  
+	<a id="editId" href="javascript:void(0)" class="easyui-linkbutton" plain="true" data-options="iconCls:'icon-cancel',disabled:!hasRole('${ROLE_AUTH_EDIT}')" onclick="cancelEdit()" style="display:none;">取消</a>  
 </div>
 <div id="mm1" style="width: 150px;">
 	<div class="menu-sep"></div>
@@ -375,7 +376,6 @@ z-index:-1
         This is prompt div.
     </div>
 <script>
-
 	function addPic(){
 		       $('#upId').dialog({
 		        title: '上传图片',
