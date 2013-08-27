@@ -6,7 +6,7 @@
     	.wkkgk_s1{
     		border:0px;
     		border-color: #C3D9E0;
-    		background-color: #FAFAFA;
+    		/* background-color: #FAFAFA; */
     		width:230px;
     	}
     		.wkkgk_s2{
@@ -15,11 +15,62 @@
     	td{border-color: #C3D9E0;
     		height: 30px;
     	}
-    
-   
+	#tid { 
+    width: auto; 
+    padding: 0; 
+    margin: 0; 
+	} 
+	
+	.reven { 
+	    font: bold 11px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif; 
+	    color: #4f6b72; 
+	    border-right: 1px solid #C1DAD7; 
+	    border-bottom: 1px solid #C1DAD7; 
+	    border-top: 1px solid #C1DAD7; 
+	    letter-spacing: 2px; 
+	    text-transform: uppercase; 
+	    text-align: left; 
+	    padding: 6px 6px 6px 12px; 
+	    background: #CAE8EA; 
+	} 
+	
+	.rodd { 
+	       font: bold 11px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif; 
+	    color: #4f6b72; 
+	    border-right: 1px solid #C1DAD7; 
+	    border-bottom: 1px solid #C1DAD7; 
+	    border-top: 1px solid #C1DAD7; 
+	    letter-spacing: 2px; 
+	    text-transform: uppercase; 
+	    text-align: left; 
+	    padding: 6px 6px 6px 12px; 
+	    background: none; 
+	} 
+	.rodd input{
+		background: #F5FAFA;
+	}
+	
+	.tdeven { 
+	    border-right: 1px solid #C1DAD7; 
+	    border-bottom: 1px solid #C1DAD7; 
+	    background: #fff; 
+	    font-size:11px; 
+	    padding: 6px 6px 6px 12px; 
+	    color: #4f6b72; 
+	} 
+	
+	
+	.tdodd { 
+	border-right: 1px solid #C1DAD7; 
+	    border-bottom: 1px solid #C1DAD7; 
+	    background: #fff; 
+	    font-size:11px; 
+	    padding: 6px 6px 6px 12px; 
+	    background: #F5FAFA; 
+	} 
+
     </style>
     <script type="text/javascript">
-    
     
     	function edit(){
     		$("#sid").show();
@@ -69,20 +120,39 @@
     		}
     		  document.getElementById("ff").reset();
     	}
+    	
+    	$(function(){
+    		setClass();
+    		if (!hasRole('ROLE_AUTH_EDIT')){
+    			$("#uid").hide();
+    		} 
+    	});
+    	
+    	function setClass(){
+    		
+    		var c=$(".reven td");
+    		var c2=$(".rodd td");
+    		for(var j=0;j<c2.length;j++){
+    			$(c2[j]).addClass("tdodd");
+    		}
+    		for(var i=0;i<c.length;i++){
+    			$(c[i]).addClass("tdeven");
+    		}
+    	}
     </script>
 
 
 <div class="easyui-panel" title=" " >
 	<form id="ff" action="wkkgk/saveOrUpdateData" method="post">
 	
-			 <table id="tid"  border="1px" cellspacing="0px" style="margin-left: 30px;margin-top: 30px;margin-right: 20px;margin-right: 20px;">
+			 <table id="tid"  cellspacing="1"  cellpadding="3" class="tablehead" style="background:#FAFAFA;">
 			 
 				<tr style="text-align: center;font-size: 14px;font-weight: bold;height: 22px;">
 					<td colspan="7" >
 						尾矿库概况
 					</td>
 				</tr>
-                <tr>
+                <tr class="reven">
                     <td >建设时间:</td>
                     <td ><input class="wkkgk_s1" name="time" value="${wkkgk.time }" readOnly="readonly" type="text"></input></td>
                       <td>投入使用时间:</td>
@@ -90,7 +160,7 @@
                       <td>尾矿库类型:</td>
                     <td><input class="wkkgk_s1" name="type" value="${wkkgk.type}" readOnly="readonly"  type="text"></input></td>
                 </tr>
-                <tr>
+                <tr class="rodd">
                     <td>筑坝方式:</td>
                     <td><input class="wkkgk_s1" name="dams" value="${wkkgk.dams}" readOnly="readonly" type="text"></input></td>
                        <td>尾矿库等级:</td>
@@ -98,7 +168,7 @@
                        <td>汇水面积:</td>
                     <td><input class="wkkgk_s1" name="area" value="${wkkgk.area}" readOnly="readonly" type="text"></input></td>
                 </tr>
-                <tr>
+                <tr class="reven">
                     <td>防洪标准:</td>
                     <td><input class="wkkgk_s1" name="standard" value="${wkkgk.standard}" readOnly="readonly" type="text"></input></td>
                        <td>初期坝类型:</td>
@@ -106,7 +176,7 @@
                        <td>初期坝底标高:</td>
                     <td><input class="wkkgk_s1" name="dambottom" value="${wkkgk.dambottom}" readOnly="readonly" type="text"></input></td>
                 </tr>
-                <tr>
+                <tr class="rodd">
                     <td>初期坝顶标高:</td>
                     <td><input class="wkkgk_s1" name="alignment1" value="${wkkgk.alignment1}" readOnly="readonly" type="text"></input></td>
                        <td>最终坝顶标高:</td>
@@ -115,7 +185,7 @@
                     <td><input class="wkkgk_s1" name="height" value="${wkkgk.height}" readOnly="readonly" type="text"></input></td>
                     
                 </tr>
-                   <tr>
+                   <tr class="reven">
                     <td >总库容:</td>
                     <td ><input class="wkkgk_s1" name="total" value="${wkkgk.total}" readOnly="readonly" type="text"></input></td>
                       <td>有效库容:</td>
@@ -123,7 +193,7 @@
                       <td>目标坝顶标高:</td>
                     <td><input class="wkkgk_s1" name="alignment3" value="${wkkgk.alignment3}" readOnly="readonly" type="text"></input></td>
                 </tr>
-                <tr>
+                <tr class="rodd">
                     <td>目标坝高:</td>
                     <td><input class="wkkgk_s1" name="damhigh" value="${wkkgk.damhigh}" readOnly="readonly" type="text"></input></td>
                        <td>目标坝体长度:</td>
@@ -131,7 +201,7 @@
                        <td>坝体纵坡度:</td>
                     <td><input class="wkkgk_s1" name="slope" value="${wkkgk.slope}" readOnly="readonly" type="text"></input></td>
                 </tr>
-                <tr>
+                <tr class="reven">
                     <td>初期坝顶宽度:</td>
                     <td><input class="wkkgk_s1" name="damwidth" value="${wkkgk.damwidth}" readOnly="readonly" type="text"></input></td>
                        <td>初期坝内坡比:</td>
@@ -139,7 +209,7 @@
                        <td>初期坝外坡比:</td>
                     <td><input class="wkkgk_s1" name="damoutslope1" value="${wkkgk.damoutslope1}" readOnly="readonly" type="text"></input></td>
                 </tr>
-                <tr>
+                <tr class="rodd">
                     <td>初期坝外坡比:</td>
                     <td><input class="wkkgk_s1" name="damoutslope2" value="${wkkgk.damoutslope2}" readOnly="readonly" type="text"></input></td>
                        <td>沉积滩平均坡度:</td>
@@ -150,8 +220,8 @@
             <input name="id" value="${wkkgk.id }" type="hidden"/>
   </form>
   </div>
-  	<div align="right" style="margin-top: 10px;margin-right: 70px;">
-		<a id="sid" href="javascript:void(0)" class="easyui-linkbutton"  onclick="save()" style="display:none;">保存</a>  
-		<a id="eid" href="javascript:void(0)" class="easyui-linkbutton"  onclick="edit()">编辑</a>  
-		<a id="cid" href="javascript:void(0)" class="easyui-linkbutton"  onclick="cancel()" style="display:none;">取消</a>  
+  	<div id="uid" align="right" style="margin-top: 10px;margin-right: 70px;">
+		<a id="sid" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',disabled:!hasRole('${ROLE_AUTH_EDIT}')" onclick="save()" style="display:none;">保存</a>  
+		<a id="eid" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',disabled:!hasRole('${ROLE_AUTH_EDIT}')" onclick="edit()">编辑</a>  
+		<a id="cid" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',disabled:!hasRole('${ROLE_AUTH_EDIT}')"  onclick="cancel()" style="display:none;">取消</a>  
 	</div>

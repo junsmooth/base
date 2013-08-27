@@ -7,19 +7,104 @@
     		border:0px;
     		border-color: #C3D9E0;
     		background-color: #FAFAFA;
-    		width:230px;
+    		width:210px;
     	}
     		.s2{
-    			width:230px;
+    			width:210px;
     	}
     	td{border-color: #C3D9E0;
     		height: 30px;
     	}
-    
+    #proTId { 
+    width: auto; 
+    padding: 0; 
+    margin: 0; 
+	} 
+	
+	.xm_reven { 
+	    font: bold 11px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif; 
+	    color: #4f6b72; 
+	    border-right: 1px solid #C1DAD7; 
+	    border-bottom: 1px solid #C1DAD7; 
+	    border-top: 1px solid #C1DAD7; 
+	    letter-spacing: 2px; 
+	    text-transform: uppercase; 
+	    text-align: left; 
+	    padding: 6px 6px 6px 12px; 
+	    background: #CAE8EA; 
+	} 
+	
+	.xm_rodd { 
+	       font: bold 11px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif; 
+	    color: #4f6b72; 
+	    border-right: 1px solid #C1DAD7; 
+	    border-bottom: 1px solid #C1DAD7; 
+	    border-top: 1px solid #C1DAD7; 
+	    letter-spacing: 2px; 
+	    text-transform: uppercase; 
+	    text-align: left; 
+	    padding: 6px 6px 6px 12px; 
+	    background: none; 
+	} 
+	.xm_rodd input{
+		background: #F5FAFA;
+	}
+	.xm_reven input{
+		background: #FFFFFF;
+	}
+	
+	.xm_tdeven { 
+	    border-right: 1px solid #C1DAD7; 
+	    border-bottom: 1px solid #C1DAD7; 
+	    background: #fff; 
+	    font-size:11px; 
+	    padding: 6px 6px 6px 12px; 
+	    color: #4f6b72; 
+	} 
+	
+	
+	.xm_tdodd { 
+	border-right: 1px solid #C1DAD7; 
+	    border-bottom: 1px solid #C1DAD7; 
+	    background: #fff; 
+	    font-size:11px; 
+	    padding: 6px 6px 6px 12px; 
+	    background: #F5FAFA; 
+	} 
    
     </style>
     <script type="text/javascript">
     
+    
+    	$(function(){
+    		setTRClass();
+    		setTDClass();
+    		if (!hasRole('ROLE_AUTH_EDIT')){
+    			$("#xm_uid").hide();
+    		} 
+    	});
+    	
+    	function setTDClass(){
+    		var c=$(".xm_reven td");
+    		var c2=$(".xm_rodd td");
+    		for(var j=0;j<c2.length;j++){
+    			$(c2[j]).addClass("xm_tdodd");
+    		}
+    		for(var i=0;i<c.length;i++){
+    			$(c[i]).addClass("xm_tdeven");
+    		}
+    	}
+    	function setTRClass(){
+    		var trArr=$("#proTId tr");
+    		//alert(trArr.length);
+    		for(var j=1;j<trArr.length;j++){
+    			if(j%2==0){
+    				$(trArr[j]).addClass("xm_rodd");
+    			}else{
+    				$(trArr[j]).addClass("xm_reven");
+    			}
+    		}
+    	}
     	function xmgk_edit(){
     		$("#proSId").show();
     		$("#proCId").show();
@@ -95,7 +180,7 @@
 <div  class="easyui-panel" title=" " >
 	<form id="proFId" action="xmgk/saveOrUpdateData" method="post">
 	
-			 <table id="proTId" border="1px" cellspacing="0px" style="margin-left: 30px;margin-top: 30px;margin-right: 20px;margin-right: 20px;">
+			 <table id="proTId" cellspacing="1"   style="background:#FAFAFA;">
 			 
 			 			<tr style="text-align: center;font-size: 14px;font-weight: bold;height: 22px;">
 					<td colspan="7" >
@@ -244,8 +329,8 @@
   </form>
   
   </div>
-  	<div align="right" style="margin-top: 10px;margin-right: 35px;">
-		<a id="proSId" href="javascript:void(0)" class="easyui-linkbutton"  onclick="xmgk_save()" style="display:none;">保存</a>  
-		<a id="proEId" href="javascript:void(0)" class="easyui-linkbutton"  onclick="xmgk_edit()">编辑</a>  
-		<a id="proCId" href="javascript:void(0)" class="easyui-linkbutton"  onclick="xmgk_cancel()" style="display:none;">取消</a>  
+  	<div id="xm_uid" align="right" style="margin-top: 10px;margin-right: 35px;">
+		<a id="proSId" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',disabled:!hasRole('${ROLE_AUTH_EDIT}')"  onclick="xmgk_save()" style="display:none;">保存</a>  
+		<a id="proEId" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',disabled:!hasRole('${ROLE_AUTH_EDIT}')" onclick="xmgk_edit()">编辑</a>  
+		<a id="proCId" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',disabled:!hasRole('${ROLE_AUTH_EDIT}')" onclick="xmgk_cancel()" style="display:none;">取消</a>  
 	</div>
