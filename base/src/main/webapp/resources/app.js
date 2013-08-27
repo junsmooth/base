@@ -6,7 +6,7 @@ $(function() {
 	registryEditPass();
 	delayRun();
 	//
-	addTab('三维地图', 'topo/threedimension');
+	addTab('监测图', 'topo/main');
 	setChartOptions();
 
 })
