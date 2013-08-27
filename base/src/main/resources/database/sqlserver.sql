@@ -60,7 +60,7 @@ INSERT [t_icon] ( [id] , [iconcls] , [iconname] , [iconpath] , [type_id] ) VALUE
 
 
 SET IDENTITY_INSERT [t_menu] ON
- INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url] ) VALUES ( 1 , 'ROOT' , 'ROOT' , 'ROOT' , '/' )
+INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url] ) VALUES ( 1 , 'ROOT' , 'ROOT' , 'ROOT' , '/' )
  INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 2 , '系统管理' , 'E' , 'SYSTEM' , '' , 2 , 1 )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 3 , '用户管理' , 'USER' , 'user' , 3 , 2 )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 4 , '菜单管理' , 'MENU' , 'menu' , 2 , 2 )
@@ -98,16 +98,15 @@ SET IDENTITY_INSERT [t_menu] ON
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 36 , '内部位移过程线' , 'NBWYCHART' , 'nbwy/chart' , 30 , 9 )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 37 , '图标管理' , 'ICON' , 'icon' , 5 , 2 )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 38 , 'Portal' , 'Portal' , 'homepage/information' , 35 , 2 )
- INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 39 , '监测图' , 'JIANCETU' , 'topo/main' , 6 , 2 )
+ INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 39 , '监测图' , 'B' , 'JIANCETU' , 'topo/main' , 6 , 46 )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 40 , '卫星云图' , 'SATPIC' , 'topo/satellite' , 13 , 2 )
  INSERT [t_menu] ( [id] , [menuname] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 41 , '三维地图' , 'THREEDIMENSION' , 'topo/threedimension' , 36 , 2 )
  INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 42 , '项目信息' , 'A' , 'PROINFO' , '' , 2 , 1 )
  INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 43 , '项目概况' , '' , 'PROJECT' , 'xmgk/iniData' , 7 , 42 )
  INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 44 , '尾矿库概况' , '' , 'TAILINGSINFO' , 'wkkgk/iniData' , 8 , 42 )
- INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 45 , '监测点列表' , 'A' , 'JCDL' , 'jcdlb/init' , 8 , 9 )
+ INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 45 , '监测点列表' , 'A' , 'JCDL' , 'jcdlb/init' , 8 , 46 )
  INSERT [t_menu] ( [id] , [menuname] , [menuorder] , [modulename] , [url] , [iconid] , [parentid] ) VALUES ( 46 , '实时监测' , 'B1' , 'REALTIME' , '' , 2 , 1 )
 
- 
 
  SET IDENTITY_INSERT [t_menu] OFF
 
