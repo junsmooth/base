@@ -74,7 +74,7 @@
 						data-options="field:'point',width:80,align:'left',formatter:bdgc.list.formatBDGCPoint">
 						测点</th>
 					<th data-options="field:'value',formatter:bdgc.list.formatBDGCValue,width:120,align:'left'">
-						深度(m)</th>
+						监测值(m)</th>
 
 				</tr>
 			</thead>
