@@ -15,7 +15,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 
 @Entity(name="t_ylj_monitoring")
-public class TYLJ extends IdEntity {
+public class TYINGLIJI extends IdEntity {
 //	@NotEmpty
 //	@Temporal(TemporalType.TIMESTAMP)
 	
@@ -25,7 +25,7 @@ public class TYLJ extends IdEntity {
 	@Column(name="monitoring_position")
 	private Integer monitoringPosition;
 	
-	@Column(name="water_depth")
+	@Column(name="value")
 	private BigDecimal value;
 
 	@Transient

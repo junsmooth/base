@@ -1,4 +1,4 @@
-package org.bgrimm.domain.bgrimm.monitor.provided;
+package org.bgrimm.domain.bgrimm.monitor.extended;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -15,7 +15,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 
 @Entity(name="ylj_monitoring")
-public class YLJ extends IdEntity {
+public class YINGLIJI extends IdEntity {
 //	@NotEmpty
 //	@Temporal(TemporalType.TIMESTAMP)
 	
@@ -25,7 +25,7 @@ public class YLJ extends IdEntity {
 	@Column(name="monitoring_position")
 	private Integer monitoringPosition;
 	
-	@Column(name="water_depth")
+	@Column(name="value")
 	private BigDecimal value;
 
 	@Transient
