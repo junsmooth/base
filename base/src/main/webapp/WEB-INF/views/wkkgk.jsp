@@ -145,7 +145,7 @@
 <div class="easyui-panel" title=" " >
 	<form id="ff" action="wkkgk/saveOrUpdateData" method="post">
 	
-			 <table id="tid"  cellspacing="1"  cellpadding="3" class="tablehead" style="background:#FAFAFA;">
+			 <table id="tid"  cellspacing="1"  class="tablehead" style="background:#FAFAFA;">
 			 
 				<tr style="text-align: center;font-size: 14px;font-weight: bold;height: 22px;">
 					<td colspan="7" >
