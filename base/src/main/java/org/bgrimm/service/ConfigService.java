@@ -51,6 +51,8 @@ public class ConfigService {
 	public Object getAllMonPoint(int page, int rows) {
 		PagedQuery pq = new PagedQuery(MonitoringPoint.class, page, rows);
 		List<Order> list = new ArrayList();
+		list.add(Order.asc("type"));
+		list.add(Order.asc("position"));
 		list.add(Order.asc("monitoringName"));
 		PageList pl = commonDao.getPagedList(pq, list);
 		return pl;

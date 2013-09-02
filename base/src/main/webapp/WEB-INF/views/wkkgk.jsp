@@ -142,16 +142,12 @@
     </script>
 
 
-<div class="easyui-panel" title=" " >
+<div class="easyui-panel" >
 	<form id="ff" action="wkkgk/saveOrUpdateData" method="post">
 	
 			 <table id="tid"  cellspacing="1"  class="tablehead" style="background:#FAFAFA;">
 			 
-				<tr style="text-align: center;font-size: 14px;font-weight: bold;height: 22px;">
-					<td colspan="7" >
-						尾矿库概况
-					</td>
-				</tr>
+			
                 <tr class="reven">
                     <td >建设时间:</td>
                     <td ><input class="wkkgk_s1" name="time" value="${wkkgk.time }" readOnly="readonly" type="text"></input></td>

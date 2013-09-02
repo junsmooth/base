@@ -74,7 +74,7 @@
 						data-options="field:'point',width:80,align:'left',formatter:aqcg.list.formatAQCGPoint">
 						测点</th>
 					<th data-options="field:'value',formatter:aqcg.list.formatAQCGValue,width:120,align:'left'">
-						深度(m)</th>
+						监测值(m)</th>
 
 				</tr>
 			</thead>

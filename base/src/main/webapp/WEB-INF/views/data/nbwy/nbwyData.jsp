@@ -74,7 +74,7 @@
 						data-options="field:'point',width:80,align:'left',formatter:nbwy.list.formatNBWYPoint">
 						测点</th>
 					<th data-options="field:'value',width:120,formatter:nbwy.list.formatNBWYValue,align:'left'">
-						深度(m)</th>
+						监测值(m)</th>
 
 				</tr>
 			</thead>
