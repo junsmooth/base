@@ -15,6 +15,7 @@ public class Constants {
 	public static final String JCD_BDGC="BDGC";
 	public static final String JCD_SLL="SLL";
 	public static final String JCD_NBWY="NBWY";
+	public static final String JCD_YINGLI="YINGLJ";
 	
 	public static final String JCD_SP = "SP";
 	public static String MIGRATION_PACKAGE = "org.bgrimm.domain.bgrimm.monitor.datamigration";
