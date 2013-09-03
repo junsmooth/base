@@ -177,16 +177,10 @@
     </script>
 	
 
-<div  class="easyui-panel" title=" " >
+<div  class="easyui-panel" >
 	<form id="proFId" action="xmgk/saveOrUpdateData" method="post">
 	
 			 <table id="proTId" cellspacing="1"   style="background:#FAFAFA;">
-			 
-			 			<tr style="text-align: center;font-size: 14px;font-weight: bold;height: 22px;">
-					<td colspan="7" >
-						项目概况
-					</td>
-				</tr>
 					 	 <tr >
 					 	 		<td rowspan="2">基本介绍</td>
 					           <td >项目名称:</td>
