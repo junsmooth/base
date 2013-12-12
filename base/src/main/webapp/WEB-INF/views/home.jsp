@@ -1,7 +1,9 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>Blasting Management System</title>
+<title>尾矿库在线监测系统</title>
 
 <!-- <link rel="stylesheet" href="resources/dijit/themes/claro/claro.css">
 <link rel="stylesheet" href="resources/dijit/themes/tundra/tundra.css"/>
@@ -33,13 +35,12 @@ html,body {
 		id="boderContainer">
 		<div data-dojo-type="dijit/layout/ContentPane"
 			data-dojo-props="region:'top', splitter:false" style="height: 50px;"
-			align="">
-			<span data-dojo-type="FancyCounter">
-			<script>require(["app/head/head.js"]);</script>
+			href="">
+			
 			</span>
 		</div>
 		<div data-dojo-type="dijit/layout/ContentPane"
-			data-dojo-props="region:'leading', splitter:true" href="resources/app/left/menu.jsp"
+			data-dojo-props="region:'leading', splitter:true" href="/menu"
 			style="width: 200px;" id="leftTree">
 		</div>
 		<!-- end AccordionContainer -->
