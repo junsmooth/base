@@ -27,15 +27,14 @@ html,body {
 	<script type="text/javascript" src="resources/dojo/dojo.js"
 		data-dojo-config="async:true"></script>
 	<script type="text/javascript" src="resources/app.js"></script>
-<script type="text/javascript" src="resources/app/left/menu.js"></script>
 </head>
 <body class="soria">
 	<div data-dojo-type="dijit/layout/BorderContainer"
 		data-dojo-props="gutters:true, liveSplitters:false"
 		id="boderContainer">
 		<div data-dojo-type="dijit/layout/ContentPane"
-			data-dojo-props="region:'top', splitter:false" style="height: 50px;"
-			href="">
+			data-dojo-props="region:'top', splitter:false" style="height: 50px;background-color: #c7dbfc;overflow-y:hidden"
+			href="/header">
 			
 			</span>
 		</div>

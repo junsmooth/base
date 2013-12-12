@@ -19,6 +19,7 @@
 		<div data-dojo-type="dijit/layout/ContentPane" title="参数配置">
 			<ul>
 				<li><a href="config/threshold">报警限值</a></li>
+				<li><a href="user">用户管理</a></li>
 			</ul>
 		</div>
 		<div data-dojo-type="dijit/layout/ContentPane" title="过程曲线">
@@ -37,6 +38,12 @@
 				<li><a href="jrx/data">浸润线过程线</a></li>
 				<li><a href="ksw/data">库水位过程线</a></li>
 				<li><a href="jyl/data">降雨量过程线</a></li>
+			</ul>
+		</div>
+		<div data-dojo-type="dijit/layout/ContentPane" title="报警信息">
+			<ul>
+				<li><a href="alarm">报警记录</a></li>
+				
 			</ul>
 		</div>
 	</div>
