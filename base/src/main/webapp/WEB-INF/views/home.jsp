@@ -36,21 +36,24 @@ html,body {
 			data-dojo-props="region:'top', splitter:false" style="height: 50px;background-color: #c7dbfc;overflow-y:hidden"
 			href="/header">
 			
-			</span>
 		</div>
 		<div data-dojo-type="dijit/layout/ContentPane"
 			data-dojo-props="region:'leading', splitter:true" href="/menu"
 			style="width: 200px;" id="leftTree">
+			
 		</div>
 		<!-- end AccordionContainer -->
 		<div id="contentTabs" data-dojo-type="dijit/layout/TabContainer"
 			data-dojo-props="region:'center', tabStrip:true">
 			<div data-dojo-type="dijit/layout/ContentPane" title="My first tab"
-				selected="true">Lorem ipsum and all around...</div>
-			
+				selected="true">Lorem ipsum and all around...
+					<div id="testdiv">testdiv</div>
+			<button id="testbtn"></button>
+				</div>
+		
+			</div>
 		</div>
 		<!-- end TabContainer -->
-	</div>
 	<!-- end BorderContainer -->
 
 
