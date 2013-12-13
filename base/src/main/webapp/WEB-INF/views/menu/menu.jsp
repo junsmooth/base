@@ -1,12 +1,11 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 <div id="menu" style="width: 300px; height: 300px">
 	<div data-dojo-type="dijit/layout/AccordionContainer"
 		style="height: 300px">
-		<div data-dojo-type="dijit/layout/ContentPane" title="项目信息">
+		<div id="testevent" data-dojo-type="dijit/layout/ContentPane" title="项目信息">
 			<ul>
-				<li><a href="project/projectinfo">项目信息</a></li>
+				<li><a id="testa" url="project/projectinfo" href="#">项目信息</a></li>
 				<li><a href="project/tailingsinfo">尾矿库概况</a></li>
 			</ul>
 		</div>
@@ -48,3 +47,4 @@
 		</div>
 	</div>
 </div>
+<script>require(["app/menu.js"]);</script>
