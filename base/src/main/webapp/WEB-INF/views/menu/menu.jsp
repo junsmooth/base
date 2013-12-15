@@ -45,5 +45,8 @@
 
 			</ul>
 		</div>
+		<script type="dojo/method">
+			    require([ "app/menu.js" ]);  
+		    </script>
 	</div>
 </div>

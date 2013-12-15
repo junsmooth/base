@@ -49,10 +49,6 @@ html,body {
 		<div data-dojo-type="dijit/layout/ContentPane"
 			data-dojo-props="region:'leading', splitter:true"
 			href="/menu" style="width: 200px;" id="leftTree">
-			<script type="dojo/method">
-			    require([ "app/menu.js" ]);  
-		    </script>
-		   
 
 		</div>
 		<!-- end AccordionContainer -->
